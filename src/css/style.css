@@ -22,16 +22,6 @@ html {
   box-sizing: border-box;
 }
 
-.offscreen {
-  position: absolute;
-  left: -10000px;
-}
-
-input,
-button {
-  font: inherit;
-}
-
 body {
   padding: 0;
   margin: 0;
@@ -50,6 +40,25 @@ h2,
 h3,
 h4 {
   color: var(--text-100);
+}
+
+.offscreen {
+  position: absolute;
+  left: -10000px;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .main {
@@ -113,11 +122,29 @@ h4 {
 }
 
 .hero__title {
-  margin: 0.5em 0;
+  margin: 1em 0;
 }
 
 .hero__title span:last-child {
   display: block;
+}
+
+.hero__nav--list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.hero__nav--link {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: color 100ms ease-in-out;
+  pointer-events: none; /* disable pointer events until functionality is added */
+}
+
+.hero__nav--link:hover {
+  color: var(--primary-100);
 }
 
 .newItemEntry {
