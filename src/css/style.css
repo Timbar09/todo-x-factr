@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap");
 
 :root {
   --primary-100: #e805fe; /* color name: electric purple */
@@ -27,6 +27,7 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text-200);
+  font-weight: 400;
   background-color: var(--bg-300);
 }
 
@@ -57,14 +58,15 @@ a {
 }
 
 .main {
+  padding: 2rem 0;
+  height: 100vh;
   max-width: 23em;
   margin: 0 auto;
 }
 
 .main__container {
-  padding: 2rem 0;
   position: relative;
-  height: 100vh;
+  height: 100%;
   border-radius: 2rem;
   overflow: hidden;
 }
@@ -131,6 +133,8 @@ a {
 
 .hero__title {
   margin: 1em 0;
+  font-size: 1.75em;
+  font-weight: 700;
 }
 
 .hero__title span:last-child {
@@ -175,10 +179,9 @@ a {
 }
 
 .app {
-  opacity: 0.85;
   position: absolute;
-  /* inset: 2rem auto 2rem 0; */
-  inset: 2rem auto 2rem 70%;
+  /* inset: 0 auto 0 0; */
+  inset: 0 auto 0 70%;
   scale: 0.85;
   width: 100%;
   background-color: var(--bg-200);
@@ -187,12 +190,13 @@ a {
 }
 
 .app:hover {
-  inset: 2rem auto 2rem 0;
+  inset: 0 auto 0 0;
   scale: 1;
 }
 
 .app.show {
-  inset: 2rem 0;
+  inset: 0 auto 0 0;
+  scale: 1;
 }
 
 .newItemEntry {
