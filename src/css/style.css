@@ -1,5 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+:root {
+  --primary-100: #e805fe; /* color name: electric purple */
+  --primary-200: #3576dc; /* color name: royal blue */
+
+  --bg-100: #051956; /* color name: oxford blue */
+  --bg-200: #3451a1; /* color name: royal blue */
+  --bg-300: #97b5fe; /* color name: light steel blue */
+
+  --text-100: #e2fdff; /* color name: baby powder */
+  --text-200: #5469a2; /* color name: slate blue */
+}
+
+html {
+  font-family: "Poppins", sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -16,26 +32,20 @@ button {
   font: inherit;
 }
 
-html {
-  font-family: "Poppins", sans-serif;
-}
-
 body {
   min-height: 100vh;
-  background-color: #333;
-  color: #fff;
+
+  color: var(--text-200);
+  background-color: var(--bg-300);
   padding: 1rem;
   display: flex;
   flex-direction: column;
 }
 
-main {
-  flex-grow: 1;
-  margin: auto;
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  flex-flow: column nowrap;
+.main {
+  max-width: 30em;
+  margin: 0 auto;
+  background-color: var(--bg-100);
 }
 
 section {
