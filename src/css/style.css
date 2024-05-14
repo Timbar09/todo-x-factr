@@ -33,28 +33,57 @@ button {
 }
 
 body {
+  padding: 0;
+  margin: 0;
   min-height: 100vh;
-
   color: var(--text-200);
   background-color: var(--bg-300);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
 }
 
 .main {
   max-width: 30em;
   margin: 0 auto;
+  border-left: 1px solid var(--bg-100);
+  border-right: 1px solid var(--bg-100);
+}
+
+.hero {
   background-color: var(--bg-100);
 }
 
+.hero__button--container {
+  text-align: center;
+}
+
+.hero__button {
+  all: unset;
+  color: var(--text-100);
+  background-color: transparent;
+  border: solid 0.125em var(--text-100);
+  border-radius: 50%;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 100ms ease-in-out;
+}
+
+.hero__button span {
+  scale: 1.5;
+}
+
+.hero__button:hover {
+  cursor: pointer;
+  background-color: var(--text-200);
+}
+
 section {
-  border: 1px solid whitesmoke;
   border-radius: 10px;
   padding: 0.5rem;
 }
 
-.button {
+/* .button {
   border-radius: 10px;
   min-width: 48px;
   min-height: 48px;
@@ -62,7 +91,7 @@ section {
 
 .button:hover {
   cursor: pointer;
-}
+} */
 
 .newItemEntry {
   position: sticky;
