@@ -189,11 +189,6 @@ a {
   transition: inset 300ms ease-in-out, scale 300ms 100ms ease-in-out;
 }
 
-.app:hover {
-  inset: 0 auto 0 0;
-  scale: 1;
-}
-
 .app.show {
   inset: 0 auto 0 0;
   scale: 1;

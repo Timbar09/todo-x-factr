@@ -101,8 +101,19 @@
           </section>
         </section>
 
-        <section class="app">
+        <section class="app" id="appList">
           <section class="newItemEntry">
+            <div class="app__hideButton--container">
+              <button
+                id="hideList"
+                class="button app__hideButton"
+                title="Hide list"
+                aria-label="Hide list"
+              >
+                <span class="material-symbols-outlined"> chevron_right </span>
+              </button>
+            </div>
+
             <h2 class="offscreen">New Item Entry</h2>
             <form class="newItemEntry__form" id="itemEntryForm">
               <label for="newItem" class="offscreen"

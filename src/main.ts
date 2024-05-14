@@ -4,6 +4,25 @@ import ListTemplate from "./templates/ListTemplate";
 
 import "./css/style.css";
 
+const showListButton = document.getElementById("showList") as HTMLButtonElement;
+const hideListButton = document.getElementById("hideList") as HTMLButtonElement;
+
+const toggleList = (): void => {
+  const list = document.getElementById("appList");
+
+  if (!list) return;
+
+  list.classList.toggle("show");
+};
+
+showListButton.addEventListener("click", () => {
+  toggleList();
+});
+
+hideListButton.addEventListener("click", () => {
+  toggleList();
+});
+
 const initApp = (): void => {
   const fullList = FullList.instance;
   const listTemplate = ListTemplate.instance;
