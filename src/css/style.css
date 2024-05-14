@@ -62,12 +62,19 @@ a {
 }
 
 .main {
+  height: 100vh;
   max-width: 25em;
   margin: 0 auto;
+  padding: 2rem 0;
+  outline: solid 0.25em var(--primary-100);
 }
 
 .hero {
   padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: var(--bg-100);
 }
 
@@ -143,8 +150,27 @@ a {
   pointer-events: none; /* disable pointer events until functionality is added */
 }
 
+.hero__nav--link span:last-child {
+  color: var(--text-100);
+}
+
 .hero__nav--link:hover {
   color: var(--primary-100);
+}
+
+.hero__analytics--chart span {
+  transform: scaleX(8) scaleY(3.5);
+  color: var(--primary-100);
+  margin: 1em 0 1.5em 3em;
+}
+
+.hero__analytics--report--text {
+  margin: 0;
+  font-size: 0.85em;
+}
+
+.hero__analytics--report--title {
+  font-size: 1.125em;
 }
 
 .newItemEntry {
