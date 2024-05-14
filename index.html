@@ -17,134 +17,131 @@
 
         <span class="blendIn"> Miles Mosweu </span>
       </h1> -->
+      <div class="main__container">
+        <section class="hero">
+          <section class="hero__section hero__profile">
+            <div class="hero__button--container">
+              <button
+                id="showList"
+                class="button hero__button"
+                title="Show list"
+                aria-label="Show list"
+              >
+                <span class="material-symbols-outlined"> chevron_left </span>
+              </button>
+            </div>
 
-      <section class="hero">
-        <section class="hero__section hero__profile">
-          <div class="hero__button--container">
-            <button
-              id="showList"
-              class="button hero__button"
-              title="Show list"
-              aria-label="Show list"
-            >
-              <span class="material-symbols-outlined"> chevron_left </span>
-            </button>
-          </div>
+            <div class="hero__image--container">
+              <img
+                src="/src/images/Gorilla-soldier.jpeg"
+                alt="User image"
+                class="hero__image"
+              />
+            </div>
 
-          <div class="hero__image--container">
-            <img
-              src="/src/images/Gorilla-soldier.jpeg"
-              alt="User image"
-              class="hero__image"
-            />
-          </div>
+            <h1 class="hero__title">
+              <span> Gorilla </span>
+              <span> Super Soldier</span>
+            </h1>
 
-          <h1 class="hero__title">
-            <span> Gorilla </span>
-            <span> Super Soldier</span>
-          </h1>
+            <nav class="hero__nav">
+              <ul class="hero__nav--list">
+                <li class="hero__nav--item">
+                  <a
+                    href=""
+                    class="hero__nav--link"
+                    title="Tempelates"
+                    aria-label="Tempelates"
+                  >
+                    <span class="material-symbols-outlined"> Bookmark </span>
 
-          <nav class="hero__nav">
-            <ul class="hero__nav--list">
-              <li class="hero__nav--item">
-                <a
-                  href=""
-                  class="hero__nav--link"
-                  title="Tempelates"
-                  aria-label="Tempelates"
-                >
-                  <span class="material-symbols-outlined"> Bookmark </span>
+                    <span class="hero__nav--link--text"> Tempelates </span>
+                  </a>
+                </li>
 
-                  <span class="hero__nav--link--text"> Tempelates </span>
-                </a>
-              </li>
+                <li class="hero__nav--item">
+                  <a
+                    href=""
+                    class="hero__nav--link"
+                    title="Cartegories"
+                    aria-label="Cartegories"
+                  >
+                    <span class="material-symbols-outlined"> view_cozy </span>
 
-              <li class="hero__nav--item">
-                <a
-                  href=""
-                  class="hero__nav--link"
-                  title="Cartegories"
-                  aria-label="Cartegories"
-                >
-                  <span class="material-symbols-outlined"> view_cozy </span>
+                    <span class="hero__nav--link--text"> Cartegories </span>
+                  </a>
+                </li>
 
-                  <span class="hero__nav--link--text"> Cartegories </span>
-                </a>
-              </li>
+                <li class="hero__nav--item">
+                  <a
+                    href=""
+                    class="hero__nav--link"
+                    title="Analytics"
+                    aria-label="Analytics"
+                  >
+                    <span class="material-symbols-outlined"> donut_large </span>
 
-              <li class="hero__nav--item">
-                <a
-                  href=""
-                  class="hero__nav--link"
-                  title="Analytics"
-                  aria-label="Analytics"
-                >
-                  <span class="material-symbols-outlined"> donut_large </span>
+                    <span class="hero__nav--link--text"> Analytics </span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </section>
 
-                  <span class="hero__nav--link--text"> Analytics </span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <section class="hero__section hero__analytics">
+            <div class="hero__analytics--chart">
+              <span class="material-symbols-outlined"> earthquake </span>
+            </div>
+
+            <div class="hero__analytics--report">
+              <p class="hero__analytics--report--text">Good</p>
+
+              <h2 class="hero__analytics--report--title">Consistency</h2>
+            </div>
+          </section>
         </section>
 
-        <section class="hero__section hero__analytics">
-          <div class="hero__analytics--chart">
-            <span class="material-symbols-outlined"> earthquake </span>
-          </div>
+        <section class="app">
+          <section class="newItemEntry">
+            <h2 class="offscreen">New Item Entry</h2>
+            <form class="newItemEntry__form" id="itemEntryForm">
+              <label for="newItem" class="offscreen"
+                >Enter a new to do item</label
+              >
+              <input
+                class="newItemEntry__input"
+                id="newItem"
+                type="text"
+                maxlength="40"
+                autocomplete="off"
+                placeholder="Add item"
+              />
+              <button
+                id="addItem"
+                class="button newItemEntry__button"
+                title="Add new item"
+                aria-label="Add new item to list"
+              >
+                +
+              </button>
+            </form>
+          </section>
 
-          <div class="hero__analytics--report">
-            <p class="hero__analytics--report--text">
-              Good
-            </p>
-
-            <h2 class="hero__analytics--report--title">
-              Consistency
-            </h2>
-        </section>
-      </section>
-
-      <section class="app">
-        <section class="newItemEntry">
-          <h2 class="offscreen">New Item Entry</h2>
-          <form class="newItemEntry__form" id="itemEntryForm">
-            <label for="newItem" class="offscreen"
-              >Enter a new to do item</label
-            >
-            <input
-              class="newItemEntry__input"
-              id="newItem"
-              type="text"
-              maxlength="40"
-              autocomplete="off"
-              placeholder="Add item"
-            />
-            <button
-              id="addItem"
-              class="button newItemEntry__button"
-              title="Add new item"
-              aria-label="Add new item to list"
-            >
-              +
-            </button>
-          </form>
-        </section>
-
-        <section class="listContainer">
-          <header class="listTitle">
-            <h2 id="listName">List</h2>
-            <button
-              id="clearItemsButton"
-              class="button listTitle__button"
-              title="Clear the list"
-              aria-label="Remove all items from the list"
-            >
-              Clear
-            </button>
-          </header>
-          <hr />
-          <ul id="listItems">
-            <!-- <li class="item">
+          <section class="listContainer">
+            <header class="listTitle">
+              <h2 id="listName">List</h2>
+              <button
+                id="clearItemsButton"
+                class="button listTitle__button"
+                title="Clear the list"
+                aria-label="Remove all items from the list"
+              >
+                Clear
+              </button>
+            </header>
+            <hr />
+            <ul id="listItems">
+              <!-- <li class="item">
                       <input type="checkbox" id="1">
                       <label for="1">eat</label>
                       <button class="button">X</button>
@@ -159,9 +156,10 @@
                       <label for="3">code</label>
                       <button class="button">X</button>
                   </li> -->
-          </ul>
+            </ul>
+          </section>
         </section>
-      </section>
+      </div>
     </main>
   </body>
   <script type="module" src="/src/main.ts"></script>

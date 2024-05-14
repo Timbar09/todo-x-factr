@@ -30,11 +30,6 @@ body {
   background-color: var(--bg-300);
 }
 
-section {
-  border-radius: 2rem;
-  padding: 0.5rem;
-}
-
 h1,
 h2,
 h3,
@@ -62,11 +57,16 @@ a {
 }
 
 .main {
-  height: 100vh;
-  max-width: 25em;
+  max-width: 23em;
   margin: 0 auto;
+}
+
+.main__container {
   padding: 2rem 0;
-  outline: solid 0.25em var(--primary-100);
+  position: relative;
+  height: 100vh;
+  border-radius: 2rem;
+  overflow: hidden;
 }
 
 .hero {
@@ -75,6 +75,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: inherit;
   background-color: var(--bg-100);
 }
 
@@ -171,6 +172,27 @@ a {
 
 .hero__analytics--report--title {
   font-size: 1.125em;
+}
+
+.app {
+  opacity: 0.85;
+  position: absolute;
+  /* inset: 2rem auto 2rem 0; */
+  inset: 2rem auto 2rem 70%;
+  scale: 0.85;
+  width: 100%;
+  background-color: var(--bg-200);
+  border-radius: inherit;
+  transition: inset 300ms ease-in-out, scale 300ms 100ms ease-in-out;
+}
+
+.app:hover {
+  inset: 2rem auto 2rem 0;
+  scale: 1;
+}
+
+.app.show {
+  inset: 2rem 0;
 }
 
 .newItemEntry {
