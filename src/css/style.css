@@ -79,6 +79,12 @@ a {
   color: inherit;
 }
 
+.section__title {
+  margin: 1em 0;
+  font-size: 1.75em;
+  font-weight: 700;
+}
+
 .main {
   padding: 2rem 0;
   height: 100vh;
@@ -137,12 +143,6 @@ a {
   object-fit: cover;
   border-radius: inherit;
   border: solid 0.215em var(--bg-100);
-}
-
-.hero__title {
-  margin: 1em 0;
-  font-size: 1.75em;
-  font-weight: 700;
 }
 
 .hero__title span:last-child {
@@ -209,9 +209,93 @@ a {
 }
 
 .app__header {
-  padding-bottom: 2rem;
   display: flex;
   justify-content: space-between;
+}
+
+.app__category {
+  margin-bottom: 1rem;
+}
+
+.app__category--list {
+  display: flex;
+  gap: 1rem;
+}
+
+.app__category--title {
+  margin: 0 0 0.5em;
+  font-size: 0.9em;
+  font-weight: normal;
+  color: var(--text-200);
+  text-transform: uppercase;
+}
+
+.app__category--item {
+  all: unset;
+  padding: 1em;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  width: 7em;
+  background-color: var(--bg-100);
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
+}
+
+.app__category--item * {
+  margin: 0;
+  line-height: 1;
+}
+
+.app__category--item__count {
+  font-size: 0.75em;
+}
+
+.app__category--item__progresBar {
+  position: relative;
+  height: 0.175em;
+  border-radius: 5em;
+  background-color: var(--text-200);
+}
+
+.app__category--item__progresBar--fill {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.app__category--item__progresBar--fill::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.175em;
+  height: 200%;
+  border-radius: inherit;
+  background-color: var(--primary-100);
+}
+
+.app__category--list li:first-child .app__category--item__progresBar--fill {
+  width: 71%;
+  background-color: var(--primary-100);
+}
+
+.app__category--list
+  li:first-child
+  .app__category--item__progresBar--fill::before {
+  background-color: var(--primary-100);
+}
+
+.app__category--list li:last-child .app__category--item__progresBar--fill {
+  width: 29%;
+  background-color: var(--primary-200);
+}
+
+.app__category--list
+  li:last-child
+  .app__category--item__progresBar--fill::before {
+  background-color: var(--primary-200);
 }
 
 .newItemEntry {
