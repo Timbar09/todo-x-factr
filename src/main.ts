@@ -7,7 +7,15 @@ import "./css/style.css";
 const showListButton = document.getElementById("showList") as HTMLButtonElement;
 const hideListButton = document.getElementById("hideList") as HTMLButtonElement;
 
-const toggleList = (): void => {
+const showList = (): void => {
+  const list = document.getElementById("appList");
+
+  if (!list) return;
+
+  list.classList.add("show");
+};
+
+const hideList = (): void => {
   const list = document.getElementById("appList");
 
   if (!list) return;
@@ -16,11 +24,11 @@ const toggleList = (): void => {
 };
 
 showListButton.addEventListener("click", () => {
-  toggleList();
+  showList();
 });
 
 hideListButton.addEventListener("click", () => {
-  toggleList();
+  hideList();
 });
 
 const initApp = (): void => {
