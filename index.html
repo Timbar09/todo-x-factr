@@ -129,7 +129,9 @@
             <h2 class="app__title section__title">What's up, Gorilla?</h2>
 
             <div class="app__category">
-              <h3 class="app__category--title">Categories</h3>
+              <div class="section__subTitle--container">
+                <h3 class="section__subTitle">Categories</h3>
+              </div>
 
               <ul class="app__category--list">
                 <li>
@@ -166,60 +168,61 @@
               </ul>
             </div>
 
-            <h2 class="offscreen">New Item Entry</h2>
-            <form class="newItemEntry__form" id="itemEntryForm">
-              <label for="newItem" class="offscreen"
-                >Enter a new to do item</label
-              >
-              <input
-                class="newItemEntry__input"
-                id="newItem"
-                type="text"
-                maxlength="40"
-                autocomplete="off"
-                placeholder="Add item"
-              />
-              <button
-                id="addItem"
-                class="button newItemEntry__button"
-                title="Add new item"
-                aria-label="Add new item to list"
-              >
-                +
-              </button>
-            </form>
-          </section>
+            <div class="app__task">
+              <header class="app__task--header">
+                <h3 class="section__subTitle">Today's tasks</h3>
 
-          <section class="listContainer">
-            <header class="listTitle">
-              <h2 id="listName">List</h2>
-              <button
-                id="clearItemsButton"
-                class="button listTitle__button"
-                title="Clear the list"
-                aria-label="Remove all items from the list"
-              >
-                Clear
-              </button>
-            </header>
-            <hr />
-            <ul id="listItems">
-              <!-- <li class="item">
-                      <input type="checkbox" id="1">
-                      <label for="1">eat</label>
-                      <button class="button">X</button>
-                  </li>
-                  <li class="item">
-                      <input type="checkbox" id="2">
-                      <label for="2">sleep</label>
-                      <button class="button">X</button>
-                  </li>
-                  <li class="item">
-                      <input type="checkbox" id="3">
-                      <label for="3">code</label>
-                      <button class="button">X</button>
-                  </li> -->
-            </ul>
+                <button
+                  id="clearItemsButton"
+                  class="app__task--clear"
+                  title="Clear the list"
+                  aria-label="Remove all items from the list"
+                >
+                  Clear
+                </button>
+              </header>
+
+              <form class="app__task--entry" id="itemEntryForm">
+                <label for="newItem" class="offscreen"
+                  >Enter a new to do item</label
+                >
+                <input
+                  class="app__task--entry--input"
+                  id="newItem"
+                  type="text"
+                  maxlength="40"
+                  autocomplete="off"
+                  placeholder="Add a new item to the list"
+                />
+
+                <button
+                  id="addItem"
+                  class="app__task--entry--button"
+                  title="Add new item"
+                  aria-label="Add new item to list"
+                >
+                  <span class="material-symbols-outlined"> add </span>
+                </button>
+              </form>
+
+              <ul id="listItems" class="app__task--list">
+                <!-- <li class="item">
+                        <input type="checkbox" id="1">
+                        <label for="1">eat</label>
+                        <button class="button">X</button>
+                    </li>
+                    <li class="item">
+                        <input type="checkbox" id="2">
+                        <label for="2">sleep</label>
+                        <button class="button">X</button>
+                    </li>
+                    <li class="item">
+                        <input type="checkbox" id="3">
+                        <label for="3">code</label>
+                        <button class="button">X</button>
+                    </li> -->
+              </ul>
+            </div>
           </section>
         </section>
       </div>

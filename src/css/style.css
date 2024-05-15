@@ -2,10 +2,10 @@
 
 :root {
   --primary-100: #e805fe; /* color name: electric purple */
-  --primary-200: #3576dc; /* color name: royal blue */
+  --primary-200: #0e62ea; /* color name: royal blue */
 
   --bg-100: #051956; /* color name: oxford blue */
-  --bg-200: #3451a1; /* color name: royal blue */
+  --bg-200: #3451a1; /* color name: blue */
   --bg-300: #97b5fe; /* color name: light steel blue */
 
   --text-100: #e2fdff; /* color name: baby powder */
@@ -83,6 +83,17 @@ a {
   margin: 1em 0;
   font-size: 1.75em;
   font-weight: 700;
+}
+
+.section__subTitle--container {
+  margin: 0 0 0.5em;
+}
+
+.section__subTitle {
+  font-size: 0.9em;
+  font-weight: normal;
+  color: var(--text-200);
+  text-transform: uppercase;
 }
 
 .main {
@@ -195,8 +206,8 @@ a {
 
 .app {
   position: absolute;
-  inset: 0 auto 0 0; /* left should be 70% */
-  /* scale: 0.85; */
+  inset: 0 auto 0 70%; /* left should be 70% */
+  scale: 0.85;
   width: 100%;
   background-color: var(--bg-200);
   border-radius: inherit;
@@ -220,14 +231,6 @@ a {
 .app__category--list {
   display: flex;
   gap: 1rem;
-}
-
-.app__category--title {
-  margin: 0 0 0.5em;
-  font-size: 0.9em;
-  font-weight: normal;
-  color: var(--text-200);
-  text-transform: uppercase;
 }
 
 .app__category--item {
@@ -296,6 +299,59 @@ a {
   li:last-child
   .app__category--item__progresBar--fill::before {
   background-color: var(--primary-200);
+}
+
+.app__task--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.app__task--clear {
+  all: unset;
+  cursor: pointer;
+  color: var(--text-100);
+  font-size: 0.75em;
+  padding: 0.125em 0.5em;
+  border-radius: 0.5em;
+  background-color: var(--primary-200);
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
+  transition: opacity 100ms ease-in-out;
+}
+
+.app__task--clear:hover {
+  opacity: 0.75;
+}
+
+.app__task--entry {
+  position: relative;
+}
+
+.app__task--entry--input {
+  width: 100%;
+  padding: 0.5em;
+  border: 2px solid var(--text-200);
+  border-radius: 10px;
+  color: var(--text-200);
+  background-color: var(--bg-100);
+}
+
+.app__task--entry--button {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  bottom: 0.25em;
+  padding: 0 0.35em;
+  border-radius: 0.45em;
+  display: grid;
+  place-items: center;
+  background-color: var(--primary-100);
+  color: var(--text-100);
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
+  transition: background-color 100ms ease-in-out;
 }
 
 .newItemEntry {
