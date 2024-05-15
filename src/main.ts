@@ -5,7 +5,9 @@ import ListTemplate from "./templates/ListTemplate";
 import "./css/style.css";
 
 const showListButton = document.getElementById("showList") as HTMLButtonElement;
-const hideListButton = document.getElementById("hideList") as HTMLButtonElement;
+const toggleListButton = document.getElementById(
+  "toggleList"
+) as HTMLButtonElement;
 
 const showList = (): void => {
   const list = document.getElementById("appList");
@@ -15,7 +17,7 @@ const showList = (): void => {
   list.classList.add("show");
 };
 
-const hideList = (): void => {
+const toggleList = (): void => {
   const list = document.getElementById("appList");
 
   if (!list) return;
@@ -27,8 +29,8 @@ showListButton.addEventListener("click", () => {
   showList();
 });
 
-hideListButton.addEventListener("click", () => {
-  hideList();
+toggleListButton.addEventListener("click", () => {
+  toggleList();
 });
 
 const initApp = (): void => {
