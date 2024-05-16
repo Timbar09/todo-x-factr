@@ -90,19 +90,23 @@
 
           <section class="hero__section hero__analytics">
             <div class="hero__analytics--chart">
-              <span class="material-symbols-outlined"> earthquake </span>
+              <img
+                src="/src/images/chart.png"
+                alt="Analytics chart"
+                class="hero__analytics--chart--image"
+              />
             </div>
 
             <div class="hero__analytics--report">
-              <h3 class="hero__analytics--report--title">Consistency</h3>
+              <h3 class="hero__analytics--report__title">Consistency</h3>
 
-              <p class="hero__analytics--report--text">Good</p>
+              <p class="hero__analytics--report__text">Good</p>
             </div>
           </section>
         </section>
 
         <section class="app" id="appList">
-          <section class="newItemEntry">
+          <div class="app__container">
             <div class="app__header">
               <div class="app__toggleList--container">
                 <button
@@ -206,24 +210,36 @@
               </form>
 
               <ul id="listItems" class="app__task--list">
-                <!-- <li class="item">
+                <!-- <li class="app__task--list__item">
+                      <div class="app__task--list__item--checkbox">
                         <input type="checkbox" id="1">
                         <label for="1">eat</label>
-                        <button class="button">X</button>
+                      </div>
+                        <button class="app__task--list__item--delete">
+                            <span class="material-symbols-outlined"> delete </span>
+                        </button>
                     </li>
-                    <li class="item">
+                    <li class="app__task--list__item">
+                      <div class="app__task--list__item--checkbox">
                         <input type="checkbox" id="2">
                         <label for="2">sleep</label>
-                        <button class="button">X</button>
+                      </div>
+                        <button class="app__task--list__item--delete">
+                            <span class="material-symbols-outlined"> delete </span>
+                        </button>
                     </li>
-                    <li class="item">
+                    <li class="app__task--list__item">
+                      <div class="app__task--list__item--checkbox">
                         <input type="checkbox" id="3">
                         <label for="3">code</label>
-                        <button class="button">X</button>
+                      </div>
+                        <button class="app__task--list__item--delete">
+                            <span class="material-symbols-outlined"> delete </span>
+                        </button>
                     </li> -->
               </ul>
             </div>
-          </section>
+          </div>
         </section>
       </div>
     </main>

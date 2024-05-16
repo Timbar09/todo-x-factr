@@ -24,14 +24,16 @@ export default class ListTemplate implements DOMList {
 
     fullList.list.forEach((item) => {
       const li = document.createElement("li") as HTMLLIElement;
-      li.className = "item";
+      li.className = "app__task--list__item";
+      const div = document.createElement("div") as HTMLDivElement;
+      div.className = "app__task--list__item--checkbox";
 
       const checkbox = document.createElement("input") as HTMLInputElement;
       checkbox.type = "checkbox";
       checkbox.id = item.id;
       checkbox.tabIndex = 0;
       checkbox.checked = item.checked;
-      li.appendChild(checkbox);
+      div.appendChild(checkbox);
 
       checkbox.addEventListener("change", () => {
         item.checked = checkbox.checked;
@@ -41,11 +43,19 @@ export default class ListTemplate implements DOMList {
       const label = document.createElement("label") as HTMLLabelElement;
       label.htmlFor = item.id;
       label.textContent = item.item;
-      li.appendChild(label);
+      div.appendChild(label);
+      li.appendChild(div);
 
       const button = document.createElement("button") as HTMLButtonElement;
-      button.className = "button";
-      button.textContent = "X";
+      button.className = "app__task--list__item--button";
+      button.tabIndex = 0;
+      button.ariaLabel = "Delete item";
+
+      const buttonIcon = document.createElement("span") as HTMLElement;
+      buttonIcon.className = "material-symbols-outlined";
+      buttonIcon.textContent = "delete";
+      button.appendChild(buttonIcon);
+
       li.appendChild(button);
 
       button.addEventListener("click", () => {

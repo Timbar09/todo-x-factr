@@ -182,31 +182,32 @@ a {
   color: var(--primary-100);
 }
 
-.hero__analytics--chart span {
-  transform: scaleX(8) scaleY(3.5);
-  color: var(--primary-100);
-  margin: 1em 0 1.5em 3em;
+.hero__analytics--chart {
+  padding: 1em 0;
 }
 
-.hero__analytics--report--title {
+.hero__analytics--chart img {
+  width: 10em;
+}
+
+.hero__analytics--report {
   display: flex;
   flex-direction: column;
 }
 
-.hero__analytics--report--text {
+.hero__analytics--report__text {
   margin: 0;
   font-size: 0.85em;
-  order: 1;
 }
 
-.hero__analytics--report--title {
+.hero__analytics--report__title {
   font-size: 1.125em;
-  order: 2;
+  order: 1;
 }
 
 .app {
   position: absolute;
-  inset: 0 auto 0 70%; /* left should be 70% */
+  inset: 0 auto 0 70%;
   scale: 0.85;
   width: 100%;
   background-color: var(--bg-200);
@@ -326,15 +327,21 @@ a {
 
 .app__task--entry {
   position: relative;
+  margin-bottom: 1em;
 }
 
 .app__task--entry--input {
   width: 100%;
-  padding: 0.5em;
+  padding: 0.5em 1em;
   border: 2px solid var(--text-200);
-  border-radius: 10px;
+  border-radius: 5em;
   color: var(--text-200);
   background-color: var(--bg-100);
+}
+
+.app__task--entry--input:focus {
+  outline: none;
+  border-color: var(--primary-100);
 }
 
 .app__task--entry--button {
@@ -344,87 +351,45 @@ a {
   top: 0.25em;
   right: 0.25em;
   bottom: 0.25em;
-  padding: 0 0.35em;
-  border-radius: 0.45em;
+  padding: 0 0.385em;
+  border-radius: 5em;
   display: grid;
   place-items: center;
   background-color: var(--primary-100);
   color: var(--text-100);
-  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
-  transition: background-color 100ms ease-in-out;
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+  transition: opacity 100ms ease-in-out;
 }
 
-.newItemEntry {
-  position: sticky;
-  top: 0;
-  margin-bottom: 1rem;
+.app__task--entry--button:hover {
+  opacity: 0.75;
 }
 
-.newItemEntry__form {
+.app__task--list {
+  padding: 0 1em;
   display: flex;
-  gap: 0.25rem;
-  font-size: 1.5rem;
+  flex-direction: column;
+  height: 17.5em;
+  gap: 0.5em;
+  overflow-y: auto;
 }
 
-.newItemEntry__input {
-  width: calc(100% - (0.25rem + 48px));
-  flex-grow: 1;
-  border: 2px solid whitesmoke;
-  border-radius: 10px;
-  padding: 0.5em;
-}
-
-.newItemEntry__button {
-  background-color: transparent;
-  color: whitesmoke;
-  border: 3px dashed whitesmoke;
-  padding: 0.75em;
-}
-
-.newItemEntry__button:hover,
-.newItemEntry__button:focus {
-  color: limegreen;
-}
-
-.listContainer {
-  font-size: 1.5rem;
-  flex-grow: 1;
-  display: flex;
-  flex-flow: column;
-  gap: 1rem;
-}
-
-.listTitle {
+.app__task--list__item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
+  padding: 0.75em 1em;
+  gap: 1em;
+  color: var(--text-100);
+  background-color: var(--bg-100);
+  border-radius: 1em;
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
 }
 
-.listTitle__button {
-  background-color: transparent;
-  color: whitesmoke;
-  padding: 0.25em;
-}
-
-.listItems {
-  flex-grow: 1;
-  display: flex;
-  flex-flow: column nowrap;
-  list-style-type: none;
-}
-
-.item {
+.app__task--list__item--checkbox {
   display: flex;
   align-items: center;
-  padding-top: 1em;
   gap: 1em;
-}
-
-.item > input[type="checkbox"] {
-  text-align: center;
-  min-width: 2.5rem;
-  min-height: 2.5rem;
-  cursor: pointer;
 }
 
 .item > input[type="checkbox"]:checked + label {
