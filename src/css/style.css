@@ -366,24 +366,29 @@ a {
 }
 
 .app__task--list {
-  padding: 0 1em;
+  padding: 0.5em 1em;
   display: flex;
   flex-direction: column;
-  height: 17.5em;
+  height: 17em;
   gap: 0.5em;
   overflow-y: auto;
 }
 
 .app__task--list__item {
+  --transition-time: 200ms;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.75em 1em;
   gap: 1em;
-  color: var(--text-100);
   background-color: var(--bg-100);
   border-radius: 1em;
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+}
+
+.app__task--list__item:focus-within {
+  outline: 0.125em solid var(--primary-100);
 }
 
 .app__task--list__item--checkbox {
@@ -392,8 +397,51 @@ a {
   gap: 1em;
 }
 
-.item > input[type="checkbox"]:checked + label {
-  text-decoration: line-through;
+.app__task--list__item--checkbox > input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 1.25em;
+  height: 1.25em;
+  outline: 0.195em solid;
+  border-radius: 50%;
+  background-color: transparent;
+  rotate: -45deg;
+  transition: outline var(--transition-time) ease-in-out,
+    background-color var(--transition-time) ease-in-out;
+}
+
+.app__task--list__item--checkbox > input[type="checkbox"]::before,
+.app__task--list__item--checkbox > input[type="checkbox"]::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 1em;
+  transition: background-color var(--transition-time) ease-in-out;
+}
+
+.app__task--list__item--checkbox > input[type="checkbox"]::before {
+  width: 0.215em;
+  height: 0.5em;
+  bottom: 35%;
+  left: 22%;
+}
+
+.app__task--list__item--checkbox > input[type="checkbox"]::after {
+  width: 0.75em;
+  height: 0.215em;
+  bottom: 35%;
+  left: 22%;
+}
+
+.app__task--list__item--checkbox > input[type="checkbox"]:checked,
+.app__task--list__item--checkbox > input[type="checkbox"]:checked {
+  background-color: var(--text-200);
+  outline-width: 0;
+}
+
+.app__task--list__item--checkbox > input[type="checkbox"]:checked::before,
+.app__task--list__item--checkbox > input[type="checkbox"]:checked::after {
+  background-color: var(--text-100);
 }
 
 .item > label {
