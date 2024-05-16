@@ -444,6 +444,29 @@ a {
   background-color: var(--text-100);
 }
 
+.app__task--list__item--checkbox input[type="checkbox"] + label {
+  position: relative;
+}
+
+.app__task--list__item--checkbox input[type="checkbox"] + label::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: -5%;
+  width: 0;
+  height: 0.115em;
+  border-radius: 1em;
+  background-color: var(--text-200);
+  transition: width 200ms ease-in-out;
+}
+
+.app__task--list__item--checkbox
+  input[type="checkbox"]:checked
+  + label::before {
+  width: 110%;
+}
+
 .item > label {
   flex-grow: 1;
   word-break: break-all;
