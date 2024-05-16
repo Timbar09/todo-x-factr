@@ -46,6 +46,9 @@ export default class ListTemplate implements DOMList {
       div.appendChild(label);
       li.appendChild(div);
 
+      const buttonContainer = document.createElement("div") as HTMLDivElement;
+      buttonContainer.className = "app__task--list__item--button-container";
+
       const button = document.createElement("button") as HTMLButtonElement;
       button.className = "app__task--list__item--button";
       button.tabIndex = 0;
@@ -55,8 +58,9 @@ export default class ListTemplate implements DOMList {
       buttonIcon.className = "material-symbols-outlined";
       buttonIcon.textContent = "delete";
       button.appendChild(buttonIcon);
+      buttonContainer.appendChild(button);
 
-      li.appendChild(button);
+      li.appendChild(buttonContainer);
 
       button.addEventListener("click", () => {
         fullList.removeItem(item.id);

@@ -391,6 +391,11 @@ a {
   outline: 0.125em solid var(--primary-100);
 }
 
+.app__task--list__item:hover .app__task--list__item--button,
+.app__task--list__item:focus-within .app__task--list__item--button {
+  display: grid;
+}
+
 .app__task--list__item--checkbox {
   display: flex;
   align-items: center;
@@ -446,6 +451,7 @@ a {
 
 .app__task--list__item--checkbox input[type="checkbox"] + label {
   position: relative;
+  color: var(--text-100);
 }
 
 .app__task--list__item--checkbox input[type="checkbox"] + label::before {
@@ -461,10 +467,34 @@ a {
   transition: width 200ms ease-in-out;
 }
 
+.app__task--list__item--checkbox input[type="checkbox"]:checked + label {
+  color: var(--text-200);
+}
+
 .app__task--list__item--checkbox
   input[type="checkbox"]:checked
   + label::before {
   width: 110%;
+}
+
+.app__task--list__item--button {
+  all: unset;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  display: none;
+  transition: color 100ms ease-in-out;
+}
+
+.app__task--list__item--button span {
+  scale: 0.95;
+}
+
+.app__task--list__item--button:hover {
+  color: #ff000084;
 }
 
 .item > label {
