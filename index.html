@@ -107,7 +107,7 @@
 
         <section class="app" id="appList">
           <div class="app__container">
-            <div class="app__header">
+            <div class="app__header padding">
               <div class="app__toggleList--container">
                 <button
                   id="toggleList"
@@ -130,9 +130,11 @@
               </div>
             </div>
 
-            <h2 class="app__title section__title">What's up, Gorilla?</h2>
+            <h2 class="app__title section__title padding-x">
+              What's up, Gorilla?
+            </h2>
 
-            <div class="app__category">
+            <div class="app__category padding-x">
               <div class="section__subTitle--container">
                 <h3 class="section__subTitle">Categories</h3>
               </div>
@@ -173,17 +175,40 @@
             </div>
 
             <div class="app__task">
-              <header class="app__task--header">
+              <header class="app__task--header padding-x">
                 <h3 class="section__subTitle">Today's tasks</h3>
 
-                <button
-                  id="clearItemsButton"
-                  class="app__task--clear"
-                  title="Clear the list"
-                  aria-label="Remove all items from the list"
-                >
-                  Clear
-                </button>
+                <div class="app__task--menu">
+                  <button
+                    id="taskMenuButton"
+                    class="button app__task--menu__button"
+                    aria-label="Menu"
+                  >
+                    <span class="material-symbols-outlined"> more_vert </span>
+                  </button>
+
+                  <ul class="app__task--menu__list" id="taskMenuList">
+                    <li class="app__task--menu__item">
+                      <button
+                        id="clearItemsButton"
+                        class="app__task--menu__clear app__task--menu__option"
+                        title="Clear the list"
+                        aria-label="Remove all items from the list"
+                      >
+                        Clear all
+                      </button>
+                    </li>
+
+                    <li class="app__task--menu__item">
+                      <button
+                        id="deleteCheckedItems"
+                        class="app__task--menu__delete app__task--menu__option"
+                        title="Delete checked items"
+                        aria-label="Remove all checked items from the list"
+                      >
+                        Delete checked
+                      </button>
+                </div>
               </header>
 
               <form class="app__task--entry" id="itemEntryForm">
@@ -209,7 +234,7 @@
                 </button>
               </form>
 
-              <ul id="listItems" class="app__task--list">
+              <ul id="listItems" class="app__task--list padding-x">
                 <!-- <li class="app__task--list__item">
                       <div class="app__task--list__item--checkbox">
                         <input type="checkbox" id="1">

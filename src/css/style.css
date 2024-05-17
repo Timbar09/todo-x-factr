@@ -9,17 +9,22 @@
   --bg-300: #97b5fe; /* color name: light steel blue */
 
   --text-100: #e2fdff; /* color name: baby powder */
-  --text-200: #5469a2; /* color name: slate blue */
+  --text-200: rgba(226, 253, 255, 0.4);
+  --text-300: rgba(226, 253, 255, 0.2);
+  --text-400: rgba(226, 253, 255, 0.1);
 }
 
 html {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 body {
@@ -67,7 +72,7 @@ button {
 .button:hover,
 .button:focus {
   color: var(--text-100);
-  background-color: var(--text-200);
+  background-color: var(--text-400);
 }
 
 ul {
@@ -77,6 +82,15 @@ ul {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.padding {
+  padding: 2rem;
+}
+
+.padding-x {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .section__title {
@@ -309,16 +323,51 @@ a {
   margin-bottom: 1em;
 }
 
-.app__task--clear {
-  all: unset;
+.app__task--menu {
+  position: relative;
+}
+
+.app__task--menu button {
   cursor: pointer;
-  color: var(--text-100);
-  font-size: 0.75em;
-  padding: 0.125em 0.5em;
+  box-sizing: border-box;
+}
+
+.app__task--menu__list {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  top: 2em;
+  right: -5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125em;
+  padding: 0.25em;
+  width: max-content;
   border-radius: 0.5em;
-  background-color: var(--primary-200);
-  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
-  transition: opacity 100ms ease-in-out;
+  background-color: var(--bg-100);
+  z-index: 1;
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+  transition: opacity 150ms ease-in-out, top 150ms ease-in-out;
+}
+
+.app__task--menu__list.open {
+  right: 0;
+  visibility: visible;
+  opacity: 1;
+  top: 2.5em;
+}
+
+.app__task--menu__option {
+  padding: 0.25em;
+  font-size: 0.85em;
+  color: var(--text-100);
+  border-radius: 0.25em;
+  width: 100%;
+  transition: background-color 100ms ease-in-out;
+}
+
+.app__task--menu__option:hover {
+  background-color: var(--text-400);
 }
 
 .app__task--clear:hover {
@@ -327,7 +376,7 @@ a {
 
 .app__task--entry {
   position: relative;
-  margin-bottom: 1em;
+  margin: 0 2em 1em;
 }
 
 .app__task--entry--input {
@@ -366,10 +415,11 @@ a {
 }
 
 .app__task--list {
-  padding: 0.5em 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   display: flex;
   flex-direction: column;
-  height: 17em;
+  height: 14em;
   gap: 0.5em;
   overflow-y: auto;
 }
@@ -380,7 +430,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75em 1em;
+  padding: 1em;
   gap: 1em;
   background-color: var(--bg-100);
   border-radius: 1em;
@@ -442,6 +492,7 @@ a {
 .app__task--list__item--checkbox > input[type="checkbox"]:checked {
   background-color: var(--text-200);
   outline-width: 0;
+  opacity: 0.5;
 }
 
 .app__task--list__item--checkbox > input[type="checkbox"]:checked::before,
@@ -495,23 +546,4 @@ a {
 
 .app__task--list__item--button:hover {
   color: #ff000084;
-}
-
-.item > label {
-  flex-grow: 1;
-  word-break: break-all;
-}
-
-.item > button:hover,
-.item > button:focus {
-  color: red;
-}
-
-@media (min-width: 768px) {
-  section {
-    padding: 1rem;
-  }
-  .newItemEntry__form {
-    gap: 0.5rem;
-  }
 }

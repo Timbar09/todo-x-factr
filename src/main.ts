@@ -1,7 +1,7 @@
 import FullList from "./model/FullList";
 import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
-import { addClass, toggleClass } from "./functions/Functions";
+import { addClass, toggleClass, removeClass } from "./functions/Functions";
 
 import "./css/style.css";
 
@@ -10,6 +10,15 @@ const toggleListButton = document.getElementById(
   "toggleList"
 ) as HTMLButtonElement;
 const taskList = document.getElementById("appList") as HTMLUListElement;
+const taskListMenuButton = document.getElementById(
+  "taskMenuButton"
+) as HTMLButtonElement;
+const taskListMenu = document.getElementById("taskMenuList") as HTMLDivElement;
+const taskListMenuItems = document.querySelectorAll(
+  ".app__task--menu__item"
+) as NodeListOf<HTMLLIElement>;
+
+console.log("taskListMenuItems", taskListMenuItems);
 
 showListButton.addEventListener("click", () => {
   addClass(taskList, "show");
@@ -17,6 +26,17 @@ showListButton.addEventListener("click", () => {
 
 toggleListButton.addEventListener("click", () => {
   toggleClass(taskList, "show");
+});
+
+taskListMenuButton.addEventListener("click", () => {
+  toggleClass(taskListMenu, "open");
+
+  taskListMenuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      console.log("clicked task list menu item");
+      removeClass(taskListMenu, "open");
+    });
+  });
 });
 
 const initApp = (): void => {
