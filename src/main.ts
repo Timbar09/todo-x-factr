@@ -1,6 +1,7 @@
 import FullList from "./model/FullList";
 import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
+import { addClass, toggleClass } from "./functions/Functions";
 
 import "./css/style.css";
 
@@ -8,29 +9,14 @@ const showListButton = document.getElementById("showList") as HTMLButtonElement;
 const toggleListButton = document.getElementById(
   "toggleList"
 ) as HTMLButtonElement;
-
-const showList = (): void => {
-  const list = document.getElementById("appList");
-
-  if (!list) return;
-
-  list.classList.add("show");
-};
-
-const toggleList = (): void => {
-  const list = document.getElementById("appList");
-
-  if (!list) return;
-
-  list.classList.toggle("show");
-};
+const taskList = document.getElementById("appList") as HTMLUListElement;
 
 showListButton.addEventListener("click", () => {
-  showList();
+  addClass(taskList, "show");
 });
 
 toggleListButton.addEventListener("click", () => {
-  toggleList();
+  toggleClass(taskList, "show");
 });
 
 const initApp = (): void => {
