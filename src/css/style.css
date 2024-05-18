@@ -136,7 +136,7 @@ a {
   position: relative;
   height: 100%;
   border-radius: 2rem;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .hero {
@@ -195,20 +195,42 @@ a {
   gap: 0.5em;
 }
 
-.hero__nav--link {
+.hero__nav--list button {
+  padding: 0.125em 0.5em 0.125em 0;
   display: flex;
   align-items: center;
   gap: 0.5em;
-  transition: color 100ms ease-in-out;
-  pointer-events: none; /* disable pointer events until functionality is added */
-}
-
-.hero__nav--link span:last-child {
   color: var(--text-100);
+  cursor: pointer;
+  transition: color 100ms ease-in-out;
 }
 
-.hero__nav--link:hover {
+.hero__nav--list button span:first-child {
+  color: var(--text-200);
+}
+
+.hero__nav--list button:hover {
   color: var(--primary);
+}
+
+.hero__nav--popup {
+  position: absolute;
+  inset: 0 auto 0 -75%;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.5em;
+  border-radius: inherit;
+  background-color: var(--bg-300);
+  box-shadow: var(--shadow);
+  z-index: 1;
+  scale: 0.85;
+  transition: inset 300ms ease-in-out;
+}
+
+.hero__nav--popup.open {
+  inset: 0 auto 0 0;
 }
 
 .hero__analytics--chart {
@@ -241,6 +263,7 @@ a {
   width: 100%;
   background-color: var(--bg-300);
   border-radius: inherit;
+  box-shadow: var(--shadow);
   transition: inset 300ms ease-in-out, scale 300ms 100ms ease-in-out;
 }
 

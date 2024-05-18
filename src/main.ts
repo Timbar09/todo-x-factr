@@ -1,7 +1,12 @@
 import FullList from "./model/FullList";
 import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
-import { addClass, toggleClass, removeClass } from "./functions/Functions";
+import {
+  addClass,
+  toggleClass,
+  removeClass,
+  selectThemeTemplate,
+} from "./functions/Functions";
 
 import "./css/style.css";
 
@@ -17,15 +22,24 @@ const taskListMenu = document.getElementById("taskMenuList") as HTMLDivElement;
 const taskListMenuItems = document.querySelectorAll(
   ".app__task--menu__item"
 ) as NodeListOf<HTMLLIElement>;
+const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
+const openHeroNavPopupButton = document.getElementById(
+  "openNavPopup"
+) as HTMLButtonElement;
+const closeHeroNavPopupButton = document.getElementById(
+  "closeHeroNavPopup"
+) as HTMLButtonElement;
 
 console.log("taskListMenuItems", taskListMenuItems);
 
 showListButton.addEventListener("click", () => {
   addClass(taskList, "show");
+  removeClass(heroNavPopup, "open");
 });
 
 toggleListButton.addEventListener("click", () => {
   toggleClass(taskList, "show");
+  removeClass(heroNavPopup, "open");
 });
 
 taskListMenuButton.addEventListener("click", () => {
@@ -38,6 +52,16 @@ taskListMenuButton.addEventListener("click", () => {
     });
   });
 });
+
+openHeroNavPopupButton.addEventListener("click", () => {
+  addClass(heroNavPopup, "open");
+});
+
+closeHeroNavPopupButton.addEventListener("click", () => {
+  removeClass(heroNavPopup, "open");
+});
+
+selectThemeTemplate("light");
 
 const initApp = (): void => {
   const fullList = FullList.instance;

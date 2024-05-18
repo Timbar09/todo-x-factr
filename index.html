@@ -42,42 +42,27 @@
             <nav class="hero__nav">
               <ul class="hero__nav--list">
                 <li class="hero__nav--item">
-                  <a
-                    href=""
-                    class="hero__nav--link"
-                    title="Tempelates"
-                    aria-label="Tempelates"
-                  >
+                  <button aria-label="Tempelates" id="openNavPopup">
                     <span class="material-symbols-outlined"> Bookmark </span>
 
-                    <span class="hero__nav--link--text"> Tempelates </span>
-                  </a>
+                    <span class="hero__nav--item--text"> Tempelates </span>
+                  </button>
                 </li>
 
                 <li class="hero__nav--item">
-                  <a
-                    href=""
-                    class="hero__nav--link"
-                    title="Cartegories"
-                    aria-label="Cartegories"
-                  >
+                  <button aria-label="Cartegories">
                     <span class="material-symbols-outlined"> view_cozy </span>
 
-                    <span class="hero__nav--link--text"> Cartegories </span>
-                  </a>
+                    <span class="hero__nav--item--text"> Cartegories </span>
+                  </button>
                 </li>
 
                 <li class="hero__nav--item">
-                  <a
-                    href=""
-                    class="hero__nav--link"
-                    title="Analytics"
-                    aria-label="Analytics"
-                  >
+                  <button aria-label="Analytics">
                     <span class="material-symbols-outlined"> donut_large </span>
 
-                    <span class="hero__nav--link--text"> Analytics </span>
-                  </a>
+                    <span class="hero__nav--item--text"> Analytics </span>
+                  </button>
                 </li>
               </ul>
             </nav>
@@ -98,6 +83,33 @@
               <p class="hero__analytics--report__text">Good</p>
             </div>
           </section>
+        </section>
+
+        <section class="hero__nav--popup" id="heroNavPopup">
+          <div class="hero__nav--popup__container">
+            <button
+              id="closeHeroNavPopup"
+              class="button hero__nav--popup__close"
+              title="Close"
+              aria-label="Close"
+            >
+              <span class="material-symbols-outlined"> close </span>
+            </button>
+
+            <ul class="hero__nav--templates__list">
+              <li class="hero__nav--templates__item" id="default">
+                <button class="hero__nav--templates__button">
+                  <span class="hero__nav--templates__text"> Dark </span>
+                </button>
+              </li>
+
+              <li class="hero__nav--templates__item" id="light">
+                <button class="hero__nav--templates__button">
+                  <span class="hero__nav--templates__text"> Light </span>
+                </button>
+              </li>
+            </ul>
+          </div>
         </section>
 
         <section class="app" id="appList">
