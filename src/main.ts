@@ -6,6 +6,7 @@ import {
   toggleClass,
   removeClass,
   selectThemeTemplate,
+  getThemeTemplate,
 } from "./functions/Functions";
 
 import "./css/style.css";
@@ -29,8 +30,9 @@ const openHeroNavPopupButton = document.getElementById(
 const closeHeroNavPopupButton = document.getElementById(
   "closeHeroNavPopup"
 ) as HTMLButtonElement;
-
-console.log("taskListMenuItems", taskListMenuItems);
+const templateOptions = document.querySelectorAll(
+  ".hero__nav--templates__button"
+) as NodeListOf<HTMLButtonElement>;
 
 showListButton.addEventListener("click", () => {
   addClass(taskList, "show");
@@ -61,7 +63,19 @@ closeHeroNavPopupButton.addEventListener("click", () => {
   removeClass(heroNavPopup, "open");
 });
 
-selectThemeTemplate("light");
+if (templateOptions.length) {
+  templateOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      const template = option.getAttribute("data-template");
+
+      if (!template) return;
+
+      selectThemeTemplate(template);
+    });
+  });
+} else {
+  console.log("No template options found");
+}
 
 const initApp = (): void => {
   const fullList = FullList.instance;
@@ -104,4 +118,12 @@ const initApp = (): void => {
   listTemplate.render(fullList);
 };
 
-document.addEventListener("DOMContentLoaded", initApp);
+document.addEventListener("DOMContentLoaded", () => {
+  const themeTemplate = getThemeTemplate();
+
+  if (themeTemplate) {
+    selectThemeTemplate(themeTemplate);
+  }
+
+  initApp();
+});

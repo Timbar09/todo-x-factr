@@ -20,7 +20,7 @@ html {
 
 body {
   /* DEFAULT COLOR VARIABLES ( DARK TEMPLATE ) */
-  --bg-100: #959cae; /* dark-blue */
+  --bg-100: #08153c; /* dark-blue */
   --bg-200: #051956; /* oxford-blue */
   --bg-300: #3451a1; /* blue */
 
@@ -136,7 +136,7 @@ a {
   position: relative;
   height: 100%;
   border-radius: 2rem;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .hero {

@@ -34,23 +34,17 @@ export const toggleClass = (element: HTMLElement, className: string): void => {
   element.classList.toggle(className);
 };
 
-export const selectThemeTemplate = (theme: string): void => {
+export const selectThemeTemplate = (template: string): void => {
   const body = document.body;
-  const currentTheme = body.getAttribute("data-template");
 
-  // Get the current theme from localStorage if it exists
-  const savedTheme = localStorage.getItem("theme");
+  body.setAttribute("data-template", template);
+  localStorage.setItem("themeTemplate", template);
+};
 
-  if (!savedTheme) {
-    body.setAttribute("data-template", theme);
-    localStorage.setItem("theme", theme);
-    return;
-  }
+export const getThemeTemplate = (): string => {
+  const template = localStorage.getItem("themeTemplate");
 
-  // Parse the saved theme to remove extra quotes
-  const parsedTheme = JSON.parse(savedTheme);
+  if (!template) return "default";
 
-  if (currentTheme === parsedTheme) return;
-
-  body.setAttribute("data-template", parsedTheme);
+  return template;
 };
