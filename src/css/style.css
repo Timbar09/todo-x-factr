@@ -1,33 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap");
 
 :root {
-  /* COLORS */
-  --electric-purple: #e805fe;
-
-  --dark-blue: #030e2f;
-  --oxford-blue: #051956;
-  --royal-blue: #0e62ea;
-  --blue: #3451a1;
-  --light-steel-blue: #97b5fe;
-
-  --baby-powder: #e2fdff;
-  --baby-powder-40: rgba(226, 253, 255, 0.4);
-  --baby-powder-20: rgba(226, 253, 255, 0.2);
-  --baby-powder-10: rgba(226, 253, 255, 0.1);
-
-  /* DEFAULT COLOR VARIABLES */
-  --primary: var(--electric-purple);
-  --variant: var(--royal-blue);
-
-  --bg-100: var(--dark-blue);
-  --bg-200: var(--oxford-blue);
-  --bg-300: var(--blue);
-  --bg-400: var(--light-steel-blue);
-
-  --text-100: var(--baby-powder);
-  --text-200: var(--baby-powder-40);
-  --text-300: var(--baby-powder-20);
-  --text-400: var(--baby-powder-10);
+  --primary: #e805fe; /* electric-purple */
+  --variant: #0e62ea; /* royal-blue */
 }
 
 html {
@@ -44,12 +19,36 @@ html {
 }
 
 body {
+  /* DEFAULT COLOR VARIABLES ( DARK TEMPLATE ) */
+  --bg-100: #959cae; /* dark-blue */
+  --bg-200: #051956; /* oxford-blue */
+  --bg-300: #3451a1; /* blue */
+
+  --text-100: #e2fdff; /* baby-powder */
+  --text-200: rgba(226, 253, 255, 0.4);
+  --text-300: rgba(226, 253, 255, 0.2);
+  --text-400: rgba(226, 253, 255, 0.1);
+
+  --shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
+
   padding: 0;
   margin: 0;
   min-height: 100vh;
   color: var(--text-200);
   font-weight: 400;
   background-color: var(--bg-100);
+}
+
+/* LIGHT TEMPLATE */
+body[data-template="light"] {
+  --bg-100: #dbe5ff; /* baby-blue */
+  --bg-200: #ffffff; /* white */
+  --bg-300: #f6f9fc; /* ghost-white */
+
+  --text-100: #051956; /* oxford-blue */
+  --text-200: rgba(3, 14, 47, 0.4);
+  --text-300: rgba(3, 14, 47, 0.2);
+  --text-400: rgba(3, 14, 47, 0.1);
 }
 
 h1,
@@ -274,7 +273,7 @@ a {
   gap: 0.75em;
   width: 7em;
   background-color: var(--bg-200);
-  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
 }
 
 .app__category--item * {
@@ -423,7 +422,7 @@ a {
   place-items: center;
   background-color: var(--primary);
   color: var(--text-100);
-  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow);
   transition: opacity 100ms ease-in-out;
 }
 
@@ -450,7 +449,7 @@ a {
   align-items: center;
   background-color: var(--bg-200);
   border-radius: 1em;
-  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow);
 }
 
 .app__task--list__item:focus-within {
@@ -479,7 +478,7 @@ a {
   border-radius: 50%;
   background-color: transparent;
   rotate: -45deg;
-  transition: outline var(--transition-time) ease-in-out,
+  transition: outline 100ms ease-in-out,
     background-color var(--transition-time) ease-in-out;
 }
 
