@@ -42,7 +42,11 @@ export default class ListTemplate implements DOMList {
 
       const label = document.createElement("label") as HTMLLabelElement;
       label.htmlFor = item.id;
-      label.textContent = item.item;
+
+      const labelSpan = document.createElement("span") as HTMLElement;
+      labelSpan.className = "app__task--list__item--text";
+      labelSpan.textContent = item.item;
+      label.appendChild(labelSpan);
       div.appendChild(label);
       li.appendChild(div);
 

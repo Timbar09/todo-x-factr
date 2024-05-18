@@ -1,17 +1,33 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap");
 
 :root {
-  --primary-100: #e805fe; /* color name: electric purple */
-  --primary-200: #0e62ea; /* color name: royal blue */
+  /* COLORS */
+  --electric-purple: #e805fe;
 
-  --bg-100: #051956; /* color name: oxford blue */
-  --bg-200: #3451a1; /* color name: blue */
-  --bg-300: #97b5fe; /* color name: light steel blue */
+  --dark-blue: #030e2f;
+  --oxford-blue: #051956;
+  --royal-blue: #0e62ea;
+  --blue: #3451a1;
+  --light-steel-blue: #97b5fe;
 
-  --text-100: #e2fdff; /* color name: baby powder */
-  --text-200: rgba(226, 253, 255, 0.4);
-  --text-300: rgba(226, 253, 255, 0.2);
-  --text-400: rgba(226, 253, 255, 0.1);
+  --baby-powder: #e2fdff;
+  --baby-powder-40: rgba(226, 253, 255, 0.4);
+  --baby-powder-20: rgba(226, 253, 255, 0.2);
+  --baby-powder-10: rgba(226, 253, 255, 0.1);
+
+  /* DEFAULT COLOR VARIABLES */
+  --primary: var(--electric-purple);
+  --variant: var(--royal-blue);
+
+  --bg-100: var(--dark-blue);
+  --bg-200: var(--oxford-blue);
+  --bg-300: var(--blue);
+  --bg-400: var(--light-steel-blue);
+
+  --text-100: var(--baby-powder);
+  --text-200: var(--baby-powder-40);
+  --text-300: var(--baby-powder-20);
+  --text-400: var(--baby-powder-10);
 }
 
 html {
@@ -33,7 +49,7 @@ body {
   min-height: 100vh;
   color: var(--text-200);
   font-weight: 400;
-  background-color: var(--bg-300);
+  background-color: var(--bg-100);
 }
 
 h1,
@@ -131,7 +147,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
   border-radius: inherit;
-  background-color: var(--bg-100);
+  background-color: var(--bg-200);
 }
 
 .hero__button--container {
@@ -156,8 +172,8 @@ a {
   background: linear-gradient(
     45deg,
     var(--text-200) 70%,
-    var(--primary-100),
-    var(--primary-100)
+    var(--primary),
+    var(--primary)
   );
   border-radius: 50%;
 }
@@ -167,7 +183,7 @@ a {
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-  border: solid 0.215em var(--bg-100);
+  border: solid 0.215em var(--bg-200);
 }
 
 .hero__title span:last-child {
@@ -193,7 +209,7 @@ a {
 }
 
 .hero__nav--link:hover {
-  color: var(--primary-100);
+  color: var(--primary);
 }
 
 .hero__analytics--chart {
@@ -224,7 +240,7 @@ a {
   inset: 0 auto 0 70%;
   scale: 0.85;
   width: 100%;
-  background-color: var(--bg-200);
+  background-color: var(--bg-300);
   border-radius: inherit;
   transition: inset 300ms ease-in-out, scale 300ms 100ms ease-in-out;
 }
@@ -235,6 +251,7 @@ a {
 }
 
 .app__header {
+  padding-top: 1.5rem;
   display: flex;
   justify-content: space-between;
 }
@@ -256,7 +273,7 @@ a {
   flex-direction: column;
   gap: 0.75em;
   width: 7em;
-  background-color: var(--bg-100);
+  background-color: var(--bg-200);
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
 }
 
@@ -291,29 +308,29 @@ a {
   width: 0.175em;
   height: 200%;
   border-radius: inherit;
-  background-color: var(--primary-100);
+  background-color: var(--primary);
 }
 
 .app__category--list li:first-child .app__category--item__progresBar--fill {
   width: 71%;
-  background-color: var(--primary-100);
+  background-color: var(--primary);
 }
 
 .app__category--list
   li:first-child
   .app__category--item__progresBar--fill::before {
-  background-color: var(--primary-100);
+  background-color: var(--primary);
 }
 
 .app__category--list li:last-child .app__category--item__progresBar--fill {
   width: 29%;
-  background-color: var(--primary-200);
+  background-color: var(--variant);
 }
 
 .app__category--list
   li:last-child
   .app__category--item__progresBar--fill::before {
-  background-color: var(--primary-200);
+  background-color: var(--variant);
 }
 
 .app__task--header {
@@ -344,7 +361,7 @@ a {
   padding: 0.25em;
   width: max-content;
   border-radius: 0.5em;
-  background-color: var(--bg-100);
+  background-color: var(--bg-200);
   z-index: 1;
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
   transition: opacity 150ms ease-in-out, top 150ms ease-in-out;
@@ -385,12 +402,12 @@ a {
   border: 2px solid var(--text-200);
   border-radius: 5em;
   color: var(--text-200);
-  background-color: var(--bg-100);
+  background-color: var(--bg-200);
 }
 
 .app__task--entry--input:focus {
   outline: none;
-  border-color: var(--primary-100);
+  border-color: var(--primary);
 }
 
 .app__task--entry--button {
@@ -404,7 +421,7 @@ a {
   border-radius: 5em;
   display: grid;
   place-items: center;
-  background-color: var(--primary-100);
+  background-color: var(--primary);
   color: var(--text-100);
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
   transition: opacity 100ms ease-in-out;
@@ -419,26 +436,25 @@ a {
   padding-bottom: 0.5em;
   display: flex;
   flex-direction: column;
-  height: 14em;
+  height: 16em;
   gap: 0.5em;
   overflow-y: auto;
 }
 
 .app__task--list__item {
   --transition-time: 200ms;
+  --padding: 1em;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
-  gap: 1em;
-  background-color: var(--bg-100);
+  background-color: var(--bg-200);
   border-radius: 1em;
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
 }
 
 .app__task--list__item:focus-within {
-  outline: 0.125em solid var(--primary-100);
+  outline: 0.125em solid var(--primary);
 }
 
 .app__task--list__item:hover .app__task--list__item--button,
@@ -447,9 +463,11 @@ a {
 }
 
 .app__task--list__item--checkbox {
+  padding-left: var(--padding);
   display: flex;
   align-items: center;
   gap: 1em;
+  flex: 1;
 }
 
 .app__task--list__item--checkbox > input[type="checkbox"] {
@@ -500,12 +518,18 @@ a {
   background-color: var(--text-100);
 }
 
-.app__task--list__item--checkbox input[type="checkbox"] + label {
+.app__task--list__item--checkbox
+  input[type="checkbox"]
+  + label
+  .app__task--list__item--text {
   position: relative;
   color: var(--text-100);
 }
 
-.app__task--list__item--checkbox input[type="checkbox"] + label::before {
+.app__task--list__item--checkbox
+  input[type="checkbox"]
+  + label
+  .app__task--list__item--text::before {
   content: "";
   display: block;
   position: absolute;
@@ -518,14 +542,33 @@ a {
   transition: width 200ms ease-in-out;
 }
 
-.app__task--list__item--checkbox input[type="checkbox"]:checked + label {
+.app__task--list__item--checkbox
+  input[type="checkbox"]:checked
+  + label
+  .app__task--list__item--text {
   color: var(--text-200);
+}
+
+.app__task--list__item--checkbox label {
+  flex: 1;
+}
+
+.app__task--list__item--checkbox .app__task--list__item--text {
+  display: inline-block;
+  padding: var(--padding) 0;
 }
 
 .app__task--list__item--checkbox
   input[type="checkbox"]:checked
-  + label::before {
+  + label
+  .app__task--list__item--text::before {
   width: 110%;
+}
+
+.app__task--list__item--button-container {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: var(--padding);
 }
 
 .app__task--list__item--button {
@@ -533,8 +576,8 @@ a {
   cursor: pointer;
   display: grid;
   place-items: center;
-  width: 1.5em;
-  height: 1.5em;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   display: none;
   transition: color 100ms ease-in-out;
