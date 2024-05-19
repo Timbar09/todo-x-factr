@@ -108,10 +108,18 @@ const initApp = (): void => {
   const clearItemsButton = document.getElementById(
     "clearItemsButton"
   ) as HTMLButtonElement;
+  const clearCompletedButton = document.getElementById(
+    "clearCompletedItemsButton"
+  ) as HTMLButtonElement;
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();
     listTemplate.clear();
+  });
+
+  clearCompletedButton.addEventListener("click", (): void => {
+    fullList.ClearCompleted();
+    listTemplate.render(fullList);
   });
 
   fullList.load();
