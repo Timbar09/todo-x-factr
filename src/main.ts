@@ -33,6 +33,7 @@ const closeHeroNavPopupButton = document.getElementById(
 const templateOptions = document.querySelectorAll(
   ".hero__nav--templates__button"
 ) as NodeListOf<HTMLButtonElement>;
+const newTaskInput = document.getElementById("newItem") as HTMLInputElement;
 
 showListButton.addEventListener("click", () => {
   addClass(taskList, "show");
@@ -42,6 +43,13 @@ showListButton.addEventListener("click", () => {
 toggleListButton.addEventListener("click", () => {
   toggleClass(taskList, "show");
   removeClass(heroNavPopup, "open");
+});
+
+newTaskInput.addEventListener("click", () => {
+  if (!taskList.classList.contains("show")) {
+    addClass(taskList, "show");
+    removeClass(heroNavPopup, "open");
+  }
 });
 
 taskListMenuButton.addEventListener("click", () => {
