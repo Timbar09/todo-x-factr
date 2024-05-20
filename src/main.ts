@@ -93,11 +93,9 @@ const initApp = (): void => {
 
     if (!newEntryText.length) return;
 
-    const itemId: number = fullList.list.length
-      ? parseInt(fullList.list[fullList.list.length - 1].id) + 1
-      : 1;
+    const itemId: string = crypto.randomUUID();
 
-    const newItem = new ListItem(itemId.toString(), newEntryText);
+    const newItem = new ListItem(itemId, newEntryText);
 
     itemInput.value = "";
 
