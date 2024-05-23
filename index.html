@@ -3,67 +3,306 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite TS Tutorial | Dave Gray</title>
+    <title>Todo X factr</title>
   </head>
-  <body>
-    <main>
-      <h1 class="offscreen">My List</h1>
+  <body data-template="default">
+    <main class="main">
+      <div class="main__container">
+        <section class="hero">
+          <section class="hero__section hero__profile">
+            <div class="hero__button--container">
+              <button
+                id="showList"
+                class="button hero__button"
+                title="Show list"
+                aria-label="Show list"
+              >
+                <span class="material-symbols-outlined"> chevron_left </span>
+              </button>
+            </div>
 
-      <section class="newItemEntry">
-        <h2 class="offscreen">New Item Entry</h2>
-        <form class="newItemEntry__form" id="itemEntryForm">
-          <label for="newItem" class="offscreen">Enter a new to do item</label>
-          <input
-            class="newItemEntry__input"
-            id="newItem"
-            type="text"
-            maxlength="40"
-            autocomplete="off"
-            placeholder="Add item"
-          />
-          <button
-            id="addItem"
-            class="button newItemEntry__button"
-            title="Add new item"
-            aria-label="Add new item to list"
-          >
-            +
-          </button>
-        </form>
-      </section>
+            <div class="hero__image--container">
+              <img
+                src="/src/images/Gorilla-soldier.jpeg"
+                alt="User image"
+                class="hero__image"
+              />
+            </div>
 
-      <section class="listContainer">
-        <header class="listTitle">
-          <h2 id="listName">List</h2>
-          <button
-            id="clearItemsButton"
-            class="button listTitle__button"
-            title="Clear the list"
-            aria-label="Remove all items from the list"
-          >
-            Clear
-          </button>
-        </header>
-        <hr />
-        <ul id="listItems">
-          <!-- <li class="item">
-                      <input type="checkbox" id="1">
-                      <label for="1">eat</label>
-                      <button class="button">X</button>
-                  </li>
-                  <li class="item">
-                      <input type="checkbox" id="2">
-                      <label for="2">sleep</label>
-                      <button class="button">X</button>
-                  </li>
-                  <li class="item">
-                      <input type="checkbox" id="3">
-                      <label for="3">code</label>
-                      <button class="button">X</button>
-                  </li> -->
-        </ul>
-      </section>
+            <h2 class="hero__title section__title">
+              <span> Gorilla </span>
+              <span> Super Soldier</span>
+            </h2>
+
+            <nav class="hero__nav">
+              <ul class="hero__nav--list">
+                <li class="hero__nav--item">
+                  <button aria-label="Tempelates" id="openNavPopup">
+                    <span class="material-symbols-outlined"> Bookmark </span>
+
+                    <span class="hero__nav--item--text"> Tempelates </span>
+                  </button>
+                </li>
+
+                <li class="hero__nav--item">
+                  <button aria-label="Cartegories">
+                    <span class="material-symbols-outlined"> view_cozy </span>
+
+                    <span class="hero__nav--item--text"> Cartegories </span>
+                  </button>
+                </li>
+
+                <li class="hero__nav--item">
+                  <button aria-label="Analytics">
+                    <span class="material-symbols-outlined"> donut_large </span>
+
+                    <span class="hero__nav--item--text"> Analytics </span>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </section>
+
+          <section class="hero__section hero__analytics">
+            <div class="hero__analytics--chart">
+              <img
+                src="/src/images/chart.png"
+                alt="Analytics chart"
+                class="hero__analytics--chart--image"
+              />
+            </div>
+
+            <div class="hero__analytics--report">
+              <h3 class="hero__analytics--report__title">Consistency</h3>
+
+              <p class="hero__analytics--report__text">Good</p>
+            </div>
+          </section>
+        </section>
+
+        <section class="hero__nav--popup" id="heroNavPopup">
+          <div class="hero__nav--popup__container">
+            <div class="hero__nav--popup__close--container">
+              <button
+                id="closeHeroNavPopup"
+                class="button hero__nav--popup__close"
+                title="Close"
+                aria-label="Close"
+              >
+                <span class="material-symbols-outlined"> close </span>
+              </button>
+            </div>
+
+            <h3 class="hero__nav--popup__title">Select a template</h3>
+
+            <ul class="hero__nav--templates__list">
+              <li class="hero__nav--templates__item">
+                <button
+                  class="hero__nav--templates__button"
+                  id="selectDefaultTemplate"
+                  data-template="default"
+                >
+                  <span class="hero__nav--templates__text"> Dark </span>
+                </button>
+              </li>
+
+              <li class="hero__nav--templates__item">
+                <button
+                  class="hero__nav--templates__button"
+                  id="selectLightTemplate"
+                  data-template="light"
+                >
+                  <span class="hero__nav--templates__text"> Light </span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="app" id="appList">
+          <div class="app__container">
+            <div class="app__header padding-x">
+              <div class="app__toggleList--container">
+                <button
+                  id="toggleList"
+                  class="button app__toggleList"
+                  title="Toggle list"
+                  aria-label="Toggle list"
+                >
+                  <span class="material-symbols-outlined"> drag_handle </span>
+                </button>
+              </div>
+
+              <div class="app__header--buttons">
+                <span class="button">
+                  <span class="material-symbols-outlined"> search </span>
+                </span>
+
+                <span class="button">
+                  <span class="material-symbols-outlined"> notifications </span>
+                </span>
+              </div>
+            </div>
+
+            <h2 class="app__title section__title padding-x">
+              What's up, Gorilla?
+            </h2>
+
+            <div class="app__category padding-x">
+              <div class="section__subTitle--container">
+                <h3 class="section__subTitle">Categories</h3>
+              </div>
+
+              <ul class="app__category--list">
+                <li>
+                  <button
+                    class="app__category--item"
+                    title="Personal"
+                    aria-label="Personal"
+                  >
+                    <span class="app__category--item__count"> 15 tasks </span>
+                    <h4 class="app__category--item__title">Personal</h4>
+                    <div class="app__category--item__progresBar">
+                      <span
+                        class="app__category--item__progresBar--fill"
+                      ></span>
+                    </div>
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    class="app__category--item"
+                    title="Business"
+                    aria-label="Business"
+                  >
+                    <span class="app__category--item__count"> 27 tasks </span>
+                    <h4 class="app__category--item__title">Business</h4>
+                    <div class="app__category--item__progresBar">
+                      <span
+                        class="app__category--item__progresBar--fill"
+                      ></span>
+                    </div>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="app__task">
+              <header class="app__task--header padding-x">
+                <h3 class="section__subTitle">Today's tasks</h3>
+
+                <div class="app__task--menu">
+                  <button
+                    id="taskMenuButton"
+                    class="button app__task--menu__button"
+                    aria-label="Menu"
+                  >
+                    <span class="material-symbols-outlined"> more_vert </span>
+                  </button>
+
+                  <ul class="app__task--menu__list" id="taskMenuList">
+                    <li class="app__task--menu__item">
+                      <button
+                        id="clearItemsButton"
+                        class="app__task--menu__clear app__task--menu__option"
+                        title="Clear the list"
+                        aria-label="Remove all items from the list"
+                      >
+                        Clear all tasks
+                      </button>
+                    </li>
+
+                    <li class="app__task--menu__item">
+                      <button
+                        id="clearCompletedItemsButton"
+                        class="app__task--menu__clear app__task--menu__option"
+                        title="Clear completed tasks"
+                        aria-label="Remove all completed items from the list"
+                      >
+                        Clear completed tasks
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </header>
+
+              <form class="app__task--entry" id="itemEntryForm">
+                <label for="newItem" class="offscreen"
+                  >Enter a new to do item</label
+                >
+                <input
+                  class="app__task--entry--input"
+                  id="newItem"
+                  type="text"
+                  maxlength="40"
+                  autocomplete="off"
+                  placeholder="Add a new item to the list"
+                />
+
+                <button
+                  id="addItem"
+                  class="app__task--entry--button"
+                  title="Add new item"
+                  aria-label="Add new item to list"
+                >
+                  <span class="material-symbols-outlined"> add </span>
+                </button>
+              </form>
+
+              <ul id="listItems" class="app__task--list padding-x">
+                <!-- <li class="app__task--list__item">
+                      <div class="app__task--list__item--checkbox">
+                        <input type="checkbox" id="1">
+                        <label for="1">
+                          <span class="app__task--list__item--text">eat</span>
+                        </label>
+                      </div>
+
+                      <div class="app__task--list__item--button-container">
+                        <button class="app__task--list__item--delete">
+                            <span class="material-symbols-outlined"> delete </span>
+                        </button>
+                      </div>
+                    </li>
+                    <li class="app__task--list__item">
+                      <div class="app__task--list__item--checkbox">
+                        <input type="checkbox" id="2">
+                        <label for="2">
+                          <span class="app__task--list__item--text">sleep</span>
+                        </label>
+                      </div>
+
+                      <div class="app__task--list__item--button-container">
+                        <button class="app__task--list__item--delete">
+                            <span class="material-symbols-outlined"> delete </span>
+                        </button>
+                      </div>
+                    </li>
+                    <li class="app__task--list__item">
+                      <div class="app__task--list__item--checkbox">
+                        <input type="checkbox" id="3">
+                        <label for="3">
+                          <span class="app__task--list__item--text">code</span>
+                        </label>
+                      </div>
+
+                      <div class="app__task--list__item--button-container">
+                        <button class="app__task--list__item--delete">
+                            <span class="material-symbols-outlined"> delete </span>
+                        </button>
+                      </div>
+                    </li> -->
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   </body>
   <script type="module" src="/src/main.ts"></script>

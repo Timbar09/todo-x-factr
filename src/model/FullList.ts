@@ -5,6 +5,7 @@ interface List {
   load: () => void;
   save: () => void;
   clearList: () => void;
+  ClearCompleted: () => void;
   addItem: (item: ListItem) => void;
   removeItem: (id: string) => void;
 }
@@ -40,8 +41,13 @@ export default class FullList implements List {
     this.save();
   }
 
+  ClearCompleted(): void {
+    this._list = this._list.filter((item) => !item.checked);
+    this.save();
+  }
+
   addItem(item: ListItem): void {
-    this._list.push(item);
+    this._list.unshift(item);
     this.save();
   }
 
