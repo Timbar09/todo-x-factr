@@ -34,6 +34,18 @@ const templateOptions = document.querySelectorAll(
   ".hero__nav--templates__button"
 ) as NodeListOf<HTMLButtonElement>;
 const newTaskInput = document.getElementById("newItem") as HTMLInputElement;
+const buttons = document.querySelectorAll(
+  ".button"
+) as NodeListOf<HTMLButtonElement>;
+
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    addClass(button, "clicked");
+    setTimeout(() => {
+      removeClass(button, "clicked");
+    }, 400);
+  });
+});
 
 showListButton.addEventListener("click", () => {
   addClass(taskList, "show");
