@@ -1,10 +1,15 @@
+import CategoryItem from "./CategoryItem";
+
 export interface Item {
   id: string;
   item: string;
   checked: boolean;
+  category?: CategoryItem;
 }
 
 export default class ListItem implements Item {
+  category?: CategoryItem;
+
   constructor(
     private _id: string,
     private _item: string,

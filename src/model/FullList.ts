@@ -1,4 +1,5 @@
 import ListItem from "./ListItem";
+import CategoryItem from "./CategoryItem";
 
 interface List {
   list: ListItem[];
@@ -6,7 +7,7 @@ interface List {
   save: () => void;
   clearList: () => void;
   ClearCompleted: () => void;
-  addItem: (item: ListItem) => void;
+  addItem: (item: ListItem, category?: CategoryItem) => void;
   removeItem: (id: string) => void;
 }
 
@@ -46,7 +47,8 @@ export default class FullList implements List {
     this.save();
   }
 
-  addItem(item: ListItem): void {
+  addItem(item: ListItem, category?: CategoryItem): void {
+    item.category = category;
     this._list.unshift(item);
     this.save();
   }
