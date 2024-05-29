@@ -28,7 +28,9 @@ export default class ListItemTemplate {
 
     const listItenName = document.createElement("span");
     listItenName.className = "app__task--list__item--text";
-    listItenName.textContent = `${item.title} ${item.category?.name || ""}`;
+    listItenName.textContent = `${item.title} ${
+      item.category?.color || "Uncategorized"
+    }`;
     listItemNameContainer.appendChild(listItenName);
     checkboxContainer.appendChild(listItemNameContainer);
     this.element.appendChild(checkboxContainer);

@@ -63,6 +63,7 @@ h4 {
 }
 
 input,
+select,
 button {
   font: inherit;
 }
@@ -264,7 +265,6 @@ a {
 
 .hero__nav--popup__container {
   padding: 1em;
-  /* padding-bottom: 1em; */
 }
 
 .hero__nav--popup.open {
@@ -492,14 +492,15 @@ a {
   opacity: 0.75;
 }
 
-.app__task--entry {
+.app__task--entry__title,
+.app__task--entry__category {
   position: relative;
   margin: 0 2em 1em;
 }
 
-.app__task--entry--input {
+.app__task--entry__input,
+.app__task--entry__select {
   width: 100%;
-  padding: 0.5em 1em;
   border: 2px solid transparent;
   border-radius: 5em;
   color: var(--text-200);
@@ -507,12 +508,24 @@ a {
   box-shadow: var(--shadow);
 }
 
-.app__task--entry--input:focus {
+.app__task--entry__input {
+  padding: 0.5em 1em;
+}
+
+.app__task--entry__select {
+  padding: 0.5em 1em;
+}
+
+.app__task--entry__select--placeholder {
+  color: red;
+}
+
+.app__task--entry__input:focus {
   outline: none;
   border-color: var(--primary);
 }
 
-.app__task--entry--button {
+.app__task--entry__button {
   all: unset;
   cursor: pointer;
   position: absolute;
@@ -529,7 +542,7 @@ a {
   transition: opacity 100ms ease-in-out;
 }
 
-.app__task--entry--button:hover {
+.app__task--entry__button:hover {
   opacity: 0.75;
 }
 

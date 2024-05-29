@@ -2,7 +2,7 @@ import CategoryItem from "./CategoryItem";
 
 export interface Item {
   id: string;
-  item: string;
+  title: string;
   checked: boolean;
   category?: CategoryItem;
 }
@@ -12,7 +12,7 @@ export default class ListItem implements Item {
 
   constructor(
     private _id: string,
-    private _item: string,
+    private _title: string,
     private _checked: boolean = false
   ) {}
 
@@ -24,12 +24,12 @@ export default class ListItem implements Item {
     this._id = id;
   }
 
-  get item(): string {
-    return this._item;
+  get title(): string {
+    return this._title;
   }
 
-  set item(item: string) {
-    this._item = item;
+  set title(title: string) {
+    this._title = title;
   }
 
   get checked(): boolean {

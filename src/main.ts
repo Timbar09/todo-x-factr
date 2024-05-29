@@ -1,6 +1,7 @@
 import FullList from "./model/FullList";
 import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
+import CategoryItem from "./model/CategoryItem";
 import {
   addClass,
   toggleClass,
@@ -111,6 +112,20 @@ const initApp = (): void => {
     const itemInput = document.getElementById("newItem") as HTMLInputElement;
     const newEntryText: string = itemInput.value.trim();
 
+    const itemSection = document.getElementById(
+      "category"
+    ) as HTMLSelectElement;
+    const itemCategory: string = itemSection.value;
+    let categoryItem;
+
+    if (itemCategory) {
+      console.log("Item category value:", itemCategory);
+      const id: string = crypto.randomUUID();
+      const color: string = "blue";
+
+      categoryItem = new CategoryItem(id, itemCategory, color);
+    }
+
     if (!newEntryText.length) return;
 
     const itemId: string = crypto.randomUUID();
@@ -119,7 +134,7 @@ const initApp = (): void => {
 
     itemInput.value = "";
 
-    fullList.addItem(newItem);
+    fullList.addItem(newItem, categoryItem);
     listTemplate.render(fullList);
   });
 
