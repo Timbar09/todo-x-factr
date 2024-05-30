@@ -49,6 +49,7 @@ export default class FullList implements List {
 
   addItem(item: ListItem, category?: CategoryItem): void {
     item.category = category;
+    console.log(item);
     this._list.unshift(item);
     this.save();
   }

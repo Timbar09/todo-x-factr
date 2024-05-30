@@ -1,4 +1,3 @@
-// CategoryList.ts
 import CategoryItem from "./CategoryItem";
 
 export default class CategoryList {

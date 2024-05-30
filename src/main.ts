@@ -70,7 +70,6 @@ taskListMenuButton.addEventListener("click", () => {
 
   taskListMenuItems.forEach((item) => {
     item.addEventListener("click", () => {
-      console.log("clicked task list menu item");
       removeClass(taskListMenu, "open");
     });
   });
@@ -119,7 +118,6 @@ const initApp = (): void => {
     let categoryItem;
 
     if (itemCategory) {
-      console.log("Item category value:", itemCategory);
       const id: string = crypto.randomUUID();
       const color: string = "blue";
 
