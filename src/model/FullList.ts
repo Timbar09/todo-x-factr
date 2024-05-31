@@ -1,5 +1,4 @@
 import ListItem from "./ListItem";
-import CategoryItem from "./CategoryItem";
 
 interface List {
   list: ListItem[];
@@ -7,7 +6,7 @@ interface List {
   save: () => void;
   clearList: () => void;
   ClearCompleted: () => void;
-  addItem: (item: ListItem, category?: CategoryItem) => void;
+  addItem: (item: ListItem) => void;
   removeItem: (id: string) => void;
 }
 
@@ -25,11 +24,16 @@ export default class FullList implements List {
 
     if (typeof storedList !== "string") return;
 
-    const parsedList: { _id: string; _item: string; _checked: boolean }[] =
-      JSON.parse(storedList);
+    const parsedList: {
+      _id: string;
+      _title: string;
+      _checked: boolean;
+      _categoryId: string;
+    }[] = JSON.parse(storedList);
 
     this._list = parsedList.map(
-      (item) => new ListItem(item._id, item._item, item._checked)
+      (item) =>
+        new ListItem(item._id, item._title, item._checked, item._categoryId)
     );
   }
 
@@ -47,9 +51,7 @@ export default class FullList implements List {
     this.save();
   }
 
-  addItem(item: ListItem, category?: CategoryItem): void {
-    item.category = category;
-    console.log(item);
+  addItem(item: ListItem): void {
     this._list.unshift(item);
     this.save();
   }

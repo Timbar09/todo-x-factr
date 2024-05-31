@@ -1,6 +1,7 @@
 import FullList from "./model/FullList";
 import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
+import CategoryList from "./model/CategoryList";
 import CategoryItem from "./model/CategoryItem";
 import {
   addClass,
@@ -99,6 +100,7 @@ if (templateOptions.length) {
 
 const initApp = (): void => {
   const fullList = FullList.instance;
+  const categoryList = CategoryList.instance;
   const listTemplate = ListTemplate.instance;
 
   const itemEntryForm = document.getElementById(
@@ -115,25 +117,26 @@ const initApp = (): void => {
       "category"
     ) as HTMLSelectElement;
     const itemCategory: string = itemSection.value;
-    let categoryItem;
+    let categoryItem: CategoryItem | null = null;
 
     if (itemCategory) {
       const id: string = crypto.randomUUID();
       const color: string = "blue";
 
       categoryItem = new CategoryItem(id, itemCategory, color);
+      categoryList.addCategory(categoryItem);
     }
 
     if (!newEntryText.length) return;
 
     const itemId: string = crypto.randomUUID();
 
-    const newItem = new ListItem(itemId, newEntryText);
+    const newItem = new ListItem(itemId, newEntryText, false, categoryItem?.id);
 
     itemInput.value = "";
 
-    fullList.addItem(newItem, categoryItem);
-    listTemplate.render(fullList);
+    fullList.addItem(newItem);
+    listTemplate.render(fullList, categoryList);
   });
 
   const clearItemsButton = document.getElementById(
@@ -150,11 +153,11 @@ const initApp = (): void => {
 
   clearCompletedButton.addEventListener("click", (): void => {
     fullList.ClearCompleted();
-    listTemplate.render(fullList);
+    listTemplate.render(fullList, categoryList);
   });
 
   fullList.load();
-  listTemplate.render(fullList);
+  listTemplate.render(fullList, categoryList);
 };
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -1,19 +1,16 @@
-import CategoryItem from "./CategoryItem";
-
 export interface Item {
   id: string;
   title: string;
   checked: boolean;
-  category?: CategoryItem;
+  categoryId: string;
 }
 
 export default class ListItem implements Item {
-  category?: CategoryItem;
-
   constructor(
     private _id: string,
     private _title: string,
-    private _checked: boolean = false
+    private _checked: boolean = false,
+    private _categoryId: string = ""
   ) {}
 
   get id(): string {
@@ -38,5 +35,13 @@ export default class ListItem implements Item {
 
   set checked(checked: boolean) {
     this._checked = checked;
+  }
+
+  get categoryId(): string {
+    return this._categoryId;
+  }
+
+  set categoryId(categoryId: string) {
+    this._categoryId = categoryId;
   }
 }

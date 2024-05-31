@@ -1,10 +1,11 @@
+import CategoryList from "../model/CategoryList";
 import FullList from "../model/FullList";
 import ListItemTemplate from "./ListItemTemplate";
 
 interface DOMList {
   ul: HTMLUListElement;
   clear(): void;
-  render(fullList: FullList): void;
+  render(fullList: FullList, categoryList: CategoryList): void;
 }
 
 export default class ListTemplate implements DOMList {
@@ -20,11 +21,11 @@ export default class ListTemplate implements DOMList {
     this.ul.innerHTML = "";
   }
 
-  render(fullList: FullList): void {
+  render(fullList: FullList, categoryList: CategoryList): void {
     this.clear();
 
     fullList.list.forEach((item) => {
-      const li = new ListItemTemplate(item, fullList).element;
+      const li = new ListItemTemplate(item, fullList, categoryList).element;
       this.ul.appendChild(li);
     });
   }

@@ -1,21 +1,30 @@
 import FullList from "../model/FullList";
+import CategoryList from "../model/CategoryList";
 import ListItem from "../model/ListItem";
 
 export default class ListItemTemplate {
   element: HTMLLIElement;
 
-  constructor(item: ListItem, fullList: FullList) {
+  constructor(item: ListItem, fullList: FullList, categoryList: CategoryList) {
     this.element = document.createElement("li");
     this.element.className = "app__task--list__item";
 
     const checkboxContainer = document.createElement("div");
     checkboxContainer.className = "app__task--list__item--checkbox";
 
+    const checkboxOuntlineColor = categoryList.findCategoryById(
+      item.categoryId
+    )?.color;
+
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = item.id;
     checkbox.tabIndex = 0;
     checkbox.checked = item.checked;
+    checkbox.style.setProperty(
+      "--outline-color",
+      checkboxOuntlineColor as string
+    );
     checkboxContainer.appendChild(checkbox);
 
     checkbox.addEventListener("change", () => {
@@ -28,9 +37,7 @@ export default class ListItemTemplate {
 
     const listItenName = document.createElement("span");
     listItenName.className = "app__task--list__item--text";
-    listItenName.textContent = `${item.title} ${
-      item.category?.color || "Uncategorized"
-    }`;
+    listItenName.textContent = item.title;
     listItemNameContainer.appendChild(listItenName);
     checkboxContainer.appendChild(listItemNameContainer);
     this.element.appendChild(checkboxContainer);
