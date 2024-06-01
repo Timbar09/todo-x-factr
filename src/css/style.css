@@ -517,7 +517,7 @@ a {
 }
 
 .app__task--entry__select--placeholder {
-  color: red;
+  color: var(--text-300);
 }
 
 .app__task--entry__input:focus {

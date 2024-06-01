@@ -119,9 +119,15 @@ const initApp = (): void => {
     const itemCategory: string = itemSection.value;
     let categoryItem: CategoryItem | null = null;
 
+    const categoryColors = {
+      personal: "var(--primary)",
+      business: "var(--variant)",
+    };
+
     if (itemCategory) {
       const id: string = crypto.randomUUID();
-      const color: string = "blue";
+      const color: string =
+        categoryColors[itemCategory as keyof typeof categoryColors];
 
       categoryItem = new CategoryItem(id, itemCategory, color);
       categoryList.addCategory(categoryItem);
