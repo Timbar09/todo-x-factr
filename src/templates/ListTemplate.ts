@@ -25,7 +25,8 @@ export default class ListTemplate implements DOMList {
     this.clear();
 
     fullList.list.forEach((item) => {
-      const li = new ListItemTemplate(item, fullList, categoryList).element;
+      const li = new ListItemTemplate(item, fullList, categoryList, this)
+        .element;
       this.ul.appendChild(li);
     });
   }

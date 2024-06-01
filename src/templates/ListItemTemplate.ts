@@ -1,11 +1,17 @@
 import FullList from "../model/FullList";
 import CategoryList from "../model/CategoryList";
 import ListItem from "../model/ListItem";
+import ListTemplate from "./ListTemplate";
 
 export default class ListItemTemplate {
   element: HTMLLIElement;
 
-  constructor(item: ListItem, fullList: FullList, categoryList: CategoryList) {
+  constructor(
+    item: ListItem,
+    fullList: FullList,
+    categoryList: CategoryList,
+    listTemplate: ListTemplate
+  ) {
     this.element = document.createElement("li");
     this.element.className = "app__task--list__item";
 
@@ -60,6 +66,7 @@ export default class ListItemTemplate {
 
     deleteButton.addEventListener("click", () => {
       fullList.removeItem(item.id);
+      listTemplate.render(fullList, categoryList);
     });
   }
 }
