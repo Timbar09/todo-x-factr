@@ -1,31 +1,30 @@
 import CategoryList from "../model/CategoryList";
 
 interface DOMList {
-  option: HTMLOptionElement;
-  render(categoryList: CategoryList, select: HTMLSelectElement): void;
+  select: HTMLSelectElement;
+  render(categoryList: CategoryList): void;
 }
 
 export default class CategoryOptionsTemplate implements DOMList {
-  option: HTMLOptionElement;
+  select: HTMLSelectElement;
 
-  static instance: CategoryOptionsTemplate = new CategoryOptionsTemplate({
-    id: "",
-    name: "",
-    color: "",
-  });
+  static instance: CategoryOptionsTemplate = new CategoryOptionsTemplate();
 
-  private constructor(category: { id: string; name: string; color: string }) {
-    this.option = document.createElement("option");
-    this.option.id = category.id;
-    this.option.value = category.name;
-    this.option.textContent = category.name;
-    this.option.setAttribute("data-color", category.color);
+  private constructor() {
+    this.select = document.getElementById(
+      "categorySelect"
+    ) as HTMLSelectElement;
   }
 
-  render(categoryList: CategoryList, select: HTMLSelectElement): void {
+  render(categoryList: CategoryList) {
     categoryList.categories.forEach((category) => {
-      const option = new CategoryOptionsTemplate(category).option;
-      select.appendChild(option);
+      const option = document.createElement("option");
+
+      option.value = category.id;
+      option.textContent = category.name;
+      option.setAttribute("data-color", category.color);
+
+      this.select.appendChild(option);
     });
   }
 }

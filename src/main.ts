@@ -157,7 +157,7 @@ const initApp = (): void => {
   });
 
   categoryListTemplate.render(categoryList);
-  categoryOptionsTemplate.render(categoryList, itemCategorySelection);
+  categoryOptionsTemplate.render(categoryList);
 
   const clearItemsButton = document.getElementById(
     "clearItemsButton"
