@@ -29,7 +29,7 @@ export default class ListItemTemplate {
     checkbox.checked = item.checked;
     checkbox.style.setProperty(
       "--outline-color",
-      checkboxOuntlineColor as string
+      checkboxOuntlineColor || ("var(--text-200)" as string)
     );
     checkboxContainer.appendChild(checkbox);
 

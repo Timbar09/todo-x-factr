@@ -262,14 +262,16 @@
                   >
                   <select
                     class="app__task--entry__select"
-                    id="category"
+                    id="categorySelect"
                     name="category"
+                    autocomplete="off"
                   >
                     <option
                       value=""
                       disabled
                       selected
                       class="app__task--entry__select--placeholder"
+                      data-color="--text-300"
                     >
                       Select a category
                     </option>
@@ -280,6 +282,14 @@
                       Business
                     </option>
                   </select>
+
+                  <div
+                    class="app__task--entry__category--color"
+                    id="categoryColor"
+                  >
+                    <span class="app__task--entry__category--color__indicator">
+                    </span>
+                  </div>
                 </div>
               </form>
 

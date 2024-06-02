@@ -106,6 +106,12 @@ const initApp = (): void => {
   const itemEntryForm = document.getElementById(
     "itemEntryForm"
   ) as HTMLFormElement;
+  const itemCategorySelection = document.getElementById(
+    "categorySelect"
+  ) as HTMLSelectElement;
+  const categoryColor = document.getElementById(
+    "categoryColor"
+  ) as HTMLDivElement;
 
   itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
     e.preventDefault();
@@ -113,31 +119,33 @@ const initApp = (): void => {
     const itemInput = document.getElementById("newItem") as HTMLInputElement;
     const newEntryText: string = itemInput.value.trim();
 
-    const itemSection = document.getElementById(
-      "category"
-    ) as HTMLSelectElement;
-    const itemCategory: string = itemSection.value;
-    let categoryItem: CategoryItem | null = null;
+    const selectedCategory: string = itemCategorySelection.value;
+    let newCategoryItem: CategoryItem | null = null;
 
     const categoryColors = {
       personal: "var(--primary)",
       business: "var(--variant)",
     };
 
-    if (itemCategory) {
+    if (selectedCategory) {
       const id: string = crypto.randomUUID();
       const color: string =
-        categoryColors[itemCategory as keyof typeof categoryColors];
+        categoryColors[selectedCategory as keyof typeof categoryColors];
 
-      categoryItem = new CategoryItem(id, itemCategory, color);
-      categoryList.addCategory(categoryItem);
+      newCategoryItem = new CategoryItem(id, selectedCategory, color);
+      categoryList.addCategory(newCategoryItem);
     }
 
     if (!newEntryText.length) return;
 
     const itemId: string = crypto.randomUUID();
 
-    const newItem = new ListItem(itemId, newEntryText, false, categoryItem?.id);
+    const newItem = new ListItem(
+      itemId,
+      newEntryText,
+      false,
+      newCategoryItem?.id
+    );
 
     itemInput.value = "";
 
@@ -151,6 +159,16 @@ const initApp = (): void => {
   const clearCompletedButton = document.getElementById(
     "clearCompletedItemsButton"
   ) as HTMLButtonElement;
+
+  itemCategorySelection.addEventListener("change", () => {
+    console.log("option changed");
+    const selectedOption =
+      itemCategorySelection.options[itemCategorySelection.selectedIndex];
+    const color: string = `var(${selectedOption.getAttribute(
+      "data-color"
+    )})` as string;
+    categoryColor.style.setProperty("--color", color);
+  });
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();

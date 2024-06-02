@@ -546,6 +546,29 @@ a {
   opacity: 0.75;
 }
 
+.app__task--entry__category {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.app__task--entry__category--color {
+  --color: var(--text-300);
+
+  padding: 0 0.5em;
+  display: grid;
+}
+
+.app__task--entry__category--color__indicator {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  outline: solid 0.125em var(--color);
+  outline-offset: 0.25em;
+  background-color: var(--color);
+}
+
 .app__task--list {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
