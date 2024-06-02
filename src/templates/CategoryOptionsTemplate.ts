@@ -19,7 +19,7 @@ export default class CategoryOptionsTemplate implements DOMList {
     this.option.id = category.id;
     this.option.value = category.name;
     this.option.textContent = category.name;
-    this.option.style.setProperty("--color", category.color);
+    this.option.setAttribute("data-color", category.color);
   }
 
   render(categoryList: CategoryList, select: HTMLSelectElement): void {

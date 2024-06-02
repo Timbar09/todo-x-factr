@@ -132,7 +132,9 @@ const initApp = (): void => {
     if (selectedCategory) {
       const id: string = crypto.randomUUID();
       const color: string =
-        categoryColors[selectedCategory as keyof typeof categoryColors];
+        categoryColors[
+          selectedCategory.toLocaleLowerCase() as keyof typeof categoryColors
+        ];
 
       newCategoryItem = new CategoryItem(id, selectedCategory, color);
       categoryList.addCategory(newCategoryItem);
@@ -165,12 +167,10 @@ const initApp = (): void => {
   ) as HTMLButtonElement;
 
   itemCategorySelection.addEventListener("change", () => {
-    console.log("option changed");
     const selectedOption =
       itemCategorySelection.options[itemCategorySelection.selectedIndex];
-    const color: string = `var(${selectedOption.getAttribute(
-      "data-color"
-    )})` as string;
+    const color: string = selectedOption.getAttribute("data-color") as string;
+    console.log(color);
     categoryColor.style.setProperty("--color", color);
   });
 
