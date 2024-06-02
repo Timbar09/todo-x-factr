@@ -2,13 +2,15 @@ export interface Category {
   id: string;
   name: string;
   color: string;
+  items: string[];
 }
 
 export default class CategoryItem implements Category {
   constructor(
     private _id: string,
     private _name: string,
-    private _color: string
+    private _color: string,
+    private _items: string[] = []
   ) {}
 
   get id(): string {
@@ -33,5 +35,13 @@ export default class CategoryItem implements Category {
 
   set color(color: string) {
     this._color = color;
+  }
+
+  get items(): string[] {
+    return this._items;
+  }
+
+  addItem(itemId: string): void {
+    this._items.push(itemId);
   }
 }

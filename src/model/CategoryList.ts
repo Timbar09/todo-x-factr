@@ -11,7 +11,14 @@ interface List {
 export default class CategoryList implements List {
   static instance: CategoryList = new CategoryList();
 
-  private constructor(private _categories: CategoryItem[] = []) {}
+  private constructor(
+    private _categories: CategoryItem[] = [
+      new CategoryItem(crypto.randomUUID(), "Personal", "var(--primary)"),
+      new CategoryItem(crypto.randomUUID(), "Business", "var(--variant)"),
+    ]
+  ) {
+    this.save();
+  }
 
   get categories(): CategoryItem[] {
     return this._categories;
