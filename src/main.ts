@@ -122,33 +122,30 @@ const initApp = (): void => {
     const newEntryText: string = itemInput.value.trim();
 
     const selectedCategory: string = itemCategorySelection.value;
-    let newCategoryItem: CategoryItem | null = null;
+    let updatedCategoryItem: CategoryItem | null = null;
 
-    const categoryColors = {
-      personal: "var(--primary)",
-      business: "var(--variant)",
-    };
+    const itemId: string = crypto.randomUUID();
 
     if (selectedCategory) {
-      const id: string = crypto.randomUUID();
-      const color: string =
-        categoryColors[
-          selectedCategory.toLocaleLowerCase() as keyof typeof categoryColors
-        ];
+      const category = categoryList.findCategoryByName(selectedCategory);
 
-      newCategoryItem = new CategoryItem(id, selectedCategory, color);
-      categoryList.addCategory(newCategoryItem);
+      if (!category) {
+        return console.error("Category not found");
+      }
+
+      updatedCategoryItem = category;
+
+      updatedCategoryItem.addItem(itemId);
+      categoryList.updateCategory(updatedCategoryItem);
     }
 
     if (!newEntryText.length) return;
-
-    const itemId: string = crypto.randomUUID();
 
     const newItem = new ListItem(
       itemId,
       newEntryText,
       false,
-      newCategoryItem?.id
+      updatedCategoryItem?.id
     );
 
     itemInput.value = "";
