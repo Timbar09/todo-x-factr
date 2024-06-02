@@ -4,6 +4,7 @@ import ListTemplate from "./templates/ListTemplate";
 import CategoryList from "./model/CategoryList";
 import CategoryItem from "./model/CategoryItem";
 import CategoryOptionsTemplate from "./templates/CategoryOptionsTemplate";
+import CategoryListTemplate from "./templates/CategoryListTemplate";
 import {
   addClass,
   toggleClass,
@@ -104,6 +105,7 @@ const initApp = (): void => {
   const categoryList = CategoryList.instance;
   const listTemplate = ListTemplate.instance;
   const categoryOptionsTemplate = CategoryOptionsTemplate.instance;
+  const categoryListTemplate = CategoryListTemplate.instance;
 
   const itemEntryForm = document.getElementById(
     "itemEntryForm"
@@ -154,6 +156,7 @@ const initApp = (): void => {
     listTemplate.render(fullList, categoryList);
   });
 
+  categoryListTemplate.render(categoryList);
   categoryOptionsTemplate.render(categoryList, itemCategorySelection);
 
   const clearItemsButton = document.getElementById(

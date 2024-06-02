@@ -6,6 +6,8 @@ interface List {
   save: () => void;
   addCategory: (category: CategoryItem) => void;
   findCategoryById: (id: string) => CategoryItem | undefined;
+  findCategoryByName: (name: string) => CategoryItem | undefined;
+  updateCategory: (UpdatedCategory: CategoryItem) => void;
 }
 
 export default class CategoryList implements List {
@@ -53,5 +55,17 @@ export default class CategoryList implements List {
   findCategoryById(id: string): CategoryItem | undefined {
     this.load();
     return this._categories.find((category) => category.id === id);
+  }
+
+  findCategoryByName(name: string): CategoryItem | undefined {
+    this.load();
+    return this._categories.find((category) => category.name === name);
+  }
+
+  updateCategory(updatedCategory: CategoryItem): void {
+    this._categories = this._categories.map((category) =>
+      category.id === updatedCategory.id ? updatedCategory : category
+    );
+    this.save();
   }
 }
