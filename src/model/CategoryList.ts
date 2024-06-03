@@ -15,8 +15,8 @@ export default class CategoryList implements List {
 
   private constructor(
     private _categories: CategoryItem[] = [
-      new CategoryItem(crypto.randomUUID(), "Personal", "var(--primary)"),
-      new CategoryItem(crypto.randomUUID(), "Business", "var(--variant)"),
+      new CategoryItem("personal1000", "Personal", "var(--primary)"),
+      new CategoryItem("business1000", "Business", "var(--variant)"),
     ]
   ) {
     this.save();

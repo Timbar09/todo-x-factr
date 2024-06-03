@@ -129,7 +129,7 @@ const initApp = (): void => {
     const itemId: string = crypto.randomUUID();
 
     if (selectedCategory) {
-      const category = categoryList.findCategoryByName(selectedCategory);
+      const category = categoryList.findCategoryById(selectedCategory);
 
       if (!category) {
         return console.error("Category not found");
