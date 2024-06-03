@@ -18,9 +18,7 @@ export default class CategoryList implements List {
       new CategoryItem("personal1000", "Personal", "var(--primary)"),
       new CategoryItem("business1000", "Business", "var(--variant)"),
     ]
-  ) {
-    this.save();
-  }
+  ) {}
 
   get categories(): CategoryItem[] {
     return this._categories;
@@ -35,11 +33,17 @@ export default class CategoryList implements List {
       _id: string;
       _name: string;
       _color: string;
+      _items: Array<string>;
     }[] = JSON.parse(storedCategories);
 
     this._categories = parsedCategories.map(
       (category) =>
-        new CategoryItem(category._id, category._name, category._color)
+        new CategoryItem(
+          category._id,
+          category._name,
+          category._color,
+          category._items
+        )
     );
   }
 

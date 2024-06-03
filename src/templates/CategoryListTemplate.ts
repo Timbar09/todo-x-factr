@@ -17,8 +17,11 @@ export default class CategoryListTemplate implements DOMList {
   render(categoryList: CategoryList): void {
     this.ul.innerHTML = "";
 
+    categoryList.load();
+
     categoryList.categories.forEach((category) => {
       const li = document.createElement("li");
+      const numberOfItems = category.items.length;
 
       const liContainer = document.createElement("button");
       liContainer.className = "app__category--item";
@@ -27,7 +30,9 @@ export default class CategoryListTemplate implements DOMList {
 
       const categoryCount = document.createElement("span");
       categoryCount.className = "app__category--item__count";
-      categoryCount.textContent = `${category.items.length.toString()} tasks`;
+      categoryCount.textContent = `${numberOfItems} task${
+        numberOfItems === 1 ? "" : "s"
+      }`;
 
       const categoryName = document.createElement("h4");
       categoryName.className = "app__category--item__title";
