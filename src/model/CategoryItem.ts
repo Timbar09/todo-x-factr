@@ -3,6 +3,9 @@ export interface Category {
   name: string;
   color: string;
   items: string[];
+  addItem: (itemId: string) => void;
+  removeItem: (itemId: string) => void;
+  clearItems: () => void;
 }
 
 export default class CategoryItem implements Category {
@@ -43,5 +46,13 @@ export default class CategoryItem implements Category {
 
   addItem(itemId: string): void {
     this._items.push(itemId);
+  }
+
+  removeItem(itemId: string): void {
+    this._items = this._items.filter((id) => id !== itemId);
+  }
+
+  clearItems(): void {
+    this._items = [];
   }
 }

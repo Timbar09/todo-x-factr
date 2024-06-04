@@ -176,6 +176,10 @@ const initApp = (): void => {
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();
+    categoryList.categories.forEach((category) => {
+      category.clearItems();
+    });
+    categoryList.save();
     listTemplate.clear();
   });
 
