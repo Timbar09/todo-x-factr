@@ -3,7 +3,7 @@ import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
 import CategoryList from "./model/CategoryList";
 import CategoryItem from "./model/CategoryItem";
-import CategoryOptionsTemplate from "./templates/CategoryOptionsTemplate";
+import CategorySelectionTemplate from "./templates/CategorySelectionTemplate";
 import CategoryListTemplate from "./templates/CategoryListTemplate";
 import {
   addClass,
@@ -104,7 +104,7 @@ const initApp = (): void => {
   const fullList = FullList.instance;
   const categoryList = CategoryList.instance;
   const listTemplate = ListTemplate.instance;
-  const categoryOptionsTemplate = CategoryOptionsTemplate.instance;
+  const categoryOptionsTemplate = CategorySelectionTemplate.instance;
   const categoryListTemplate = CategoryListTemplate.instance;
 
   const itemEntryForm = document.getElementById(
