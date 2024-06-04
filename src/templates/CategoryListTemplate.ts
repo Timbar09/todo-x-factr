@@ -1,11 +1,13 @@
 import CategoryList from "../model/CategoryList";
+import CategoryItem from "../model/CategoryItem";
+import { Observer } from "../model/CategoryList";
 
 interface DOMList {
   ul: HTMLUListElement;
   render(categoryList: CategoryList): void;
 }
 
-export default class CategoryListTemplate implements DOMList {
+export default class CategoryListTemplate implements DOMList, Observer {
   ul: HTMLUListElement;
 
   static instance: CategoryListTemplate = new CategoryListTemplate();
@@ -14,10 +16,25 @@ export default class CategoryListTemplate implements DOMList {
     this.ul = document.getElementById("categoryList") as HTMLUListElement;
   }
 
+  update(category: CategoryItem): void {
+    const categoryCount = this.ul.querySelector(
+      `[data-category-id="${category.id}"] .app__category--item__count`
+    );
+
+    if (!categoryCount) return;
+
+    const numberOfItems = category.items.length;
+    categoryCount.textContent = `${numberOfItems} task${
+      numberOfItems === 1 ? "" : "s"
+    }`;
+  }
+
   render(categoryList: CategoryList): void {
     this.ul.innerHTML = "";
 
     categoryList.load();
+
+    categoryList.addObserver(this);
 
     categoryList.categories.forEach((category) => {
       const li = document.createElement("li");
@@ -27,6 +44,7 @@ export default class CategoryListTemplate implements DOMList {
       liContainer.className = "app__category--item";
       liContainer.title = category.name;
       liContainer.ariaLabel = category.name;
+      liContainer.dataset.categoryId = category.id;
 
       const categoryCount = document.createElement("span");
       categoryCount.className = "app__category--item__count";

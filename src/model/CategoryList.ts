@@ -10,8 +10,14 @@ interface List {
   updateCategory: (UpdatedCategory: CategoryItem) => void;
 }
 
+export interface Observer {
+  update: (category: CategoryItem) => void;
+}
+
 export default class CategoryList implements List {
   static instance: CategoryList = new CategoryList();
+
+  private observers: Observer[] = [];
 
   private constructor(
     private _categories: CategoryItem[] = [
@@ -51,9 +57,22 @@ export default class CategoryList implements List {
     localStorage.setItem("categories", JSON.stringify(this._categories));
   }
 
+  addObserver(observer: Observer): void {
+    this.observers.push(observer);
+  }
+
+  removeObserver(observer: Observer): void {
+    this.observers = this.observers.filter((obs) => obs !== observer);
+  }
+
+  notifyObservers(category: CategoryItem): void {
+    this.observers.forEach((observer) => observer.update(category));
+  }
+
   addCategory(category: CategoryItem): void {
     this._categories.push(category);
     this.save();
+    this.notifyObservers(category);
   }
 
   findCategoryById(id: string): CategoryItem | undefined {
@@ -71,5 +90,6 @@ export default class CategoryList implements List {
       category.id === updatedCategory.id ? updatedCategory : category
     );
     this.save();
+    this.notifyObservers(updatedCategory);
   }
 }
