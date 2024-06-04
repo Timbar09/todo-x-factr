@@ -1,13 +1,15 @@
 import CategoryList from "../model/CategoryList";
 import CategoryItem from "../model/CategoryItem";
-import { Observer } from "../model/CategoryList";
+import Observer from "../types/Observer";
 
 interface DOMList {
   ul: HTMLUListElement;
   render(categoryList: CategoryList): void;
 }
 
-export default class CategoryListTemplate implements DOMList, Observer {
+export default class CategoryListTemplate
+  implements DOMList, Observer<CategoryItem>
+{
   ul: HTMLUListElement;
 
   static instance: CategoryListTemplate = new CategoryListTemplate();
@@ -34,7 +36,7 @@ export default class CategoryListTemplate implements DOMList, Observer {
 
     categoryList.load();
 
-    categoryList.addObserver(this);
+    categoryList.addCategoryObserver(this);
 
     categoryList.categories.forEach((category) => {
       const li = document.createElement("li");

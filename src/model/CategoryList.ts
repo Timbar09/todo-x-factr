@@ -1,4 +1,5 @@
 import CategoryItem from "./CategoryItem";
+import Observer from "../types/Observer";
 
 interface List {
   categories: CategoryItem[];
@@ -10,14 +11,10 @@ interface List {
   updateCategory: (UpdatedCategory: CategoryItem) => void;
 }
 
-export interface Observer {
-  update: (category: CategoryItem) => void;
-}
-
 export default class CategoryList implements List {
   static instance: CategoryList = new CategoryList();
 
-  private observers: Observer[] = [];
+  private categoryObservers: Observer<CategoryItem>[] = [];
 
   private constructor(
     private _categories: CategoryItem[] = [
@@ -57,22 +54,26 @@ export default class CategoryList implements List {
     localStorage.setItem("categories", JSON.stringify(this._categories));
   }
 
-  addObserver(observer: Observer): void {
-    this.observers.push(observer);
+  // Category Observers
+
+  addCategoryObserver(observer: Observer<CategoryItem>): void {
+    this.categoryObservers.push(observer);
   }
 
-  removeObserver(observer: Observer): void {
-    this.observers = this.observers.filter((obs) => obs !== observer);
+  removeCategoryObserver(observer: Observer<CategoryItem>): void {
+    this.categoryObservers = this.categoryObservers.filter(
+      (obs) => obs !== observer
+    );
   }
 
-  notifyObservers(category: CategoryItem): void {
-    this.observers.forEach((observer) => observer.update(category));
+  notifyCategoryObservers(category: CategoryItem): void {
+    this.categoryObservers.forEach((observer) => observer.update(category));
   }
 
   addCategory(category: CategoryItem): void {
     this._categories.push(category);
     this.save();
-    this.notifyObservers(category);
+    this.notifyCategoryObservers(category);
   }
 
   findCategoryById(id: string): CategoryItem | undefined {
@@ -90,6 +91,6 @@ export default class CategoryList implements List {
       category.id === updatedCategory.id ? updatedCategory : category
     );
     this.save();
-    this.notifyObservers(updatedCategory);
+    this.notifyCategoryObservers(updatedCategory);
   }
 }
