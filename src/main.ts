@@ -178,12 +178,20 @@ const initApp = (): void => {
     fullList.clearList();
     categoryList.categories.forEach((category) => {
       category.clearItems();
+      categoryList.updateCategory(category);
     });
-    categoryList.save();
     listTemplate.clear();
   });
 
   clearCompletedButton.addEventListener("click", (): void => {
+    categoryList.categories.forEach((category) => {
+      fullList.list.forEach((item) => {
+        if (item.checked) {
+          category.removeItem(item.id);
+        }
+      });
+      categoryList.updateCategory(category);
+    });
     fullList.ClearCompleted();
     listTemplate.render(fullList, categoryList);
   });

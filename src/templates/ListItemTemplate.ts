@@ -66,6 +66,12 @@ export default class ListItemTemplate {
 
     deleteButton.addEventListener("click", () => {
       fullList.removeItem(item.id);
+      const updatedCategory = categoryList.findCategoryById(item.categoryId);
+      if (updatedCategory) {
+        updatedCategory.removeItem(item.id);
+        categoryList.updateCategory(updatedCategory);
+      }
+
       listTemplate.render(fullList, categoryList);
     });
   }
