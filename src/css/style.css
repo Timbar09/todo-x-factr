@@ -388,6 +388,8 @@ a {
 }
 
 .app__category--item__progressBar {
+  --progress: 0;
+
   position: relative;
   height: 0.175em;
   border-radius: 5em;
@@ -413,7 +415,7 @@ a {
 }
 
 .app__category--list li:first-child .app__category--item__progressBar--fill {
-  width: 71%;
+  width: var(--progress);
   background-color: var(--primary);
 }
 
@@ -424,7 +426,7 @@ a {
 }
 
 .app__category--list li:last-child .app__category--item__progressBar--fill {
-  width: 29%;
+  width: var(--progress);
   background-color: var(--variant);
 }
 

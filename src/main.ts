@@ -170,7 +170,6 @@ const initApp = (): void => {
     const selectedOption =
       itemCategorySelection.options[itemCategorySelection.selectedIndex];
     const color: string = selectedOption.getAttribute("data-color") as string;
-    console.log(color);
     categoryColor.style.setProperty("--color", color);
   });
 

@@ -1,3 +1,4 @@
+import FullList from "../model/FullList";
 import CategoryList from "../model/CategoryList";
 import CategoryItem from "../model/CategoryItem";
 import Observer from "../types/Observer";
@@ -42,6 +43,17 @@ export default class CategoryListTemplate
       const li = document.createElement("li");
       const numberOfItems = category.items.length;
 
+      const fullList = FullList.instance;
+      fullList.load();
+
+      const numberOfCompletedItems = category.items.filter(
+        (itemId) => fullList.list.find((item) => item.id === itemId)?.checked
+      ).length;
+
+      const completionPercentage = Math.round(
+        (numberOfCompletedItems / numberOfItems) * 100
+      );
+
       const liContainer = document.createElement("button");
       liContainer.className = "app__category--item";
       liContainer.title = category.name;
@@ -60,6 +72,10 @@ export default class CategoryListTemplate
 
       const categoryProgressBar = document.createElement("div");
       categoryProgressBar.className = "app__category--item__progressBar";
+      categoryProgressBar.style.setProperty(
+        "--progress",
+        `${completionPercentage}%`
+      );
 
       const categoryProgressBarFill = document.createElement("span");
       categoryProgressBarFill.className =
