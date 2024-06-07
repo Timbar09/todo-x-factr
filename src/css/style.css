@@ -501,7 +501,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-300);
+  background-color: var(--bg-200);
   display: grid;
   place-items: center;
   /* display: none; */
@@ -515,21 +515,20 @@ a {
 
 .app__task--entry__input,
 .app__task--entry__select {
+  border: none;
+  font-size: 1.5em;
   width: 100%;
-  border: 2px solid transparent;
-  border-radius: 5em;
   color: var(--text-200);
-  background-color: var(--bg-200);
-  box-shadow: var(--shadow);
+  background-color: transparent;
 }
 
-.app__task--entry__input {
+/* .app__task--entry__input {
   padding: 0.5em 1em;
 }
 
 .app__task--entry__select {
   padding: 0.5em 1em;
-}
+} */
 
 .app__task--entry__select--placeholder {
   color: var(--text-300);
