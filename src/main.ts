@@ -1,6 +1,10 @@
 import FullList from "./model/FullList";
 import ListItem from "./model/ListItem";
 import ListTemplate from "./templates/ListTemplate";
+import CategoryList from "./model/CategoryList";
+import CategoryItem from "./model/CategoryItem";
+import CategorySelectionTemplate from "./templates/CategorySelectionTemplate";
+import CategoryListTemplate from "./templates/CategoryListTemplate";
 import {
   addClass,
   toggleClass,
@@ -69,7 +73,6 @@ taskListMenuButton.addEventListener("click", () => {
 
   taskListMenuItems.forEach((item) => {
     item.addEventListener("click", () => {
-      console.log("clicked task list menu item");
       removeClass(taskListMenu, "open");
     });
   });
@@ -99,11 +102,20 @@ if (templateOptions.length) {
 
 const initApp = (): void => {
   const fullList = FullList.instance;
+  const categoryList = CategoryList.instance;
   const listTemplate = ListTemplate.instance;
+  const categoryOptionsTemplate = CategorySelectionTemplate.instance;
+  const categoryListTemplate = CategoryListTemplate.instance;
 
   const itemEntryForm = document.getElementById(
     "itemEntryForm"
   ) as HTMLFormElement;
+  const itemCategorySelection = document.getElementById(
+    "categorySelect"
+  ) as HTMLSelectElement;
+  const categoryColor = document.getElementById(
+    "categoryColor"
+  ) as HTMLDivElement;
 
   itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
     e.preventDefault();
@@ -111,17 +123,41 @@ const initApp = (): void => {
     const itemInput = document.getElementById("newItem") as HTMLInputElement;
     const newEntryText: string = itemInput.value.trim();
 
-    if (!newEntryText.length) return;
+    const selectedCategory: string = itemCategorySelection.value;
+    let updatedCategoryItem: CategoryItem | null = null;
 
     const itemId: string = crypto.randomUUID();
 
-    const newItem = new ListItem(itemId, newEntryText);
+    if (selectedCategory) {
+      const category = categoryList.findCategoryById(selectedCategory);
+
+      if (!category) {
+        return console.error("Category not found");
+      }
+
+      updatedCategoryItem = category;
+
+      updatedCategoryItem.addItem(itemId);
+      categoryList.updateCategory(updatedCategoryItem);
+    }
+
+    if (!newEntryText.length) return;
+
+    const newItem = new ListItem(
+      itemId,
+      newEntryText,
+      false,
+      updatedCategoryItem?.id
+    );
 
     itemInput.value = "";
 
     fullList.addItem(newItem);
-    listTemplate.render(fullList);
+    listTemplate.render(fullList, categoryList);
   });
+
+  categoryListTemplate.render(categoryList);
+  categoryOptionsTemplate.render(categoryList);
 
   const clearItemsButton = document.getElementById(
     "clearItemsButton"
@@ -130,18 +166,37 @@ const initApp = (): void => {
     "clearCompletedItemsButton"
   ) as HTMLButtonElement;
 
+  itemCategorySelection.addEventListener("change", () => {
+    const selectedOption =
+      itemCategorySelection.options[itemCategorySelection.selectedIndex];
+    const color: string = selectedOption.getAttribute("data-color") as string;
+    categoryColor.style.setProperty("--color", color);
+  });
+
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();
+    categoryList.categories.forEach((category) => {
+      category.clearItems();
+      categoryList.updateCategory(category);
+    });
     listTemplate.clear();
   });
 
   clearCompletedButton.addEventListener("click", (): void => {
+    categoryList.categories.forEach((category) => {
+      fullList.list.forEach((item) => {
+        if (item.checked) {
+          category.removeItem(item.id);
+        }
+      });
+      categoryList.updateCategory(category);
+    });
     fullList.ClearCompleted();
-    listTemplate.render(fullList);
+    listTemplate.render(fullList, categoryList);
   });
 
   fullList.load();
-  listTemplate.render(fullList);
+  listTemplate.render(fullList, categoryList);
 };
 
 document.addEventListener("DOMContentLoaded", () => {

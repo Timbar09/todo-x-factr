@@ -24,11 +24,16 @@ export default class FullList implements List {
 
     if (typeof storedList !== "string") return;
 
-    const parsedList: { _id: string; _item: string; _checked: boolean }[] =
-      JSON.parse(storedList);
+    const parsedList: {
+      _id: string;
+      _title: string;
+      _checked: boolean;
+      _categoryId: string;
+    }[] = JSON.parse(storedList);
 
     this._list = parsedList.map(
-      (item) => new ListItem(item._id, item._item, item._checked)
+      (item) =>
+        new ListItem(item._id, item._title, item._checked, item._categoryId)
     );
   }
 
@@ -54,5 +59,14 @@ export default class FullList implements List {
   removeItem(id: string): void {
     this._list = this._list.filter((item) => item.id !== id);
     this.save();
+  }
+
+  checkItem(id: string): void {
+    const item = this._list.find((item) => item.id === id);
+
+    if (item) {
+      item.checked = !item.checked;
+      this.save();
+    }
   }
 }

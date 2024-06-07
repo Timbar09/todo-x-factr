@@ -63,6 +63,7 @@ h4 {
 }
 
 input,
+select,
 button {
   font: inherit;
 }
@@ -264,7 +265,6 @@ a {
 
 .hero__nav--popup__container {
   padding: 1em;
-  /* padding-bottom: 1em; */
 }
 
 .hero__nav--popup.open {
@@ -387,21 +387,24 @@ a {
   font-size: 0.75em;
 }
 
-.app__category--item__progresBar {
+.app__category--item__progressBar {
+  --progress: 0;
+
   position: relative;
   height: 0.175em;
   border-radius: 5em;
   background-color: var(--text-200);
 }
 
-.app__category--item__progresBar--fill {
+.app__category--item__progressBar--fill {
   display: inline-block;
   position: absolute;
   height: 100%;
   border-radius: inherit;
+  transition: width 200ms ease-in-out;
 }
 
-.app__category--item__progresBar--fill::before {
+.app__category--item__progressBar--fill::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -412,25 +415,25 @@ a {
   background-color: var(--primary);
 }
 
-.app__category--list li:first-child .app__category--item__progresBar--fill {
-  width: 71%;
+.app__category--list li:first-child .app__category--item__progressBar--fill {
+  width: var(--progress);
   background-color: var(--primary);
 }
 
 .app__category--list
   li:first-child
-  .app__category--item__progresBar--fill::before {
+  .app__category--item__progressBar--fill::before {
   background-color: var(--primary);
 }
 
-.app__category--list li:last-child .app__category--item__progresBar--fill {
-  width: 29%;
+.app__category--list li:last-child .app__category--item__progressBar--fill {
+  width: var(--progress);
   background-color: var(--variant);
 }
 
 .app__category--list
   li:last-child
-  .app__category--item__progresBar--fill::before {
+  .app__category--item__progressBar--fill::before {
   background-color: var(--variant);
 }
 
@@ -492,14 +495,15 @@ a {
   opacity: 0.75;
 }
 
-.app__task--entry {
+.app__task--entry__title,
+.app__task--entry__category {
   position: relative;
   margin: 0 2em 1em;
 }
 
-.app__task--entry--input {
+.app__task--entry__input,
+.app__task--entry__select {
   width: 100%;
-  padding: 0.5em 1em;
   border: 2px solid transparent;
   border-radius: 5em;
   color: var(--text-200);
@@ -507,12 +511,24 @@ a {
   box-shadow: var(--shadow);
 }
 
-.app__task--entry--input:focus {
+.app__task--entry__input {
+  padding: 0.5em 1em;
+}
+
+.app__task--entry__select {
+  padding: 0.5em 1em;
+}
+
+.app__task--entry__select--placeholder {
+  color: var(--text-300);
+}
+
+.app__task--entry__input:focus {
   outline: none;
   border-color: var(--primary);
 }
 
-.app__task--entry--button {
+.app__task--entry__button {
   all: unset;
   cursor: pointer;
   position: absolute;
@@ -529,8 +545,31 @@ a {
   transition: opacity 100ms ease-in-out;
 }
 
-.app__task--entry--button:hover {
+.app__task--entry__button:hover {
   opacity: 0.75;
+}
+
+.app__task--entry__category {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.app__task--entry__category--color {
+  --color: var(--text-300);
+
+  padding: 0 0.5em;
+  display: grid;
+}
+
+.app__task--entry__category--color__indicator {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  outline: solid 0.125em var(--color);
+  outline-offset: 0.25em;
+  background-color: var(--color);
 }
 
 .app__task--list {
@@ -565,6 +604,8 @@ a {
 }
 
 .app__task--list__item--checkbox {
+  --outline-color: var(--text-200);
+
   padding-left: var(--padding);
   display: flex;
   align-items: center;
@@ -577,7 +618,7 @@ a {
   position: relative;
   width: 1.25em;
   height: 1.25em;
-  outline: 0.195em solid;
+  outline: 0.195em solid var(--outline-color);
   border-radius: 50%;
   background-color: transparent;
   rotate: -45deg;
@@ -636,7 +677,7 @@ a {
   display: block;
   position: absolute;
   top: 50%;
-  left: -5%;
+  left: -0.25em;
   width: 0;
   height: 0.115em;
   border-radius: 1em;
@@ -664,7 +705,7 @@ a {
   input[type="checkbox"]:checked
   + label
   .app__task--list__item--text::before {
-  width: 110%;
+  width: calc(100% + 0.5em);
 }
 
 .app__task--list__item--button-container {
