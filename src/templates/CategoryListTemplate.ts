@@ -77,7 +77,7 @@ export default class CategoryListTemplate
           "--progress",
           `${completionPercentage}%`
         );
-      }, 200);
+      }, 400);
 
       const categoryProgressBarFill = document.createElement("span");
       categoryProgressBarFill.className =

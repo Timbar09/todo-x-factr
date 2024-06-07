@@ -232,67 +232,6 @@
                 </div>
               </header>
 
-              <form class="app__task--entry" id="itemEntryForm">
-                <div class="app__task--entry__title">
-                  <label for="newItem" class="offscreen"
-                    >Enter a new to do item</label
-                  >
-                  <input
-                    class="app__task--entry__input"
-                    id="newItem"
-                    type="text"
-                    maxlength="40"
-                    autocomplete="off"
-                    placeholder="Add a new item to the list"
-                  />
-
-                  <button
-                    id="addItem"
-                    class="app__task--entry__button"
-                    title="Add new item"
-                    aria-label="Add new item to list"
-                  >
-                    <span class="material-symbols-outlined"> add </span>
-                  </button>
-                </div>
-
-                <div class="app__task--entry__category">
-                  <label for="category" class="offscreen"
-                    >Select a category for the item</label
-                  >
-                  <select
-                    class="app__task--entry__select"
-                    id="categorySelect"
-                    name="category"
-                    autocomplete="off"
-                  >
-                    <option
-                      value=""
-                      disabled
-                      selected
-                      class="app__task--entry__select--placeholder"
-                      data-color="--text-300"
-                    >
-                      Select a category
-                    </option>
-                    <!-- <option value="personal" data-color="--primary">
-                      Personal
-                    </option>
-                    <option value="business" data-color="--variant">
-                      Business
-                    </option> -->
-                  </select>
-
-                  <div
-                    class="app__task--entry__category--color"
-                    id="categoryColor"
-                  >
-                    <span class="app__task--entry__category--color__indicator">
-                    </span>
-                  </div>
-                </div>
-              </form>
-
               <ul id="listItems" class="app__task--list padding-x">
                 <!-- <li class="app__task--list__item">
                       <div class="app__task--list__item--checkbox">
@@ -339,6 +278,69 @@
               </ul>
             </div>
           </div>
+        </section>
+
+        <section
+          class="app__task--entry__container"
+          id="itemEntryFormContainer"
+        >
+          <form class="app__task--entry" id="itemEntryForm">
+            <div class="app__task--entry__title">
+              <label for="newItem" class="offscreen"
+                >Enter a new to do item</label
+              >
+              <input
+                class="app__task--entry__input"
+                id="newItem"
+                type="text"
+                maxlength="40"
+                autocomplete="off"
+                placeholder="Add a new item to the list"
+              />
+
+              <button
+                id="addItem"
+                class="app__task--entry__button"
+                title="Add new item"
+                aria-label="Add new item to list"
+              >
+                <span class="material-symbols-outlined"> add </span>
+              </button>
+            </div>
+
+            <div class="app__task--entry__category">
+              <label for="category" class="offscreen"
+                >Select a category for the item</label
+              >
+              <select
+                class="app__task--entry__select"
+                id="categorySelect"
+                name="category"
+                autocomplete="off"
+              >
+                <option
+                  value=""
+                  disabled
+                  selected
+                  class="app__task--entry__select--placeholder"
+                  data-color="--text-300"
+                >
+                  Select a category
+                </option>
+                <!-- <option value="personal" data-color="--primary">
+                Personal
+              </option>
+              <option value="business" data-color="--variant">
+                Business
+              </option> -->
+              </select>
+
+              <div class="app__task--entry__category--color" id="categoryColor">
+                <span class="app__task--entry__category--color__indicator">
+                </span>
+              </div>
+            </div>
+          </form>
         </section>
       </div>
     </main>
