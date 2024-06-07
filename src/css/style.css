@@ -30,6 +30,10 @@ body {
   --text-400: rgba(226, 253, 255, 0.1);
 
   --shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
+  --shadow-200: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+
+  --shadow-variant: 0 0 0.5em 0.125em rgba(14, 98, 234, 0.1);
+  --shadow-variant-200: 0 0 0.75em 0.15em rgba(14, 98, 234, 0.3);
 
   padding: 0;
   margin: 0;
@@ -565,19 +569,18 @@ a {
 }
 
 .app__task--entry__button {
-  all: unset;
-  cursor: pointer;
   position: absolute;
-  top: 0.25em;
-  right: 0.25em;
-  bottom: 0.25em;
-  padding: 0 0.385em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  right: 2em;
+  bottom: 2em;
+  padding: 0.75em 1.5em;
   border-radius: 5em;
-  display: grid;
-  place-items: center;
-  background-color: var(--primary);
-  color: var(--text-100);
-  box-shadow: var(--shadow);
+  background-color: var(--variant);
+  color: var(--bg-200);
+  box-shadow: var(--shadow-variant-200);
+  cursor: pointer;
   transition: opacity 100ms ease-in-out;
 }
 
