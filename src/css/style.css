@@ -401,6 +401,7 @@ a {
   position: absolute;
   height: 100%;
   border-radius: inherit;
+  transition: width 200ms ease-in-out;
 }
 
 .app__category--item__progressBar--fill::before {

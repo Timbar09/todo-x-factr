@@ -72,10 +72,12 @@ export default class CategoryListTemplate
 
       const categoryProgressBar = document.createElement("div");
       categoryProgressBar.className = "app__category--item__progressBar";
-      categoryProgressBar.style.setProperty(
-        "--progress",
-        `${completionPercentage}%`
-      );
+      setTimeout(() => {
+        categoryProgressBar.style.setProperty(
+          "--progress",
+          `${completionPercentage}%`
+        );
+      }, 200);
 
       const categoryProgressBarFill = document.createElement("span");
       categoryProgressBarFill.className =

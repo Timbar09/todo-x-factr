@@ -2,6 +2,7 @@ import FullList from "../model/FullList";
 import CategoryList from "../model/CategoryList";
 import ListItem from "../model/ListItem";
 import ListTemplate from "./ListTemplate";
+import CategoryListTemplate from "./CategoryListTemplate";
 
 export default class ListItemTemplate {
   element: HTMLLIElement;
@@ -27,9 +28,7 @@ export default class ListItemTemplate {
       ".app__task--list__item--button"
     ) as HTMLButtonElement;
 
-    checkbox.addEventListener("change", () =>
-      this.handleCheckboxChange(checkbox)
-    );
+    checkbox.addEventListener("change", () => this.handleCheckboxChange());
     deleteButton.addEventListener("click", () =>
       this.handleDeleteButtonClick()
     );
@@ -58,9 +57,11 @@ export default class ListItemTemplate {
     `;
   }
 
-  private handleCheckboxChange(checkbox: HTMLInputElement): void {
-    this.item.checked = checkbox.checked;
-    this.fullList.save();
+  private handleCheckboxChange(): void {
+    const categories = CategoryListTemplate.instance;
+
+    this.fullList.checkItem(this.item.id);
+    categories.render(this.categoryList);
   }
 
   private handleDeleteButtonClick(): void {

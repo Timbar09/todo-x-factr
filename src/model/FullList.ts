@@ -60,4 +60,13 @@ export default class FullList implements List {
     this._list = this._list.filter((item) => item.id !== id);
     this.save();
   }
+
+  checkItem(id: string): void {
+    const item = this._list.find((item) => item.id === id);
+
+    if (item) {
+      item.checked = !item.checked;
+      this.save();
+    }
+  }
 }
