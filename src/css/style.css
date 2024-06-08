@@ -535,11 +535,28 @@ a {
   width: 100%;
 }
 
+.app__task--entry__select--container {
+  position: relative;
+}
+
 .app__task--entry__select {
-  padding: 0.5em 1em;
+  -webkit-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   font-size: 1.15em;
+  padding: 0.5em 2em 0.5em 1em;
   border-radius: 10rem;
   border: solid 0.125em var(--text-400);
+}
+
+.app__task--entry__select--icon {
+  display: inline-block;
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  translate: 0 -50%;
+  pointer-events: none;
 }
 
 .app__task--entry__select--placeholder {

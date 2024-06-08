@@ -298,31 +298,39 @@
             </div>
 
             <div class="app__task--entry__category">
-              <label for="category" class="offscreen"
-                >Select a category for the item</label
-              >
-              <select
-                class="app__task--entry__select"
-                id="categorySelect"
-                name="category"
-                autocomplete="off"
-              >
-                <option
-                  value=""
-                  disabled
-                  selected
-                  class="app__task--entry__select--placeholder"
-                  data-color="--text-300"
+              <div class="app__task--entry__select--container">
+                <label for="category" class="offscreen"
+                  >Select a category for the item</label
                 >
-                  Select category
-                </option>
-                <!-- <option value="personal" data-color="--primary">
+                <select
+                  class="app__task--entry__select"
+                  id="categorySelect"
+                  name="category"
+                  autocomplete="off"
+                >
+                  <option
+                    value=""
+                    disabled
+                    selected
+                    class="app__task--entry__select--placeholder"
+                    data-color="--text-300"
+                  >
+                    Select category
+                  </option>
+                  <!-- <option value="personal" data-color="--primary">
                 Personal
               </option>
               <option value="business" data-color="--variant">
                 Business
               </option> -->
-              </select>
+                </select>
+
+                <span
+                  class="material-symbols-outlined app__task--entry__select--icon"
+                >
+                  keyboard_arrow_down
+                </span>
+              </div>
 
               <div class="app__task--entry__category--color" id="categoryColor">
                 <span class="app__task--entry__category--color__indicator">
@@ -339,7 +347,7 @@
               >
                 <span> New task </span>
                 <span class="material-symbols-outlined">
-                  keyboard_arrow_down
+                  keyboard_arrow_up
                 </span>
               </button>
             </div>
