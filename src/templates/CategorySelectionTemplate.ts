@@ -1,4 +1,5 @@
 import CategoryList from "../model/CategoryList";
+import CategoryItem from "../model/CategoryItem";
 
 interface DOMList {
   select: HTMLSelectElement;
@@ -17,6 +18,10 @@ export default class CategoryOptionsTemplate implements DOMList {
   }
 
   render(categoryList: CategoryList) {
+    this.renderOptions(categoryList);
+  }
+
+  private renderOptions(categoryList: CategoryList): void {
     categoryList.categories.forEach((category) => {
       const option = document.createElement("option");
 
