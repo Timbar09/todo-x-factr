@@ -1,5 +1,4 @@
 import CategoryList from "../model/CategoryList";
-import CategoryItem from "../model/CategoryItem";
 
 interface DOMList {
   select: HTMLSelectElement;

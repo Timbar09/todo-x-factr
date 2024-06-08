@@ -297,6 +297,49 @@
               />
             </div>
 
+            <div class="app__task--entry__customSelect">
+              <label for="button" class="offscreen"> Category</label>
+              <button
+                class="app__task--entry__dropdownButton"
+                id="categoryButton"
+              >
+                <span>Select category</span>
+
+                <span class="material-symbols-outlined">
+                  keyboard_arrow_down
+                </span>
+              </button>
+
+              <div class="app__task--entry__dropdown">
+                <label class="select-item" for="select-personal">
+                  Personal
+                </label>
+                <input
+                  class="option"
+                  type="radio"
+                  name="category"
+                  id="select-personal"
+                  value="personal"
+                />
+
+                <label class="select-item" for="select-business">
+                  Business
+                </label>
+                <input
+                  class="option"
+                  type="radio"
+                  name="category"
+                  id="select-business"
+                  value="business"
+                />
+              </div>
+
+              <div class="app__task--entry__category--color" id="categoryColor">
+                <span class="app__task--entry__category--color__indicator">
+                </span>
+              </div>
+            </div>
+
             <div class="app__task--entry__category">
               <div class="app__task--entry__select--container">
                 <label for="category" class="offscreen"
@@ -332,10 +375,10 @@
                 </span>
               </div>
 
-              <div class="app__task--entry__category--color" id="categoryColor">
+              <!-- <div class="app__task--entry__category--color" id="categoryColor">
                 <span class="app__task--entry__category--color__indicator">
                 </span>
-              </div>
+              </div> -->
             </div>
 
             <div class="app__task--entry__button--container">
