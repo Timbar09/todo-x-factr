@@ -562,15 +562,34 @@ a {
   color: var(--text-300);
   border: solid 0.125em var(--text-400);
   border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+}
+
+.app__task--entry__dropdownButton:active {
+  background-color: var(--bg-300);
+}
+
+.app__task--entry__dropdownButton.selected {
+  color: var(--text-200);
+  background-color: var(--bg-300);
 }
 
 .app__task--entry__dropdownButton > span:last-child {
+  display: inline-block;
+  position: relative;
   color: var(--text-200);
+  transition: rotate 200ms ease-in-out;
+}
+
+.app__task--entry__dropdownButton > span:last-child.open {
+  rotate: 180deg;
 }
 
 .app__task--entry__dropdown {
+  display: none;
   position: absolute;
-  top: 125%;
+  top: 110%;
   left: 2em;
   right: 2em;
   padding: 0.125em;
@@ -578,6 +597,10 @@ a {
   border-radius: var(--radius-50);
   background-color: var(--bg-300);
   z-index: 10;
+}
+
+.app__task--entry__dropdown.open {
+  display: block;
 }
 
 .app__task--entry__dropdown .option {
@@ -589,10 +612,11 @@ a {
   padding: 0 0.5em;
   cursor: pointer;
   border-radius: var(--radius-25);
-  transition: background-color 100ms ease-in-out;
+  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
 }
 
 .app__task--entry__dropdown .select-item:hover {
+  color: var(--text-100);
   background-color: var(--bg-100);
 }
 

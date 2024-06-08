@@ -113,9 +113,6 @@ const initApp = (): void => {
   const itemCategorySelection = document.getElementById(
     "categorySelect"
   ) as HTMLSelectElement;
-  const categoryColor = document.getElementById(
-    "categoryColor"
-  ) as HTMLDivElement;
 
   itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
     e.preventDefault();
@@ -165,13 +162,6 @@ const initApp = (): void => {
   const clearCompletedButton = document.getElementById(
     "clearCompletedItemsButton"
   ) as HTMLButtonElement;
-
-  itemCategorySelection.addEventListener("change", () => {
-    const selectedOption =
-      itemCategorySelection.options[itemCategorySelection.selectedIndex];
-    const color: string = selectedOption.getAttribute("data-color") as string;
-    categoryColor.style.setProperty("--color", color);
-  });
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();
