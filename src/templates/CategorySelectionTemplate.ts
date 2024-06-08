@@ -38,6 +38,7 @@ export default class CategoryOptionsTemplate implements DOMList {
     const selectBox = document.createElement("button");
     selectBox.id = "categoryButton";
     selectBox.className = "app__task--entry__dropdownButton";
+    selectBox.tabIndex = 0;
 
     const selectBoxPlaceholder = document.createElement("span");
     selectBoxPlaceholder.textContent = "Select category";
@@ -53,6 +54,11 @@ export default class CategoryOptionsTemplate implements DOMList {
     selectBox.addEventListener("click", () => {
       this.handleSelectBoxClick();
     });
+    selectBox.addEventListener("keydown", (event) => {
+      if (event.key === "Space" || event.key === "Enter") {
+        this.handleSelectBoxClick();
+      }
+    });
 
     this.customSelect.appendChild(label);
     this.customSelect.appendChild(selectBox);
@@ -64,7 +70,6 @@ export default class CategoryOptionsTemplate implements DOMList {
     ) as HTMLDivElement;
 
     categoryList.categories.forEach((category) => {
-      console.log(category.name);
       this.renderSelectItem(category);
     });
 
@@ -76,9 +81,16 @@ export default class CategoryOptionsTemplate implements DOMList {
     selectItem.setAttribute("for", category.id);
     selectItem.className = "select-item";
     selectItem.textContent = category.name;
+    selectItem.tabIndex = 0;
 
     selectItem.addEventListener("click", () => {
       this.handleSelectItemClick(category);
+    });
+    selectItem.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        this.handleSelectItemClick(category);
+        this.closeDropdown();
+      }
     });
 
     const option = document.createElement("input");
@@ -94,6 +106,7 @@ export default class CategoryOptionsTemplate implements DOMList {
     toggleClass(this.dropdown, "open");
 
     this.rotateIcon();
+    this.lockFocus();
 
     document.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
@@ -122,11 +135,33 @@ export default class CategoryOptionsTemplate implements DOMList {
 
     if (this.dropdown.classList.contains("open")) {
       categoryButtonIcon.classList.add("open");
-      console.log(categoryButtonIcon.classList);
     } else {
       categoryButtonIcon.classList.remove("open");
-      console.log(categoryButtonIcon.classList);
     }
+  }
+
+  private lockFocus() {
+    if (!this.dropdown.classList.contains("open")) return;
+
+    const focusableElements = this.dropdown.querySelectorAll(
+      "input, label"
+    ) as NodeListOf<HTMLInputElement | HTMLLabelElement>;
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    this.dropdown.addEventListener("keydown", (event) => {
+      if (event.key === "Tab" && event.shiftKey) {
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else if (event.key === "Tab") {
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    });
   }
 
   private handleSelectItemClick(category: CategoryItem) {
