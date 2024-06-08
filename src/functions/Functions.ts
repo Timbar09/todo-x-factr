@@ -60,3 +60,36 @@ export const getThemeTemplate = (): string => {
 
   return template;
 };
+
+export const openEntryForm = (): void => {
+  const entryForm = document.getElementById("itemEntryFormContainer");
+
+  if (!entryForm) return;
+
+  const lockFocus = (): void => {
+    if (!entryForm.classList.contains("open")) return;
+
+    const focusableElements = entryForm.querySelectorAll(
+      "input, button"
+    ) as NodeListOf<HTMLElement>;
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    entryForm.addEventListener("keydown", (event) => {
+      if (event.key === "Tab" && event.shiftKey) {
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      } else if (event.key === "Tab") {
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      }
+    });
+  };
+
+  addClass(entryForm, "open");
+  lockFocus();
+};
