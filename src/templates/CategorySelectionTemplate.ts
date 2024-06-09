@@ -51,12 +51,12 @@ export default class CategoryOptionsTemplate implements DOMList {
     selectBox.appendChild(selectBoxPlaceholder);
     selectBox.appendChild(selectBoxIcon);
 
-    selectBox.addEventListener("click", () => {
-      this.handleSelectBoxClick();
+    selectBox.addEventListener("click", (event) => {
+      this.handleSelectBoxClick(event);
     });
     selectBox.addEventListener("keydown", (event) => {
       if (event.key === "Space" || event.key === "Enter") {
-        this.handleSelectBoxClick();
+        this.handleSelectBoxClick(event);
       }
     });
 
@@ -102,7 +102,9 @@ export default class CategoryOptionsTemplate implements DOMList {
     this.dropdown.appendChild(selectItem);
   }
 
-  private handleSelectBoxClick() {
+  private handleSelectBoxClick(event: Event) {
+    event.preventDefault();
+
     toggleClass(this.dropdown, "open");
 
     this.rotateIcon();
