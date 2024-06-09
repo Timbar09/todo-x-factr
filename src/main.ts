@@ -11,6 +11,7 @@ import {
   removeClass,
   selectThemeTemplate,
   getThemeTemplate,
+  openEntryForm,
 } from "./functions/Functions";
 
 import "./css/style.css";
@@ -41,6 +42,12 @@ const newTaskInput = document.getElementById("newItem") as HTMLInputElement;
 const buttons = document.querySelectorAll(
   ".button"
 ) as NodeListOf<HTMLButtonElement>;
+const showItemEntryFormButton = document.getElementById(
+  "showItemEntryForm"
+) as HTMLButtonElement;
+const closeItemEntryFormButton = document.getElementById(
+  "closeItemEntryForm"
+) as HTMLButtonElement;
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -84,6 +91,18 @@ openHeroNavPopupButton.addEventListener("click", () => {
 
 closeHeroNavPopupButton.addEventListener("click", () => {
   removeClass(heroNavPopup, "open");
+});
+
+showItemEntryFormButton.addEventListener("click", () => {
+  openEntryForm();
+});
+
+closeItemEntryFormButton.addEventListener("click", () => {
+  const entryForm = document.getElementById("itemEntryFormContainer");
+
+  if (!entryForm) return;
+
+  removeClass(entryForm, "open");
 });
 
 if (templateOptions.length) {

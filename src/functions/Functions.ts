@@ -74,17 +74,22 @@ export const openEntryForm = (): void => {
     ) as NodeListOf<HTMLElement>;
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
+    const textInput = entryForm.querySelector(
+      "input[type='text']"
+    ) as HTMLInputElement;
+
+    textInput.focus();
 
     entryForm.addEventListener("keydown", (event) => {
       if (event.key === "Tab" && event.shiftKey) {
         if (document.activeElement === firstElement) {
           event.preventDefault();
-          firstElement.focus();
+          lastElement.focus();
         }
       } else if (event.key === "Tab") {
         if (document.activeElement === lastElement) {
           event.preventDefault();
-          lastElement.focus();
+          firstElement.focus();
         }
       }
     });
