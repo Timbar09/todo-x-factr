@@ -507,15 +507,41 @@ a {
 }
 
 .app__task--entry__container {
+  --dimension: 4em;
+
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 2em;
+  right: 2em;
+  width: var(--dimension);
+  height: var(--dimension);
   background-color: var(--bg-200);
   display: grid;
   place-items: center;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+  transition: bottom 300ms ease-in-out, right 300ms ease-in-out,
+    width 300ms ease-in-out, height 300ms ease-in-out,
+    border-radius 200ms 200ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+.app__task--entry__container.open {
+  --dimension: 100%;
+
+  bottom: 0;
+  right: 0;
+  border-radius: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.app__task--entryForm__closeButton--container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  cursor: pointer;
 }
 
 .app__task--entry__title,
