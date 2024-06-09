@@ -12,6 +12,7 @@ import {
   selectThemeTemplate,
   getThemeTemplate,
   openEntryForm,
+  closeEntryForm,
 } from "./functions/Functions";
 
 import "./css/style.css";
@@ -98,11 +99,7 @@ showItemEntryFormButton.addEventListener("click", () => {
 });
 
 closeItemEntryFormButton.addEventListener("click", () => {
-  const entryForm = document.getElementById("itemEntryFormContainer");
-
-  if (!entryForm) return;
-
-  removeClass(entryForm, "open");
+  closeEntryForm();
 });
 
 if (templateOptions.length) {
@@ -116,7 +113,7 @@ if (templateOptions.length) {
     });
   });
 } else {
-  console.log("No template options found");
+  console.error("No template options found");
 }
 
 const initApp = (): void => {

@@ -96,5 +96,15 @@ export const openEntryForm = (): void => {
   };
 
   addClass(entryForm, "open");
-  lockFocus();
+  removeClass(entryForm, "close");
+  setTimeout(lockFocus, 100);
+};
+
+export const closeEntryForm = (): void => {
+  const entryForm = document.getElementById("itemEntryFormContainer");
+
+  if (!entryForm) return;
+
+  removeClass(entryForm, "open");
+  addClass(entryForm, "close");
 };
