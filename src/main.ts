@@ -1,11 +1,4 @@
-import FullList from "./model/FullList";
-import ListItem from "./model/ListItem";
-import ListTemplate from "./templates/ListTemplate";
-import CategoryList from "./model/CategoryList";
-import CategoryItem from "./model/CategoryItem";
-import CategorySelectionTemplate from "./templates/CategorySelectionTemplate";
-import CategoryListTemplate from "./templates/CategoryListTemplate";
-
+import initApp from "./functions/InitApp";
 import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
 import { addClass, toggleClass, removeClass } from "./functions/Reusable";
 import {
@@ -113,95 +106,6 @@ if (templateOptions.length) {
 } else {
   console.error("No template options found");
 }
-
-const initApp = (): void => {
-  const fullList = FullList.instance;
-  const categoryList = CategoryList.instance;
-  const listTemplate = ListTemplate.instance;
-  const categoryOptionsTemplate = CategorySelectionTemplate.instance;
-  const categoryListTemplate = CategoryListTemplate.instance;
-
-  const itemEntryForm = document.getElementById(
-    "itemEntryForm"
-  ) as HTMLFormElement;
-  const itemCategorySelection = document.getElementById(
-    "categorySelect"
-  ) as HTMLSelectElement;
-
-  itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
-    e.preventDefault();
-
-    const itemInput = document.getElementById("newItem") as HTMLInputElement;
-    const newEntryText: string = itemInput.value.trim();
-
-    const selectedCategory: string = itemCategorySelection.value;
-    let updatedCategoryItem: CategoryItem | null = null;
-
-    const itemId: string = crypto.randomUUID();
-
-    if (selectedCategory) {
-      const category = categoryList.findCategoryById(selectedCategory);
-
-      if (!category) {
-        return console.error("Category not found");
-      }
-
-      updatedCategoryItem = category;
-
-      updatedCategoryItem.addItem(itemId);
-      categoryList.updateCategory(updatedCategoryItem);
-    }
-
-    if (!newEntryText.length) return;
-
-    const newItem = new ListItem(
-      itemId,
-      newEntryText,
-      false,
-      updatedCategoryItem?.id
-    );
-
-    itemInput.value = "";
-
-    fullList.addItem(newItem);
-    listTemplate.render(fullList, categoryList);
-  });
-
-  categoryListTemplate.render(categoryList);
-  categoryOptionsTemplate.render(categoryList);
-
-  const clearItemsButton = document.getElementById(
-    "clearItemsButton"
-  ) as HTMLButtonElement;
-  const clearCompletedButton = document.getElementById(
-    "clearCompletedItemsButton"
-  ) as HTMLButtonElement;
-
-  clearItemsButton.addEventListener("click", (): void => {
-    fullList.clearList();
-    categoryList.categories.forEach((category) => {
-      category.clearItems();
-      categoryList.updateCategory(category);
-    });
-    listTemplate.clear();
-  });
-
-  clearCompletedButton.addEventListener("click", (): void => {
-    categoryList.categories.forEach((category) => {
-      fullList.list.forEach((item) => {
-        if (item.checked) {
-          category.removeItem(item.id);
-        }
-      });
-      categoryList.updateCategory(category);
-    });
-    fullList.ClearCompleted();
-    listTemplate.render(fullList, categoryList);
-  });
-
-  fullList.load();
-  listTemplate.render(fullList, categoryList);
-};
 
 document.addEventListener("DOMContentLoaded", () => {
   const themeTemplate = getThemeTemplate();
