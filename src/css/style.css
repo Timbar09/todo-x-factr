@@ -10,6 +10,10 @@
   --radius-500: 5em;
   --radius-pill: 50em;
   --radius-circle: 50%;
+
+  /* VIEW PORT VARIABLES */
+
+  --mobile: 23.438em;
 }
 
 html {
@@ -20,8 +24,6 @@ html {
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
   box-sizing: inherit;
 }
 
@@ -173,7 +175,7 @@ a {
   padding: 2rem 0;
   height: 100vh;
   min-height: 45em;
-  max-width: 23em;
+  max-width: var(--mobile);
   margin: 0 auto;
 }
 
@@ -521,27 +523,88 @@ a {
   opacity: 0;
   border-radius: var(--radius-circle);
   overflow: hidden;
-  transition: bottom 300ms ease-in-out, right 300ms ease-in-out,
-    width 300ms ease-in-out, height 300ms ease-in-out,
-    border-radius 200ms 200ms ease-in-out, opacity 300ms ease-in-out;
 }
 
 .app__task--entry__container.open {
-  --dimension: 100%;
+  animation: openEntryForm 300ms ease-in-out forwards;
+}
 
-  bottom: 0;
-  right: 0;
-  border-radius: 0;
-  opacity: 1;
-  visibility: visible;
+.app__task--entry__container.close {
+  animation: closeEntryForm 200ms ease-in-out forwards;
+}
+
+@keyframes openEntryForm {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    width: 4em;
+    height: 4em;
+    bottom: 2em;
+    right: 2em;
+    border-radius: 50%;
+  }
+
+  50% {
+    width: var(--mobile);
+    height: var(--mobile);
+    border-radius: 50%;
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+}
+
+@keyframes closeEntryForm {
+  0% {
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+
+  50% {
+    width: var(--mobile);
+    height: var(--mobile);
+    bottom: 2em;
+    right: 2em;
+    opacity: 0.65;
+    border-radius: 50%;
+  }
+
+  100% {
+    visibility: hidden;
+    opacity: 0;
+    width: 4em;
+    height: 4em;
+    bottom: 2em;
+    right: 2em;
+    border-radius: 50%;
+  }
 }
 
 .app__task--entryForm__closeButton--container {
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0.5em;
+  display: grid;
+  top: 2em;
+  right: 2em;
+  border-radius: var(--radius-circle);
+  border: solid 0.125em var(--text-400);
   cursor: pointer;
+}
+
+.app__task--entryForm__closeButton:focus-visible {
+  outline: solid 0.125em var(--variant);
+  outline-offset: 0.25em;
 }
 
 .app__task--entry__title,
@@ -628,6 +691,7 @@ a {
   border: solid 0.125em var(--text-400);
   border-radius: var(--radius-50);
   background-color: var(--bg-300);
+  box-shadow: var(--shadow);
   z-index: 10;
 }
 
