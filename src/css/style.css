@@ -7,6 +7,7 @@
   --radius-25: 0.25em;
   --radius-50: 0.5em;
   --radius-100: 1em;
+  --radius-200: 2em;
   --radius-500: 5em;
   --radius-pill: 50em;
   --radius-circle: 50%;
@@ -138,6 +139,8 @@ button {
 
 ul {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -182,7 +185,7 @@ a {
 .main__container {
   position: relative;
   height: 100%;
-  border-radius: var(--radius-200) rem;
+  border-radius: var(--radius-200);
   overflow: hidden;
 }
 

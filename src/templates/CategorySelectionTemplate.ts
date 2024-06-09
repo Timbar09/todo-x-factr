@@ -1,7 +1,7 @@
 import CategoryList from "../model/CategoryList";
 import CategoryItem from "../model/CategoryItem";
 
-import { toggleClass } from "../functions/Functions";
+import { toggleClass } from "../functions/Reusable";
 
 interface DOMList {
   customSelect: HTMLDivElement;

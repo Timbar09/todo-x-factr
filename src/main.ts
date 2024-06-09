@@ -5,15 +5,13 @@ import CategoryList from "./model/CategoryList";
 import CategoryItem from "./model/CategoryItem";
 import CategorySelectionTemplate from "./templates/CategorySelectionTemplate";
 import CategoryListTemplate from "./templates/CategoryListTemplate";
+
+import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
+import { addClass, toggleClass, removeClass } from "./functions/Reusable";
 import {
-  addClass,
-  toggleClass,
-  removeClass,
   selectThemeTemplate,
   getThemeTemplate,
-  openEntryForm,
-  closeEntryForm,
-} from "./functions/Functions";
+} from "./functions/ThemeTemplate";
 
 import "./css/style.css";
 
