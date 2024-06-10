@@ -1,3 +1,4 @@
+import FullList from "./FullList";
 import CategoryItem from "./CategoryItem";
 import Observer from "../types/Observer";
 
@@ -9,6 +10,8 @@ interface List {
   findCategoryById: (id: string) => CategoryItem | undefined;
   findCategoryByName: (name: string) => CategoryItem | undefined;
   updateCategory: (UpdatedCategory: CategoryItem) => void;
+  clearCategoryItems: () => void;
+  clearCompletedCategoryItems: (fullList: FullList) => void;
 }
 
 export default class CategoryList implements List {
@@ -40,13 +43,7 @@ export default class CategoryList implements List {
     }[] = JSON.parse(storedCategories);
 
     this._categories = parsedCategories.map(
-      (category) =>
-        new CategoryItem(
-          category._id,
-          category._name,
-          category._color,
-          category._items
-        )
+      (category) => new CategoryItem(category._id, category._name, category._color, category._items)
     );
   }
 
@@ -61,9 +58,7 @@ export default class CategoryList implements List {
   }
 
   removeCategoryObserver(observer: Observer<CategoryItem>): void {
-    this.categoryObservers = this.categoryObservers.filter(
-      (obs) => obs !== observer
-    );
+    this.categoryObservers = this.categoryObservers.filter((obs) => obs !== observer);
   }
 
   notifyCategoryObservers(category: CategoryItem): void {
@@ -92,5 +87,23 @@ export default class CategoryList implements List {
     );
     this.save();
     this.notifyCategoryObservers(updatedCategory);
+  }
+
+  clearCategoryItems(): void {
+    this._categories.forEach((category) => {
+      category.clearItems();
+      this.updateCategory(category);
+    });
+  }
+
+  clearCompletedCategoryItems(fullList: FullList) {
+    this.categories.forEach((category) => {
+      fullList.list.forEach((item) => {
+        if (item.checked) {
+          category.removeItem(item.id);
+        }
+      });
+      this.updateCategory(category);
+    });
   }
 }

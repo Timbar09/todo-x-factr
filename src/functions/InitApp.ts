@@ -10,11 +10,11 @@ export default (): void => {
   const fullList = FullList.instance;
   const categoryList = CategoryList.instance;
   const listTemplate = ListTemplate.instance;
-  const categoryOptionsTemplate = CategorySelectionTemplate.instance;
+  const categorySelectionTemplate = CategorySelectionTemplate.instance;
   const categoryListTemplate = CategoryListTemplate.instance;
 
   categoryListTemplate.render(categoryList);
-  categoryOptionsTemplate.render(categoryList);
+  categorySelectionTemplate.render(categoryList);
 
   const itemEntryForm = document.getElementById("itemEntryForm") as HTMLFormElement;
   const clearItemsButton = document.getElementById("clearItemsButton") as HTMLButtonElement;
@@ -28,22 +28,12 @@ export default (): void => {
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();
-    categoryList.categories.forEach((category) => {
-      category.clearItems();
-      categoryList.updateCategory(category);
-    });
+    categoryList.clearCategoryItems();
     listTemplate.clear();
   });
 
   clearCompletedButton.addEventListener("click", (): void => {
-    categoryList.categories.forEach((category) => {
-      fullList.list.forEach((item) => {
-        if (item.checked) {
-          category.removeItem(item.id);
-        }
-      });
-      categoryList.updateCategory(category);
-    });
+    categoryList.clearCompletedCategoryItems(fullList);
     fullList.ClearCompleted();
     listTemplate.render(fullList, categoryList);
   });
