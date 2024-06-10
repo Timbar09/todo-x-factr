@@ -38,8 +38,11 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
   if (!newEntryText.length) return;
 
   const newItem = new ListItem(itemId, newEntryText, false, updatedCategoryItem?.id);
+  const categoryColor = document.getElementById("categoryColor") as HTMLDivElement;
 
   itemInput.value = "";
+  categorySelectionBox.children[0].textContent = "Select category";
+  categoryColor.style.setProperty("--color", "var(--text-300)");
 
   fullList.addItem(newItem);
   listTemplate.render(fullList, categoryList);
