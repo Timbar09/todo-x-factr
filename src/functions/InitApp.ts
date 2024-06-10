@@ -6,6 +6,8 @@ import CategoryItem from "../model/CategoryItem";
 import CategorySelectionTemplate from "../templates/CategorySelectionTemplate";
 import CategoryListTemplate from "../templates/CategoryListTemplate";
 
+import { closeEntryForm } from "./EntryForm";
+
 export default (): void => {
   const fullList = FullList.instance;
   const categoryList = CategoryList.instance;
@@ -60,6 +62,7 @@ export default (): void => {
 
     fullList.addItem(newItem);
     listTemplate.render(fullList, categoryList);
+    closeEntryForm();
   });
 
   const clearItemsButton = document.getElementById(
