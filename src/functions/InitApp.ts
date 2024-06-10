@@ -1,12 +1,10 @@
 import FullList from "../model/FullList";
-import ListItem from "../model/ListItem";
 import ListTemplate from "../templates/ListTemplate";
 import CategoryList from "../model/CategoryList";
-import CategoryItem from "../model/CategoryItem";
 import CategorySelectionTemplate from "../templates/CategorySelectionTemplate";
 import CategoryListTemplate from "../templates/CategoryListTemplate";
 
-import { closeEntryForm } from "./EntryForm";
+import { handleFormSubmit } from "./EntryForm";
 
 export default (): void => {
   const fullList = FullList.instance;
@@ -18,59 +16,15 @@ export default (): void => {
   categoryListTemplate.render(categoryList);
   categoryOptionsTemplate.render(categoryList);
 
-  const itemEntryForm = document.getElementById(
-    "itemEntryForm"
-  ) as HTMLFormElement;
-  const categorySelectionBox = document.getElementById(
-    "categoryButton"
-  ) as HTMLButtonElement;
-
-  itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
-    e.preventDefault();
-
-    const itemInput = document.getElementById("newItem") as HTMLInputElement;
-    const newEntryText: string = itemInput.value.trim();
-
-    const selectedCategory = categorySelectionBox.children[0].textContent;
-    let updatedCategoryItem: CategoryItem | null = null;
-
-    const itemId: string = crypto.randomUUID();
-
-    if (selectedCategory && selectedCategory !== "Select category") {
-      const category = categoryList.findCategoryByName(selectedCategory);
-
-      if (!category) {
-        return console.error("Category not found");
-      }
-
-      updatedCategoryItem = category;
-
-      updatedCategoryItem.addItem(itemId);
-      categoryList.updateCategory(updatedCategoryItem);
-    }
-
-    if (!newEntryText.length) return;
-
-    const newItem = new ListItem(
-      itemId,
-      newEntryText,
-      false,
-      updatedCategoryItem?.id
-    );
-
-    itemInput.value = "";
-
-    fullList.addItem(newItem);
-    listTemplate.render(fullList, categoryList);
-    closeEntryForm();
-  });
-
-  const clearItemsButton = document.getElementById(
-    "clearItemsButton"
-  ) as HTMLButtonElement;
+  const itemEntryForm = document.getElementById("itemEntryForm") as HTMLFormElement;
+  const clearItemsButton = document.getElementById("clearItemsButton") as HTMLButtonElement;
   const clearCompletedButton = document.getElementById(
     "clearCompletedItemsButton"
   ) as HTMLButtonElement;
+
+  itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
+    handleFormSubmit(e);
+  });
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();

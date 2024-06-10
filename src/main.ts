@@ -1,45 +1,28 @@
 import initApp from "./functions/InitApp";
 import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
 import { addClass, toggleClass, removeClass } from "./functions/Reusable";
-import {
-  selectThemeTemplate,
-  getThemeTemplate,
-} from "./functions/ThemeTemplate";
+import { selectThemeTemplate, getThemeTemplate } from "./functions/ThemeTemplate";
 
 import "./css/style.css";
 
-const showListButton = document.getElementById("showList") as HTMLButtonElement;
-const toggleListButton = document.getElementById(
-  "toggleList"
-) as HTMLButtonElement;
-const taskList = document.getElementById("appList") as HTMLUListElement;
-const taskListMenuButton = document.getElementById(
-  "taskMenuButton"
-) as HTMLButtonElement;
+const showListSectionButton = document.getElementById("showList") as HTMLButtonElement;
+const toggleListButton = document.getElementById("toggleList") as HTMLButtonElement;
+const taskListSection = document.getElementById("appList") as HTMLUListElement;
+const taskListMenuButton = document.getElementById("taskMenuButton") as HTMLButtonElement;
 const taskListMenu = document.getElementById("taskMenuList") as HTMLDivElement;
 const taskListMenuItems = document.querySelectorAll(
   ".app__task--menu__item"
 ) as NodeListOf<HTMLLIElement>;
 const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
-const openHeroNavPopupButton = document.getElementById(
-  "openNavPopup"
-) as HTMLButtonElement;
-const closeHeroNavPopupButton = document.getElementById(
-  "closeHeroNavPopup"
-) as HTMLButtonElement;
+const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
+const closeHeroNavPopupButton = document.getElementById("closeHeroNavPopup") as HTMLButtonElement;
 const templateOptions = document.querySelectorAll(
   ".hero__nav--templates__button"
 ) as NodeListOf<HTMLButtonElement>;
 const newTaskInput = document.getElementById("newItem") as HTMLInputElement;
-const buttons = document.querySelectorAll(
-  ".button"
-) as NodeListOf<HTMLButtonElement>;
-const showItemEntryFormButton = document.getElementById(
-  "showItemEntryForm"
-) as HTMLButtonElement;
-const closeItemEntryFormButton = document.getElementById(
-  "closeItemEntryForm"
-) as HTMLButtonElement;
+const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
+const showItemEntryFormButton = document.getElementById("showItemEntryForm") as HTMLButtonElement;
+const closeItemEntryFormButton = document.getElementById("closeItemEntryForm") as HTMLButtonElement;
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -50,19 +33,19 @@ buttons.forEach((button) => {
   });
 });
 
-showListButton.addEventListener("click", () => {
-  addClass(taskList, "show");
+showListSectionButton.addEventListener("click", () => {
+  addClass(taskListSection, "show");
   removeClass(heroNavPopup, "open");
 });
 
 toggleListButton.addEventListener("click", () => {
-  toggleClass(taskList, "show");
+  toggleClass(taskListSection, "show");
   removeClass(heroNavPopup, "open");
 });
 
 newTaskInput.addEventListener("click", () => {
-  if (!taskList.classList.contains("show")) {
-    addClass(taskList, "show");
+  if (!taskListSection.classList.contains("show")) {
+    addClass(taskListSection, "show");
     removeClass(heroNavPopup, "open");
   }
 });
