@@ -208,6 +208,11 @@ a {
   border: solid 0.125em var(--text-100);
 }
 
+.hero__button:focus-visible {
+  outline: solid 0.125em var(--variant);
+  outline-offset: 0.25em;
+}
+
 .hero__button span {
   scale: 1.15;
 }
@@ -218,12 +223,7 @@ a {
   padding: 0.15em;
   width: var(--dimension);
   height: var(--dimension);
-  background: linear-gradient(
-    45deg,
-    var(--text-200) 70%,
-    var(--primary),
-    var(--primary)
-  );
+  background: linear-gradient(45deg, var(--text-200) 70%, var(--primary), var(--primary));
   border-radius: var(--radius-circle);
 }
 
@@ -253,6 +253,11 @@ a {
   color: var(--text-100);
   cursor: pointer;
   transition: color 100ms ease-in-out;
+}
+
+.hero__nav--list button:focus-visible {
+  outline: solid 0.125em var(--variant);
+  outline-offset: 0.25em;
 }
 
 .hero__nav--list button span:first-child {
@@ -436,9 +441,7 @@ a {
   background-color: var(--primary);
 }
 
-.app__category--list
-  li:first-child
-  .app__category--item__progressBar--fill::before {
+.app__category--list li:first-child .app__category--item__progressBar--fill::before {
   background-color: var(--primary);
 }
 
@@ -447,9 +450,7 @@ a {
   background-color: var(--variant);
 }
 
-.app__category--list
-  li:last-child
-  .app__category--item__progressBar--fill::before {
+.app__category--list li:last-child .app__category--item__progressBar--fill::before {
   background-color: var(--variant);
 }
 
@@ -845,8 +846,7 @@ a {
   border-radius: var(--radius-circle);
   background-color: transparent;
   rotate: -45deg;
-  transition: outline 100ms ease-in-out,
-    background-color var(--transition-time) ease-in-out;
+  transition: outline 100ms ease-in-out, background-color var(--transition-time) ease-in-out;
 }
 
 .app__task--list__item--checkbox > input[type="checkbox"]::before,
@@ -884,10 +884,7 @@ a {
   background-color: var(--text-100);
 }
 
-.app__task--list__item--checkbox
-  input[type="checkbox"]
-  + label
-  .app__task--list__item--text {
+.app__task--list__item--checkbox input[type="checkbox"] + label .app__task--list__item--text {
   position: relative;
   color: var(--text-100);
 }

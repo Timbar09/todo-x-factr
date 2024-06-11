@@ -33,3 +33,28 @@ export const toggleClass = (element: HTMLElement, className: string): void => {
 
   element.classList.toggle(className);
 };
+
+/**
+ * @description Skip a section of the page when tabbing
+ * @param sectionId string - id of the section to skip
+ * @param enable boolean - enable or disable tabbing
+ */
+
+export const toggleFocusableInSection = (sectionId: string, enable: boolean): void => {
+  const focusableElements =
+    'button, [href], input, select, textarea, ul, img, [tabindex]:not([tabindex="-1"])';
+  const section = document.getElementById(sectionId) as HTMLElement;
+  const focusable = Array.from(section.querySelectorAll(focusableElements)) as HTMLElement[];
+
+  focusable.forEach((element) => {
+    if (enable) {
+      element.removeAttribute("tabindex");
+      focusable[0].focus();
+    } else {
+      const heroFirtFocusable = document.getElementById("showList") as HTMLButtonElement;
+
+      element.setAttribute("tabindex", "-1");
+      heroFirtFocusable.focus();
+    }
+  });
+};

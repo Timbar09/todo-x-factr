@@ -1,6 +1,6 @@
 import initApp from "./functions/InitApp";
 import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
-import { addClass, toggleClass, removeClass } from "./functions/Reusable";
+import { addClass, toggleClass, removeClass, toggleFocusableInSection } from "./functions/Reusable";
 import { setThemeTemplate } from "./functions/ThemeTemplate";
 
 import "./css/style.css";
@@ -33,17 +33,32 @@ buttons.forEach((button) => {
 showListSectionButton.addEventListener("click", () => {
   addClass(taskListSection, "show");
   removeClass(heroNavPopup, "open");
+
+  if (taskListSection.classList.contains("show")) {
+    toggleFocusableInSection("appList", true);
+    toggleFocusableInSection("heroNavPopup", false);
+  }
 });
 
 toggleListButton.addEventListener("click", () => {
   toggleClass(taskListSection, "show");
   removeClass(heroNavPopup, "open");
+
+  if (taskListSection.classList.contains("show")) {
+    toggleFocusableInSection("appList", true);
+  } else {
+    toggleFocusableInSection("appList", false);
+  }
 });
 
 newTaskInput.addEventListener("click", () => {
   if (!taskListSection.classList.contains("show")) {
     addClass(taskListSection, "show");
     removeClass(heroNavPopup, "open");
+
+    if (taskListSection.classList.contains("show")) {
+      toggleFocusableInSection("appList", true);
+    }
   }
 });
 
@@ -55,14 +70,30 @@ taskListMenuButton.addEventListener("click", () => {
       removeClass(taskListMenu, "open");
     });
   });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+
+    if (target.closest("#taskMenuButton")) return;
+
+    removeClass(taskListMenu, "open");
+  });
 });
 
 openHeroNavPopupButton.addEventListener("click", () => {
   addClass(heroNavPopup, "open");
+
+  if (heroNavPopup.classList.contains("open")) {
+    toggleFocusableInSection("heroNavPopup", true);
+  }
 });
 
 closeHeroNavPopupButton.addEventListener("click", () => {
   removeClass(heroNavPopup, "open");
+
+  if (!heroNavPopup.classList.contains("open")) {
+    toggleFocusableInSection("heroNavPopup", false);
+  }
 });
 
 showItemEntryFormButton.addEventListener("click", () => {
@@ -74,7 +105,18 @@ closeItemEntryFormButton.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  initApp();
+
   setThemeTemplate();
 
-  initApp();
+  toggleFocusableInSection("appList", false);
+  toggleFocusableInSection("heroNavPopup", false);
 });
+
+// document.addEventListener(
+//   "focus",
+//   function (event) {
+//     console.log(event.target);
+//   },
+//   true
+// ); // Use capture to catch the event as it bubbles up.
