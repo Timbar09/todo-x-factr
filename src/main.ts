@@ -1,7 +1,7 @@
 import initApp from "./functions/InitApp";
 import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
 import { addClass, toggleClass, removeClass } from "./functions/Reusable";
-import { selectThemeTemplate, getThemeTemplate } from "./functions/ThemeTemplate";
+import { setThemeTemplate } from "./functions/ThemeTemplate";
 
 import "./css/style.css";
 
@@ -16,9 +16,6 @@ const taskListMenuItems = document.querySelectorAll(
 const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
 const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
 const closeHeroNavPopupButton = document.getElementById("closeHeroNavPopup") as HTMLButtonElement;
-const templateOptions = document.querySelectorAll(
-  ".hero__nav--templates__button"
-) as NodeListOf<HTMLButtonElement>;
 const newTaskInput = document.getElementById("newItem") as HTMLInputElement;
 const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
 const showItemEntryFormButton = document.getElementById("showItemEntryForm") as HTMLButtonElement;
@@ -76,26 +73,8 @@ closeItemEntryFormButton.addEventListener("click", () => {
   closeEntryForm();
 });
 
-if (templateOptions.length) {
-  templateOptions.forEach((option) => {
-    option.addEventListener("click", () => {
-      const template = option.getAttribute("data-template");
-
-      if (!template) return;
-
-      selectThemeTemplate(template);
-    });
-  });
-} else {
-  console.error("No template options found");
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  const themeTemplate = getThemeTemplate();
-
-  if (themeTemplate) {
-    selectThemeTemplate(themeTemplate);
-  }
+  setThemeTemplate();
 
   initApp();
 });

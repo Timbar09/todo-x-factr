@@ -1,15 +1,33 @@
 /**
  * @description Selects a theme template
- * @param template string - theme template to select
  * @returns void
- * @example selectThemeTemplate("default")
  */
 
-export const selectThemeTemplate = (template: string): void => {
+export const setThemeTemplate = (): void => {
   const body = document.body;
+  const templateOptions = document.querySelectorAll(
+    ".hero__nav--templates__button"
+  ) as NodeListOf<HTMLButtonElement>;
+  const savedTemplate = localStorage.getItem("themeTemplate");
 
-  body.setAttribute("data-template", template);
-  localStorage.setItem("themeTemplate", template);
+  const setAttribute = (template: string): void => {
+    body.setAttribute("data-template", template);
+    localStorage.setItem("themeTemplate", template);
+  };
+
+  if (savedTemplate) {
+    setAttribute(savedTemplate);
+  }
+
+  templateOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      const template = option.dataset.template;
+
+      if (!template) return;
+
+      setAttribute(template);
+    });
+  });
 };
 
 /**
@@ -17,10 +35,10 @@ export const selectThemeTemplate = (template: string): void => {
  * @returns string
  */
 
-export const getThemeTemplate = (): string => {
-  const template = localStorage.getItem("themeTemplate");
+// export const getThemeTemplate = (): string => {
+//   const template = localStorage.getItem("themeTemplate");
 
-  if (!template) return "default";
+//   if (!template) return "default";
 
-  return template;
-};
+//   return template;
+// };
