@@ -1,22 +1,20 @@
 import initApp from "./functions/App";
 import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
 import { addClass, toggleClass, removeClass } from "./functions/Reusable";
-import { showTaskListSection } from "./functions/HeroSection";
+import { showTaskListSection, toggleTaskListSection } from "./functions/HeroSection";
+import { openHeroNavPopup, closeHeroNavPopup } from "./functions/ThemeTemplate";
 
 import "./css/style.css";
 
 const showListSectionButton = document.getElementById("showList") as HTMLButtonElement;
 const toggleListButton = document.getElementById("toggleList") as HTMLButtonElement;
-const taskListSection = document.getElementById("appList") as HTMLUListElement;
 const taskListMenuButton = document.getElementById("taskMenuButton") as HTMLButtonElement;
 const taskListMenu = document.getElementById("taskMenuList") as HTMLDivElement;
 const taskListMenuItems = document.querySelectorAll(
   ".app__task--menu__item"
 ) as NodeListOf<HTMLLIElement>;
-const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
 const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
 const closeHeroNavPopupButton = document.getElementById("closeHeroNavPopup") as HTMLButtonElement;
-const newTaskInput = document.getElementById("newItem") as HTMLInputElement;
 const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
 const showItemEntryFormButton = document.getElementById("showItemEntryForm") as HTMLButtonElement;
 const closeItemEntryFormButton = document.getElementById("closeItemEntryForm") as HTMLButtonElement;
@@ -35,25 +33,7 @@ showListSectionButton.addEventListener("click", () => {
 });
 
 toggleListButton.addEventListener("click", () => {
-  toggleClass(taskListSection, "show");
-  removeClass(heroNavPopup, "open");
-
-  // if (taskListSection.classList.contains("show")) {
-  //   toggleFocusableInSection("appList", true);
-  // } else {
-  //   toggleFocusableInSection("appList", false);
-  // }
-});
-
-newTaskInput.addEventListener("click", () => {
-  if (!taskListSection.classList.contains("show")) {
-    addClass(taskListSection, "show");
-    removeClass(heroNavPopup, "open");
-
-    // if (taskListSection.classList.contains("show")) {
-    //   toggleFocusableInSection("appList", true);
-    // }
-  }
+  toggleTaskListSection();
 });
 
 taskListMenuButton.addEventListener("click", () => {
@@ -75,19 +55,11 @@ taskListMenuButton.addEventListener("click", () => {
 });
 
 openHeroNavPopupButton.addEventListener("click", () => {
-  addClass(heroNavPopup, "open");
-
-  // if (heroNavPopup.classList.contains("open")) {
-  //   toggleFocusableInSection("heroNavPopup", true);
-  // }
+  openHeroNavPopup();
 });
 
 closeHeroNavPopupButton.addEventListener("click", () => {
-  removeClass(heroNavPopup, "open");
-
-  // if (!heroNavPopup.classList.contains("open")) {
-  //   toggleFocusableInSection("heroNavPopup", false);
-  // }
+  closeHeroNavPopup();
 });
 
 showItemEntryFormButton.addEventListener("click", () => {

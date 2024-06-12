@@ -5,6 +5,7 @@ import CategoryItem from "../model/CategoryItem";
 import CategoryList from "../model/CategoryList";
 
 import { addClass, removeClass, lockFocus } from "./Reusable";
+import { showTaskListSection } from "./HeroSection";
 
 export const handleFormSubmit = (e: SubmitEvent): void => {
   e.preventDefault();
@@ -69,4 +70,6 @@ export const closeEntryForm = (): void => {
 
   removeClass(entryForm, "open");
   addClass(entryForm, "close");
+
+  showTaskListSection();
 };

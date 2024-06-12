@@ -1,3 +1,7 @@
+import { addClass, removeClass } from "./Reusable";
+import { setSectionFocusStatus } from "./Reusable";
+import { lockFocus } from "./Reusable";
+
 /**
  * @description Selects a theme template
  * @returns void
@@ -30,15 +34,23 @@ export const setThemeTemplate = (): void => {
   });
 };
 
-/**
- * @description Get theme template
- * @returns string
- */
+export const openHeroNavPopup = (): void => {
+  const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
 
-// export const getThemeTemplate = (): string => {
-//   const template = localStorage.getItem("themeTemplate");
+  addClass(heroNavPopup, "open");
 
-//   if (!template) return "default";
+  if (heroNavPopup.classList.contains("open")) {
+    setSectionFocusStatus("heroNavPopup", true);
+    lockFocus(heroNavPopup);
+  }
+};
 
-//   return template;
-// };
+export const closeHeroNavPopup = (): void => {
+  const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
+
+  removeClass(heroNavPopup, "open");
+
+  if (!heroNavPopup.classList.contains("open")) {
+    setSectionFocusStatus("heroNavPopup", false);
+  }
+};

@@ -42,7 +42,7 @@ export const toggleClass = (element: HTMLElement, className: string): void => {
 
 export const setSectionFocusStatus = (sectionId: string, enable: boolean): void => {
   const focusableElements =
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    'button, [href], input, select, textarea, ul, [tabindex]:not([tabindex="-1"])';
   const section = document.getElementById(sectionId) as HTMLElement;
   const focusable = Array.from(section.querySelectorAll(focusableElements)) as HTMLElement[];
 
@@ -55,6 +55,12 @@ export const setSectionFocusStatus = (sectionId: string, enable: boolean): void 
   });
 };
 
+/**
+ * @description Lock focus within a section
+ * @param section HTMLElement - section to lock focus within
+ * @param firstFocusablePosition number - position of first focusable element
+ */
+
 export const lockFocus = (
   section: HTMLElement,
   firstFocusablePosition: number | null = null
@@ -62,7 +68,7 @@ export const lockFocus = (
   if (!section) return;
 
   const focusableElements = section.querySelectorAll(
-    "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+    "button, [href], input, select, ul, textarea, [tabindex]:not([tabindex='-1'])"
   ) as NodeListOf<HTMLElement>;
   const firstElement = focusableElements[0];
   const lastElement = focusableElements[focusableElements.length - 1];
