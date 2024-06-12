@@ -58,7 +58,7 @@ export const openEntryForm = (): void => {
   removeClass(entryForm, "close");
 
   setTimeout(() => {
-    lockFocus(entryForm);
+    lockFocus(entryForm, 2);
   }, 100);
 };
 
