@@ -40,7 +40,7 @@ export const toggleClass = (element: HTMLElement, className: string): void => {
  * @param enable boolean - enable or disable tabbing
  */
 
-export const toggleFocusableInSection = (sectionId: string, enable: boolean): void => {
+export const setSectionFocusStatus = (sectionId: string, enable: boolean): void => {
   const focusableElements =
     'button, [href], input, select, textarea, ul, img, [tabindex]:not([tabindex="-1"])';
   const section = document.getElementById(sectionId) as HTMLElement;
@@ -48,13 +48,9 @@ export const toggleFocusableInSection = (sectionId: string, enable: boolean): vo
 
   focusable.forEach((element) => {
     if (enable) {
-      element.removeAttribute("tabindex");
-      focusable[0].focus();
+      element.setAttribute("tabindex", "0");
     } else {
-      const heroFirtFocusable = document.getElementById("showList") as HTMLButtonElement;
-
       element.setAttribute("tabindex", "-1");
-      heroFirtFocusable.focus();
     }
   });
 };
