@@ -7,6 +7,16 @@ import CategoryListTemplate from "../templates/CategoryListTemplate";
 import { setSectionFocusStatus } from "./Reusable";
 import { handleFormSubmit } from "./EntryForm";
 import { setThemeTemplate } from "./ThemeTemplate";
+import { showTaskListSection, toggleTaskListSection, toggleTaskListMenu } from "./HeroSection";
+import { openHeroNavPopup, closeHeroNavPopup } from "./ThemeTemplate";
+import { openEntryForm, closeEntryForm } from "./EntryForm";
+import { addClass, removeClass } from "./Reusable";
+
+const fullList = FullList.instance;
+const categoryList = CategoryList.instance;
+const listTemplate = ListTemplate.instance;
+const categorySelectionTemplate = CategorySelectionTemplate.instance;
+const categoryListTemplate = CategoryListTemplate.instance;
 
 const setDefaultSectionFocusStatuses = (): void => {
   const taskListSection = document.getElementById("appList") as HTMLUListElement;
@@ -21,16 +31,17 @@ const setDefaultSectionFocusStatuses = (): void => {
   }
 };
 
-export default (): void => {
-  const fullList = FullList.instance;
-  const categoryList = CategoryList.instance;
-  const listTemplate = ListTemplate.instance;
-  const categorySelectionTemplate = CategorySelectionTemplate.instance;
-  const categoryListTemplate = CategoryListTemplate.instance;
-
-  categoryListTemplate.render(categoryList);
-  categorySelectionTemplate.render(categoryList);
-
+const renderListeners = (): void => {
+  const showListSectionButton = document.getElementById("showList") as HTMLButtonElement;
+  const toggleListButton = document.getElementById("toggleList") as HTMLButtonElement;
+  const taskListMenuButton = document.getElementById("taskMenuButton") as HTMLButtonElement;
+  const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
+  const closeHeroNavPopupButton = document.getElementById("closeHeroNavPopup") as HTMLButtonElement;
+  const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
+  const showItemEntryFormButton = document.getElementById("showItemEntryForm") as HTMLButtonElement;
+  const closeItemEntryFormButton = document.getElementById(
+    "closeItemEntryForm"
+  ) as HTMLButtonElement;
   const itemEntryForm = document.getElementById("itemEntryForm") as HTMLFormElement;
   const clearItemsButton = document.getElementById("clearItemsButton") as HTMLButtonElement;
   const clearCompletedButton = document.getElementById(
@@ -52,6 +63,50 @@ export default (): void => {
     fullList.ClearCompleted();
     listTemplate.render(fullList, categoryList);
   });
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      addClass(button, "clicked");
+      setTimeout(() => {
+        removeClass(button, "clicked");
+      }, 400);
+    });
+  });
+
+  showListSectionButton.addEventListener("click", () => {
+    showTaskListSection();
+  });
+
+  toggleListButton.addEventListener("click", () => {
+    toggleTaskListSection();
+  });
+
+  taskListMenuButton.addEventListener("click", () => {
+    toggleTaskListMenu();
+  });
+
+  openHeroNavPopupButton.addEventListener("click", () => {
+    openHeroNavPopup();
+  });
+
+  closeHeroNavPopupButton.addEventListener("click", () => {
+    closeHeroNavPopup();
+  });
+
+  showItemEntryFormButton.addEventListener("click", () => {
+    openEntryForm();
+  });
+
+  closeItemEntryFormButton.addEventListener("click", () => {
+    closeEntryForm();
+  });
+};
+
+export default (): void => {
+  categoryListTemplate.render(categoryList);
+  categorySelectionTemplate.render(categoryList);
+
+  renderListeners();
 
   fullList.load();
   listTemplate.render(fullList, categoryList);
