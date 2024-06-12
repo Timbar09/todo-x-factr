@@ -54,3 +54,31 @@ export const setSectionFocusStatus = (sectionId: string, enable: boolean): void 
     }
   });
 };
+
+export const lockFocus = (
+  section: HTMLElement,
+  firstFocusablePosition: number | null = null
+): void => {
+  if (!section.classList.contains("open")) return;
+
+  const focusableElements = section.querySelectorAll("input, button") as NodeListOf<HTMLElement>;
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+  const focusStart = firstFocusablePosition ? focusableElements[firstFocusablePosition - 1] : null;
+
+  focusStart ? focusStart.focus() : firstElement.focus();
+
+  section.addEventListener("keydown", (event) => {
+    if (event.key === "Tab" && event.shiftKey) {
+      if (document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      }
+    } else if (event.key === "Tab") {
+      if (document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    }
+  });
+};
