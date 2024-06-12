@@ -4,8 +4,22 @@ import CategoryList from "../model/CategoryList";
 import CategorySelectionTemplate from "../templates/CategorySelectionTemplate";
 import CategoryListTemplate from "../templates/CategoryListTemplate";
 
+import { setSectionFocusStatus } from "./Reusable";
 import { handleFormSubmit } from "./EntryForm";
 import { setThemeTemplate } from "./ThemeTemplate";
+
+const setDefaultSectionFocusStatuses = (): void => {
+  const taskListSection = document.getElementById("appList") as HTMLUListElement;
+  const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
+
+  const isTaskListSectionActive = taskListSection.classList.contains("show");
+  const isHeroNavPopupActive = heroNavPopup.classList.contains("open");
+
+  if (!isTaskListSectionActive && !isHeroNavPopupActive) {
+    setSectionFocusStatus("appList", false);
+    setSectionFocusStatus("heroNavPopup", false);
+  }
+};
 
 export default (): void => {
   const fullList = FullList.instance;
@@ -43,4 +57,6 @@ export default (): void => {
   listTemplate.render(fullList, categoryList);
 
   setThemeTemplate();
+
+  setDefaultSectionFocusStatuses();
 };

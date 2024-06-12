@@ -1,6 +1,6 @@
 import initApp from "./functions/App";
 import { openEntryForm, closeEntryForm } from "./functions/EntryForm";
-import { addClass, toggleClass, removeClass, setSectionFocusStatus } from "./functions/Reusable";
+import { addClass, toggleClass, removeClass } from "./functions/Reusable";
 import { showTaskListSection } from "./functions/HeroSection";
 
 import "./css/style.css";
@@ -100,14 +100,6 @@ closeItemEntryFormButton.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
-
-  const isTaskListSectionActive = taskListSection.classList.contains("show");
-  const isHeroNavPopupActive = heroNavPopup.classList.contains("open");
-
-  if (!isTaskListSectionActive && !isHeroNavPopupActive) {
-    setSectionFocusStatus("appList", false);
-    setSectionFocusStatus("heroNavPopup", false);
-  }
 });
 
 document.addEventListener(
