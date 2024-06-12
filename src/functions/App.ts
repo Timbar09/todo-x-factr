@@ -5,6 +5,7 @@ import CategorySelectionTemplate from "../templates/CategorySelectionTemplate";
 import CategoryListTemplate from "../templates/CategoryListTemplate";
 
 import { handleFormSubmit } from "./EntryForm";
+import { setThemeTemplate } from "./ThemeTemplate";
 
 export default (): void => {
   const fullList = FullList.instance;
@@ -40,4 +41,6 @@ export default (): void => {
 
   fullList.load();
   listTemplate.render(fullList, categoryList);
+
+  setThemeTemplate();
 };
