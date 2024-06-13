@@ -37,13 +37,15 @@ body {
   --text-100: #e2fdff; /* baby-powder */
   --text-200: #c4c4c4; /* light-gray */
   --text-300: #9d9ab4; /* grayish-blue */
-  --text-400: #373b5e; /* dark-blue */
+  --text-400: rgba(255, 255, 255, 0.125);
 
   --shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
   --shadow-200: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
 
   --shadow-variant: 0 0 0.5em 0.125em rgba(14, 98, 234, 0.1);
   --shadow-variant-200: 0 0 0.75em 0.15em rgba(14, 98, 234, 0.3);
+
+  --focus-outline: 0.125em solid var(--primary);
 
   padding: 0;
   margin: 0;
@@ -62,6 +64,8 @@ body[data-template="light"] {
   --text-200: #9d9ab4; /* grayish-blue */
   --text-300: #c4c4c4; /* light-gray */
   --text-400: #e0e0e0; /* white-gray */
+
+  --focus-outline: 0.125em solid var(--variant);
 }
 
 h1,
@@ -84,19 +88,15 @@ button {
 
 button {
   all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 .button {
   position: relative;
   background-color: transparent;
-  border-radius: var(--radius-circle);
-  min-width: 2.25em;
-  min-height: 2.25em;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+  transition: background-color 100ms ease-in-out, color 100ms ease-in-out, opacity 100ms ease-in-out,
+    box-shadow 100ms ease-in-out;
 }
 
 .button::before {
@@ -131,10 +131,57 @@ button {
   animation: click 300ms ease-in-out forwards 1;
 }
 
-.button:hover,
-.button:focus {
+.button:hover {
   color: var(--text-100);
   background-color: var(--text-400);
+}
+
+.button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 0.25em;
+}
+
+.button__round {
+  --dimension: 2.25em;
+
+  border-radius: var(--radius-circle);
+  min-width: var(--dimension);
+  min-height: var(--dimension);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 0.125em var(--text-200);
+}
+
+.button__primary {
+  background-color: var(--variant);
+  color: var(--bg-100);
+  display: inline-flex;
+  box-shadow: var(--shadow-variant-200);
+}
+
+.button__primary:hover {
+  --shadow-variant-200: var(--shadow-variant);
+
+  color: var(--bg-100);
+  background-color: var(--variant);
+  opacity: 0.85;
+}
+
+.button__primary--round {
+  --dimension: 4em;
+
+  border-radius: var(--radius-circle);
+  min-width: var(--dimension);
+  min-height: var(--dimension);
+  justify-content: center;
+  align-items: center;
+}
+
+.button__primary--bar {
+  padding: 0.75em 1.5em;
+  border-radius: var(--radius-500);
+  justify-content: center;
 }
 
 ul {
@@ -208,13 +255,10 @@ a {
 }
 
 .hero__button {
+  --dimension: 2.75em;
+
   color: var(--text-100);
   border: solid 0.125em var(--text-100);
-}
-
-.hero__button:focus-visible {
-  outline: solid 0.125em var(--variant);
-  outline-offset: 0.25em;
 }
 
 .hero__button span {
@@ -246,30 +290,26 @@ a {
 .hero__nav--list {
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.125em;
 }
 
-.hero__nav--list button {
-  padding: 0.125em 0.5em 0.125em 0;
+.hero__nav--item button {
+  padding: 0.15em 0.5em;
+  margin-left: -0.5em;
   display: flex;
   align-items: center;
   gap: 0.5em;
   color: var(--text-100);
-  cursor: pointer;
-  transition: color 100ms ease-in-out;
+  border-radius: var(--radius-25);
 }
 
-.hero__nav--list button:focus-visible {
-  outline: solid 0.125em var(--variant);
-  outline-offset: 0.25em;
-}
-
-.hero__nav--list button span:first-child {
+.hero__nav--item button span:first-child {
   color: var(--text-200);
 }
 
 .hero__nav--list button:hover {
   color: var(--primary);
+  background-color: transparent;
 }
 
 .hero__nav--popup {
@@ -300,6 +340,10 @@ a {
   text-align: right;
 }
 
+.hero__nav--popup__close span {
+  font-size: 1.125em;
+}
+
 .hero__nav--templates__list {
   --default-bg: #081e60;
   --default-text: #e2fdff;
@@ -310,12 +354,10 @@ a {
 }
 
 .hero__nav--templates__list > li:not(:last-child) {
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 
 .hero__nav--templates__button {
-  box-sizing: border-box;
-  cursor: pointer;
   padding: 1em;
   font-size: 1.5em;
   border-radius: var(--radius-100);
@@ -380,6 +422,16 @@ a {
   padding-top: 1.5rem;
   display: flex;
   justify-content: space-between;
+}
+
+.app__toggleList,
+.app__header--buttons > span {
+  border: none;
+}
+
+.app__toggleList > span,
+.app__header--buttons > span > span {
+  font-size: 1.25em;
 }
 
 .app__category {
@@ -471,9 +523,8 @@ a {
   position: relative;
 }
 
-.app__task--menu button {
-  cursor: pointer;
-  box-sizing: border-box;
+.app__task--menu__button {
+  border: none;
 }
 
 .app__task--menu__list {
@@ -607,14 +658,6 @@ a {
   display: grid;
   top: 2em;
   right: 2em;
-  border-radius: var(--radius-circle);
-  border: solid 0.125em var(--text-400);
-  cursor: pointer;
-}
-
-.app__task--entryForm__closeButton:focus-visible {
-  outline: solid 0.125em var(--variant);
-  outline-offset: 0.25em;
 }
 
 .app__task--entry__title,
@@ -629,11 +672,10 @@ a {
   gap: 1em;
 }
 
-.app__task--entry__input,
-.app__task--entry__select {
+.app__task--entry__input {
   border: none;
   font-size: 1.5rem;
-  color: var(--text-200);
+  color: var(--text-100);
   background-color: transparent;
 }
 
@@ -652,23 +694,16 @@ a {
 }
 
 .app__task--entry__dropdownButton {
-  box-sizing: border-box;
   padding: 0.5em 1em;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5em;
-  color: var(--text-300);
+  color: var(--text-200);
   border: solid 0.125em var(--text-400);
   border-radius: var(--radius-pill);
-  cursor: pointer;
   transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
-}
-
-.app__task--entry__dropdownButton:focus-visible {
-  outline: solid 0.125em var(--variant);
-  outline-offset: 0.25em;
 }
 
 .app__task--entry__dropdownButton:active {
@@ -779,18 +814,10 @@ a {
 
 .app__task--entry__button {
   position: absolute;
-  display: flex;
   align-items: center;
   gap: 0.5em;
   right: 2em;
   bottom: 2em;
-  padding: 0.75em 1.5em;
-  border-radius: var(--radius-500);
-  background-color: var(--variant);
-  color: var(--bg-200);
-  box-shadow: var(--shadow-variant-200);
-  cursor: pointer;
-  transition: opacity 100ms ease-in-out;
 }
 
 .app__task--entry__button:hover {
@@ -803,7 +830,8 @@ a {
 }
 
 .app__task--list {
-  padding-bottom: 0.5em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
   display: flex;
   flex-direction: column;
   height: 16em;
@@ -820,7 +848,6 @@ a {
   align-items: center;
   background-color: var(--bg-200);
   border-radius: var(--radius-100);
-  /* box-shadow: var(--shadow); */
 }
 
 .app__task--list__item:focus-within {
@@ -940,8 +967,6 @@ a {
 }
 
 .app__task--list__item--button {
-  all: unset;
-  cursor: pointer;
   display: grid;
   place-items: center;
   width: 100%;
@@ -963,28 +988,4 @@ a {
   position: absolute;
   right: 2em;
   bottom: 2em;
-}
-
-.app__entryForm--button {
-  --dimention: 4em;
-
-  width: var(--dimention);
-  height: var(--dimention);
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-circle);
-  color: var(--bg-200);
-  background-color: var(--variant);
-  box-shadow: var(--shadow-variant-200);
-  cursor: pointer;
-  transition: opacity 100ms ease-in-out;
-}
-
-.app__entryForm--button:hover {
-  opacity: 0.75;
-}
-
-.app__entryForm--button:focus-visible {
-  outline: solid 0.125em var(--variant);
-  outline-offset: 0.25em;
 }

@@ -18,7 +18,7 @@
             <div class="hero__button--container">
               <button
                 id="showList"
-                class="button hero__button"
+                class="button button__round button hero__button"
                 title="Show list"
                 aria-label="Show list"
               >
@@ -27,11 +27,7 @@
             </div>
 
             <div class="hero__image--container">
-              <img
-                src="/src/images/Gorilla-soldier.jpeg"
-                alt="User image"
-                class="hero__image"
-              />
+              <img src="/src/images/Gorilla-soldier.jpeg" alt="User image" class="hero__image" />
             </div>
 
             <h2 class="hero__title section__title">
@@ -42,7 +38,7 @@
             <nav class="hero__nav">
               <ul class="hero__nav--list">
                 <li class="hero__nav--item">
-                  <button aria-label="Tempelates" id="openNavPopup">
+                  <button aria-label="Tempelates" id="openNavPopup" class="button">
                     <span class="material-symbols-outlined"> Bookmark </span>
 
                     <span class="hero__nav--item--text"> Tempelates </span>
@@ -50,7 +46,7 @@
                 </li>
 
                 <li class="hero__nav--item">
-                  <button aria-label="Cartegories">
+                  <button aria-label="Cartegories" class="button">
                     <span class="material-symbols-outlined"> view_cozy </span>
 
                     <span class="hero__nav--item--text"> Cartegories </span>
@@ -58,7 +54,7 @@
                 </li>
 
                 <li class="hero__nav--item">
-                  <button aria-label="Analytics">
+                  <button aria-label="Analytics" class="button">
                     <span class="material-symbols-outlined"> donut_large </span>
 
                     <span class="hero__nav--item--text"> Analytics </span>
@@ -90,7 +86,7 @@
             <div class="hero__nav--popup__close--container">
               <button
                 id="closeHeroNavPopup"
-                class="button hero__nav--popup__close"
+                class="buttton button__round button hero__nav--popup__close"
                 title="Close"
                 aria-label="Close"
               >
@@ -103,7 +99,7 @@
             <ul class="hero__nav--templates__list">
               <li class="hero__nav--templates__item">
                 <button
-                  class="hero__nav--templates__button"
+                  class="button hero__nav--templates__button"
                   id="selectDefaultTemplate"
                   data-template="default"
                 >
@@ -113,7 +109,7 @@
 
               <li class="hero__nav--templates__item">
                 <button
-                  class="hero__nav--templates__button"
+                  class="button hero__nav--templates__button"
                   id="selectLightTemplate"
                   data-template="light"
                 >
@@ -130,7 +126,7 @@
               <div class="app__toggleList--container">
                 <button
                   id="toggleList"
-                  class="button app__toggleList"
+                  class="button button__round app__toggleList"
                   title="Toggle list"
                   aria-label="Toggle list"
                 >
@@ -139,19 +135,17 @@
               </div>
 
               <div class="app__header--buttons">
-                <span class="button">
+                <span class="button button__round">
                   <span class="material-symbols-outlined"> search </span>
                 </span>
 
-                <span class="button">
+                <span class="button button__round">
                   <span class="material-symbols-outlined"> notifications </span>
                 </span>
               </div>
             </div>
 
-            <h2 class="app__title section__title padding-x">
-              What's up, Gorilla?
-            </h2>
+            <h2 class="app__title section__title padding-x">What's up, Gorilla?</h2>
 
             <div class="app__category padding-x">
               <div class="section__subTitle--container">
@@ -200,7 +194,7 @@
                 <div class="app__task--menu">
                   <button
                     id="taskMenuButton"
-                    class="button app__task--menu__button"
+                    class="button button__round button app__task--menu__button"
                     aria-label="Menu"
                   >
                     <span class="material-symbols-outlined"> more_vert </span>
@@ -282,7 +276,7 @@
           <div class="app__entryForm--button__container">
             <button
               id="showItemEntryForm"
-              class="app__entryForm--button"
+              class="button button__primary button__primary--round app__entryForm--button"
               title="Add new item"
               aria-label="Add new item to list"
             >
@@ -291,14 +285,11 @@
           </div>
         </section>
 
-        <section
-          class="app__task--entry__container"
-          id="itemEntryFormContainer"
-        >
+        <section class="app__task--entry__container" id="itemEntryFormContainer">
           <div class="app__task--entryForm__closeButton--container">
             <button
               id="closeItemEntryForm"
-              class="button app__task--entryForm__closeButton"
+              class="button button__round app__task--entryForm__closeButton"
               title="Close"
               aria-label="Close"
             >
@@ -323,8 +314,7 @@
               <ul class="app__task--entry__dropdown" id="categoryDropdown"></ul>
 
               <div class="app__task--entry__category--color" id="categoryColor">
-                <span class="app__task--entry__category--color__indicator">
-                </span>
+                <span class="app__task--entry__category--color__indicator"> </span>
               </div>
             </div>
 
@@ -372,14 +362,12 @@
             <div class="app__task--entry__button--container">
               <button
                 id="addItem"
-                class="app__task--entry__button"
+                class="button button__primary button__primary--bar app__task--entry__button"
                 title="Add new item"
                 aria-label="Add new item to list"
               >
                 <span> New task </span>
-                <span class="material-symbols-outlined">
-                  keyboard_arrow_up
-                </span>
+                <span class="material-symbols-outlined"> keyboard_arrow_up </span>
               </button>
             </div>
           </form>

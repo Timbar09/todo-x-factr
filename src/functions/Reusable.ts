@@ -74,8 +74,6 @@ export const lockFocus = (
   const lastElement = focusableElements[focusableElements.length - 1];
   const focusStart = firstFocusablePosition ? focusableElements[firstFocusablePosition - 1] : null;
 
-  console.log(`firstElement: ${firstElement}\nfocusStart: ${focusStart}`);
-
   focusStart ? focusStart.focus() : firstElement.focus();
 
   section.addEventListener("keydown", (event) => {

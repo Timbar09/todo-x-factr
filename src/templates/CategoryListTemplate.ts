@@ -8,9 +8,7 @@ interface DOMList {
   render(categoryList: CategoryList): void;
 }
 
-export default class CategoryListTemplate
-  implements DOMList, Observer<CategoryItem>
-{
+export default class CategoryListTemplate implements DOMList, Observer<CategoryItem> {
   ul: HTMLUListElement;
 
   static instance: CategoryListTemplate = new CategoryListTemplate();
@@ -27,9 +25,7 @@ export default class CategoryListTemplate
     if (!categoryCount) return;
 
     const numberOfItems = category.items.length;
-    categoryCount.textContent = `${numberOfItems} task${
-      numberOfItems === 1 ? "" : "s"
-    }`;
+    categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
   }
 
   render(categoryList: CategoryList): void {
@@ -50,11 +46,9 @@ export default class CategoryListTemplate
         (itemId) => fullList.list.find((item) => item.id === itemId)?.checked
       ).length;
 
-      const completionPercentage = Math.round(
-        (numberOfCompletedItems / numberOfItems) * 100
-      );
+      const completionPercentage = Math.round((numberOfCompletedItems / numberOfItems) * 100);
 
-      const liContainer = document.createElement("button");
+      const liContainer = document.createElement("span");
       liContainer.className = "app__category--item";
       liContainer.title = category.name;
       liContainer.ariaLabel = category.name;
@@ -62,9 +56,7 @@ export default class CategoryListTemplate
 
       const categoryCount = document.createElement("span");
       categoryCount.className = "app__category--item__count";
-      categoryCount.textContent = `${numberOfItems} task${
-        numberOfItems === 1 ? "" : "s"
-      }`;
+      categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
 
       const categoryName = document.createElement("h4");
       categoryName.className = "app__category--item__title";
@@ -73,15 +65,11 @@ export default class CategoryListTemplate
       const categoryProgressBar = document.createElement("div");
       categoryProgressBar.className = "app__category--item__progressBar";
       setTimeout(() => {
-        categoryProgressBar.style.setProperty(
-          "--progress",
-          `${completionPercentage}%`
-        );
+        categoryProgressBar.style.setProperty("--progress", `${completionPercentage}%`);
       }, 400);
 
       const categoryProgressBarFill = document.createElement("span");
-      categoryProgressBarFill.className =
-        "app__category--item__progressBar--fill";
+      categoryProgressBarFill.className = "app__category--item__progressBar--fill";
 
       categoryProgressBar.appendChild(categoryProgressBarFill);
 

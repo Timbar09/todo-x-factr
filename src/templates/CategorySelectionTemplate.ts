@@ -33,7 +33,7 @@ export default class CategorySelectionTemplate implements DOMList {
 
     const selectBox = document.createElement("button");
     selectBox.id = "categoryButton";
-    selectBox.className = "app__task--entry__dropdownButton";
+    selectBox.className = "button app__task--entry__dropdownButton";
     selectBox.tabIndex = 0;
 
     const selectBoxPlaceholder = document.createElement("span");
@@ -141,13 +141,26 @@ export default class CategorySelectionTemplate implements DOMList {
     >;
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
+    let currentIndex = 0;
+
+    firstElement.focus();
 
     this.dropdown.addEventListener("keydown", (event) => {
+      const maxIndex = focusableElements.length - 1;
+
       if (event.key === "Tab" && event.shiftKey) {
         if (document.activeElement === firstElement) {
           event.preventDefault();
           lastElement.focus();
         }
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+        focusableElements[currentIndex].focus();
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
+        focusableElements[currentIndex].focus();
       } else if (event.key === "Tab") {
         if (document.activeElement === lastElement) {
           event.preventDefault();
