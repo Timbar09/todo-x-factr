@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap");
 
 :root {
-  --primary: #e805fe; /* electric-purple */
-  --variant: #0e62ea; /* royal-blue */
+  --primary: #a056c5; /* electric-purple */
+  --variant: #2643c4; /* royal-blue */
 
   --radius-25: 0.25em;
   --radius-50: 0.5em;
@@ -31,13 +31,13 @@ html {
 body {
   /* DEFAULT COLOR VARIABLES ( DARK TEMPLATE ) */
   --bg-100: #08153c; /* dark-blue */
-  --bg-200: #051956; /* oxford-blue */
-  --bg-300: #3451a1; /* blue */
+  --bg-200: #081e60; /* oxford-blue */
+  --bg-300: #051956; /* air-force-blue */
 
   --text-100: #e2fdff; /* baby-powder */
-  --text-200: rgba(226, 253, 255, 0.4);
-  --text-300: rgba(226, 253, 255, 0.2);
-  --text-400: rgba(226, 253, 255, 0.1);
+  --text-200: #c4c4c4; /* light-gray */
+  --text-300: #9d9ab4; /* grayish-blue */
+  --text-400: #373b5e; /* dark-blue */
 
   --shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.1);
   --shadow-200: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
@@ -54,14 +54,14 @@ body {
 
 /* LIGHT TEMPLATE */
 body[data-template="light"] {
-  --bg-100: #dbe5ff; /* baby-blue */
+  --bg-100: #adbaeb; /* lavender-blue */
   --bg-200: #ffffff; /* white */
-  --bg-300: #f6f9fc; /* ghost-white */
+  --bg-300: #f4f6fd; /* light-blue */
 
-  --text-100: #051956; /* oxford-blue */
-  --text-200: rgba(3, 14, 47, 0.4);
-  --text-300: rgba(3, 14, 47, 0.2);
-  --text-400: rgba(3, 14, 47, 0.1);
+  --text-100: #373b5e; /* dark-blue */
+  --text-200: #9d9ab4; /* grayish-blue */
+  --text-300: #c4c4c4; /* light-gray */
+  --text-400: #e0e0e0; /* white-gray */
 }
 
 h1,
@@ -141,6 +141,10 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+ul:focus {
+  outline: none;
 }
 
 a {
@@ -297,7 +301,7 @@ a {
 }
 
 .hero__nav--templates__list {
-  --default-bg: #051956;
+  --default-bg: #081e60;
   --default-text: #e2fdff;
   --light-bg: #dbe5ff;
   --light-text: #051956;
@@ -389,14 +393,13 @@ a {
 
 .app__category--item {
   all: unset;
-  padding: 1em;
+  padding: 1.25em 1em;
   border-radius: var(--radius-100);
   display: flex;
   flex-direction: column;
   gap: 0.75em;
-  width: 7em;
+  width: 8em;
   background-color: var(--bg-200);
-  box-shadow: var(--shadow);
 }
 
 .app__category--item * {
@@ -408,12 +411,16 @@ a {
   font-size: 0.75em;
 }
 
+.app__category--item__title {
+  font-weight: 400;
+}
+
 .app__category--item__progressBar {
   --progress: 0;
 
   position: relative;
-  height: 0.175em;
-  border-radius: var(--radius-500);
+  height: 0.205em;
+  border-radius: var(--radius-pill);
   background-color: var(--text-200);
 }
 
@@ -430,7 +437,7 @@ a {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 0.175em;
+  width: 0.205em;
   height: 200%;
   border-radius: inherit;
   background-color: var(--primary);
@@ -458,7 +465,6 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1em;
 }
 
 .app__task--menu {
@@ -797,7 +803,6 @@ a {
 }
 
 .app__task--list {
-  padding-top: 0.5em;
   padding-bottom: 0.5em;
   display: flex;
   flex-direction: column;
@@ -815,7 +820,7 @@ a {
   align-items: center;
   background-color: var(--bg-200);
   border-radius: var(--radius-100);
-  box-shadow: var(--shadow);
+  /* box-shadow: var(--shadow); */
 }
 
 .app__task--list__item:focus-within {
