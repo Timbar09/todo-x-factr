@@ -1,47 +1,56 @@
-# Todo X factr
+# Todo X Factor
 
 ## Overview
 
-Todo X factr is a web application designed to help users manage their tasks efficiently. It provides a simple and intuitive interface for users to add, delete, and manage their tasks. The application is built using modern web technologies including HTML5, CSS3, JavaScript, and TypeScript.
+Todo X Factor began as a [TypeScript tutorial](https://youtu.be/61v23Ce5SXA?list=PLU0pnXVbHLls62DwFOB35Kxq2bw4-EVBF) project led by [Dave Gray](https://www.youtube.com/@DaveGrayTeachesCode), aimed at building a simple todo application to learn TypeScript. Originally, the app featured basic functionalities such as adding items to a list, deleting an item, removing all items, and saving to local storage. Inspired to enhance the application, I embarked on a journey of adding new features and revamping the UI, drawing inspiration from a [design template](https://dribbble.com/shots/14100356-ToDo-App-UI) by [Alex Arutuynov](https://dribbble.com/alex_arutuynov).
+
+The evolution of Todo X Factor includes a comprehensive UI overhaul, the introduction of task item categories, the implementation of observers for dynamic UI updates, and a restructured app divided into distinct sections: the hero section, the task list (app) section, the theme template section, and the item entry section. Additional improvements include focus lock for enhanced accessibility, a custom select box, and a redesigned task list menu offering options to clear all tasks or only completed tasks.
+
+## New Features and Enhancements
+
+- **UI Overhaul:** Inspired by a design template from Alex Arutuynov, the app now boasts a modern and intuitive interface.
+- **Task Item Categories:** Introduced categories for better organization of tasks.
+- **Dynamic UI Updates:** Implemented observers to refresh the UI automatically upon modifications.
+- **App Structure:** Divided the application into several sections for improved user experience.
+- **Accessibility Improvements:** Added focus lock to ensure a more accessible interface.
+- **Custom Select Box:** Developed a custom select box for a more cohesive design.
+- **Tasklist Menu:** Redesigned the menu to include options for clearing all tasks or only completed tasks.
 
 ## Technologies Used
 
-- TypeScript: Used for adding static type definitions to JavaScript, enhancing code quality and understandability.
-- HTML5: The markup language used for structuring and presenting content on the web.
-- CSS3: Used for styling the web pages.
-- JavaScript: The scripting language used to create dynamic and interactive user experiences on the web.
+- **TypeScript:** Enhances JavaScript with static type definitions, improving code quality and understandability.
+- **HTML5:** The core markup language for structuring web content.
+- **CSS3:** Empowers the styling of web pages.
+- **JavaScript:** Enables dynamic and interactive web experiences.
 
-## Features
+## Future Improvements
 
-- Add new tasks: Users can add new tasks to their todo list.
-- Delete tasks: Users can delete tasks when they are completed or no longer needed.
-- Persistent data: The tasks are stored in the browser's local storage, so they persist even after the browser or the system is restarted.
+- **Custom Categories:** Allow users to create their own task categories.
+- **Enhanced CRUD Operations:** Introduce more CRUD functionalities for task items.
+- **Task Scheduling:** Implement the ability to schedule tasks for future dates.
+- **Search Functionality:** Add a feature to search through tasks.
+- **Notifications:** Implement notifications to alert users about task deadlines or updates.
 
 ## Running Locally
 
-To run this project locally, follow these steps:
-
-1. Clone the repository
-2. Navigate into the directory
-3. Install the dependencies
-4. Start the development server
+To experience Todo X Factor locally, follow these steps:
 
 ```bash
-git clone https://github.com/Timbar09/Todo-X-factr.git`
-cd The-portfolio
+git clone https://github.com/Timbar09/Todo-X-factr.git
+cd Todo-X-factr
 npm install
-npm start
+npm run dev
 ```
 
-The site will be available at `http://localhost:3000`.
+Access the application at `http://localhost:5173`.
 
 ## Contributing
 
-While this is a personal project, if you find any bugs or ways to improve the code, your contributions are welcome. Please open an issue or submit a pull request.
+This project, while personal, welcomes contributions. If you discover bugs or have suggestions for improvement, feel free to open an issue or submit a pull request.
 
 ## Acknowledgements
 
-> **Design template from <a href="https://dribbble.com/alex_arutuynov">Alex Arutuynov</a>.**
+> **Design inspiration from [Alex Arutuynov](https://dribbble.com/alex_arutuynov).** > **Initial project tutorial by Dave Gray.**
 
 ## License
 
