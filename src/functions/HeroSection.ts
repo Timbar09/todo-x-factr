@@ -40,6 +40,8 @@ export const toggleTaskListMenu = (): void => {
 
   toggleClass(taskListMenu, "open");
 
+  lockFocus(taskListMenu);
+
   taskListMenuItems.forEach((item) => {
     item.addEventListener("click", () => {
       removeClass(taskListMenu, "open");

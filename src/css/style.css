@@ -571,7 +571,8 @@ a {
   transition: background-color 100ms ease-in-out;
 }
 
-.app__task--menu__option:hover {
+.app__task--menu__option:hover,
+.app__task--menu__option:focus-visible {
   background-color: var(--text-400);
 }
 
@@ -977,14 +978,16 @@ a {
 .app__task--entry__category--color {
   --color: var(--text-300);
 
-  padding: 0 0.5em;
+  padding: 1em;
   display: grid;
+  border: solid 0.125em var(--text-400);
+  border-radius: var(--radius-circle);
 }
 
 .app__task--entry__category--color__indicator {
   display: inline-block;
-  width: 2.15em;
-  height: 2.15em;
+  width: 0.75em;
+  height: 0.75em;
   border-radius: var(--radius-circle);
   outline: solid 0.125em var(--color);
   outline-offset: 0.25em;

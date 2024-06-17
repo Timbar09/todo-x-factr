@@ -72,9 +72,10 @@ export const lockFocus = (
   ) as NodeListOf<HTMLElement>;
   const firstElement = focusableElements[0];
   const lastElement = focusableElements[focusableElements.length - 1];
-  const focusStart = firstFocusablePosition ? focusableElements[firstFocusablePosition - 1] : null;
 
-  focusStart ? focusStart.focus() : firstElement.focus();
+  firstFocusablePosition
+    ? focusableElements[firstFocusablePosition - 1].focus()
+    : firstElement.focus();
 
   section.addEventListener("keydown", (event) => {
     if (event.key === "Tab" && event.shiftKey) {
