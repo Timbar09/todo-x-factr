@@ -21,32 +21,11 @@
         justify-content: center;
         align-items: center;
         z-index: 1000;
-        animation: fadeOut 1s ease-in-out forwards;
+        animation: fadeOut 1500ms ease-in-out forwards;
       }
 
       .hide-loader {
         display: none;
-      }
-
-      .loader__animation {
-        width: 45px;
-        height: 40px;
-        background: linear-gradient(#0000 calc(1 * 100% / 6), #fff 0 calc(3 * 100% / 6), #0000 0),
-          linear-gradient(#0000 calc(2 * 100% / 6), #fff 0 calc(4 * 100% / 6), #0000 0),
-          linear-gradient(#0000 calc(3 * 100% / 6), #fff 0 calc(5 * 100% / 6), #0000 0);
-        background-size: 10px 400%;
-        background-repeat: no-repeat;
-        animation: matrix 1s infinite linear;
-      }
-
-      @keyframes matrix {
-        0% {
-          background-position: 0% 100%, 50% 100%, 100% 100%;
-        }
-
-        100% {
-          background-position: 0% 0%, 50% 0%, 100% 0%;
-        }
       }
 
       @keyframes fadeOut {
@@ -66,7 +45,7 @@
   </head>
   <body data-template="default">
     <div id="loader" class="loader">
-      <div class="loader__animation"></div>
+      <img src="/public/logo.png" alt="App logo" width="150" height="150" />
     </div>
 
     <main class="main">

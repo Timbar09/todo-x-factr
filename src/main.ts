@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(() => {
     loader?.classList.add("hide-loader");
-  }, 1500);
+  }, 2000);
 
   initApp();
 });
