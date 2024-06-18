@@ -1,5 +1,9 @@
 # Todo X Factr
 
+<div align="center">
+  <img src="public/logo.png" alt="Todo X Factr Logo"/>
+</div>
+
 ## Overview
 
 Todo X Factr began as a [TypeScript tutorial](https://youtu.be/61v23Ce5SXA?list=PLU0pnXVbHLls62DwFOB35Kxq2bw4-EVBF) project led by [Dave Gray](https://www.youtube.com/@DaveGrayTeachesCode), aimed at building a simple todo application to learn TypeScript. Originally, the app featured basic functionalities such as adding items to a list, deleting an item, removing all items, and saving to local storage. Inspired to enhance the application, I embarked on a journey of adding new features and revamping the UI, drawing inspiration from a [design template](https://dribbble.com/shots/14100356-ToDo-App-UI) by [Alex Arutuynov](https://dribbble.com/alex_arutuynov).
