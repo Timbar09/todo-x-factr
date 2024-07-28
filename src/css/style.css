@@ -184,6 +184,54 @@ button {
   justify-content: center;
 }
 
+/* MORE OPTIONS BUTTON AND POPUP */
+.more__options {
+  position: relative;
+}
+
+.more__options--button {
+  border: none;
+}
+
+.more__options--menu__list {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  top: 2em;
+  right: -5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125em;
+  padding: 0.25em;
+  width: max-content;
+  border-radius: var(--radius-50);
+  background-color: var(--bg-200);
+  z-index: 1;
+  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
+  transition: opacity 150ms ease-in-out, top 150ms ease-in-out;
+}
+
+.more__options--menu__list.open {
+  right: 0;
+  visibility: visible;
+  opacity: 1;
+  top: 2.5em;
+}
+
+.more__options--menu__option {
+  padding: 0.25em;
+  font-size: 0.85em;
+  color: var(--text-100);
+  border-radius: var(--radius-25);
+  width: 100%;
+  transition: background-color 100ms ease-in-out;
+}
+
+.more__options--menu__option:hover,
+.more__options--menu__option:focus-visible {
+  background-color: var(--text-400);
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -529,56 +577,14 @@ a {
   align-items: center;
 }
 
-.app__task--menu {
+/* .app__task--menu {
   position: relative;
-}
+} */
 
-.app__task--menu__button {
+/* TODO: Remove this */
+/* .app__task--menu__button {
   border: none;
-}
-
-.app__task--menu__list {
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  top: 2em;
-  right: -5em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125em;
-  padding: 0.25em;
-  width: max-content;
-  border-radius: var(--radius-50);
-  background-color: var(--bg-200);
-  z-index: 1;
-  box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
-  transition: opacity 150ms ease-in-out, top 150ms ease-in-out;
-}
-
-.app__task--menu__list.open {
-  right: 0;
-  visibility: visible;
-  opacity: 1;
-  top: 2.5em;
-}
-
-.app__task--menu__option {
-  padding: 0.25em;
-  font-size: 0.85em;
-  color: var(--text-100);
-  border-radius: var(--radius-25);
-  width: 100%;
-  transition: background-color 100ms ease-in-out;
-}
-
-.app__task--menu__option:hover,
-.app__task--menu__option:focus-visible {
-  background-color: var(--text-400);
-}
-
-.app__task--clear:hover {
-  opacity: 0.75;
-}
+} */
 
 .app__task--entry__container {
   --dimension: 4em;
@@ -748,7 +754,6 @@ a {
   width: 100%;
   height: 100%;
   border-radius: var(--radius-circle);
-  display: none;
   transition: color 100ms ease-in-out;
 }
 

@@ -7,10 +7,10 @@ import CategoryListTemplate from "../templates/CategoryListTemplate";
 import { setSectionFocusStatus } from "./Reusable";
 import { handleFormSubmit } from "./EntryForm";
 import { setThemeTemplate } from "./ThemeTemplate";
-import { showTaskListSection, toggleTaskListSection, toggleTaskListMenu } from "./HeroSection";
+import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
 import { openHeroNavPopup, closeHeroNavPopup } from "./ThemeTemplate";
 import { openEntryForm, closeEntryForm } from "./EntryForm";
-import { addClass, removeClass } from "./Reusable";
+import { addClass, removeClass, toggleMoreOptionsMenu } from "./Reusable";
 
 const fullList = FullList.instance;
 const categoryList = CategoryList.instance;
@@ -34,7 +34,9 @@ const setDefaultSectionFocusStatuses = (): void => {
 const renderListeners = (): void => {
   const showListSectionButton = document.getElementById("showList") as HTMLButtonElement;
   const toggleListButton = document.getElementById("toggleList") as HTMLButtonElement;
-  const taskListMenuButton = document.getElementById("taskMenuButton") as HTMLButtonElement;
+  const moreOptionsButton = document.querySelectorAll(
+    ".more__options--button"
+  ) as NodeListOf<HTMLButtonElement>;
   const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
   const closeHeroNavPopupButton = document.getElementById("closeHeroNavPopup") as HTMLButtonElement;
   const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
@@ -81,9 +83,15 @@ const renderListeners = (): void => {
     toggleTaskListSection();
   });
 
-  taskListMenuButton.addEventListener("click", () => {
-    toggleTaskListMenu();
+  moreOptionsButton.forEach((button) => {
+    button.addEventListener("click", () => {
+      toggleMoreOptionsMenu(button);
+    });
   });
+
+  // taskListMenuButton.addEventListener("click", () => {
+  //   toggleTaskListMenu();
+  // });
 
   openHeroNavPopupButton.addEventListener("click", () => {
     openHeroNavPopup();
