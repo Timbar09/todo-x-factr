@@ -117,7 +117,9 @@ export const toggleMoreOptionsMenu = (toggleButton: HTMLButtonElement): void => 
   document.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
 
-    if (target.closest(".more__options")) return;
+    const isMoreOptionsMenu = target.closest(".more__options");
+
+    if (isMoreOptionsMenu) return;
 
     removeClass(moreOptionsMenu, "open");
   });

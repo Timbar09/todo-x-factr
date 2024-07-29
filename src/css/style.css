@@ -577,15 +577,6 @@ a {
   align-items: center;
 }
 
-/* .app__task--menu {
-  position: relative;
-} */
-
-/* TODO: Remove this */
-/* .app__task--menu__button {
-  border: none;
-} */
-
 .app__task--entry__container {
   --dimension: 4em;
 
@@ -636,9 +627,14 @@ a {
   outline: 0.125em solid var(--primary);
 }
 
-.app__task--list__item:hover .app__task--list__item--button,
-.app__task--list__item:focus-within .app__task--list__item--button {
-  display: grid;
+.app__task--list__item .more__options--button {
+  color: var(--text-300);
+}
+
+.app__task--list__item .more__options--button:hover,
+.app__task--list__item .more__options--button:focus-visible {
+  color: var(--text-100);
+  background-color: transparent;
 }
 
 .app__task--list__item--checkbox {
@@ -740,29 +736,6 @@ a {
   + label
   .app__task--list__item--text::before {
   width: calc(100% + 0.5em);
-}
-
-.app__task--list__item--button-container {
-  width: 1.5em;
-  height: 1.5em;
-  margin-right: var(--padding);
-}
-
-.app__task--list__item--button {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-circle);
-  transition: color 100ms ease-in-out;
-}
-
-.app__task--list__item--button span {
-  scale: 0.95;
-}
-
-.app__task--list__item--button:hover {
-  color: #ff000084;
 }
 
 .app__entryForm--button__container {
