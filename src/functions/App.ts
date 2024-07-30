@@ -71,7 +71,7 @@ const renderListeners = (): void => {
       addClass(button, "clicked");
       setTimeout(() => {
         removeClass(button, "clicked");
-      }, 400);
+      }, 500);
     });
   });
 
