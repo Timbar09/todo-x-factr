@@ -45,7 +45,13 @@ body {
   --shadow-variant: 0 0 0.5em 0.125em rgba(14, 98, 234, 0.1);
   --shadow-variant-200: 0 0 0.75em 0.15em rgba(14, 98, 234, 0.3);
 
+  --shadow-primary: 0 0 0.5em 0.125em rgba(160, 86, 197, 0.1);
+  --shadow-primary-200: 0 0 0.75em 0.15em rgba(160, 86, 197, 0.3);
+
   --focus-outline: 0.125em solid var(--primary);
+
+  --primary-button: var(--primary);
+  --shadow-button: var(--shadow-primary);
 
   padding: 0;
   margin: 0;
@@ -66,6 +72,9 @@ body[data-template="light"] {
   --text-400: #e0e0e0; /* white-gray */
 
   --focus-outline: 0.125em solid var(--variant);
+
+  --primary-button: var(--variant);
+  --shadow-button: var(--shadow-variant);
 }
 
 h1,
@@ -154,17 +163,17 @@ button {
 }
 
 .button__primary {
-  background-color: var(--variant);
+  background-color: var(--primary-button);
   color: var(--bg-200);
   display: inline-flex;
-  box-shadow: var(--shadow-variant-200);
+  box-shadow: var(--shadow-button);
 }
 
 .button__primary:hover {
-  --shadow-variant-200: var(--shadow-variant);
+  /* --shadow-variant-200: var(--shadow-variant); */
 
   color: var(--bg-200);
-  background-color: var(--variant);
+  background-color: var(--primary-button);
   opacity: 0.85;
 }
 
@@ -608,6 +617,7 @@ a {
   flex-direction: column;
   height: 16em;
   gap: 0.5em;
+  overflow-x: clip;
   overflow-y: auto;
   max-height: 19.5em;
 }

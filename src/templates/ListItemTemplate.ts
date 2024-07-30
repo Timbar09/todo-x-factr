@@ -55,7 +55,7 @@ export default class ListItemTemplate {
         <ul class="more__options--menu__list">
           <li class="more__options--menu__item">
             <button id="deleteItem" class="more__options--menu__option" aria-label="Delete item">
-              Delete item
+              Delete task
             </button>
           </li>
         </ul>
