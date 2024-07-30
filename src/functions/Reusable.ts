@@ -104,6 +104,13 @@ export const toggleMoreOptionsMenu = (toggleButton: HTMLButtonElement): void => 
     ".more__options--menu__item"
   ) as NodeListOf<HTMLLIElement>;
 
+  const openMenus = document.querySelectorAll(".more__options--menu__list.open");
+  openMenus.forEach((menu) => {
+    if (menu !== moreOptionsMenu) {
+      removeClass(menu as HTMLElement, "open");
+    }
+  });
+
   toggleClass(moreOptionsMenu, "open");
 
   lockFocus(moreOptionsMenu);

@@ -48,7 +48,7 @@ export default class ListItemTemplate {
       </div>
 
       <div class="more__options">
-        <button class="button button__round button more__options--button" aria-label="More options">
+        <button class="more__options--button" aria-label="More options">
           <span class="material-symbols-outlined">more_vert</span>
         </button>
 

@@ -146,7 +146,7 @@ button {
 }
 
 .button:focus-visible {
-  outline: var(--focus-outline);
+  outline: var(--primary-button) solid 0.125em;
   outline-offset: 0.25em;
 }
 
@@ -170,8 +170,6 @@ button {
 }
 
 .button__primary:hover {
-  /* --shadow-variant-200: var(--shadow-variant); */
-
   color: var(--bg-200);
   background-color: var(--primary-button);
   opacity: 0.85;
@@ -638,7 +636,10 @@ a {
 }
 
 .app__task--list__item .more__options--button {
-  color: var(--text-300);
+  padding-right: 0.375em;
+  display: grid;
+  place-items: center;
+  color: var(--text-400);
 }
 
 .app__task--list__item .more__options--button:hover,
