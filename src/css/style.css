@@ -11,10 +11,6 @@
   --radius-500: 5em;
   --radius-pill: 50em;
   --radius-circle: 50%;
-
-  /* VIEW PORT VARIABLES */
-
-  --mobile: 23.438em;
 }
 
 html {
@@ -281,10 +277,10 @@ a {
 }
 
 .main {
-  padding: 2rem 0;
+  padding: 2rem min(2.5%, 2rem);
   height: 100vh;
   min-height: 45em;
-  max-width: var(--mobile);
+  max-width: 75em;
   margin: 0 auto;
 }
 
@@ -293,6 +289,14 @@ a {
   height: 100%;
   border-radius: var(--radius-200);
   overflow: hidden;
+}
+
+@media (min-width: 48em) {
+  .main__container {
+    display: flex;
+    gap: 2em;
+    height: 100%;
+  }
 }
 
 .hero {
@@ -466,6 +470,19 @@ a {
   border-radius: inherit;
   box-shadow: var(--shadow);
   transition: inset 300ms ease-in-out, scale 300ms 100ms ease-in-out;
+}
+
+@media (min-width: 23.438em) {
+  .app {
+    inset: 0 auto 0 50vw;
+  }
+}
+
+@media (min-width: 48em) {
+  .app {
+    position: static;
+    scale: 1;
+  }
 }
 
 .app__container {
