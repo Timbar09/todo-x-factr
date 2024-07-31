@@ -12,6 +12,12 @@
   text-align: center;
 }
 
+@media (min-width: 48em) {
+  .hero__button--container {
+    display: none;
+  }
+}
+
 .hero__button {
   --dimension: 2.75em;
 
@@ -45,10 +51,38 @@
   display: block;
 }
 
+@media (min-width: 48em) {
+  .hero__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hero__image--container {
+    --dimension: 3.5em;
+  }
+
+  .hero__title {
+    font-size: 0.825em;
+    margin: 0;
+  }
+
+  .hero__title span:first-child {
+    font-weight: 400;
+    color: var(--text-300);
+  }
+}
+
 .hero__nav--list {
   display: flex;
   flex-direction: column;
   gap: 0.125em;
+}
+
+@media (min-width: 48em) {
+  .hero__nav--list {
+    margin-top: 1em;
+  }
 }
 
 .hero__nav--item button {
@@ -68,6 +102,10 @@
 .hero__nav--list button:hover {
   color: var(--primary);
   background-color: transparent;
+}
+
+.hero__categories {
+  display: none;
 }
 
 .hero__nav--popup {
