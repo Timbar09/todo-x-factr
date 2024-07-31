@@ -4,81 +4,83 @@ import CategoryItem from "../model/CategoryItem";
 import Observer from "../types/Observer";
 
 interface DOMList {
-  ul: HTMLUListElement;
+  uls: NodeListOf<HTMLUListElement>;
   render(categoryList: CategoryList): void;
 }
 
 export default class CategoryListTemplate implements DOMList, Observer<CategoryItem> {
-  ul: HTMLUListElement;
+  uls: NodeListOf<HTMLUListElement>;
 
   static instance: CategoryListTemplate = new CategoryListTemplate();
 
   private constructor() {
-    this.ul = document.getElementById("categoryList") as HTMLUListElement;
+    this.uls = document.querySelectorAll(".app__category--list") as NodeListOf<HTMLUListElement>;
   }
 
   update(category: CategoryItem): void {
-    const categoryCount = this.ul.querySelector(
-      `[data-category-id="${category.id}"] .app__category--item__count`
-    );
+    this.uls.forEach((ul) => {
+      const categoryCount = ul.querySelector(
+        `[data-category-id="${category.id}"] .app__category--item__count`
+      );
 
-    if (!categoryCount) return;
+      if (!categoryCount) return;
 
-    const numberOfItems = category.items.length;
-    categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
+      const numberOfItems = category.items.length;
+      categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
+    });
   }
 
   render(categoryList: CategoryList): void {
-    this.ul.innerHTML = "";
+    this.uls.forEach((ul) => {
+      ul.innerHTML = "";
 
-    categoryList.load();
+      categoryList.load();
 
-    categoryList.addCategoryObserver(this);
+      categoryList.categories.forEach((category) => {
+        const li = document.createElement("li");
+        const numberOfItems = category.items.length;
 
-    categoryList.categories.forEach((category) => {
-      const li = document.createElement("li");
-      const numberOfItems = category.items.length;
+        const fullList = FullList.instance;
+        fullList.load();
 
-      const fullList = FullList.instance;
-      fullList.load();
+        const numberOfCompletedItems = category.items.filter(
+          (itemId) => fullList.list.find((item) => item.id === itemId)?.checked
+        ).length;
 
-      const numberOfCompletedItems = category.items.filter(
-        (itemId) => fullList.list.find((item) => item.id === itemId)?.checked
-      ).length;
+        const completionPercentage = Math.round((numberOfCompletedItems / numberOfItems) * 100);
 
-      const completionPercentage = Math.round((numberOfCompletedItems / numberOfItems) * 100);
+        const liContainer = document.createElement("span");
+        liContainer.className = "app__category--item";
+        liContainer.title = category.name;
+        liContainer.ariaLabel = category.name;
+        liContainer.dataset.categoryId = category.id;
 
-      const liContainer = document.createElement("span");
-      liContainer.className = "app__category--item";
-      liContainer.title = category.name;
-      liContainer.ariaLabel = category.name;
-      liContainer.dataset.categoryId = category.id;
+        const categoryCount = document.createElement("span");
+        categoryCount.className = "app__category--item__count";
+        categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
 
-      const categoryCount = document.createElement("span");
-      categoryCount.className = "app__category--item__count";
-      categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
+        const categoryName = document.createElement("h4");
+        categoryName.className = "app__category--item__title";
+        categoryName.textContent = category.name;
 
-      const categoryName = document.createElement("h4");
-      categoryName.className = "app__category--item__title";
-      categoryName.textContent = category.name;
+        const categoryProgressBar = document.createElement("div");
+        categoryProgressBar.className = "app__category--item__progressBar";
+        setTimeout(() => {
+          categoryProgressBar.style.setProperty("--progress", `${completionPercentage}%`);
+        }, 400);
 
-      const categoryProgressBar = document.createElement("div");
-      categoryProgressBar.className = "app__category--item__progressBar";
-      setTimeout(() => {
-        categoryProgressBar.style.setProperty("--progress", `${completionPercentage}%`);
-      }, 400);
+        const categoryProgressBarFill = document.createElement("span");
+        categoryProgressBarFill.className = "app__category--item__progressBar--fill";
 
-      const categoryProgressBarFill = document.createElement("span");
-      categoryProgressBarFill.className = "app__category--item__progressBar--fill";
+        categoryProgressBar.appendChild(categoryProgressBarFill);
 
-      categoryProgressBar.appendChild(categoryProgressBarFill);
+        liContainer.appendChild(categoryCount);
+        liContainer.appendChild(categoryName);
+        liContainer.appendChild(categoryProgressBar);
+        li.appendChild(liContainer);
 
-      liContainer.appendChild(categoryCount);
-      liContainer.appendChild(categoryName);
-      liContainer.appendChild(categoryProgressBar);
-      li.appendChild(liContainer);
-
-      this.ul.appendChild(li);
+        ul.appendChild(li);
+      });
     });
   }
 }
