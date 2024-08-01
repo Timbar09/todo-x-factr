@@ -114,13 +114,13 @@
     display: block;
   }
 
-  .hero__categories .app__category--list {
+  .hero__categories .category--list {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
   }
 
-  .hero__categories .app__category--item {
+  .hero__categories .category--item {
     background-color: var(--bg-300);
   }
 }
