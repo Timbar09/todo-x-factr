@@ -48,36 +48,24 @@ export default class CategoryListTemplate implements DOMList, Observer<CategoryI
         ).length;
 
         const completionPercentage = Math.round((numberOfCompletedItems / numberOfItems) * 100);
+        const { name, id } = category;
+        const plural = numberOfItems === 1 ? "" : "s";
 
-        const liContainer = document.createElement("span");
-        liContainer.className = "category--item";
-        liContainer.title = category.name;
-        liContainer.ariaLabel = category.name;
-        liContainer.dataset.categoryId = category.id;
+        const categoryItem = `
+          <span class="category--item" title="${name}" aria-label="${name}" data-category-id="${id}">
+            <span class="category--item__progressCircle"> ${completionPercentage}% </span>
 
-        const categoryCount = document.createElement("span");
-        categoryCount.className = "category--item__count";
-        categoryCount.textContent = `${numberOfItems} task${numberOfItems === 1 ? "" : "s"}`;
+            <span class="category--item__count">${numberOfItems} task${plural} </span>
 
-        const categoryName = document.createElement("h4");
-        categoryName.className = "category--item__title";
-        categoryName.textContent = category.name;
+            <h4 class="category--item__title">${category.name}</h4>
+            
+            <div class="category--item__progressBar" style="--progress: ${completionPercentage}%;">
+              <span class="category--item__progressBar--fill"></span>
+            </div>
+          </span>
+        `;
 
-        const categoryProgressBar = document.createElement("div");
-        categoryProgressBar.className = "category--item__progressBar";
-        setTimeout(() => {
-          categoryProgressBar.style.setProperty("--progress", `${completionPercentage}%`);
-        }, 400);
-
-        const categoryProgressBarFill = document.createElement("span");
-        categoryProgressBarFill.className = "category--item__progressBar--fill";
-
-        categoryProgressBar.appendChild(categoryProgressBarFill);
-
-        liContainer.appendChild(categoryCount);
-        liContainer.appendChild(categoryName);
-        liContainer.appendChild(categoryProgressBar);
-        li.appendChild(liContainer);
+        li.innerHTML = categoryItem;
 
         ul.appendChild(li);
       });

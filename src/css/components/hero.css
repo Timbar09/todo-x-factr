@@ -123,6 +123,10 @@
   .hero__categories .category--item {
     background-color: var(--bg-300);
   }
+
+  .hero__categories .category--item__progressCircle {
+    display: block;
+  }
 }
 
 .hero__nav--popup {

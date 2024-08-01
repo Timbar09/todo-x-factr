@@ -151,6 +151,10 @@ button {
   line-height: 1;
 }
 
+.category--item__progressCircle {
+  display: none;
+}
+
 .category--item__count {
   font-size: 0.75em;
 }
@@ -166,6 +170,16 @@ button {
   height: 0.205em;
   border-radius: var(--radius-pill);
   background-color: var(--text-200);
+}
+
+@media (min-width: 48em) {
+  .category--item__count {
+    display: none;
+  }
+
+  .category--item__progressBar {
+    display: none;
+  }
 }
 
 .category--item__progressBar--fill {
