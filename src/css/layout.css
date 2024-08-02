@@ -68,5 +68,6 @@ a {
     display: flex;
     gap: 2em;
     height: 100%;
+    border-radius: var(--radius-100);
   }
 }
