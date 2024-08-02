@@ -138,6 +138,8 @@ button {
 }
 
 .category--item {
+  --progress: 0;
+
   padding: 1.25em 1em;
   border-radius: var(--radius-100);
   display: flex;
@@ -162,9 +164,24 @@ button {
 }
 
 .category--item__progressCircle {
+  --progress: 82;
+  --stroke-clr: var(--variant);
+
   display: none;
   position: relative;
   width: min-content;
+}
+
+.category--item__progressCircle > svg {
+  position: relative;
+  color: var(--text-400);
+}
+
+.category--item__progressCircle > svg:last-child {
+  position: absolute;
+  color: var(--stroke-clr);
+  stroke-dasharray: var(--progress);
+  stroke-dashoffset: 82;
 }
 
 .category--item__progressCircle--count {

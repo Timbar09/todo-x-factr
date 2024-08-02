@@ -47,16 +47,22 @@ export default class CategoryListTemplate implements DOMList, Observer<CategoryI
           (itemId) => fullList.list.find((item) => item.id === itemId)?.checked
         ).length;
 
+        const strokeProgress = 82 + (numberOfCompletedItems / numberOfItems) * 70;
+
         const completionPercentage = Math.round((numberOfCompletedItems / numberOfItems) * 100);
-        const { name, id } = category;
+        const { name, id, color } = category;
         const plural = numberOfItems === 1 ? "" : "s";
 
         const categoryItem = `
           <span class="category--item" title="${name}" aria-label="${name}" data-category-id="${id}">
-            <span class="category--item__progressCircle">
+            <span class="category--item__progressCircle" style="--progress: ${strokeProgress}; --stroke-clr: ${color};">
               <span class="category--item__progressCircle--count">
                 ${numberOfItems}
               </span>
+              
+              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2" fill="transparent" />
+              </svg>
               
               <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2" fill="transparent" />
