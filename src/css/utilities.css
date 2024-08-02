@@ -146,6 +146,16 @@ button {
   background-color: var(--bg-200);
 }
 
+@media (min-width: 48em) {
+  .category--item {
+    padding: 0.5em 0.75em;
+    border-radius: var(--radius-50);
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+  }
+}
+
 .category--item * {
   margin: 0;
   line-height: 1;
@@ -153,6 +163,16 @@ button {
 
 .category--item__progressCircle {
   display: none;
+  position: relative;
+  width: min-content;
+}
+
+.category--item__progressCircle--count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  font-size: 0.85em;
 }
 
 .category--item__count {

@@ -53,7 +53,15 @@ export default class CategoryListTemplate implements DOMList, Observer<CategoryI
 
         const categoryItem = `
           <span class="category--item" title="${name}" aria-label="${name}" data-category-id="${id}">
-            <span class="category--item__progressCircle"> ${completionPercentage}% </span>
+            <span class="category--item__progressCircle">
+              <span class="category--item__progressCircle--count">
+                ${numberOfItems}
+              </span>
+              
+              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2" fill="transparent" />
+              </svg>
+            </span>
 
             <span class="category--item__count">${numberOfItems} task${plural} </span>
 
