@@ -215,11 +215,41 @@
   box-shadow: var(--shadow);
 }
 
-.hero__analytics--chart {
-  padding: 1em 0;
+.hero__analytics .section__subTitle--container {
+  display: none;
 }
 
-.hero__analytics--chart img {
+@media (min-width: 48em) {
+  .hero__analytics .section__subTitle--container {
+    display: block;
+  }
+}
+
+.hero__analytics--graph {
+  padding: 1em 0;
+  position: relative;
+}
+
+.hero__analytics--graph::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 100%;
+  background-color: var(--bg-200);
+  border-radius: inherit;
+  animation: graph-animation 3s 1s forwards ease-in-out;
+}
+
+@keyframes graph-animation {
+  0% {
+    width: 1001;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+.hero__analytics--graph__image {
   width: 10em;
 }
 
