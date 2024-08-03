@@ -106,6 +106,33 @@
               </ul>
             </nav>
 
+            <div class="hero__templates">
+              <div class="section__subTitle--container">
+                <h3 class="section__subTitle">Templates</h3>
+              </div>
+
+              <ul class="hero__templates--list">
+                <li class="hero__templates--item">
+                  <button
+                    class="hero__templates--button templates__button"
+                    id="selectDefaultTemplate"
+                    data-template="default"
+                    aria-label="Dark template"
+                  >
+                  </button>
+                </li>
+
+                <li class="hero__templates--item">
+                  <button
+                    class="hero__templates--button templates__button"
+                    id="selectLightTemplate"
+                    data-template="light"
+                    aria-label="Light template"
+                  >
+                  </button>
+                </li>
+            </div>
+
             <div class="hero__categories category padding-x">
               <div class="section__subTitle--container">
                 <h3 class="section__subTitle">Categories</h3>
@@ -182,7 +209,7 @@
             <ul class="hero__nav--templates__list">
               <li class="hero__nav--templates__item">
                 <button
-                  class="button hero__nav--templates__button"
+                  class="button hero__nav--templates__button templates__button"
                   id="selectDefaultTemplate"
                   data-template="default"
                 >
@@ -192,7 +219,7 @@
 
               <li class="hero__nav--templates__item">
                 <button
-                  class="button hero__nav--templates__button"
+                  class="button hero__nav--templates__button templates__button"
                   id="selectLightTemplate"
                   data-template="light"
                 >
