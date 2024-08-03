@@ -267,6 +267,11 @@ button {
   transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
 }
 
+.templates__button.active {
+  outline: dashed 0.125em var(--text-200);
+  outline-offset: 0.125em;
+}
+
 .templates__button[data-template="default"] {
   --button-border-clr: var(--primary);
 

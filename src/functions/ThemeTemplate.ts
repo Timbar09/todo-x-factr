@@ -17,6 +17,18 @@ export const setThemeTemplate = (): void => {
   const setTheme = (template: string): void => {
     body.setAttribute("data-template", template);
     localStorage.setItem("themeTemplate", template);
+
+    templateOptions.forEach((option) => {
+      removeClass(option, "active");
+    });
+
+    const selectedOptions = body.querySelectorAll(
+      `[data-template="${template}"]`
+    ) as NodeListOf<HTMLButtonElement>;
+
+    selectedOptions.forEach((option) => {
+      addClass(option, "active");
+    });
   };
 
   if (savedTemplate) {

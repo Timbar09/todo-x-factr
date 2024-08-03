@@ -125,7 +125,7 @@
 .hero__templates--button {
   padding: 0.75em;
   border-radius: var(--radius-circle);
-  outline: solid 2px var(--button-border-clr);
+  border: solid 2px var(--button-border-clr);
   display: grid;
   transition: scale 100ms ease-in-out;
 }
