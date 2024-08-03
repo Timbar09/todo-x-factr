@@ -60,12 +60,12 @@ export default class CategoryListTemplate implements DOMList, Observer<CategoryI
                 ${numberOfItems}
               </span>
               
-              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2" fill="transparent" />
+              <svg width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="10" stroke="currentColor" stroke-width="2" fill="transparent" />
               </svg>
-              
-              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2" fill="transparent" />
+                            
+              <svg width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="10" stroke="currentColor" stroke-width="2" fill="transparent" />
               </svg>
             </span>
 
