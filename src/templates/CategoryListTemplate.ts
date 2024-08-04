@@ -38,6 +38,7 @@ export default class CategoryListTemplate implements DOMList, Observer<CategoryI
 
       categoryList.categories.forEach((category) => {
         const li = document.createElement("li");
+        li.style.setProperty("--category-clr", category.color);
         const numberOfItems = category.items.length;
 
         const fullList = FullList.instance;
