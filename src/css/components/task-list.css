@@ -29,7 +29,7 @@
 }
 
 .app__task--list__item:focus-within {
-  outline: 0.125em solid var(--primary);
+  outline: 0.125em solid var(--primary-button);
 }
 
 .app__task--list__item .more__options--button {

@@ -61,7 +61,8 @@ export const setSectionFocusStatus = (sectionId: string, enable: boolean): void 
  * @param firstFocusablePosition number - position of first focusable element
  */
 
-// TODO: Find out why lockFocus is not working for the more options dropdown
+// TODO: Find out why lockFocus is not working for the more options dropdown.
+// TODO: Disable all focus lock methods outside mobile view ports.
 export const lockFocus = (
   section: HTMLElement,
   firstFocusablePosition: number | null = null
