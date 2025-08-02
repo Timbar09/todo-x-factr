@@ -49,7 +49,7 @@ a {
 }
 
 .main {
-  padding: 2rem min(2.5%, 2rem);
+  padding: 0;
   height: 100vh;
   min-height: 45em;
   max-width: 75em;
@@ -59,11 +59,15 @@ a {
 .main__container {
   position: relative;
   height: 100%;
-  border-radius: var(--radius-200);
+  /* border-radius: var(--radius-200); */
   overflow: hidden;
 }
 
 @media (min-width: 48em) {
+  .main {
+    padding: 2rem min(2.5%, 2rem);
+  }
+
   .main__container {
     display: flex;
     gap: 2em;
