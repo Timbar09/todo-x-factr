@@ -10,17 +10,29 @@ import { lockFocus } from "./Reusable";
 export const setThemeTemplate = (): void => {
   const body = document.body;
   const templateOptions = document.querySelectorAll(
-    ".hero__nav--templates__button"
+    ".templates__button"
   ) as NodeListOf<HTMLButtonElement>;
   const savedTemplate = localStorage.getItem("themeTemplate");
 
-  const setAttribute = (template: string): void => {
+  const setTheme = (template: string): void => {
     body.setAttribute("data-template", template);
     localStorage.setItem("themeTemplate", template);
+
+    templateOptions.forEach((option) => {
+      removeClass(option, "active");
+    });
+
+    const selectedOptions = body.querySelectorAll(
+      `[data-template="${template}"]`
+    ) as NodeListOf<HTMLButtonElement>;
+
+    selectedOptions.forEach((option) => {
+      addClass(option, "active");
+    });
   };
 
   if (savedTemplate) {
-    setAttribute(savedTemplate);
+    setTheme(savedTemplate);
   }
 
   templateOptions.forEach((option) => {
@@ -29,7 +41,7 @@ export const setThemeTemplate = (): void => {
 
       if (!template) return;
 
-      setAttribute(template);
+      setTheme(template);
     });
   });
 };

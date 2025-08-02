@@ -63,34 +63,36 @@
               </button>
             </div>
 
-            <div class="hero__image--container">
-              <img
-                src="/src/images/Gorilla-soldier_100x100.jpeg"
-                alt="User image"
-                class="hero__image"
-              />
-            </div>
+            <div class="hero__header">
+              <div class="hero__image--container">
+                <img
+                  src="/src/images/Gorilla-soldier_100x100.jpeg"
+                  alt="User image"
+                  class="hero__image"
+                />
+              </div>
 
-            <h2 class="hero__title section__title">
-              <span> Gorilla </span>
-              <span> Super Soldier</span>
-            </h2>
+              <h2 class="hero__title section__title">
+                <span> Gorilla </span>
+                <span> Super Soldier</span>
+              </h2>
+            </div>
 
             <nav class="hero__nav">
               <ul class="hero__nav--list">
                 <li class="hero__nav--item">
-                  <button aria-label="Tempelates" id="openNavPopup" class="button">
+                  <button aria-label="Templates" id="openNavPopup" class="button">
                     <span class="material-symbols-outlined"> Bookmark </span>
 
-                    <span class="hero__nav--item--text"> Tempelates </span>
+                    <span class="hero__nav--item--text"> Templates </span>
                   </button>
                 </li>
 
                 <li class="hero__nav--item">
-                  <button aria-label="Cartegories" class="button">
+                  <button aria-label="Categories" class="button">
                     <span class="material-symbols-outlined"> view_cozy </span>
 
-                    <span class="hero__nav--item--text"> Cartegories </span>
+                    <span class="hero__nav--item--text"> Categories </span>
                   </button>
                 </li>
 
@@ -103,19 +105,89 @@
                 </li>
               </ul>
             </nav>
+
+            <div class="hero__templates">
+              <div class="section__subTitle--container">
+                <h3 class="section__subTitle">Templates</h3>
+              </div>
+
+              <ul class="hero__templates--list">
+                <li class="hero__templates--item">
+                  <button
+                    class="button hero__templates--button templates__button"
+                    data-template="default"
+                    aria-label="Dark template"
+                    title="Dark template"
+                  ></button>
+                </li>
+
+                <li class="hero__templates--item">
+                  <button
+                    class="button hero__templates--button templates__button"
+                    data-template="light"
+                    aria-label="Light template"
+                    title="Light template"
+                  ></button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="hero__categories category padding-x">
+              <div class="section__subTitle--container">
+                <h3 class="section__subTitle">Categories</h3>
+              </div>
+
+              <ul class="category--list" id="categoryList">
+                <!-- <li>
+                  <button
+                    class="category--item"
+                    title="Personal"
+                    aria-label="Personal"
+                  >
+                    <span class="category--item__count"> 15 tasks </span>
+                    <h4 class="category--item__title">Personal</h4>
+                    <div class="category--item__progresBar">
+                      <span
+                        class="category--item__progresBar--fill"
+                      ></span>
+                    </div>
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    class="category--item"
+                    title="Business"
+                    aria-label="Business"
+                  >
+                    <span class="category--item__count"> 27 tasks </span>
+                    <h4 class="category--item__title">Business</h4>
+                    <div class="category--item__progresBar">
+                      <span
+                        class="category--item__progresBar--fill"
+                      ></span>
+                    </div>
+                  </button>
+                </li> -->
+              </ul>
+            </div>
           </section>
 
           <section class="hero__section hero__analytics">
-            <div class="hero__analytics--chart">
+            <div class="section__subTitle--container">
+              <h3 class="section__subTitle">Analytics</h3>
+            </div>
+
+            <div class="hero__analytics--graph">
               <img
-                src="/src/images/chart.png"
-                alt="Analytics chart"
-                class="hero__analytics--chart--image"
+                src="/src/images/line-graph.png"
+                alt="Graph showing progress"
+                class="hero__analytics--graph__image"
               />
             </div>
 
             <div class="hero__analytics--report">
-              <h3 class="hero__analytics--report__title">Consistency</h3>
+              <h2 class="hero__analytics--report__title">Consistency</h2>
 
               <p class="hero__analytics--report__text">Good</p>
             </div>
@@ -140,8 +212,7 @@
             <ul class="hero__nav--templates__list">
               <li class="hero__nav--templates__item">
                 <button
-                  class="button hero__nav--templates__button"
-                  id="selectDefaultTemplate"
+                  class="button hero__nav--templates__button templates__button"
                   data-template="default"
                 >
                   <span class="hero__nav--templates__text"> Dark </span>
@@ -150,8 +221,7 @@
 
               <li class="hero__nav--templates__item">
                 <button
-                  class="button hero__nav--templates__button"
-                  id="selectLightTemplate"
+                  class="button hero__nav--templates__button templates__button"
                   data-template="light"
                 >
                   <span class="hero__nav--templates__text"> Light </span>
@@ -188,23 +258,23 @@
 
             <h2 class="app__title section__title padding-x">What's up, Gorilla?</h2>
 
-            <div class="app__category padding-x">
+            <div class="app__categories category padding-x">
               <div class="section__subTitle--container">
                 <h3 class="section__subTitle">Categories</h3>
               </div>
 
-              <ul class="app__category--list" id="categoryList">
+              <ul class="category--list" id="categoryList">
                 <!-- <li>
                   <button
-                    class="app__category--item"
+                    class="category--item"
                     title="Personal"
                     aria-label="Personal"
                   >
-                    <span class="app__category--item__count"> 15 tasks </span>
-                    <h4 class="app__category--item__title">Personal</h4>
-                    <div class="app__category--item__progresBar">
+                    <span class="category--item__count"> 15 tasks </span>
+                    <h4 class="category--item__title">Personal</h4>
+                    <div class="category--item__progresBar">
                       <span
-                        class="app__category--item__progresBar--fill"
+                        class="category--item__progresBar--fill"
                       ></span>
                     </div>
                   </button>
@@ -212,15 +282,15 @@
 
                 <li>
                   <button
-                    class="app__category--item"
+                    class="category--item"
                     title="Business"
                     aria-label="Business"
                   >
-                    <span class="app__category--item__count"> 27 tasks </span>
-                    <h4 class="app__category--item__title">Business</h4>
-                    <div class="app__category--item__progresBar">
+                    <span class="category--item__count"> 27 tasks </span>
+                    <h4 class="category--item__title">Business</h4>
+                    <div class="category--item__progresBar">
                       <span
-                        class="app__category--item__progresBar--fill"
+                        class="category--item__progresBar--fill"
                       ></span>
                     </div>
                   </button>
@@ -232,20 +302,20 @@
               <header class="app__task--header padding-x">
                 <h3 class="section__subTitle">Today's tasks</h3>
 
-                <div class="app__task--menu">
+                <div id="taskMenu" class="more__options">
                   <button
                     id="taskMenuButton"
-                    class="button button__round button app__task--menu__button"
-                    aria-label="Menu"
+                    class="button button__round button more__options--button"
+                    aria-label="More options"
                   >
                     <span class="material-symbols-outlined"> more_vert </span>
                   </button>
 
-                  <ul class="app__task--menu__list" id="taskMenuList">
-                    <li class="app__task--menu__item">
+                  <ul class="app__task--menu__list more__options--menu__list" id="taskMenuList">
+                    <li class="app__task--menu__item more__options--menu__item">
                       <button
                         id="clearItemsButton"
-                        class="app__task--menu__clear app__task--menu__option"
+                        class="more__options--menu__option"
                         title="Clear the list"
                         aria-label="Remove all items from the list"
                       >
@@ -253,10 +323,10 @@
                       </button>
                     </li>
 
-                    <li class="app__task--menu__item">
+                    <li class="app__task--menu__item more__options--menu__item">
                       <button
                         id="clearCompletedItemsButton"
-                        class="app__task--menu__clear app__task--menu__option"
+                        class="more__options--menu__option"
                         title="Clear completed tasks"
                         aria-label="Remove all completed items from the list"
                       >

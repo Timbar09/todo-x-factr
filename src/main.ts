@@ -1,6 +1,6 @@
 import initApp from "./functions/App";
 
-import "./css/style.css";
+import "./css/main.css";
 
 document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");

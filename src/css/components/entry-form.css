@@ -1,0 +1,208 @@
+.app__entryForm--button__container {
+  position: absolute;
+  right: 2em;
+  bottom: 2em;
+}
+
+.app__task--entry__container {
+  --dimension: 4em;
+
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  width: var(--dimension);
+  height: var(--dimension);
+  background-color: var(--bg-200);
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+}
+
+.app__task--entry__container.open {
+  animation: openEntryForm 300ms ease-in-out forwards;
+}
+
+.app__task--entry__container.close {
+  animation: closeEntryForm 200ms ease-in-out forwards;
+}
+
+.app__task--entryForm__closeButton--container {
+  position: absolute;
+  display: grid;
+  top: 2em;
+  right: 2em;
+}
+
+.app__task--entry__title,
+.app__task--entry__category {
+  position: relative;
+  margin: 0 2em 1em;
+}
+
+.app__task--entry__category {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.app__task--entry__input {
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-100);
+  background-color: transparent;
+}
+
+.app__task--entry__input {
+  outline: none;
+  width: 100%;
+}
+
+.app__task--entry__customSelect {
+  position: relative;
+  padding: 0 2em;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 1em;
+}
+
+.app__task--entry__dropdownButton {
+  padding: 0.5em 1em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--text-200);
+  border: solid 0.125em var(--text-400);
+  border-radius: var(--radius-pill);
+  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+}
+
+.app__task--entry__dropdownButton:active {
+  background-color: var(--bg-300);
+}
+
+.app__task--entry__dropdownButton.selected {
+  color: var(--text-200);
+  background-color: var(--bg-300);
+}
+
+.app__task--entry__dropdownButton > span:last-child {
+  display: inline-block;
+  position: relative;
+  color: var(--text-200);
+  transition: rotate 200ms ease-in-out;
+}
+
+.app__task--entry__dropdownButton > span:last-child.open {
+  rotate: 180deg;
+}
+
+.app__task--entry__dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 2em;
+  right: 2em;
+  padding: 0.125em;
+  border: solid 0.125em var(--text-400);
+  border-radius: var(--radius-50);
+  background-color: var(--bg-300);
+  box-shadow: var(--shadow);
+  z-index: 10;
+}
+
+.app__task--entry__dropdown.open {
+  display: block;
+}
+
+.app__task--entry__dropdown .option {
+  display: none;
+}
+
+.app__task--entry__dropdown .select-item {
+  display: block;
+  padding: 0 0.5em;
+  cursor: pointer;
+  border-radius: var(--radius-25);
+  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+}
+
+.app__task--entry__dropdown .select-item:hover,
+.app__task--entry__dropdown .select-item:focus-visible {
+  color: var(--text-100);
+  background-color: var(--bg-100);
+}
+
+.app__task--entry__dropdown .select-item:not(:first-child) {
+  margin-top: 0.125em;
+}
+
+.app__task--entry__select--container {
+  position: relative;
+  opacity: 0;
+}
+
+.app__task--entry__select {
+  -webkit-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 1.15em;
+  padding: 0.5em 2em 0.5em 1em;
+  border-radius: var(--radius-pill);
+  border: solid 0.125em var(--text-400);
+}
+
+.app__task--entry__select--icon {
+  display: inline-block;
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+.app__task--entry__select--placeholder {
+  color: var(--text-300);
+}
+
+.app__task--entry__category--color {
+  --color: var(--text-300);
+
+  padding: 1em;
+  display: grid;
+  border: solid 0.125em var(--text-400);
+  border-radius: var(--radius-circle);
+}
+
+.app__task--entry__category--color__indicator {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: var(--radius-circle);
+  outline: solid 0.125em var(--color);
+  outline-offset: 0.25em;
+  background-color: var(--color);
+}
+
+.app__task--entry__button {
+  position: absolute;
+  align-items: center;
+  gap: 0.5em;
+  right: 2em;
+  bottom: 2em;
+}
+
+.app__task--entry__button:hover {
+  opacity: 0.75;
+}
+
+.app__task--entry__button:focus-visible {
+  outline: solid 0.125em var(--variant);
+  outline-offset: 0.25em;
+}

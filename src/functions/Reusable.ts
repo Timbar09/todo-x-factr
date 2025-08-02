@@ -61,6 +61,8 @@ export const setSectionFocusStatus = (sectionId: string, enable: boolean): void 
  * @param firstFocusablePosition number - position of first focusable element
  */
 
+// TODO: Find out why lockFocus is not working for the more options dropdown.
+// TODO: Disable all focus lock methods outside mobile view ports.
 export const lockFocus = (
   section: HTMLElement,
   firstFocusablePosition: number | null = null
@@ -89,5 +91,44 @@ export const lockFocus = (
         firstElement.focus();
       }
     }
+  });
+};
+
+/**
+ * @description Toggle more options menu
+ * @param toggleButton HTMLButtonElement - button to toggle more options menu
+ */
+
+export const toggleMoreOptionsMenu = (toggleButton: HTMLButtonElement): void => {
+  const moreOptionsMenu = toggleButton.nextElementSibling as HTMLElement;
+  const moreOptionsMenuItems = moreOptionsMenu.querySelectorAll(
+    ".more__options--menu__item"
+  ) as NodeListOf<HTMLLIElement>;
+
+  const openMenus = document.querySelectorAll(".more__options--menu__list.open");
+  openMenus.forEach((menu) => {
+    if (menu !== moreOptionsMenu) {
+      removeClass(menu as HTMLElement, "open");
+    }
+  });
+
+  toggleClass(moreOptionsMenu, "open");
+
+  lockFocus(moreOptionsMenu);
+
+  moreOptionsMenuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      removeClass(moreOptionsMenu, "open");
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+
+    const isMoreOptionsMenu = target.closest(".more__options");
+
+    if (isMoreOptionsMenu) return;
+
+    removeClass(moreOptionsMenu, "open");
   });
 };
