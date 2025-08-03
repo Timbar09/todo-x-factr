@@ -1,14 +1,14 @@
-import { closeHeroNavPopup } from "./ThemeTemplate";
+import { closeMenu } from "./ThemeTemplate";
 import { addClass, toggleClass, setSectionFocusStatus, lockFocus } from "./Reusable";
 
 const taskListSection = document.getElementById("appList") as HTMLElement;
-const heroNavPopup = document.getElementById("heroNavPopup") as HTMLElement;
+const menu = document.getElementById("menu") as HTMLElement;
 
 export const showTaskListSection = (): void => {
   addClass(taskListSection, "show");
 
-  if (heroNavPopup.classList.contains("open")) {
-    closeHeroNavPopup();
+  if (menu.classList.contains("open")) {
+    closeMenu();
   }
 
   if (taskListSection.classList.contains("show")) {
@@ -20,8 +20,8 @@ export const showTaskListSection = (): void => {
 export const toggleTaskListSection = (): void => {
   toggleClass(taskListSection, "show");
 
-  if (heroNavPopup.classList.contains("open")) {
-    closeHeroNavPopup();
+  if (menu.classList.contains("open")) {
+    closeMenu();
   }
 
   if (taskListSection.classList.contains("show")) {

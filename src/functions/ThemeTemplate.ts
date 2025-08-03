@@ -10,7 +10,7 @@ import { lockFocus } from "./Reusable";
 export const setThemeTemplate = (): void => {
   const body = document.body;
   const templateOptions = document.querySelectorAll(
-    ".templates__button"
+    ".template__button"
   ) as NodeListOf<HTMLButtonElement>;
   const savedTemplate = localStorage.getItem("themeTemplate");
 
@@ -46,23 +46,35 @@ export const setThemeTemplate = (): void => {
   });
 };
 
+/**
+ * @description Opens the hero navigation popup
+ * @returns void
+ */
+
 export const openHeroNavPopup = (): void => {
-  const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
+  const menu = document.getElementById("menu") as HTMLDivElement;
 
-  addClass(heroNavPopup, "open");
+  removeClass(menu, "close");
+  addClass(menu, "open");
 
-  if (heroNavPopup.classList.contains("open")) {
-    setSectionFocusStatus("heroNavPopup", true);
-    lockFocus(heroNavPopup);
+  if (menu.classList.contains("open")) {
+    setSectionFocusStatus("menu", true);
+    lockFocus(menu);
   }
 };
 
-export const closeHeroNavPopup = (): void => {
-  const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
+/**
+ * @description Closes the hero navigation popup
+ * @returns void
+ */
 
-  removeClass(heroNavPopup, "open");
+export const closeMenu = (): void => {
+  const menu = document.getElementById("menu") as HTMLDivElement;
 
-  if (!heroNavPopup.classList.contains("open")) {
-    setSectionFocusStatus("heroNavPopup", false);
+  removeClass(menu, "open");
+  addClass(menu, "close");
+
+  if (menu.classList.contains("close")) {
+    setSectionFocusStatus("menu", false);
   }
 };

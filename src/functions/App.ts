@@ -8,7 +8,7 @@ import { setSectionFocusStatus } from "./Reusable";
 import { handleFormSubmit } from "./EntryForm";
 import { setThemeTemplate } from "./ThemeTemplate";
 import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
-import { openHeroNavPopup, closeHeroNavPopup } from "./ThemeTemplate";
+import { openHeroNavPopup, closeMenu } from "./ThemeTemplate";
 import { openEntryForm, closeEntryForm } from "./EntryForm";
 import { addClass, removeClass, toggleMoreOptionsMenu } from "./Reusable";
 
@@ -20,14 +20,14 @@ const categoryListTemplate = CategoryListTemplate.instance;
 
 const setDefaultSectionFocusStatuses = (): void => {
   const taskListSection = document.getElementById("appList") as HTMLUListElement;
-  const heroNavPopup = document.getElementById("heroNavPopup") as HTMLDivElement;
+  const menu = document.getElementById("menu") as HTMLDivElement;
 
   const isTaskListSectionActive = taskListSection.classList.contains("show");
-  const isHeroNavPopupActive = heroNavPopup.classList.contains("open");
+  const isHeroNavPopupActive = menu.classList.contains("open");
 
   if (!isTaskListSectionActive && !isHeroNavPopupActive) {
     setSectionFocusStatus("appList", false);
-    setSectionFocusStatus("heroNavPopup", false);
+    setSectionFocusStatus("menu", false);
   }
 };
 
@@ -38,7 +38,7 @@ const renderListeners = (): void => {
     ".more__options--button"
   ) as NodeListOf<HTMLButtonElement>;
   const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
-  const closeHeroNavPopupButton = document.getElementById("closeHeroNavPopup") as HTMLButtonElement;
+  const closeMenuButton = document.getElementById("closeMenu") as HTMLButtonElement;
   const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
   const showItemEntryFormButton = document.getElementById("showItemEntryForm") as HTMLButtonElement;
   const closeItemEntryFormButton = document.getElementById(
@@ -97,8 +97,8 @@ const renderListeners = (): void => {
     openHeroNavPopup();
   });
 
-  closeHeroNavPopupButton.addEventListener("click", () => {
-    closeHeroNavPopup();
+  closeMenuButton.addEventListener("click", () => {
+    closeMenu();
   });
 
   showItemEntryFormButton.addEventListener("click", () => {

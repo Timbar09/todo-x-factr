@@ -106,15 +106,15 @@
               </ul>
             </nav>
 
-            <div class="hero__templates">
+            <!-- <div class="hero__templates">
               <div class="section__subTitle--container">
                 <h3 class="section__subTitle">Templates</h3>
               </div>
 
-              <ul class="hero__templates--list">
+              <ul class="hero__template--list">
                 <li class="hero__templates--item">
                   <button
-                    class="button hero__templates--button templates__button"
+                    class="button hero__template--button template__button"
                     data-template="default"
                     aria-label="Dark template"
                     title="Dark template"
@@ -123,14 +123,14 @@
 
                 <li class="hero__templates--item">
                   <button
-                    class="button hero__templates--button templates__button"
+                    class="button hero__template--button template__button"
                     data-template="light"
                     aria-label="Light template"
                     title="Light template"
                   ></button>
                 </li>
               </ul>
-            </div>
+            </div> -->
 
             <div class="hero__categories category padding-x">
               <div class="section__subTitle--container">
@@ -194,12 +194,12 @@
           </section>
         </section>
 
-        <section class="hero__nav--popup" id="heroNavPopup">
-          <div class="hero__nav--popup__container">
-            <div class="hero__nav--popup__close--container">
+        <section class="menu" id="menu">
+          <div class="menu__container">
+            <div class="menu__button">
               <button
-                id="closeHeroNavPopup"
-                class="buttton button__round button hero__nav--popup__close"
+                id="closeMenu"
+                class="menu__button--close button button__round"
                 title="Close"
                 aria-label="Close"
               >
@@ -207,24 +207,48 @@
               </button>
             </div>
 
-            <h3 class="hero__nav--popup__title">Select a template</h3>
+            <h3 class="menu__title">Select a template</h3>
 
-            <ul class="hero__nav--templates__list">
-              <li class="hero__nav--templates__item">
+            <ul class="menu__list">
+              <li class="menu__list--item">
                 <button
-                  class="button hero__nav--templates__button templates__button"
+                  class="button menu__list--item__button template__button"
                   data-template="default"
                 >
-                  <span class="hero__nav--templates__text"> Dark </span>
+                  <span class="menu__list--item__status">
+                    <span class="material-symbols-outlined"> check </span>
+                  </span>
+                  <span class="menu__list--item__text"> Dark </span>
+
+                  <span class="template__color--list">
+                    <span class="template__color--item template__color--primary"></span>
+                    <span class="template__color--item template__color--text"></span>
+                    <span class="template__color--item template__color--variant"></span>
+                    <span class="template__color--item template__color--bg-100"></span>
+                    <span class="template__color--item template__color--bg-200"></span>
+                    <span class="template__color--item template__color--bg-300"></span>
+                  </span>
                 </button>
               </li>
 
-              <li class="hero__nav--templates__item">
+              <li class="menu__list--item">
                 <button
-                  class="button hero__nav--templates__button templates__button"
+                  class="button menu__list--item__button template__button"
                   data-template="light"
                 >
-                  <span class="hero__nav--templates__text"> Light </span>
+                  <span class="menu__list--item__status">
+                    <span class="material-symbols-outlined"> check </span>
+                  </span>
+                  <span class="menu__list--item__text"> Light </span>
+
+                  <span class="template__color--list">
+                    <span class="template__color--item template__color--primary"></span>
+                    <span class="template__color--item template__color--text"></span>
+                    <span class="template__color--item template__color--variant"></span>
+                    <span class="template__color--item template__color--bg-100"></span>
+                    <span class="template__color--item template__color--bg-200"></span>
+                    <span class="template__color--item template__color--bg-300"></span>
+                  </span>
                 </button>
               </li>
             </ul>
