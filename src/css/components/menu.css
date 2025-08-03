@@ -1,0 +1,163 @@
+.menu {
+  position: absolute;
+  inset: 0 auto 0 -100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.5em;
+  border-radius: var(--radius-200);
+  background-color: var(--bg-300);
+  box-shadow: var(--shadow);
+  z-index: 1;
+  scale: 0.85;
+}
+
+@media (min-width: 48em) {
+  .menu {
+    width: 14em;
+  }
+}
+
+.menu__container {
+  padding: 1em;
+}
+
+.menu.open {
+  animation: nav-popup-slide-in 400ms ease-in-out forwards;
+}
+
+.menu.close {
+  animation: nav-popup-slide-out 400ms ease-in-out forwards;
+}
+
+@keyframes nav-popup-slide-in {
+  0% {
+    inset: 0 auto 0 -100%;
+    scale: 0.85;
+    border-radius: var(--radius-200);
+  }
+  60% {
+    scale: 0.85;
+    border-radius: var(--radius-200);
+  }
+  100% {
+    inset: 0 auto 0 0;
+    scale: 1;
+    border-radius: inherit;
+  }
+  
+}
+
+@keyframes nav-popup-slide-out {
+  0% {
+    inset: 0 auto 0 0;
+    scale: 1;
+    border-radius: inherit;
+  }
+  60% {
+    scale: 0.85;
+    border-radius: var(--radius-200);
+  }
+  100% {
+    inset: 0 auto 0 -100%;
+    scale: 0.85;
+    border-radius: var(--radius-200);
+  }
+}
+
+.menu__button {
+  text-align: right;
+}
+
+.menu__button--close span {
+  font-size: 1.125em;
+}
+
+.menu__list {
+  padding: 1em 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+  gap: 1em;
+}
+
+.menu__list--item__button {
+  padding: 1em;
+  font-size: 0.8125em;
+  border-radius: var(--radius-100);
+  width: 100%;
+  background-color: var(--bg-200);
+}
+
+@media (min-width: 48em) {
+  .menu__list--item__button {
+    width: auto;
+  }
+}
+
+.menu__list--item__button:hover {
+  box-shadow: var(--shadow);
+}
+
+.template__button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.menu__list--item__status {
+  --dimension: 1.5em;
+  
+  display: grid;
+  place-items: center;
+  border: 2px solid;
+  width: var(--dimension);
+  height: var(--dimension);
+  border-radius: var(--radius-circle);
+}
+
+.template__button .material-symbols-outlined {
+  display: none;
+  font-size: 1.125em;
+}
+
+.template__button.active .material-symbols-outlined {
+  display: inline-block;
+}
+
+.template__color--list {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.template__color--item {
+  width: 0.5em;
+  height: 1.25em;
+  display: inline-block;
+  border-radius: var(--radius-pill);
+}
+
+.template__color--primary {
+  background-color: var(--primary);
+}
+
+.template__color--text {
+  background-color: var(--text-100);
+}
+
+.template__color--variant {
+  background-color: var(--variant);
+}
+
+.template__color--bg-100 {
+  background-color: var(--bg-100);
+}
+
+.template__color--bg-200 {
+  background-color: var(--bg-200);
+}
+
+.template__color--bg-300 {
+  background-color: var(--bg-300);
+}
