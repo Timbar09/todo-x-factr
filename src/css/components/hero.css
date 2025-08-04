@@ -12,6 +12,10 @@
   text-align: center;
 }
 
+.hero__header--button__container .button {
+  border: solid 0.125em var(--text-200);
+}
+
 @media (min-width: 48em) {
   .hero__header--button__container {
     display: none;

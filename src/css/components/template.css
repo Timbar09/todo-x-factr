@@ -5,7 +5,12 @@
   --light-template-bg: #dbe5ff;
   --light-template-text: #051956;
 
-  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition:
+    background-color 100ms ease-in-out,
+    color 100ms ease-in-out;
 }
 
 .template__button.active {

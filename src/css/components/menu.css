@@ -46,7 +46,6 @@
     scale: 1;
     border-radius: inherit;
   }
-  
 }
 
 @keyframes nav-popup-slide-out {
@@ -99,15 +98,9 @@
   box-shadow: var(--shadow);
 }
 
-.template__button {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-}
-
 .menu__list--item__status {
   --dimension: 1.5em;
-  
+
   display: grid;
   place-items: center;
   border: 2px solid;

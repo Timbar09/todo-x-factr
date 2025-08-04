@@ -7,7 +7,10 @@ button {
 .button {
   position: relative;
   background-color: transparent;
-  transition: background-color 100ms ease-in-out, color 100ms ease-in-out, opacity 100ms ease-in-out,
+  transition:
+    background-color 100ms ease-in-out,
+    color 100ms ease-in-out,
+    opacity 100ms ease-in-out,
     box-shadow 100ms ease-in-out;
 }
 
@@ -43,7 +46,6 @@ button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: solid 0.125em var(--text-200);
 }
 
 .button__primary {
