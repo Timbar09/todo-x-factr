@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -51,37 +51,47 @@
     <main class="main">
       <div class="main__container">
         <section class="hero">
-          <section class="hero__section hero__profile">
-            <div class="hero__button--container">
-              <button
-                id="showList"
-                class="button button__round button hero__button"
-                title="Show list"
-                aria-label="Show list"
-              >
-                <span class="material-symbols-outlined"> chevron_left </span>
-              </button>
-            </div>
-
-            <div class="hero__header">
-              <div class="hero__image--container">
-                <img
-                  src="/src/images/Gorilla-soldier_100x100.jpeg"
-                  alt="User image"
-                  class="hero__image"
-                />
+          <section class="hero__section">
+            <header class="hero__header">
+              <div class="hero__header--button__container">
+                <button
+                  id="showList"
+                  class="button button__round"
+                  title="Show list"
+                  aria-label="Show list"
+                >
+                  <span class="material-symbols-outlined"> chevron_left </span>
+                </button>
               </div>
 
-              <h2 class="hero__title section__title">
-                <span> Gorilla </span>
-                <span> Soldier</span>
-              </h2>
-            </div>
+              <div class="hero__header--profile">
+                <div class="hero__header--profile__image--container">
+                  <img
+                    src="/src/images/Gorilla-soldier_100x100.jpeg"
+                    alt="User image"
+                    class="hero__header--profile__image"
+                  />
+                </div>
+
+                <h2 class="hero__header--profile__name">
+                  <span class="hero__header--profile__name--first">
+                    Gorilla
+                  </span>
+                  <span class="hero__header--profile__name--last">
+                    Soldier</span
+                  >
+                </h2>
+              </div>
+            </header>
 
             <nav class="hero__nav">
               <ul class="hero__nav--list">
                 <li class="hero__nav--item">
-                  <button aria-label="Templates" id="openNavPopup" class="button">
+                  <button
+                    aria-label="Templates"
+                    id="openNavPopup"
+                    class="button"
+                  >
                     <span class="material-symbols-outlined"> Bookmark </span>
 
                     <span class="hero__nav--item--text"> Templates </span>
@@ -105,79 +115,9 @@
                 </li>
               </ul>
             </nav>
-
-            <!-- <div class="hero__templates">
-              <div class="section__subTitle--container">
-                <h3 class="section__subTitle">Templates</h3>
-              </div>
-
-              <ul class="hero__template--list">
-                <li class="hero__templates--item">
-                  <button
-                    class="button hero__template--button template__button"
-                    data-template="default"
-                    aria-label="Dark template"
-                    title="Dark template"
-                  ></button>
-                </li>
-
-                <li class="hero__templates--item">
-                  <button
-                    class="button hero__template--button template__button"
-                    data-template="light"
-                    aria-label="Light template"
-                    title="Light template"
-                  ></button>
-                </li>
-              </ul>
-            </div> -->
-
-            <div class="hero__categories category padding-x">
-              <div class="section__subTitle--container">
-                <h3 class="section__subTitle">Categories</h3>
-              </div>
-
-              <ul class="category--list" id="categoryList">
-                <!-- <li>
-                  <button
-                    class="category--item"
-                    title="Personal"
-                    aria-label="Personal"
-                  >
-                    <span class="category--item__count"> 15 tasks </span>
-                    <h4 class="category--item__title">Personal</h4>
-                    <div class="category--item__progresBar">
-                      <span
-                        class="category--item__progresBar--fill"
-                      ></span>
-                    </div>
-                  </button>
-                </li>
-
-                <li>
-                  <button
-                    class="category--item"
-                    title="Business"
-                    aria-label="Business"
-                  >
-                    <span class="category--item__count"> 27 tasks </span>
-                    <h4 class="category--item__title">Business</h4>
-                    <div class="category--item__progresBar">
-                      <span
-                        class="category--item__progresBar--fill"
-                      ></span>
-                    </div>
-                  </button>
-                </li> -->
-              </ul>
-            </div>
           </section>
 
           <section class="hero__section hero__analytics">
-            <div class="section__subTitle--container">
-              <h3 class="section__subTitle">Analytics</h3>
-            </div>
-
             <div class="hero__analytics--graph">
               <img
                 src="/src/images/line-graph.png"
@@ -221,12 +161,24 @@
                   <span class="menu__list--item__text"> Dark </span>
 
                   <span class="template__color--list">
-                    <span class="template__color--item template__color--primary"></span>
-                    <span class="template__color--item template__color--text"></span>
-                    <span class="template__color--item template__color--variant"></span>
-                    <span class="template__color--item template__color--bg-100"></span>
-                    <span class="template__color--item template__color--bg-200"></span>
-                    <span class="template__color--item template__color--bg-300"></span>
+                    <span
+                      class="template__color--item template__color--primary"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--text"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--variant"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--bg-100"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--bg-200"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--bg-300"
+                    ></span>
                   </span>
                 </button>
               </li>
@@ -242,12 +194,24 @@
                   <span class="menu__list--item__text"> Light </span>
 
                   <span class="template__color--list">
-                    <span class="template__color--item template__color--primary"></span>
-                    <span class="template__color--item template__color--text"></span>
-                    <span class="template__color--item template__color--variant"></span>
-                    <span class="template__color--item template__color--bg-100"></span>
-                    <span class="template__color--item template__color--bg-200"></span>
-                    <span class="template__color--item template__color--bg-300"></span>
+                    <span
+                      class="template__color--item template__color--primary"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--text"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--variant"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--bg-100"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--bg-200"
+                    ></span>
+                    <span
+                      class="template__color--item template__color--bg-300"
+                    ></span>
                   </span>
                 </button>
               </li>
@@ -288,41 +252,43 @@
               </div>
             </div>
 
-            <h2 class="app__title section__title padding-x">What's up, Gorilla?</h2>
+            <h2 class="app__title section__title padding-x">
+              What's up, Gorilla?
+            </h2>
 
             <div class="app__categories category padding-x">
               <div class="section__subTitle--container">
                 <h3 class="section__subTitle">Categories</h3>
               </div>
 
-              <ul class="category--list" id="categoryList">
-                <!-- <li>
+              <ul class="category__list" id="categoryList">
+                <!-- <li class="category__item">
                   <button
-                    class="category--item"
+                    class="category__item--button"
                     title="Personal"
                     aria-label="Personal"
                   >
-                    <span class="category--item__count"> 15 tasks </span>
-                    <h4 class="category--item__title">Personal</h4>
-                    <div class="category--item__progresBar">
+                    <span class="category__item--count"> 15 tasks </span>
+                    <h4 class="category__item--title">Personal</h4>
+                    <div class="category__item--progressBar">
                       <span
-                        class="category--item__progresBar--fill"
+                        class="category__item--progressBar--fill"
                       ></span>
                     </div>
                   </button>
                 </li>
 
-                <li>
+                <li class="category__item">
                   <button
-                    class="category--item"
+                    class="category__item--button"
                     title="Business"
                     aria-label="Business"
                   >
-                    <span class="category--item__count"> 27 tasks </span>
-                    <h4 class="category--item__title">Business</h4>
-                    <div class="category--item__progresBar">
+                    <span class="category__item--count"> 27 tasks </span>
+                    <h4 class="category__item--title">Business</h4>
+                    <div class="category__item--progressBar">
                       <span
-                        class="category--item__progresBar--fill"
+                        class="category__item--progressBar--fill"
                       ></span>
                     </div>
                   </button>
@@ -343,7 +309,10 @@
                     <span class="material-symbols-outlined"> more_vert </span>
                   </button>
 
-                  <ul class="app__task--menu__list more__options--menu__list" id="taskMenuList">
+                  <ul
+                    class="app__task--menu__list more__options--menu__list"
+                    id="taskMenuList"
+                  >
                     <li class="app__task--menu__item more__options--menu__item">
                       <button
                         id="clearItemsButton"
@@ -428,7 +397,10 @@
           </div>
         </section>
 
-        <section class="app__task--entry__container" id="itemEntryFormContainer">
+        <section
+          class="app__task--entry__container"
+          id="itemEntryFormContainer"
+        >
           <div class="app__task--entryForm__closeButton--container">
             <button
               id="closeItemEntryForm"
@@ -457,7 +429,8 @@
               <ul class="app__task--entry__dropdown" id="categoryDropdown"></ul>
 
               <div class="app__task--entry__category--color" id="categoryColor">
-                <span class="app__task--entry__category--color__indicator"> </span>
+                <span class="app__task--entry__category--color__indicator">
+                </span>
               </div>
             </div>
 
@@ -510,7 +483,9 @@
                 aria-label="Add new item to list"
               >
                 <span> New task </span>
-                <span class="material-symbols-outlined"> keyboard_arrow_up </span>
+                <span class="material-symbols-outlined">
+                  keyboard_arrow_up
+                </span>
               </button>
             </div>
           </form>
