@@ -1,0 +1,131 @@
+.category {
+  margin-bottom: 1rem;
+}
+
+.category__list {
+  display: flex;
+  gap: 1rem;
+}
+
+.category__list li {
+  flex: 1;
+}
+
+.category__item {
+  --progress: 0;
+
+  padding: 1.25em 1em;
+  border-radius: var(--radius-100);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  background-color: var(--bg-200);
+}
+
+@media (min-width: 48em) {
+  .category__item {
+    padding: 0.25em 0.5em;
+    border-radius: var(--radius-50);
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+  }
+}
+
+.category__item * {
+  margin: 0;
+  line-height: 1;
+}
+
+.category__item--progressCircle {
+  --progress: 82;
+  --stroke-clr: var(--variant);
+
+  display: none;
+  position: relative;
+  width: min-content;
+}
+
+.category__item--progressCircle > svg {
+  position: relative;
+  color: var(--text-400);
+}
+
+.category__item--progressCircle > svg:last-child {
+  position: absolute;
+  color: var(--stroke-clr);
+  stroke-dasharray: var(--progress);
+  stroke-dashoffset: 82;
+}
+
+.category__item--progressCircle--count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  font-size: 0.75em;
+}
+
+.category__item--count {
+  font-size: 0.75em;
+}
+
+.category__item--title {
+  font-weight: 400;
+}
+
+.category__item--progressBar {
+  --progress: 0;
+
+  position: relative;
+  height: 0.205em;
+  border-radius: var(--radius-pill);
+  background-color: var(--text-200);
+}
+
+@media (min-width: 48em) {
+  .category__item--count {
+    display: none;
+  }
+
+  .category__item--progressBar {
+    display: none;
+  }
+}
+
+.category__item--progressBar__fill {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 400ms ease-in-out;
+}
+
+.category__item--progressBar__fill::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.205em;
+  height: 200%;
+  border-radius: inherit;
+  background-color: var(--primary);
+}
+
+.category__list li:first-child .category__item--progressBar__fill {
+  width: var(--progress);
+  background-color: var(--primary);
+}
+
+.category__list li:first-child .category__item--progressBar__fill::before {
+  background-color: var(--primary);
+}
+
+.category__list li:last-child .category__item--progressBar__fill {
+  width: var(--progress);
+  background-color: var(--variant);
+}
+
+.category__list li:last-child .category__item--progressBar__fill::before {
+  background-color: var(--variant);
+}

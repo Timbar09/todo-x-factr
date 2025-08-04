@@ -1,0 +1,27 @@
+.template__button {
+  --default-template-bg: #081e60;
+  --default-template-text: #e2fdff;
+
+  --light-template-bg: #dbe5ff;
+  --light-template-text: #051956;
+
+  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+}
+
+.template__button.active {
+  border-style: solid;
+}
+
+.template__button[data-template="default"] {
+  --button-border-clr: var(--primary);
+
+  background-color: var(--default-template-bg);
+  color: var(--default-template-text);
+}
+
+.template__button[data-template="light"] {
+  --button-border-clr: var(--variant);
+
+  background-color: var(--light-template-bg);
+  color: var(--light-template-text);
+}
