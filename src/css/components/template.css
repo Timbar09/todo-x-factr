@@ -12,7 +12,7 @@
 }
 
 .template__item--button {
-  --btn-bg: var(--template-bg-color, var(--text-400));
+  --btn-bg: var(--text-400);
 
   padding: 1em;
   color: var(--template-text-color, var(--text-100));
@@ -29,9 +29,12 @@
   outline: var(--focus-outline);
 }
 
-.template__item--button:hover {
+.template__item--button:hover,
+.template__item--button:focus-visible {
+  --btn-bg: var(--template-bg-color);
+
   outline: 1px solid var(--text-400);
-  background-color: var(--btn-bg);
+  color: var(--template-text-color);
 }
 
 .template__item--status {
