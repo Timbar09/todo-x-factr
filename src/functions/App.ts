@@ -9,7 +9,7 @@ import { handleFormSubmit } from "./EntryForm";
 import TemplateController from "../controller/TemplateController";
 import { TemplateUI } from "../UI/TemplateUI";
 import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
-import { openHeroNavPopup, closeMenu } from "./ThemeTemplate";
+import MenuController from "../controller/MenuController";
 import { openEntryForm, closeEntryForm } from "./EntryForm";
 import { addClass, removeClass, toggleMoreOptionsMenu } from "./Reusable";
 
@@ -44,12 +44,6 @@ const renderListeners = (): void => {
   const moreOptionsButton = document.querySelectorAll(
     ".more__options--button"
   ) as NodeListOf<HTMLButtonElement>;
-  const openHeroNavPopupButton = document.getElementById(
-    "openNavPopup"
-  ) as HTMLButtonElement;
-  const closeMenuButton = document.getElementById(
-    "closeMenu"
-  ) as HTMLButtonElement;
   const buttons = document.querySelectorAll(
     ".button"
   ) as NodeListOf<HTMLButtonElement>;
@@ -108,18 +102,6 @@ const renderListeners = (): void => {
     });
   });
 
-  // taskListMenuButton.addEventListener("click", () => {
-  //   toggleTaskListMenu();
-  // });
-
-  openHeroNavPopupButton.addEventListener("click", () => {
-    openHeroNavPopup();
-  });
-
-  closeMenuButton.addEventListener("click", () => {
-    closeMenu();
-  });
-
   showItemEntryFormButton.addEventListener("click", () => {
     openEntryForm();
   });
@@ -138,6 +120,7 @@ export default (): void => {
   fullList.load();
   const templateController = new TemplateController();
   new TemplateUI(templateController);
+  MenuController.getInstance();
 
   setDefaultSectionFocusStatuses();
 };

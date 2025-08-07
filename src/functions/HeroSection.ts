@@ -1,14 +1,19 @@
-import { closeMenu } from "./ThemeTemplate";
-import { addClass, toggleClass, setSectionFocusStatus, lockFocus } from "./Reusable";
+import MenuController from "../controller/MenuController";
+import {
+  addClass,
+  toggleClass,
+  setSectionFocusStatus,
+  lockFocus,
+} from "./Reusable";
 
 const taskListSection = document.getElementById("appList") as HTMLElement;
-const menu = document.getElementById("menu") as HTMLElement;
+const menu = MenuController.getInstance();
 
 export const showTaskListSection = (): void => {
   addClass(taskListSection, "show");
 
-  if (menu.classList.contains("open")) {
-    closeMenu();
+  if (menu.isMenuOpen) {
+    menu.close();
   }
 
   if (taskListSection.classList.contains("show")) {
@@ -20,8 +25,8 @@ export const showTaskListSection = (): void => {
 export const toggleTaskListSection = (): void => {
   toggleClass(taskListSection, "show");
 
-  if (menu.classList.contains("open")) {
-    closeMenu();
+  if (menu.isMenuOpen) {
+    menu.close();
   }
 
   if (taskListSection.classList.contains("show")) {
