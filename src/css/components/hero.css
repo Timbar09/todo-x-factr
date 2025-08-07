@@ -58,13 +58,6 @@
   width: max-content;
 }
 
-@media (min-width: 48em) {
-  .hero__nav--list {
-    margin: 2em 0;
-    width: 100%;
-  }
-}
-
 .hero__nav--item .button {
   padding: 0.5em 0.5em;
   display: flex;

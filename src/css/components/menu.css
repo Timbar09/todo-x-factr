@@ -1,12 +1,16 @@
 .menu {
+  --menu-start-position: 0 100% 0 auto;
+  --menu-end-position: 0 0 0 auto;
+  --menu-start-radius: var(--radius-200);
+  --menu-end-radius: inherit;
+
   position: absolute;
-  inset: 0 auto 0 -100%;
+  inset: var(--menu-start-position);
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  padding: 1em;
-  border-radius: var(--radius-200);
+  border-radius: var(--menu-start-radius);
   background-color: var(--bg-300);
   box-shadow: var(--shadow);
   z-index: 1;
@@ -15,7 +19,12 @@
 
 @media (min-width: 48em) {
   .menu {
-    width: 14em;
+    --menu-start-position: 2em 100% 2em auto;
+    --menu-end-position: 2em 2em 2em auto;
+    --menu-start-radius: var(--radius-100);
+    --menu-end-radius: var(--menu-start-radius);
+
+    width: calc(100% - 18em);
   }
 }
 
@@ -29,42 +38,48 @@
 
 @keyframes nav-popup-slide-in {
   0% {
-    inset: 0 auto 0 -100%;
+    inset: var(--menu-start-position);
     scale: 0.85;
-    border-radius: var(--radius-200);
+    border-radius: var(--menu-start-radius);
   }
   60% {
     scale: 0.85;
-    border-radius: var(--radius-200);
+    border-radius: var(--menu-start-radius);
   }
   100% {
-    inset: 0 auto 0 0;
+    inset: var(--menu-end-position);
     scale: 1;
-    border-radius: inherit;
+    border-radius: var(--menu-end-radius);
   }
 }
 
 @keyframes nav-popup-slide-out {
   0% {
-    inset: 0 auto 0 0;
+    inset: var(--menu-end-position);
     scale: 1;
-    border-radius: inherit;
+    border-radius: var(--menu-end-radius);
   }
   60% {
     scale: 0.85;
-    border-radius: var(--radius-200);
+    border-radius: var(--menu-start-radius);
   }
   100% {
-    inset: 0 auto 0 -100%;
+    inset: var(--menu-start-position);
     scale: 0.85;
-    border-radius: var(--radius-200);
+    border-radius: var(--menu-start-radius);
   }
 }
 
-.menu__button {
+.menu__header {
   text-align: right;
+  position: absolute;
+  inset: 2em 2em 0 auto;
 }
 
 .menu__button--close span {
   font-size: 1.125em;
+}
+
+.menu__title {
+  margin-top: 0;
 }

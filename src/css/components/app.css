@@ -6,7 +6,9 @@
   background-color: var(--bg-300);
   border-radius: var(--radius-200);
   box-shadow: var(--shadow);
-  transition: inset 300ms ease-in-out, scale 300ms 100ms ease-in-out,
+  transition:
+    inset 300ms ease-in-out,
+    scale 300ms 100ms ease-in-out,
     border-radius 300ms ease-in-out;
 }
 
@@ -18,8 +20,10 @@
 
 @media (min-width: 48em) {
   .app {
-    border-radius: inherit;
-    position: static;
+    border-radius: var(--radius-100);
+    inset: 2em 2em 2em auto;
+    width: calc(100% - 18em);
+    /* position: static; */
     scale: 1;
   }
 }

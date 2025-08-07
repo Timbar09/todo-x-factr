@@ -59,7 +59,6 @@ a {
 .main__container {
   position: relative;
   height: 100%;
-  /* border-radius: var(--radius-200); */
   overflow: hidden;
 }
 
@@ -69,9 +68,6 @@ a {
   }
 
   .main__container {
-    display: flex;
-    gap: 2em;
-    height: 100%;
-    border-radius: var(--radius-100);
+    border-radius: var(--radius-200);
   }
 }

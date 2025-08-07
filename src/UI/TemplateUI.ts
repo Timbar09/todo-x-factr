@@ -31,7 +31,7 @@ export class TemplateUI {
       .join("");
 
     this.menuContent.innerHTML = `
-      <h3 class="template__title">Choose a Template</h3>
+      <h3 class="menu__title template__title">Choose a Template</h3>
 
       <ul id="templateList" class="template__list">
         ${this.templateList.innerHTML}
