@@ -1,0 +1,232 @@
+import TemplateController from "../controller/TemplateController.js";
+import Template from "../model/Template.js";
+
+export class TemplateUI {
+  private templateController: TemplateController;
+  private templateList: HTMLElement;
+  private menuContent: HTMLElement;
+
+  constructor(templateController: TemplateController) {
+    this.templateController = templateController;
+    this.menuContent = document.getElementById("menuContent")!;
+
+    this.templateList = document.createElement("ul");
+
+    this.init();
+  }
+
+  private init(): void {
+    this.renderTemplates();
+    this.bindEvents();
+  }
+
+  private renderTemplates(): void {
+    const templates = this.templateController.getAllTemplates();
+    const currentTemplate = this.templateController.getCurrentTemplate();
+
+    this.templateList.innerHTML = templates
+      .map(template =>
+        this.createTemplateHTML(template, template.id === currentTemplate.id)
+      )
+      .join("");
+
+    this.menuContent.innerHTML = `
+      <h3 class="menu__title template__title">Choose a Template</h3>
+
+      <ul id="templateList" class="menu__list template__list">
+        ${this.templateList.innerHTML}
+      </ul>
+
+      <div class="menu__actions template__actions">
+        <button
+          id="addCustomTemplate"
+          class="button button__secondary menu__add-template"
+        >
+          <span class="material-symbols-outlined">add</span>
+          <span>Add New Template</span>
+        </button>
+      </div>
+    `;
+  }
+
+  private createTemplateHTML(template: Template, isActive: boolean): string {
+    const isActiveClass = isActive ? "template__button--active" : "";
+    // Get an object containing primary, variant, bg-100, bg-300 and text-100 colors
+    const colorScheme = {
+      primary: template.colors.primary,
+      variant: template.colors.variant,
+      "bg-100": template.colors["bg-100"],
+      "bg-300": template.colors["bg-300"],
+      "text-100": template.colors["text-100"],
+    };
+
+    const colorItems = Object.entries(colorScheme)
+      .map(([key, color]) => {
+        return `<span class="template__color--item" style="background-color: ${color}" title="${key}"></span>`;
+      })
+      .join("");
+
+    return `
+      <li class="menu__list--item">
+        <button
+          class="button menu__list--item__button template__button ${isActiveClass}"
+          data-template="${template.id}"
+        >
+          <span class="menu__list--item__status">
+            ${isActive ? '<span class="material-symbols-outlined">check</span>' : ""}
+          </span>
+
+          <span class="menu__list--item__text">${template.name}</span>
+
+          <span class="template__color--list">
+            ${colorItems}
+          </span>
+        </button>
+      </li>
+    `;
+  }
+
+  private bindEvents(): void {
+    // Template selection
+    this.templateList.addEventListener("click", e => {
+      const button = (e.target as Element).closest(
+        ".template__button"
+      ) as HTMLButtonElement;
+      if (button) {
+        const templateId = button.dataset.template!;
+        this.selectTemplate(templateId);
+      }
+    });
+
+    // Add custom template button
+    const addButton = this.menuContent.querySelector(
+      "#addCustomTemplate"
+    ) as HTMLButtonElement;
+    if (addButton) {
+      addButton.addEventListener("click", () => {
+        this.showCustomTemplateDialog();
+      });
+    }
+
+    // Listen for template changes
+    window.addEventListener("templateChanged", () => {
+      this.renderTemplates();
+    });
+  }
+
+  private selectTemplate(templateId: string): void {
+    if (this.templateController.setTemplate(templateId)) {
+      this.renderTemplates();
+    }
+  }
+
+  private showCustomTemplateDialog(): void {
+    // Create a simple dialog for custom template creation
+    const dialog = this.createCustomTemplateDialog();
+    document.body.appendChild(dialog);
+  }
+
+  private createCustomTemplateDialog(): HTMLElement {
+    const dialog = document.createElement("div");
+    dialog.className = "custom-template-dialog";
+    dialog.innerHTML = `
+      <div class="template__dialog--overlay">
+        <div class="template__dialog">
+          <h3 class="template__dialog--title">Create Custom Template</h3>
+
+          <form id="customTemplateForm" class="template__form">
+            <div class="template__form--field">
+              <label for="templateName">Template Name</label>
+              <input type="text" id="templateName" name="templateName" required>
+            </div>
+            <div class="template__form--field">
+              <label for="primaryColor">Primary Color</label>
+              <input type="color" id="primaryColor" name="primaryColor" value="#6366f1">
+            </div>
+            <div class="template__form--field">
+              <label for="textColor">Text Color</label>
+              <input type="color" id="textColor" name="textColor" value="#ffffff">
+            </div>
+            <div class="template__form--field">
+              <label for="bgColor">Background Color</label>
+              <input type="color" id="bgColor" name="bgColor" value="#0f172a">
+            </div>
+            <div class="template__form--actions">
+              <button type="button" class="button" onclick="this.closest('.custom-template-dialog').remove()">Cancel</button>
+              <button type="submit" class="button button__primary">Create Template</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+
+    // Handle form submission
+    const form = dialog.querySelector("#customTemplateForm") as HTMLFormElement;
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      this.handleCustomTemplateSubmission(form, dialog);
+    });
+
+    return dialog;
+  }
+
+  private handleCustomTemplateSubmission(
+    form: HTMLFormElement,
+    dialog: HTMLElement
+  ): void {
+    const formData = new FormData(form);
+
+    const name = formData.get("templateName") as string;
+    const primary = formData.get("primaryColor") as string;
+    const text = formData.get("textColor") as string;
+    const bg = formData.get("bgColor") as string;
+
+    const customTemplate: Template = new Template(
+      `custom-${Date.now()}`,
+      name,
+      {
+        primary,
+        "text-100": text,
+        "text-200": this.reduceOpacity(text, 0.7),
+        "text-300": this.reduceOpacity(text, 0.5),
+        "text-400": this.reduceOpacity(text, 0.125),
+        variant: primary,
+        "bg-100": bg,
+        "bg-200": this.lightenColor(bg, 10),
+        "bg-300": this.lightenColor(bg, 20),
+      }
+    );
+
+    this.templateController.addCustomTemplate(customTemplate);
+    this.renderTemplates();
+    dialog.remove();
+  }
+
+  private reduceOpacity(color: string, opacity: number): string {
+    return (
+      color +
+      Math.round(opacity * 255)
+        .toString(16)
+        .padStart(2, "0")
+    );
+  }
+
+  private lightenColor(color: string, percent: number): string {
+    const num = parseInt(color.replace("#", ""), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = (num >> 16) + amt;
+    const G = ((num >> 8) & 0x00ff) + amt;
+    const B = (num & 0x0000ff) + amt;
+    return (
+      "#" +
+      (
+        0x1000000 +
+        (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+        (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+        (B < 255 ? (B < 1 ? 0 : B) : 255)
+      )
+        .toString(16)
+        .slice(1)
+    );
+  }
+}

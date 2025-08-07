@@ -6,7 +6,8 @@ import CategoryListTemplate from "../templates/CategoryListTemplate";
 
 import { setSectionFocusStatus } from "./Reusable";
 import { handleFormSubmit } from "./EntryForm";
-import { setThemeTemplate } from "./ThemeTemplate";
+import TemplateController from "../controller/TemplateController";
+import { TemplateUI } from "../UI/TemplateUI";
 import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
 import { openHeroNavPopup, closeMenu } from "./ThemeTemplate";
 import { openEntryForm, closeEntryForm } from "./EntryForm";
@@ -19,7 +20,9 @@ const categorySelectionTemplate = CategorySelectionTemplate.instance;
 const categoryListTemplate = CategoryListTemplate.instance;
 
 const setDefaultSectionFocusStatuses = (): void => {
-  const taskListSection = document.getElementById("appList") as HTMLUListElement;
+  const taskListSection = document.getElementById(
+    "appList"
+  ) as HTMLUListElement;
   const menu = document.getElementById("menu") as HTMLDivElement;
 
   const isTaskListSectionActive = taskListSection.classList.contains("show");
@@ -32,20 +35,36 @@ const setDefaultSectionFocusStatuses = (): void => {
 };
 
 const renderListeners = (): void => {
-  const showListSectionButton = document.getElementById("showList") as HTMLButtonElement;
-  const toggleListButton = document.getElementById("toggleList") as HTMLButtonElement;
+  const showListSectionButton = document.getElementById(
+    "showList"
+  ) as HTMLButtonElement;
+  const toggleListButton = document.getElementById(
+    "toggleList"
+  ) as HTMLButtonElement;
   const moreOptionsButton = document.querySelectorAll(
     ".more__options--button"
   ) as NodeListOf<HTMLButtonElement>;
-  const openHeroNavPopupButton = document.getElementById("openNavPopup") as HTMLButtonElement;
-  const closeMenuButton = document.getElementById("closeMenu") as HTMLButtonElement;
-  const buttons = document.querySelectorAll(".button") as NodeListOf<HTMLButtonElement>;
-  const showItemEntryFormButton = document.getElementById("showItemEntryForm") as HTMLButtonElement;
+  const openHeroNavPopupButton = document.getElementById(
+    "openNavPopup"
+  ) as HTMLButtonElement;
+  const closeMenuButton = document.getElementById(
+    "closeMenu"
+  ) as HTMLButtonElement;
+  const buttons = document.querySelectorAll(
+    ".button"
+  ) as NodeListOf<HTMLButtonElement>;
+  const showItemEntryFormButton = document.getElementById(
+    "showItemEntryForm"
+  ) as HTMLButtonElement;
   const closeItemEntryFormButton = document.getElementById(
     "closeItemEntryForm"
   ) as HTMLButtonElement;
-  const itemEntryForm = document.getElementById("itemEntryForm") as HTMLFormElement;
-  const clearItemsButton = document.getElementById("clearItemsButton") as HTMLButtonElement;
+  const itemEntryForm = document.getElementById(
+    "itemEntryForm"
+  ) as HTMLFormElement;
+  const clearItemsButton = document.getElementById(
+    "clearItemsButton"
+  ) as HTMLButtonElement;
   const clearCompletedButton = document.getElementById(
     "clearCompletedItemsButton"
   ) as HTMLButtonElement;
@@ -66,7 +85,7 @@ const renderListeners = (): void => {
     listTemplate.render(fullList, categoryList);
   });
 
-  buttons.forEach((button) => {
+  buttons.forEach(button => {
     button.addEventListener("click", () => {
       addClass(button, "clicked");
       setTimeout(() => {
@@ -83,7 +102,7 @@ const renderListeners = (): void => {
     toggleTaskListSection();
   });
 
-  moreOptionsButton.forEach((button) => {
+  moreOptionsButton.forEach(button => {
     button.addEventListener("click", () => {
       toggleMoreOptionsMenu(button);
     });
@@ -117,9 +136,8 @@ export default (): void => {
   renderListeners();
 
   fullList.load();
-  listTemplate.render(fullList, categoryList);
-
-  setThemeTemplate();
+  const templateController = new TemplateController();
+  new TemplateUI(templateController);
 
   setDefaultSectionFocusStatuses();
 };

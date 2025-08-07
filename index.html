@@ -134,88 +134,20 @@
           </section>
         </section>
 
-        <section class="menu" id="menu">
-          <div class="menu__container">
-            <div class="menu__button">
-              <button
-                id="closeMenu"
-                class="menu__button--close button button__round"
-                title="Close"
-                aria-label="Close"
-              >
-                <span class="material-symbols-outlined"> close </span>
-              </button>
-            </div>
+        <section id="menu" class="menu">
+          <div class="menu__button">
+            <button
+              id="closeMenu"
+              class="menu__button--close button button__round"
+              title="Close"
+              aria-label="Close"
+            >
+              <span class="material-symbols-outlined"> close </span>
+            </button>
+          </div>
 
-            <h3 class="menu__title">Select a template</h3>
-
-            <ul class="menu__list">
-              <li class="menu__list--item">
-                <button
-                  class="button menu__list--item__button template__button"
-                  data-template="default"
-                >
-                  <span class="menu__list--item__status">
-                    <span class="material-symbols-outlined"> check </span>
-                  </span>
-                  <span class="menu__list--item__text"> Dark </span>
-
-                  <span class="template__color--list">
-                    <span
-                      class="template__color--item template__color--primary"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--text"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--variant"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--bg-100"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--bg-200"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--bg-300"
-                    ></span>
-                  </span>
-                </button>
-              </li>
-
-              <li class="menu__list--item">
-                <button
-                  class="button menu__list--item__button template__button"
-                  data-template="light"
-                >
-                  <span class="menu__list--item__status">
-                    <span class="material-symbols-outlined"> check </span>
-                  </span>
-                  <span class="menu__list--item__text"> Light </span>
-
-                  <span class="template__color--list">
-                    <span
-                      class="template__color--item template__color--primary"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--text"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--variant"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--bg-100"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--bg-200"
-                    ></span>
-                    <span
-                      class="template__color--item template__color--bg-300"
-                    ></span>
-                  </span>
-                </button>
-              </li>
-            </ul>
+          <div id="menuContent" class="menu__content">
+            <!-- Menu content is dynamically generated -->
           </div>
         </section>
 
