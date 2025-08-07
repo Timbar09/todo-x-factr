@@ -55,7 +55,6 @@ export default class TemplateController {
     // Apply CSS custom properties
     Object.entries(template.colors).forEach(([key, value]) => {
       const cssVar = `--${key}`;
-      console.log(`Setting ${cssVar} to ${value}`);
       root.style.setProperty(cssVar, value);
     });
 

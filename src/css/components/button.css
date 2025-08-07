@@ -6,7 +6,7 @@ button {
 
 .button {
   position: relative;
-  background-color: transparent;
+  background-color: var(--btn-bg, transparent);
   transition:
     background-color 100ms ease-in-out,
     color 100ms ease-in-out,
@@ -49,15 +49,16 @@ button {
 }
 
 .button__primary {
-  background-color: var(--primary-button);
+  --btn-bg: var(--primary);
+
+  background-color: var(--btn-bg);
   color: var(--bg-200);
   display: inline-flex;
-  box-shadow: var(--shadow-button);
+  box-shadow: var(--shadow);
 }
 
 .button__primary:hover {
   color: var(--bg-200);
-  background-color: var(--primary-button);
   opacity: 0.85;
 }
 

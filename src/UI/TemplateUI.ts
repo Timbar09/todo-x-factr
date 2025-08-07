@@ -22,6 +22,7 @@ export class TemplateUI {
 
   private renderTemplates(): void {
     const templates = this.templateController.getAllTemplates();
+    console.log("Rendering templates:", templates);
     const currentTemplate = this.templateController.getCurrentTemplate();
 
     this.templateList.innerHTML = templates
@@ -31,16 +32,16 @@ export class TemplateUI {
       .join("");
 
     this.menuContent.innerHTML = `
-      <h3 class="menu__title template__title">Choose a Template</h3>
+      <h3 class="template__title">Choose a Template</h3>
 
-      <ul id="templateList" class="menu__list template__list">
+      <ul id="templateList" class="template__list">
         ${this.templateList.innerHTML}
       </ul>
 
-      <div class="menu__actions template__actions">
+      <div class="template__actions">
         <button
           id="addCustomTemplate"
-          class="button button__secondary menu__add-template"
+          class="button button__secondary template__add-button"
         >
           <span class="material-symbols-outlined">add</span>
           <span>Add New Template</span>
@@ -62,21 +63,21 @@ export class TemplateUI {
 
     const colorItems = Object.entries(colorScheme)
       .map(([key, color]) => {
-        return `<span class="template__color--item" style="background-color: ${color}" title="${key}"></span>`;
+        return `<span class="template__color--item" style="--template-color: ${color}" title="${key}"></span>`;
       })
       .join("");
 
     return `
-      <li class="menu__list--item">
+      <li class="template__item">
         <button
-          class="button menu__list--item__button template__button ${isActiveClass}"
+          class="template__item--button button ${isActiveClass}"
           data-template="${template.id}"
         >
-          <span class="menu__list--item__status">
+          <span class="template__item--status">
             ${isActive ? '<span class="material-symbols-outlined">check</span>' : ""}
           </span>
 
-          <span class="menu__list--item__text">${template.name}</span>
+          <span class="template__item--text">${template.name}</span>
 
           <span class="template__color--list">
             ${colorItems}
@@ -88,9 +89,9 @@ export class TemplateUI {
 
   private bindEvents(): void {
     // Template selection
-    this.templateList.addEventListener("click", e => {
+    this.menuContent.addEventListener("click", e => {
       const button = (e.target as Element).closest(
-        ".template__button"
+        ".template__item--button"
       ) as HTMLButtonElement;
       if (button) {
         const templateId = button.dataset.template!;
