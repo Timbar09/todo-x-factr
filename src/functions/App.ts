@@ -118,6 +118,7 @@ export default (): void => {
   renderListeners();
 
   fullList.load();
+  listTemplate.render(fullList, categoryList);
   const templateController = new TemplateController();
   new TemplateUI(templateController);
   MenuController.getInstance();

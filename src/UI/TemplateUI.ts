@@ -22,7 +22,6 @@ export class TemplateUI {
 
   private renderTemplates(): void {
     const templates = this.templateController.getAllTemplates();
-    console.log("Rendering templates:", templates);
     const currentTemplate = this.templateController.getCurrentTemplate();
 
     this.templateList.innerHTML = templates
@@ -52,7 +51,6 @@ export class TemplateUI {
 
   private createTemplateHTML(template: Template, isActive: boolean): string {
     const isActiveClass = isActive ? "template__button--active" : "";
-    // Get an object containing primary, variant, bg-100, bg-300 and text-100 colors
     const colorScheme = {
       primary: template.colors.primary,
       variant: template.colors.variant,
@@ -69,8 +67,6 @@ export class TemplateUI {
     const cssVarString = Object.entries(cssVars)
       .map(([key, value]) => `${key}: ${value};`)
       .join(" ");
-
-    console.log("CSS Variables:", cssVarString);
 
     const colorItems = Object.entries(colorScheme)
       .map(([key, color]) => {
