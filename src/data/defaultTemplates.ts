@@ -2,7 +2,7 @@ import TemplateItem from "../model/Template";
 
 const defaultTemplates: TemplateItem[] = [
   new TemplateItem("default", "Dark", {
-    primary: "#a056c5", // electric-purple
+    primary: "rgba(160, 86, 197, 1)", // electric-purple
     variant: "#2643c4", // royal-blue
     "text-100": "#e2fdff", // baby-powder
     "text-200": "#cbd5e1", // grayish-blue
@@ -18,29 +18,18 @@ const defaultTemplates: TemplateItem[] = [
     "text-100": "#373b5e", // dark-blue
     "text-200": "#9d9ab4", // grayish-blue
     "text-300": "#c4c4c4", // light-gray
-    "text-400": "#e2fdff44", // gray
+    "text-400": "#373b5e0f", // gray
     "bg-100": "#adbaeb", // lavender-blue
     "bg-200": "#ffffff", // white
     "bg-300": "#f4f6fd", // light-blue
   }),
-  new TemplateItem("forest", "Forest", {
-    primary: "#794516", // brown
-    variant: "#563366", // dark purple
-    "text-100": "#f0fdf4", // mint cream
-    "text-200": "#bbf7d0", // light green
-    "text-300": "#86efac", // pastel green
-    "text-400": "#6ee7b7", // soft green
-    "bg-100": "#064e3b",
-    "bg-200": "#065f46",
-    "bg-300": "#047857",
-  }),
   new TemplateItem("desert", "Desert", {
-    primary: "#7c2d12",
-    variant: "#9a3412",
-    "text-100": "#fef3c7", // light yellow
-    "text-200": "#fde68a", // pale yellow
-    "text-300": "#fcd34d", // golden yellow
-    "text-400": "#fbbf24", // bright yellow
+    primary: "#fbbf24", // yellow
+    variant: "#f59e0b", // golden yellow
+    "text-100": "#f9f2d8ff", // light yellow
+    "text-200": "#e7e2cdff", // pale yellow
+    "text-300": "#9b6e5eff", // golden yellow
+    "text-400": "#7c2c1241", // dark yellow
     "bg-100": "#7c2d12",
     "bg-200": "#9a3412",
     "bg-300": "#c2410c",
