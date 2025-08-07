@@ -28,8 +28,9 @@ button {
 } */
 
 .button:hover {
+  --btn-bg: var(--text-400);
+
   color: var(--text-100);
-  background-color: var(--text-400);
 }
 
 .button:focus-visible {

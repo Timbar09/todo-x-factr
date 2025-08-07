@@ -41,10 +41,10 @@ export class TemplateUI {
       <div class="template__actions">
         <button
           id="addCustomTemplate"
-          class="button button__secondary template__add-button"
+          class="button button__primary button__primary--bar template__button--entry"
         >
-          <span class="material-symbols-outlined">add</span>
-          <span>Add New Template</span>
+          <span>New Template</span>
+          <span class="material-symbols-outlined">Keyboard_arrow_up</span>
         </button>
       </div>
     `;
@@ -61,6 +61,17 @@ export class TemplateUI {
       "text-100": template.colors["text-100"],
     };
 
+    const cssVars = {
+      "--template-bg-color": colorScheme["bg-100"],
+      "--template-bg-color-hover": colorScheme["bg-300"],
+      "--template-text-color": colorScheme["text-100"],
+    };
+    const cssVarString = Object.entries(cssVars)
+      .map(([key, value]) => `${key}: ${value};`)
+      .join(" ");
+
+    console.log("CSS Variables:", cssVarString);
+
     const colorItems = Object.entries(colorScheme)
       .map(([key, color]) => {
         return `<span class="template__color--item" style="--template-color: ${color}" title="${key}"></span>`;
@@ -68,7 +79,7 @@ export class TemplateUI {
       .join("");
 
     return `
-      <li class="template__item">
+      <li class="template__item" style="${cssVarString}">
         <button
           class="template__item--button button ${isActiveClass}"
           data-template="${template.id}"

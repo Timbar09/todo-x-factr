@@ -12,11 +12,13 @@
 }
 
 .template__item--button {
-  --btn-bg: var(--text-400);
+  --btn-bg: var(--template-bg-color, var(--text-400));
 
   padding: 1em;
+  color: var(--template-text-color, var(--text-100));
   font-size: 0.8125em;
   border-radius: var(--radius-50);
+  outline-offset: 2px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -24,13 +26,12 @@
 }
 
 .template__button--active {
-  --btn-bg: var(--bg-100);
-
-  color: var(--text-100);
+  outline: var(--focus-outline);
 }
 
 .template__item--button:hover {
-  box-shadow: var(--shadow);
+  outline: 1px solid var(--text-400);
+  background-color: var(--btn-bg);
 }
 
 .template__item--status {
@@ -60,4 +61,9 @@
   display: inline-block;
   border-radius: var(--radius-pill);
   background-color: var(--template-color, #888888);
+  border: 1px solid var(--text-400);
+}
+
+.template__button--entry {
+  margin-top: 1em;
 }
