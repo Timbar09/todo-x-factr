@@ -76,6 +76,7 @@
   height: 100%;
   border-radius: var(--radius-100);
   background-color: var(--bg-100);
+  box-shadow: var(--shadow);
   transition:
     inset 400ms ease-in-out,
     scale 400ms ease-in-out,

@@ -1,6 +1,5 @@
 import TemplateController from "../controller/TemplateController.js";
-import Template from "../model/Template.js";
-
+import Template, { ColorScheme } from "../model/Template.js";
 export class TemplateUI {
   private templateController: TemplateController;
   private templateList: HTMLElement;
@@ -54,6 +53,7 @@ export class TemplateUI {
 
   private createTemplateHTML(template: Template, isActive: boolean): string {
     const isActiveClass = isActive ? "template__button--active" : "";
+    console.log(template);
     const colorScheme = {
       primary: template.colors.primary,
       variant: template.colors.variant,
@@ -98,27 +98,30 @@ export class TemplateUI {
   }
 
   private bindEvents(): void {
-    // Template selection
+    // Template selection and button clicks - use event delegation
     this.menuContent.addEventListener("click", e => {
-      const templateButton = (e.target as Element).closest(
+      const target = e.target as Element;
+
+      // Handle template selection
+      const templateButton = target.closest(
         ".template__item--button"
       ) as HTMLButtonElement;
       if (templateButton) {
         const templateId = templateButton.dataset.template!;
         this.selectTemplate(templateId);
+        return;
       }
-    });
 
-    // Add custom template button
-    const addCustomTemplateButton = this.menuContent.querySelector(
-      "#addCustomTemplate"
-    ) as HTMLButtonElement;
-    if (addCustomTemplateButton) {
-      addCustomTemplateButton.addEventListener("click", e => {
+      // ✅ Handle add custom template button with event delegation
+      const addButton = target.closest(
+        "#addCustomTemplate"
+      ) as HTMLButtonElement;
+      if (addButton) {
         e.stopPropagation();
         this.dragUpCustomTemplateDialog();
-      });
-    }
+        return;
+      }
+    });
 
     // Drag up custom template dialog
     const customDialogDragHandle = this.dialog.querySelector(
@@ -182,32 +185,44 @@ export class TemplateUI {
         </button>
       </header>
 
-      <form id="customTemplateForm" class="template__form">
-        <div class="template__form--field">
-          <label for="templateName">Template Name</label>
-          <input type="text" id="templateName" name="templateName" required>
-        </div>
+      <div class="form__container">
+        <form id="customTemplateForm" class="form template__form">
+          <div class="form__field">
+          <input type="text" id="templateName" name="templateName" placeholder="Enter template name" required>
+          <label for="templateName" class="offscreen">Template Name</label>
+          </div>
 
-        <div class="template__form--field">
-          <label for="primaryColor">Primary Color</label>
-          <input type="color" id="primaryColor" name="primaryColor" value="#6366f1">
-        </div>
+          <fieldset class="form__fieldset form__colors">
+            <legend class="form__fieldset--legend">
+              <span class="">Select Colors</span>
+            </legend>
 
-        <div class="template__form--field">
-          <label for="textColor">Text Color</label>
-          <input type="color" id="textColor" name="textColor" value="#ffffff">
-        </div>
+            <div class="form__field form__field__color">
+            <input type="color" id="primaryColor" name="primaryColor" value="#6366f1">
+            <label for="primaryColor" class="form__field__color--label">Primary</label>
+            </div>
 
-        <div class="template__form--field">
-          <label for="bgColor">Background Color</label>
-          <input type="color" id="bgColor" name="bgColor" value="#0f172a">
-        </div>
+            <div class="form__field form__field__color">
+            <input type="color" id="textColor" name="textColor" value="#ffffff">
+            <label for="textColor" class="form__field__color--label">Text</label>
+            </div>
 
-        <div class="template__form--actions">
-          <button type="button" class="button" id="cancelCustomTemplate">Cancel</button>
-          <button type="submit" class="button button__primary">Create Template</button>
-        </div>
-      </form>
+            <div class="form__field form__field__color">
+            <input type="color" id="bgColor" name="bgColor" value="#0f172a">
+            <label for="bgColor" class="form__field__color--label">Background</label>
+            </div>
+          </fieldset>
+
+          <div class="form__actions">
+          <button type="submit" class="button button__primary button__primary--bar">
+            <span>Create Template</span>
+            <span class="material-symbols-outlined">Keyboard_arrow_up</span>
+          </button>
+
+            <button type="button" class="button" id="cancelCustomTemplate">Cancel</button>
+          </div>
+        </form>
+      </div>
     `;
 
     // Handle form submission
@@ -215,7 +230,7 @@ export class TemplateUI {
     form.addEventListener("submit", e => {
       e.preventDefault();
       e.stopPropagation();
-      this.clearFormFields(form);
+      // this.clearFormFields(form);
       this.handleCustomTemplateSubmission(form, dialog);
     });
 
@@ -249,25 +264,28 @@ export class TemplateUI {
     const text = formData.get("textColor") as string;
     const bg = formData.get("bgColor") as string;
 
+    const colors: ColorScheme = {
+      primary,
+      "text-100": text,
+      "text-200": this.reduceOpacity(text, 0.7),
+      "text-300": this.reduceOpacity(text, 0.5),
+      "text-400": this.reduceOpacity(text, 0.125),
+      variant: primary,
+      "bg-100": bg,
+      "bg-200": this.lightenColor(bg, 10),
+      "bg-300": this.lightenColor(bg, 20),
+    };
+
     const customTemplate: Template = new Template(
       `custom-${Date.now()}`,
-      name,
-      {
-        primary,
-        "text-100": text,
-        "text-200": this.reduceOpacity(text, 0.7),
-        "text-300": this.reduceOpacity(text, 0.5),
-        "text-400": this.reduceOpacity(text, 0.125),
-        variant: primary,
-        "bg-100": bg,
-        "bg-200": this.lightenColor(bg, 10),
-        "bg-300": this.lightenColor(bg, 20),
-      }
+      name.trim(),
+      colors
     );
 
     this.templateController.addCustomTemplate(customTemplate);
     this.renderTemplates();
-    dialog.remove();
+    // this.clearFormFields(form);
+    this.dragDownCustomTemplateDialog();
   }
 
   private reduceOpacity(color: string, opacity: number): string {
