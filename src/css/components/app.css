@@ -23,7 +23,6 @@
     border-radius: var(--radius-100);
     inset: 2em 2em 2em auto;
     width: calc(100% - 18em);
-    /* position: static; */
     scale: 1;
   }
 }
@@ -40,6 +39,12 @@
   border-radius: inherit;
   inset: 0 auto 0 0;
   scale: 1;
+}
+
+@media (min-width: 48em) {
+  .app.show {
+    inset: 2em 2em 2em auto;
+  }
 }
 
 .app__header {

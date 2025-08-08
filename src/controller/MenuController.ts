@@ -57,6 +57,8 @@ export default class MenuController implements MenuInterface {
       this.isMenuOpen = false;
       setSectionFocusStatus("menu", false);
     }
+
+    window.dispatchEvent(new CustomEvent("menuClosed"));
   }
 
   toggle(): void {

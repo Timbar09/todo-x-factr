@@ -15,6 +15,7 @@
   box-shadow: var(--shadow);
   z-index: 1;
   scale: 0.85;
+  overflow-y: hidden;
 }
 
 @media (min-width: 48em) {
@@ -81,5 +82,5 @@
 }
 
 .menu__title {
-  margin-top: 0;
+  margin: 0.25em 0;
 }
