@@ -5,12 +5,13 @@ export class TemplateUI {
   private templateController: TemplateController;
   private templateList: HTMLElement;
   private menuContent: HTMLElement;
+  private dialog: HTMLElement;
 
   constructor(templateController: TemplateController) {
     this.templateController = templateController;
     this.menuContent = document.getElementById("menuContent")!;
-
     this.templateList = document.createElement("ul");
+    this.dialog = this.createCustomTemplateDialog();
 
     this.init();
   }
@@ -47,6 +48,8 @@ export class TemplateUI {
         </button>
       </div>
     `;
+
+    this.showCustomTemplateDialog();
   }
 
   private createTemplateHTML(template: Template, isActive: boolean): string {
@@ -97,28 +100,45 @@ export class TemplateUI {
   private bindEvents(): void {
     // Template selection
     this.menuContent.addEventListener("click", e => {
-      const button = (e.target as Element).closest(
+      const templateButton = (e.target as Element).closest(
         ".template__item--button"
       ) as HTMLButtonElement;
-      if (button) {
-        const templateId = button.dataset.template!;
+      if (templateButton) {
+        const templateId = templateButton.dataset.template!;
         this.selectTemplate(templateId);
       }
     });
 
     // Add custom template button
-    const addButton = this.menuContent.querySelector(
+    const addCustomTemplateButton = this.menuContent.querySelector(
       "#addCustomTemplate"
     ) as HTMLButtonElement;
-    if (addButton) {
-      addButton.addEventListener("click", () => {
-        this.showCustomTemplateDialog();
+    if (addCustomTemplateButton) {
+      addCustomTemplateButton.addEventListener("click", e => {
+        e.stopPropagation();
+        this.dragUpCustomTemplateDialog();
+      });
+    }
+
+    // Drag up custom template dialog
+    const customDialogDragHandle = this.dialog.querySelector(
+      ".template__dialog--button__toggle"
+    ) as HTMLButtonElement;
+    if (customDialogDragHandle) {
+      customDialogDragHandle.addEventListener("click", e => {
+        e.stopPropagation();
+        this.dragCustomTemplateDialog();
       });
     }
 
     // Listen for template changes
     window.addEventListener("templateChanged", () => {
       this.renderTemplates();
+    });
+
+    // Listen for menu close event
+    window.addEventListener("menuClosed", () => {
+      this.dragDownCustomTemplateDialog();
     });
   }
 
@@ -128,54 +148,92 @@ export class TemplateUI {
     }
   }
 
+  private dragUpCustomTemplateDialog(): void {
+    this.dialog.classList.remove("closed");
+    this.dialog.classList.add("open");
+  }
+
+  private dragDownCustomTemplateDialog(): void {
+    this.dialog.classList.remove("open");
+    this.dialog.classList.add("closed");
+  }
+
+  private dragCustomTemplateDialog(): void {
+    const isDialogOpen = this.dialog.classList.contains("open");
+
+    isDialogOpen
+      ? this.dragDownCustomTemplateDialog()
+      : this.dragUpCustomTemplateDialog();
+  }
+
   private showCustomTemplateDialog(): void {
-    // Create a simple dialog for custom template creation
-    const dialog = this.createCustomTemplateDialog();
-    document.body.appendChild(dialog);
+    this.menuContent.appendChild(this.dialog);
   }
 
   private createCustomTemplateDialog(): HTMLElement {
     const dialog = document.createElement("div");
-    dialog.className = "custom-template-dialog";
+    dialog.className = "template__dialog padding closed";
     dialog.innerHTML = `
-      <div class="template__dialog--overlay">
-        <div class="template__dialog">
-          <h3 class="template__dialog--title">Create Custom Template</h3>
+      <header class="template__dialog--header">
+        <h3 class="offscreen">Create Custom Template</h3>
 
-          <form id="customTemplateForm" class="template__form">
-            <div class="template__form--field">
-              <label for="templateName">Template Name</label>
-              <input type="text" id="templateName" name="templateName" required>
-            </div>
-            <div class="template__form--field">
-              <label for="primaryColor">Primary Color</label>
-              <input type="color" id="primaryColor" name="primaryColor" value="#6366f1">
-            </div>
-            <div class="template__form--field">
-              <label for="textColor">Text Color</label>
-              <input type="color" id="textColor" name="textColor" value="#ffffff">
-            </div>
-            <div class="template__form--field">
-              <label for="bgColor">Background Color</label>
-              <input type="color" id="bgColor" name="bgColor" value="#0f172a">
-            </div>
-            <div class="template__form--actions">
-              <button type="button" class="button" onclick="this.closest('.custom-template-dialog').remove()">Cancel</button>
-              <button type="submit" class="button button__primary">Create Template</button>
-            </div>
-          </form>
+        <button class="button button__round template__dialog--button__toggle">
+          <span class="material-symbols-outlined">drag_handle</span>
+        </button>
+      </header>
+
+      <form id="customTemplateForm" class="template__form">
+        <div class="template__form--field">
+          <label for="templateName">Template Name</label>
+          <input type="text" id="templateName" name="templateName" required>
         </div>
-      </div>
+
+        <div class="template__form--field">
+          <label for="primaryColor">Primary Color</label>
+          <input type="color" id="primaryColor" name="primaryColor" value="#6366f1">
+        </div>
+
+        <div class="template__form--field">
+          <label for="textColor">Text Color</label>
+          <input type="color" id="textColor" name="textColor" value="#ffffff">
+        </div>
+
+        <div class="template__form--field">
+          <label for="bgColor">Background Color</label>
+          <input type="color" id="bgColor" name="bgColor" value="#0f172a">
+        </div>
+
+        <div class="template__form--actions">
+          <button type="button" class="button" id="cancelCustomTemplate">Cancel</button>
+          <button type="submit" class="button button__primary">Create Template</button>
+        </div>
+      </form>
     `;
 
     // Handle form submission
     const form = dialog.querySelector("#customTemplateForm") as HTMLFormElement;
     form.addEventListener("submit", e => {
       e.preventDefault();
+      e.stopPropagation();
+      this.clearFormFields(form);
       this.handleCustomTemplateSubmission(form, dialog);
     });
 
+    // Handle cancel button
+    const cancelButton = dialog.querySelector(
+      "#cancelCustomTemplate"
+    ) as HTMLButtonElement;
+    cancelButton.addEventListener("click", e => {
+      e.stopPropagation();
+      this.dragCustomTemplateDialog();
+      this.clearFormFields(form);
+    });
+
     return dialog;
+  }
+
+  private clearFormFields(form: HTMLFormElement): void {
+    form.reset();
   }
 
   private handleCustomTemplateSubmission(
@@ -183,6 +241,8 @@ export class TemplateUI {
     dialog: HTMLElement
   ): void {
     const formData = new FormData(form);
+
+    dialog.classList.add("open");
 
     const name = formData.get("templateName") as string;
     const primary = formData.get("primaryColor") as string;

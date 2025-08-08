@@ -70,3 +70,49 @@
 .template__button--entry {
   margin-top: 1em;
 }
+
+.template__dialog {
+  position: absolute;
+  height: 100%;
+  border-radius: var(--radius-100);
+  background-color: var(--bg-100);
+  transition:
+    inset 400ms ease-in-out,
+    scale 400ms ease-in-out,
+    border-radius 400ms ease-in-out;
+}
+
+.template__dialog.closed {
+  inset: 80% 0 auto;
+  scale: 0.85;
+}
+
+.template__dialog.open {
+  inset: 0 0 auto;
+  scale: 1;
+  border-radius: 0;
+}
+
+.template__dialog--header {
+  position: absolute;
+  inset: 0 0 2em 0;
+  height: 3.5em;
+  border-radius: inherit;
+  background-color: transparent;
+  transition:
+    height 400ms ease-in-out,
+    background-color 400ms ease-in-out;
+}
+
+.template__dialog.closed .template__dialog--header {
+  height: 100%;
+  background-color: var(--bg-100);
+}
+
+.template__dialog--button__toggle {
+  margin: 1em 2em;
+}
+
+.template__form {
+  margin-top: 2em;
+}
