@@ -73,9 +73,21 @@ export default class TemplateController {
     const stored = localStorage.getItem(this.storageKey);
     if (stored) {
       try {
-        this.customTemplates = JSON.parse(stored);
+        const parsedData = JSON.parse(stored);
+
+        this.customTemplates = parsedData.map((data: any) => {
+          const template = new Template(
+            data._id,
+            data._name,
+            data._colors,
+            data._description
+          );
+
+          return template;
+        });
       } catch (e) {
         console.warn("Failed to load custom templates:", e);
+        this.customTemplates = [];
       }
     }
   }

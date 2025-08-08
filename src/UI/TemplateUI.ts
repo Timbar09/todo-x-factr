@@ -53,7 +53,6 @@ export class TemplateUI {
 
   private createTemplateHTML(template: Template, isActive: boolean): string {
     const isActiveClass = isActive ? "template__button--active" : "";
-    console.log(template);
     const colorScheme = {
       primary: template.colors.primary,
       variant: template.colors.variant,
