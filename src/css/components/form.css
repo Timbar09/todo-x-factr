@@ -63,19 +63,25 @@
   height: 2.1125em;
   width: 100%;
   cursor: pointer;
+  border: 0.15em solid var(--text-100);
+  border-radius: var(--radius-100);
+  background-color: var(--bg-100);
+  padding: 0.05em;
+}
+
+.form__field input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: none;
 }
 
 .form__field input[type="color"]::-webkit-color-swatch {
-  border-radius: var(--radius-100);
-  border: 0;
-  box-shadow:
-    0 0 0 0.05em var(--bg-100),
-    0 0 0 0.175em var(--text-100);
-  /* box-shadow: 0 0 0 15px rgb(5, 77, 244); */
+  border: none;
+  border-radius: calc(var(--radius-100) - 0.175em);
 }
+
 .form__field input[type="color"]::-moz-color-swatch {
-  border-radius: var(--radius-100);
-  border: 0;
+  border: none;
+  border-radius: calc(var(--radius-100) - 0.175em);
 }
 
 .form__actions {
