@@ -142,6 +142,11 @@ export class TemplateUI {
     window.addEventListener("menuClosed", () => {
       this.dragDownCustomTemplateDialog();
     });
+
+    // Listen for menu already open event
+    window.addEventListener("menuAlreadyOpen", () => {
+      this.dragDownCustomTemplateDialog();
+    });
   }
 
   private selectTemplate(templateId: string): void {

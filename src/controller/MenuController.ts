@@ -35,7 +35,11 @@ export default class MenuController implements MenuInterface {
   }
 
   open(): void {
-    if (this.isMenuOpen) return;
+    if (this.isMenuOpen) {
+      window.dispatchEvent(new CustomEvent("menuAlreadyOpen"));
+
+      return;
+    }
 
     removeClass(this.menu, "close");
     addClass(this.menu, "open");
