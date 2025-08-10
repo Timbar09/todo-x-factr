@@ -41,7 +41,7 @@ export default class MenuController implements MenuInterface {
       return;
     }
 
-    removeClass(this.menu, "close");
+    removeClass(this.menu, "closed");
     addClass(this.menu, "open");
 
     if (this.menu.classList.contains("open")) {
@@ -55,9 +55,9 @@ export default class MenuController implements MenuInterface {
     if (!this.isMenuOpen) return;
 
     removeClass(this.menu, "open");
-    addClass(this.menu, "close");
+    addClass(this.menu, "closed");
 
-    if (this.menu.classList.contains("close")) {
+    if (this.menu.classList.contains("closed")) {
       this.isMenuOpen = false;
       setSectionFocusStatus("menu", false);
     }

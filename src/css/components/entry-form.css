@@ -25,7 +25,7 @@
   animation: openEntryForm 300ms ease-in-out forwards;
 }
 
-.app__task--entry__container.close {
+.app__task--entry__container.closed {
   animation: closeEntryForm 200ms ease-in-out forwards;
 }
 
@@ -79,7 +79,9 @@
   color: var(--text-200);
   border: solid 0.125em var(--text-400);
   border-radius: var(--radius-pill);
-  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+  transition:
+    background-color 100ms ease-in-out,
+    color 100ms ease-in-out;
 }
 
 .app__task--entry__dropdownButton:active {
@@ -129,7 +131,9 @@
   padding: 0 0.5em;
   cursor: pointer;
   border-radius: var(--radius-25);
-  transition: background-color 100ms ease-in-out, color 100ms ease-in-out;
+  transition:
+    background-color 100ms ease-in-out,
+    color 100ms ease-in-out;
 }
 
 .app__task--entry__dropdown .select-item:hover,

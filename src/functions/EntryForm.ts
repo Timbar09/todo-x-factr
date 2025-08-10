@@ -14,7 +14,9 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
   const categoryList = CategoryList.instance;
   const listTemplate = ListTemplate.instance;
 
-  const categorySelectionBox = document.getElementById("categoryButton") as HTMLButtonElement;
+  const categorySelectionBox = document.getElementById(
+    "categoryButton"
+  ) as HTMLButtonElement;
   const itemInput = document.getElementById("newItem") as HTMLInputElement;
   const newEntryText: string = itemInput.value.trim();
 
@@ -38,8 +40,15 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
 
   if (!newEntryText.length) return;
 
-  const newItem = new ListItem(itemId, newEntryText, false, updatedCategoryItem?.id);
-  const categoryColor = document.getElementById("categoryColor") as HTMLDivElement;
+  const newItem = new ListItem(
+    itemId,
+    newEntryText,
+    false,
+    updatedCategoryItem?.id
+  );
+  const categoryColor = document.getElementById(
+    "categoryColor"
+  ) as HTMLDivElement;
 
   itemInput.value = "";
   categorySelectionBox.children[0].textContent = "Select category";
@@ -56,7 +65,7 @@ export const openEntryForm = (): void => {
   if (!entryForm) return;
 
   addClass(entryForm, "open");
-  removeClass(entryForm, "close");
+  removeClass(entryForm, "closed");
 
   setTimeout(() => {
     lockFocus(entryForm, 2);
@@ -69,7 +78,7 @@ export const closeEntryForm = (): void => {
   if (!entryForm) return;
 
   removeClass(entryForm, "open");
-  addClass(entryForm, "close");
+  addClass(entryForm, "closed");
 
   showTaskListSection();
 };

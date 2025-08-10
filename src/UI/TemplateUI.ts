@@ -184,7 +184,11 @@ export class TemplateUI {
       <header class="template__dialog--header">
         <h3 class="offscreen">Create Custom Template</h3>
 
-        <button class="button button__round template__dialog--button__toggle">
+        <button 
+          type="button"
+          class="button button__round template__dialog--button__toggle" 
+          title="Toggle template entry form" aria-label="Toggle template entry form"
+        >
           <span class="material-symbols-outlined">drag_handle</span>
         </button>
       </header>

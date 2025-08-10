@@ -33,7 +33,7 @@
   animation: open-menu 400ms ease-in-out forwards;
 }
 
-.menu.close {
+.menu.closed {
   animation: close-menu 400ms ease-in-out forwards;
 }
 
