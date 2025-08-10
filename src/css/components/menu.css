@@ -18,7 +18,7 @@
   overflow-y: hidden;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 40em) {
   .menu {
     --menu-start-position: 2em 100% 2em auto;
     --menu-end-position: 2em 2em 2em auto;
@@ -30,14 +30,14 @@
 }
 
 .menu.open {
-  animation: nav-popup-slide-in 400ms ease-in-out forwards;
+  animation: open-menu 400ms ease-in-out forwards;
 }
 
 .menu.close {
-  animation: nav-popup-slide-out 400ms ease-in-out forwards;
+  animation: close-menu 400ms ease-in-out forwards;
 }
 
-@keyframes nav-popup-slide-in {
+@keyframes open-menu {
   0% {
     inset: var(--menu-start-position);
     scale: 0.85;
@@ -54,7 +54,7 @@
   }
 }
 
-@keyframes nav-popup-slide-out {
+@keyframes close-menu {
   0% {
     inset: var(--menu-end-position);
     scale: 1;
@@ -75,6 +75,7 @@
   text-align: right;
   position: absolute;
   inset: 2em 2em 0 auto;
+  height: max-content;
 }
 
 .menu__button--close span {

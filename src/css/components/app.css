@@ -1,6 +1,9 @@
 .app {
+  --overlap-position: 0 -70% 0 auto;
+  --no-overlap-position: 0 0 0 auto;
+
   position: absolute;
-  inset: 0 auto 0 70%;
+  inset: var(--overlap-position);
   scale: 0.85;
   width: 100%;
   background-color: var(--bg-300);
@@ -12,16 +15,12 @@
     border-radius 300ms ease-in-out;
 }
 
-@media (min-width: 23.438em) {
+@media (min-width: 40em) {
   .app {
-    inset: 0 auto 0 50vw;
-  }
-}
+    --no-overlap-position: 2em 2em 2em auto;
 
-@media (min-width: 48em) {
-  .app {
     border-radius: var(--radius-100);
-    inset: 2em 2em 2em auto;
+    inset: var(--no-overlap-position);
     width: calc(100% - 18em);
     scale: 1;
   }
@@ -37,15 +36,15 @@
 
 .app.show {
   border-radius: inherit;
-  inset: 0 auto 0 0;
+  inset: var(--no-overlap-position);
   scale: 1;
 }
 
-@media (min-width: 48em) {
+/* @media (min-width: 48em) {
   .app.show {
     inset: 2em 2em 2em auto;
   }
-}
+} */
 
 .app__header {
   padding-top: 1.5rem;

@@ -62,7 +62,7 @@ a {
   overflow: hidden;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 40em) {
   .main {
     padding: 2rem min(2.5%, 2rem);
   }

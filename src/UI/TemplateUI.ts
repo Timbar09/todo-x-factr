@@ -223,7 +223,7 @@ export class TemplateUI {
             <span class="material-symbols-outlined">Keyboard_arrow_up</span>
           </button>
 
-            <button type="button" class="button" id="cancelCustomTemplate">Cancel</button>
+            <button type="button" class="button form__button--cancel" id="cancelCustomTemplate">Cancel</button>
           </div>
         </form>
       </div>

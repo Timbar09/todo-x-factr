@@ -12,6 +12,10 @@
   gap: 1em;
 }
 
+.form__fieldset--legend {
+  margin: 0 auto;
+}
+
 .form__field {
   position: relative;
 }
@@ -22,6 +26,7 @@
   outline: none;
   width: 100%;
   border-radius: var(--radius-100);
+  color: var(--text-100);
   background-color: transparent;
 }
 
@@ -37,7 +42,7 @@
 }
 
 .form__colors {
-  text-align: center;
+  padding: 1em;
   display: flex;
   gap: 0.5em;
   color: var(--text-100);
@@ -60,7 +65,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  height: 2.1125em;
+  height: 1.5em;
   width: 100%;
   cursor: pointer;
   border: 0.15em solid var(--text-100);
@@ -88,4 +93,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.form__button--cancel {
+  font-size: 0.85em;
+  padding: 0.25em 0.75em;
+  border-radius: var(--radius-pill);
+  color: var(--text-100);
+  background-color: var(--text-400);
+}
+
+.form__button--cancel:hover {
+  color: var(--text-200);
 }
