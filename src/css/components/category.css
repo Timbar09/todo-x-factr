@@ -2,12 +2,12 @@
   margin-bottom: 1rem;
 }
 
-.category__list {
+.app__category--list {
   display: flex;
   gap: 1rem;
 }
 
-.category__list li {
+.app__category--list li {
   flex: 1;
 }
 
@@ -20,16 +20,6 @@
   flex-direction: column;
   gap: 0.75em;
   background-color: var(--bg-200);
-}
-
-@media (min-width: 48em) {
-  .category__item {
-    padding: 0.25em 0.5em;
-    border-radius: var(--radius-50);
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5em;
-  }
 }
 
 .category__item * {
@@ -83,16 +73,6 @@
   background-color: var(--text-200);
 }
 
-@media (min-width: 48em) {
-  .category__item--count {
-    display: none;
-  }
-
-  .category__item--progressBar {
-    display: none;
-  }
-}
-
 .category__item--progressBar__fill {
   display: inline-block;
   position: absolute;
@@ -105,27 +85,27 @@
   content: "";
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: calc(-0.205em / 2);
   width: 0.205em;
   height: 200%;
   border-radius: inherit;
   background-color: var(--primary);
 }
 
-.category__list li:first-child .category__item--progressBar__fill {
+.app__category--list li:first-child .category__item--progressBar__fill {
   width: var(--progress);
   background-color: var(--primary);
 }
 
-.category__list li:first-child .category__item--progressBar__fill::before {
+.app__category--list li:first-child .category__item--progressBar__fill::before {
   background-color: var(--primary);
 }
 
-.category__list li:last-child .category__item--progressBar__fill {
+.app__category--list li:last-child .category__item--progressBar__fill {
   width: var(--progress);
   background-color: var(--variant);
 }
 
-.category__list li:last-child .category__item--progressBar__fill::before {
+.app__category--list li:last-child .category__item--progressBar__fill::before {
   background-color: var(--variant);
 }

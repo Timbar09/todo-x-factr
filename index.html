@@ -159,11 +159,11 @@
 
         <section class="app" id="appList">
           <div class="app__container">
-            <div class="app__header padding-x">
-              <div class="app__toggleList--container">
+            <header class="app__header padding-x">
+              <div class="app__header--button">
                 <button
-                  id="toggleList"
-                  class="button button__round app__toggleList"
+                  id="toggleTaskListButton"
+                  class="button button__round app__header--button__toggle"
                   title="Toggle task list"
                   aria-label="Toggle task list"
                 >
@@ -171,7 +171,7 @@
                 </button>
               </div>
 
-              <div class="app__header--logo">
+              <div class="app__logo">
                 <img
                   src="/logo.png"
                   alt="App logo"
@@ -179,7 +179,7 @@
                 />
               </div>
 
-              <div class="app__header--buttons">
+              <div class="app__nav">
                 <span class="button button__round">
                   <span class="material-symbols-outlined"> search </span>
                 </span>
@@ -188,49 +188,19 @@
                   <span class="material-symbols-outlined"> notifications </span>
                 </span>
               </div>
-            </div>
+            </header>
 
             <h2 class="app__title section__title padding-x">
               What's up, Gorilla?
             </h2>
 
-            <div class="app__categories category padding-x">
+            <div class="app__category category padding-x">
               <div class="section__subTitle--container">
                 <h3 class="section__subTitle">Categories</h3>
               </div>
 
-              <ul class="category__list" id="categoryList">
-                <!-- <li class="category__item">
-                  <button
-                    class="category__item--button"
-                    title="Personal"
-                    aria-label="Personal"
-                  >
-                    <span class="category__item--count"> 15 tasks </span>
-                    <h4 class="category__item--title">Personal</h4>
-                    <div class="category__item--progressBar">
-                      <span
-                        class="category__item--progressBar--fill"
-                      ></span>
-                    </div>
-                  </button>
-                </li>
-
-                <li class="category__item">
-                  <button
-                    class="category__item--button"
-                    title="Business"
-                    aria-label="Business"
-                  >
-                    <span class="category__item--count"> 27 tasks </span>
-                    <h4 class="category__item--title">Business</h4>
-                    <div class="category__item--progressBar">
-                      <span
-                        class="category__item--progressBar--fill"
-                      ></span>
-                    </div>
-                  </button>
-                </li> -->
+              <ul class="app__category--list" id="appCategoryList">
+                <!-- Categories are dynamically generated -->
               </ul>
             </div>
 
@@ -238,7 +208,7 @@
               <header class="app__task--header padding-x">
                 <h3 class="section__subTitle">Today's tasks</h3>
 
-                <div id="taskMenu" class="more__options">
+                <div id="taskMenu" class="task__menu--button more__options">
                   <button
                     id="taskMenuButton"
                     class="button button__round button more__options--button"

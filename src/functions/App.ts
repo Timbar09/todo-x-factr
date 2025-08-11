@@ -39,7 +39,7 @@ const renderListeners = (): void => {
     "showList"
   ) as HTMLButtonElement;
   const toggleListButton = document.getElementById(
-    "toggleList"
+    "toggleTaskListButton"
   ) as HTMLButtonElement;
   const moreOptionsButton = document.querySelectorAll(
     ".more__options--button"
