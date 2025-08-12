@@ -1,3 +1,5 @@
+// Export storage key for templates
+export const STORAGE_KEY = "todo-templates";
 export interface ColorScheme {
   primary: string;
   variant: string;
@@ -13,6 +15,7 @@ export interface ColorScheme {
 
 export interface TemplateInterface {
   id: string;
+  active: boolean;
   name: string;
   colors: ColorScheme;
   description?: string;
@@ -21,6 +24,7 @@ export interface TemplateInterface {
 export default class Template implements TemplateInterface {
   constructor(
     private _id: string,
+    private _active: boolean = false,
     private _name: string,
     private _colors: ColorScheme,
     private _description?: string
@@ -32,6 +36,14 @@ export default class Template implements TemplateInterface {
 
   set id(id: string) {
     this._id = id;
+  }
+
+  get active(): boolean {
+    return this._active;
+  }
+
+  set active(active: boolean) {
+    this._active = active;
   }
 
   get name(): string {

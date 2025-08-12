@@ -1,7 +1,7 @@
-import TemplateItem from "../model/Template";
+import Template from "../model/Template";
 
-const defaultTemplates: TemplateItem[] = [
-  new TemplateItem("default", "Dark", {
+const defaultTemplates: Template[] = [
+  new Template("default", true, "Dark", {
     primary: "rgba(160, 86, 197, 1)", // electric-purple
     variant: "#2643c4", // royal-blue
     "text-100": "#e2fdff", // baby-powder
@@ -12,7 +12,7 @@ const defaultTemplates: TemplateItem[] = [
     "bg-200": "#081e60", // oxford-blue
     "bg-300": "#051956", // air-force-blue
   }),
-  new TemplateItem("light", "Light", {
+  new Template("light", false, "Light", {
     primary: "#a056c5", // electric-purple
     variant: "#2643c4", // royal-blue
     "text-100": "#373b5e", // dark-blue
@@ -23,7 +23,7 @@ const defaultTemplates: TemplateItem[] = [
     "bg-200": "#ffffff", // white
     "bg-300": "#f4f6fd", // light-blue
   }),
-  new TemplateItem("desert", "Desert", {
+  new Template("desert", false, "Desert", {
     primary: "#fbbf24", // yellow
     variant: "#f59e0b", // golden yellow
     "text-100": "#f9f2d8ff", // light yellow

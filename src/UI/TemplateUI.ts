@@ -1,15 +1,15 @@
 import TemplateController from "../controller/TemplateController.js";
 import Template, { ColorScheme } from "../model/Template.js";
 export class TemplateUI {
-  private templateController: TemplateController;
-  private templateList: HTMLElement;
+  private controller: TemplateController;
+  private ul: HTMLUListElement;
   private menuContent: HTMLElement;
   private dialog: HTMLElement;
 
-  constructor(templateController: TemplateController) {
-    this.templateController = templateController;
+  constructor(controller: TemplateController) {
+    this.controller = controller;
     this.menuContent = document.getElementById("menuContent")!;
-    this.templateList = document.createElement("ul");
+    this.ul = document.createElement("ul");
     this.dialog = this.createCustomTemplateDialog();
 
     this.init();
@@ -21,20 +21,20 @@ export class TemplateUI {
   }
 
   private renderTemplates(): void {
-    const templates = this.templateController.getAllTemplates();
-    const currentTemplate = this.templateController.getCurrentTemplate();
+    const templates = this.controller.templates;
+    const activeTemplate = this.controller.activeTemplate;
 
-    this.templateList.innerHTML = templates
+    this.ul.innerHTML = templates
       .map(template =>
-        this.createTemplateHTML(template, template.id === currentTemplate.id)
+        this.createTemplateHTML(template, template.id === activeTemplate.id)
       )
       .join("");
 
     this.menuContent.innerHTML = `
       <h3 class="menu__title template__title">Choose a Template</h3>
 
-      <ul id="templateList" class="template__list">
-        ${this.templateList.innerHTML}
+      <ul id="ul" class="template__list">
+        ${this.ul.innerHTML}
       </ul>
 
       <div class="template__actions">
@@ -150,8 +150,12 @@ export class TemplateUI {
   }
 
   private selectTemplate(templateId: string): void {
-    if (this.templateController.setTemplate(templateId)) {
-      this.renderTemplates();
+    if (this.controller.activeTemplate.id !== templateId) {
+      const template = this.controller.findTemplateById(templateId);
+      if (template) {
+        this.controller.activeTemplate = template;
+        this.renderTemplates();
+      }
     }
   }
 
@@ -286,11 +290,12 @@ export class TemplateUI {
 
     const customTemplate: Template = new Template(
       `custom-${Date.now()}`,
+      false,
       name.trim(),
       colors
     );
 
-    this.templateController.addCustomTemplate(customTemplate);
+    this.controller.addTemplate(customTemplate);
     this.renderTemplates();
     // this.clearFormFields(form);
     this.dragDownCustomTemplateDialog();
