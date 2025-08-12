@@ -66,6 +66,7 @@ export default class TemplateController implements Controller {
         _name: string;
         _colors: ColorScheme;
         _description?: string;
+        _default: boolean;
       }[] = JSON.parse(stored);
 
       this._templates = parsedTemplates.map(
@@ -75,7 +76,8 @@ export default class TemplateController implements Controller {
             template._active,
             template._name,
             template._colors,
-            template._description
+            template._description,
+            template._default
           )
       );
     } catch (e) {

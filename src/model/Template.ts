@@ -19,6 +19,7 @@ export interface TemplateInterface {
   name: string;
   colors: ColorScheme;
   description?: string;
+  default: boolean;
 }
 
 export default class Template implements TemplateInterface {
@@ -27,7 +28,8 @@ export default class Template implements TemplateInterface {
     private _active: boolean = false,
     private _name: string,
     private _colors: ColorScheme,
-    private _description?: string
+    private _description?: string,
+    private _default: boolean = false
   ) {}
 
   get id(): string {
@@ -68,5 +70,13 @@ export default class Template implements TemplateInterface {
 
   set description(description: string | undefined) {
     this._description = description;
+  }
+
+  get default(): boolean {
+    return this._default;
+  }
+
+  set default(defaultValue: boolean) {
+    this._default = defaultValue;
   }
 }

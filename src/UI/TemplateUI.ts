@@ -1,6 +1,9 @@
+import MoreMenuController from "../controller/MoreMenuController.js";
 import TemplateController from "../controller/TemplateController.js";
 import Template, { ColorScheme } from "../model/Template.js";
 export class TemplateUI {
+  private moreMenuController: MoreMenuController =
+    MoreMenuController.getInstance();
   private controller: TemplateController;
   private ul: HTMLUListElement;
   private menuContent: HTMLElement;
@@ -8,6 +11,7 @@ export class TemplateUI {
 
   constructor(controller: TemplateController) {
     this.controller = controller;
+    this.moreMenuController = MoreMenuController.getInstance();
     this.menuContent = document.getElementById("menuContent")!;
     this.ul = document.createElement("ul");
     this.dialog = this.createCustomTemplateDialog();
@@ -76,22 +80,67 @@ export class TemplateUI {
       })
       .join("");
 
+    const showMoreMenu = template.default ? false : true;
+
     return `
       <li class="template__item" style="${cssVarString}">
-        <button
-          class="template__item--button button ${isActiveClass}"
-          data-template="${template.id}"
-        >
-          <span class="template__item--status">
-            ${isActive ? '<span class="material-symbols-outlined">check</span>' : ""}
-          </span>
+        <header class="template__item--header">
+          <button
+            class="template__item--button button ${isActiveClass}"
+            data-template="${template.id}"
+          >
+            <span class="template__item--status">
+              ${isActive ? '<span class="material-symbols-outlined">check</span>' : ""}
+            </span>
 
-          <span class="template__item--text">${template.name}</span>
+            <span class="template__item--text">${template.name}</span>
 
-          <span class="template__color--list">
-            ${colorItems}
-          </span>
-        </button>
+            <span class="template__color--list">
+              ${colorItems}
+            </span>
+          </button>
+        </header>
+
+        ${
+          showMoreMenu
+            ? `
+          <aside class="more__options">
+            <button 
+              class="more__options--button button button__round"
+              aria-expanded="false"
+              aria-haspopup="menu"
+            >
+              <span class="material-symbols-outlined">more_vert</span>
+            </button>
+
+            <menu class="more__options--menu__list" 
+              role="menu"
+              aria-hidden="true"
+            >
+              <li class="more__options--menu__item" role="none">
+                <button
+                  class="more__options--menu__option template__item--actions__edit"
+                  data-template="${template.id}"
+                  role="menuitem"
+                >
+                  Update Template
+                </button>
+              </li>
+
+              <li class="more__options--menu__item" role="none">
+                <button
+                  class="more__options--menu__option template__item--actions__delete"
+                  data-template="${template.id}"
+                  role="menuitem"
+                >
+                  Delete Template
+                </button>
+              </li>
+            </menu>
+          </aside>
+        `
+            : ""
+        }
       </li>
     `;
   }
@@ -118,6 +167,35 @@ export class TemplateUI {
       if (addButton) {
         e.stopPropagation();
         this.dragUpCustomTemplateDialog();
+        return;
+      }
+
+      // Handle MoreMenuController actions
+      const moreMenuButton = target.closest(
+        ".more__options--button"
+      ) as HTMLButtonElement;
+      if (moreMenuButton) {
+        const moreMenu = moreMenuButton.closest(
+          ".more__options"
+        ) as HTMLElement;
+
+        if (!moreMenu) return;
+
+        e.stopPropagation();
+        this.moreMenuController.toggle(moreMenu);
+        return;
+      }
+
+      // Handle delete template action
+      const deleteButton = target.closest(
+        ".template__item--actions__delete"
+      ) as HTMLButtonElement;
+      if (deleteButton) {
+        const templateId = deleteButton.dataset.template!;
+
+        e.stopPropagation();
+        this.controller.removeTemplate(templateId);
+        this.renderTemplates();
         return;
       }
     });

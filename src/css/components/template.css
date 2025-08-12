@@ -11,30 +11,48 @@
   }
 }
 
+.template__item {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-50);
+  background-color: var(--text-400);
+  outline-offset: 2px;
+  justify-content: space-between;
+  gap: 0.75em;
+}
+
+.template__item--active {
+  outline: var(--focus-outline);
+}
+
+.template__item:hover,
+.template__item:focus-visible {
+  /* --btn-bg: var(--template-bg-color); */
+  background-color: var(--template-bg-color, var(--text-400));
+  outline: 1px solid var(--text-400);
+  color: var(--template-text-color);
+}
+
+.template__item--header {
+  flex: 1;
+}
+
 .template__item--button {
-  --btn-bg: var(--text-400);
+  --btn-bg: transparent;
 
   padding: 1em;
   color: var(--template-text-color, var(--text-100));
   font-size: 0.8125em;
-  border-radius: var(--radius-50);
-  outline-offset: 2px;
   width: 100%;
   display: flex;
+  color: inherit;
   align-items: center;
   gap: 0.75em;
 }
 
-.template__button--active {
-  outline: var(--focus-outline);
-}
-
-.template__item--button:hover,
-.template__item--button:focus-visible {
-  --btn-bg: var(--template-bg-color);
-
-  outline: 1px solid var(--text-400);
-  color: var(--template-text-color);
+.template__item:hover .template__item--button,
+.template__item:focus-visible .template__item--button {
+  --btn-text-color: var(--template-text-color, var(--text-100));
 }
 
 .template__item--status {
@@ -65,6 +83,11 @@
   border-radius: var(--radius-pill);
   background-color: var(--template-color, #888888);
   border: 1px solid var(--text-400);
+}
+
+.template__item:hover .more__options--button,
+.template__item:focus-visible .more__options--button {
+  color: var(--template-text-color);
 }
 
 .template__button--entry {
