@@ -11,7 +11,7 @@ import { TemplateUI } from "../UI/TemplateUI";
 import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
 import MenuController from "../controller/MenuController";
 import { openEntryForm, closeEntryForm } from "./EntryForm";
-import { addClass, removeClass, toggleMoreOptionsMenu } from "./Reusable";
+import { addClass, removeClass } from "./Reusable";
 
 const fullList = FullList.instance;
 const categoryList = CategoryList.instance;
@@ -41,9 +41,6 @@ const renderListeners = (): void => {
   const toggleListButton = document.getElementById(
     "toggleTaskListButton"
   ) as HTMLButtonElement;
-  const moreOptionsButton = document.querySelectorAll(
-    ".more__options--button"
-  ) as NodeListOf<HTMLButtonElement>;
   const buttons = document.querySelectorAll(
     ".button"
   ) as NodeListOf<HTMLButtonElement>;
@@ -69,12 +66,12 @@ const renderListeners = (): void => {
 
   clearItemsButton.addEventListener("click", (): void => {
     fullList.clearList();
-    categoryList.clearCategoryItems();
+    // categoryList.clearCategoryItems();
     listTemplate.clear();
   });
 
   clearCompletedButton.addEventListener("click", (): void => {
-    categoryList.clearCompletedCategoryItems(fullList);
+    // categoryList.clearCompletedCategoryItems(fullList);
     fullList.ClearCompleted();
     listTemplate.render(fullList, categoryList);
   });
@@ -94,12 +91,6 @@ const renderListeners = (): void => {
 
   toggleListButton.addEventListener("click", () => {
     toggleTaskListSection();
-  });
-
-  moreOptionsButton.forEach(button => {
-    button.addEventListener("click", () => {
-      toggleMoreOptionsMenu(button);
-    });
   });
 
   showItemEntryFormButton.addEventListener("click", () => {
