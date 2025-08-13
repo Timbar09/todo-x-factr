@@ -13,6 +13,16 @@
   --radius-circle: 50%;
 }
 
+* {
+  scrollbar-gutter: stable; /* Reserves space for scrollbar */
+  scrollbar-width: auto; /* Firefox */
+  scrollbar-color: var(--text-300) transparent; /* Firefox */
+  scroll-behavior: smooth;
+  transition:
+    color 100ms ease-in-out,
+    background-color 100ms ease-in-out;
+}
+
 html {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;

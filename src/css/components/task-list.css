@@ -64,7 +64,9 @@
   border-radius: var(--radius-circle);
   background-color: transparent;
   rotate: -45deg;
-  transition: outline 100ms ease-in-out, background-color var(--transition-time) ease-in-out;
+  transition:
+    outline 100ms ease-in-out,
+    background-color var(--transition-time) ease-in-out;
 }
 
 .app__task--list__item--checkbox > input[type="checkbox"]::before,
@@ -102,7 +104,10 @@
   background-color: var(--text-100);
 }
 
-.app__task--list__item--checkbox input[type="checkbox"] + label .app__task--list__item--text {
+.app__task--list__item--checkbox
+  input[type="checkbox"]
+  + label
+  .app__task--list__item--text {
   position: relative;
   color: var(--text-100);
 }
