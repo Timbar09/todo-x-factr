@@ -10,6 +10,7 @@
 .more__options--menu__list {
   position: absolute;
   visibility: hidden;
+  list-style-type: none;
   opacity: 0;
   top: 2em;
   right: -5em;
@@ -22,7 +23,9 @@
   background-color: var(--bg-200);
   z-index: 1;
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
-  transition: opacity 150ms ease-in-out, top 150ms ease-in-out;
+  transition:
+    opacity 150ms ease-in-out,
+    top 150ms ease-in-out;
 }
 
 .more__options--menu__list.open {

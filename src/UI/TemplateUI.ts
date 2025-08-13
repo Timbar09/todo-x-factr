@@ -123,7 +123,7 @@ export class TemplateUI {
                   data-template="${template.id}"
                   role="menuitem"
                 >
-                  Update Template
+                  Edit Template
                 </button>
               </li>
 
@@ -196,6 +196,21 @@ export class TemplateUI {
         e.stopPropagation();
         this.controller.removeTemplate(templateId);
         this.renderTemplates();
+
+        this.moreMenuController.closeAll();
+        return;
+      }
+
+      // Handle edit template action
+      const editButton = target.closest(
+        ".template__item--actions__edit"
+      ) as HTMLButtonElement;
+      if (editButton) {
+        const templateId = editButton.dataset.template!;
+        e.stopPropagation();
+        this.editTemplate(templateId);
+
+        this.moreMenuController.closeAll();
         return;
       }
     });
@@ -225,6 +240,45 @@ export class TemplateUI {
     window.addEventListener("menuAlreadyOpen", () => {
       this.dragDownCustomTemplateDialog();
     });
+  }
+
+  private editTemplate(templateId: string): void {
+    const template = this.controller.findTemplateById(templateId);
+    if (template && !template.default) {
+      this.populateDialogForEdit(template);
+      this.dragUpCustomTemplateDialog();
+    }
+  }
+
+  private populateDialogForEdit(template: Template): void {
+    const form = this.dialog.querySelector(
+      "#customTemplateForm"
+    ) as HTMLFormElement;
+    const nameInput = form.querySelector("#templateName") as HTMLInputElement;
+    const primaryInput = form.querySelector(
+      "#primaryColor"
+    ) as HTMLInputElement;
+    const textInput = form.querySelector("#textColor") as HTMLInputElement;
+    const bgInput = form.querySelector("#bgColor") as HTMLInputElement;
+    const submitButton = form.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement;
+
+    // Populate with existing values
+    nameInput.value = template.name;
+    primaryInput.value = template.colors.primary;
+    textInput.value = template.colors["text-100"];
+    bgInput.value = template.colors["bg-100"];
+
+    // Change button text and add edit mode
+    submitButton.innerHTML = `
+      <span>Update Template</span>
+      <span class="material-symbols-outlined">save</span>
+    `;
+
+    // Mark form as edit mode
+    form.dataset.mode = "edit";
+    form.dataset.templateId = template.id;
   }
 
   private selectTemplate(templateId: string): void {
@@ -321,7 +375,7 @@ export class TemplateUI {
       e.preventDefault();
       e.stopPropagation();
       // this.clearFormFields(form);
-      this.handleCustomTemplateSubmission(form, dialog);
+      this.handleCustomTemplateSubmission(form);
     });
 
     // Handle cancel button
@@ -341,14 +395,8 @@ export class TemplateUI {
     form.reset();
   }
 
-  private handleCustomTemplateSubmission(
-    form: HTMLFormElement,
-    dialog: HTMLElement
-  ): void {
+  private handleCustomTemplateSubmission(form: HTMLFormElement): void {
     const formData = new FormData(form);
-
-    dialog.classList.add("open");
-
     const name = formData.get("templateName") as string;
     const primary = formData.get("primaryColor") as string;
     const text = formData.get("textColor") as string;
@@ -366,17 +414,49 @@ export class TemplateUI {
       "bg-300": this.lightenColor(bg, 20),
     };
 
-    const customTemplate: Template = new Template(
-      `custom-${Date.now()}`,
-      false,
-      name.trim(),
-      colors
-    );
+    // ✅ Check if this is edit or create mode
+    if (form.dataset.mode === "edit") {
+      // Update existing template
+      const templateId = form.dataset.templateId!;
+      const template = this.controller.findTemplateById(templateId);
+      if (template) {
+        template.name = name.trim();
+        template.colors = colors;
+        this.controller.updateTemplate(template);
+      }
+    } else {
+      // Create new template
+      const customTemplate = new Template(
+        `custom-${Date.now()}`,
+        false,
+        name.trim(),
+        colors
+      );
+      this.controller.addTemplate(customTemplate);
+    }
 
-    this.controller.addTemplate(customTemplate);
     this.renderTemplates();
-    // this.clearFormFields(form);
+    this.resetDialogToCreateMode(form);
     this.dragDownCustomTemplateDialog();
+  }
+
+  private resetDialogToCreateMode(form: HTMLFormElement): void {
+    const submitButton = form.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement;
+
+    // Reset button text
+    submitButton.innerHTML = `
+      <span>Create Template</span>
+      <span class="material-symbols-outlined">Keyboard_arrow_up</span>
+    `;
+
+    // Clear edit mode
+    delete form.dataset.mode;
+    delete form.dataset.templateId;
+
+    // Clear form
+    form.reset();
   }
 
   private reduceOpacity(color: string, opacity: number): string {
