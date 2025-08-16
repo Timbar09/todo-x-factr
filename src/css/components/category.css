@@ -80,7 +80,17 @@
   position: absolute;
   height: 100%;
   border-radius: inherit;
-  transition: width 400ms ease-in-out;
+  /* transition: width 400ms ease-in-out; */
+  animation: grow-progress-bar 600ms ease-out forwards;
+}
+
+@keyframes grow-progress-bar {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--progress);
+  }
 }
 
 .category__item--progressBar__fill::before {

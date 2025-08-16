@@ -20,28 +20,11 @@ export default class CategoryUI implements Observer<Category> {
 
   private init(): void {
     this.render();
+    this.controller.addCategoryObserver(this);
   }
 
-  // ✅ Just use render() for everything
-  // notifyChange(): void {
-  //   this.render(); // Re-render everything when any category changes
-  // }
-
   update(category: Category): void {
-    this.uls.forEach(ul => {
-      const categoryCount = ul.querySelector(
-        `[data-category-id="${category.id}"] .category__item--count`
-      );
-
-      if (!categoryCount) return;
-
-      const { numberOfItems, numberOfCompletedItems } =
-        this.getCategoryStats(category);
-
-      categoryCount.innerHTML = `
-      <span>${numberOfItems} task${numberOfItems === 1 ? "" : "s"}</span> | <span>${numberOfCompletedItems} completed</span>
-      `;
-    });
+    this.updateCategoryDisplay(category.id);
   }
 
   private render(): void {
@@ -94,5 +77,29 @@ export default class CategoryUI implements Observer<Category> {
       numberOfCompletedItems: completedTasks,
       completionPercentage: completionPercentage,
     };
+  }
+
+  private updateCategoryDisplay(categoryId: string): void {
+    const category = this.controller.findCategoryById(categoryId);
+    if (!category) return;
+
+    this.uls.forEach(ul => {
+      const categoryItem = ul.querySelector(
+        `[data-category-id="${categoryId}"]`
+      );
+      if (!categoryItem) return;
+
+      const { numberOfItems, numberOfCompletedItems } =
+        this.getCategoryStats(category);
+      const categoryCount = categoryItem.querySelector(
+        ".category__item--count"
+      );
+
+      if (!categoryCount) return;
+
+      categoryCount.innerHTML = `
+        <span>${numberOfItems} task${numberOfItems === 1 ? "" : "s"}</span> | <span>${numberOfCompletedItems} completed</span>
+      `;
+    });
   }
 }

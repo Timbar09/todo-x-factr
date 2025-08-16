@@ -64,6 +64,7 @@ export default class Category implements CategoryInterface {
   }
 
   addTask(taskId: string): void {
+    if (this._tasks.includes(taskId)) return;
     this._tasks.push(taskId);
   }
 

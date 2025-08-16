@@ -69,14 +69,6 @@ export default class CategoryController implements Controller {
   }
 
   syncWithTasks(tasks: Task[]): void {
-    tasks.forEach(task => {
-      const category = this.findCategoryById(task.categoryId);
-
-      if (category && !category.tasks.includes(task.id)) {
-        category.addTask(task.id);
-      }
-    });
-
     this._categories.forEach(category => {
       let completedCount = 0;
 
@@ -152,18 +144,19 @@ export default class CategoryController implements Controller {
   private bindTaskEvents(): void {
     window.addEventListener("taskAdded", (e: Event) => {
       const customEvent = e as CustomEvent;
-      const task = customEvent.detail.item;
+      const task = customEvent.detail;
       const category = this.findCategoryById(task.categoryId);
 
       if (category) {
         category.addTask(task.id);
         this.save();
+        this.notifyCategoryObservers(category);
       }
     });
 
     window.addEventListener("taskRemoved", (e: Event) => {
       const customEvent = e as CustomEvent;
-      const task = customEvent.detail.removedItem;
+      const task = customEvent.detail;
       const category = this.findCategoryById(task.categoryId);
 
       if (category) {
@@ -172,6 +165,7 @@ export default class CategoryController implements Controller {
         }
         category.removeTask(task.id);
         this.save();
+        this.notifyCategoryObservers(category);
       }
     });
 
@@ -188,21 +182,38 @@ export default class CategoryController implements Controller {
         }
 
         this.save();
+        this.notifyCategoryObservers(category);
       }
+    });
+
+    window.addEventListener("tasksCleared", () => {
+      this.clearCategoryTasks();
+      this.save();
+      this._categories.forEach(category => {
+        this.notifyCategoryObservers(category);
+      });
     });
 
     window.addEventListener("completedTasksCleared", (e: Event) => {
       const customEvent = e as CustomEvent;
       const { removedItems } = customEvent.detail;
+      console.log("Tasks removed:", removedItems);
+
+      const affectedCategories = new Set<Category>();
 
       removedItems.forEach((task: { id: string; categoryId: string }) => {
         const category = this.findCategoryById(task.categoryId);
         if (category) {
           category.markTaskIncomplete(task.id);
           category.removeTask(task.id);
+          affectedCategories.add(category);
         }
       });
       this.save();
+
+      affectedCategories.forEach(category => {
+        this.notifyCategoryObservers(category);
+      });
     });
   }
 }
