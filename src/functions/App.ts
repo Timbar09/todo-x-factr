@@ -1,8 +1,7 @@
 import FullList from "../model/FullList";
 import ListTemplate from "../templates/ListTemplate";
-import CategoryList from "../model/CategoryList";
+import CategoryController from "../controller/CategoryController";
 import CategorySelectionTemplate from "../templates/CategorySelectionTemplate";
-import CategoryListTemplate from "../templates/CategoryListTemplate";
 
 import { setSectionFocusStatus } from "./Reusable";
 import { handleFormSubmit } from "./EntryForm";
@@ -14,10 +13,9 @@ import { openEntryForm, closeEntryForm } from "./EntryForm";
 import { addClass, removeClass } from "./Reusable";
 
 const fullList = FullList.instance;
-const categoryList = CategoryList.instance;
+const categoryController = CategoryController.instance;
 const listTemplate = ListTemplate.instance;
 const categorySelectionTemplate = CategorySelectionTemplate.instance;
-const categoryListTemplate = CategoryListTemplate.instance;
 
 const setDefaultSectionFocusStatuses = (): void => {
   const taskListSection = document.getElementById(
@@ -72,8 +70,8 @@ const renderListeners = (): void => {
 
   clearCompletedButton.addEventListener("click", (): void => {
     // categoryList.clearCompletedCategoryItems(fullList);
-    fullList.ClearCompleted();
-    listTemplate.render(fullList, categoryList);
+    fullList.clearCompleted();
+    listTemplate.render(fullList, categoryController);
   });
 
   buttons.forEach(button => {
@@ -103,14 +101,14 @@ const renderListeners = (): void => {
 };
 
 export default (): void => {
-  categoryListTemplate.render(categoryList);
-  categorySelectionTemplate.render(categoryList);
+  fullList.load();
+  categoryController.syncWithTasks(fullList.list);
+  categorySelectionTemplate.render(categoryController);
 
   renderListeners();
 
-  fullList.load();
-  listTemplate.render(fullList, categoryList);
   const templateController = new TemplateController();
+  listTemplate.render(fullList, categoryController);
   new TemplateUI(templateController);
   MenuController.getInstance();
 

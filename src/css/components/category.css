@@ -58,6 +58,8 @@
 
 .category__item--count {
   font-size: 0.75em;
+  display: flex;
+  gap: 0.75em;
 }
 
 .category__item--title {

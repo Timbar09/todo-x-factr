@@ -1,5 +1,5 @@
-import CategoryList from "../model/CategoryList";
-import CategoryItem from "../model/CategoryItem";
+import CategoryList from "../controller/CategoryController";
+import CategoryItem from "../model/Category";
 
 import { toggleClass } from "../functions/Reusable";
 
@@ -16,8 +16,12 @@ export default class CategorySelectionTemplate implements DOMList {
   static instance: CategorySelectionTemplate = new CategorySelectionTemplate();
 
   private constructor() {
-    this.customSelect = document.getElementById("customSelect") as HTMLDivElement;
-    this.dropdown = document.getElementById("categoryDropdown") as HTMLUListElement;
+    this.customSelect = document.getElementById(
+      "customSelect"
+    ) as HTMLDivElement;
+    this.dropdown = document.getElementById(
+      "categoryDropdown"
+    ) as HTMLUListElement;
   }
 
   render(categoryList: CategoryList) {
@@ -40,16 +44,17 @@ export default class CategorySelectionTemplate implements DOMList {
     selectBoxPlaceholder.textContent = "Select category";
 
     const selectBoxIcon = document.createElement("span");
-    selectBoxIcon.className = "material-symbols-outlined app__task--entry__icon";
+    selectBoxIcon.className =
+      "material-symbols-outlined app__task--entry__icon";
     selectBoxIcon.textContent = "keyboard_arrow_down";
 
     selectBox.appendChild(selectBoxPlaceholder);
     selectBox.appendChild(selectBoxIcon);
 
-    selectBox.addEventListener("click", (event) => {
+    selectBox.addEventListener("click", event => {
       this.handleSelectBoxClick(event);
     });
-    selectBox.addEventListener("keydown", (event) => {
+    selectBox.addEventListener("keydown", event => {
       if (event.key === "Space" || event.key === "Enter") {
         this.handleSelectBoxClick(event);
       }
@@ -60,9 +65,11 @@ export default class CategorySelectionTemplate implements DOMList {
   }
 
   private renderDropdown(categoryList: CategoryList) {
-    const dropdown = document.getElementById("categoryDropdown") as HTMLDivElement;
+    const dropdown = document.getElementById(
+      "categoryDropdown"
+    ) as HTMLDivElement;
 
-    categoryList.categories.forEach((category) => {
+    categoryList.categories.forEach(category => {
       this.renderSelectItem(category);
     });
 
@@ -79,7 +86,7 @@ export default class CategorySelectionTemplate implements DOMList {
     selectItem.addEventListener("click", () => {
       this.handleSelectItemClick(category);
     });
-    selectItem.addEventListener("keydown", (event) => {
+    selectItem.addEventListener("keydown", event => {
       if (event.key === "Enter") {
         this.handleSelectItemClick(category);
         this.closeDropdown();
@@ -103,7 +110,7 @@ export default class CategorySelectionTemplate implements DOMList {
     this.rotateIcon();
     this.lockFocus();
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", event => {
       const target = event.target as HTMLElement;
 
       if (target.closest("#categoryButton")) return;
@@ -111,7 +118,7 @@ export default class CategorySelectionTemplate implements DOMList {
       this.closeDropdown();
     });
 
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener("keydown", event => {
       if (event.key === "Escape") {
         this.closeDropdown();
       }
@@ -124,7 +131,9 @@ export default class CategorySelectionTemplate implements DOMList {
   }
 
   private rotateIcon(): void {
-    const categoryButtonIcon = document.querySelector(".app__task--entry__icon") as HTMLSpanElement;
+    const categoryButtonIcon = document.querySelector(
+      ".app__task--entry__icon"
+    ) as HTMLSpanElement;
 
     if (this.dropdown.classList.contains("open")) {
       categoryButtonIcon.classList.add("open");
@@ -136,16 +145,16 @@ export default class CategorySelectionTemplate implements DOMList {
   private lockFocus() {
     if (!this.dropdown.classList.contains("open")) return;
 
-    const focusableElements = this.dropdown.querySelectorAll("input, label") as NodeListOf<
-      HTMLInputElement | HTMLLabelElement
-    >;
+    const focusableElements = this.dropdown.querySelectorAll(
+      "input, label"
+    ) as NodeListOf<HTMLInputElement | HTMLLabelElement>;
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
     let currentIndex = 0;
 
     firstElement.focus();
 
-    this.dropdown.addEventListener("keydown", (event) => {
+    this.dropdown.addEventListener("keydown", event => {
       const maxIndex = focusableElements.length - 1;
 
       if (event.key === "Tab" && event.shiftKey) {
@@ -171,10 +180,16 @@ export default class CategorySelectionTemplate implements DOMList {
   }
 
   private handleSelectItemClick(category: CategoryItem) {
-    const categoryColor = document.getElementById("categoryColor") as HTMLDivElement;
+    const categoryColor = document.getElementById(
+      "categoryColor"
+    ) as HTMLDivElement;
     const color: string = category.color;
-    const categoryButton = document.getElementById("categoryButton") as HTMLButtonElement;
-    const categoryButtonText = categoryButton.querySelector("span") as HTMLSpanElement;
+    const categoryButton = document.getElementById(
+      "categoryButton"
+    ) as HTMLButtonElement;
+    const categoryButtonText = categoryButton.querySelector(
+      "span"
+    ) as HTMLSpanElement;
 
     categoryButtonText.textContent = category.name;
     categoryButton.classList.add("selected");

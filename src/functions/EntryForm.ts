@@ -1,8 +1,8 @@
 import FullList from "../model/FullList";
 import ListTemplate from "../templates/ListTemplate";
 import ListItem from "../model/ListItem";
-import CategoryItem from "../model/CategoryItem";
-import CategoryList from "../model/CategoryList";
+import CategoryItem from "../model/Category";
+import CategoryList from "../controller/CategoryController";
 
 import { addClass, removeClass, lockFocus } from "./Reusable";
 import { showTaskListSection } from "./HeroSection";
@@ -34,7 +34,7 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
 
     updatedCategoryItem = category;
 
-    updatedCategoryItem.addItem(itemId);
+    updatedCategoryItem.addTask(itemId);
     categoryList.updateCategory(updatedCategoryItem);
   }
 
