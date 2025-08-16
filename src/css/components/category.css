@@ -58,8 +58,10 @@
 
 .category__item--count {
   font-size: 0.75em;
-  display: flex;
-  gap: 0.75em;
+}
+
+.category__item--count > span:first-child {
+  font-weight: 700;
 }
 
 .category__item--title {
@@ -68,6 +70,7 @@
 
 .category__item--progressBar {
   --progress: 0;
+  --previous-progress: 0;
 
   position: relative;
   height: 0.205em;
@@ -79,14 +82,14 @@
   display: inline-block;
   position: absolute;
   height: 100%;
+  width: var(--progress);
   border-radius: inherit;
-  /* transition: width 400ms ease-in-out; */
-  animation: grow-progress-bar 600ms ease-out forwards;
+  animation: grow-progress-bar 400ms ease-out forwards;
 }
 
 @keyframes grow-progress-bar {
   from {
-    width: 0;
+    width: var(--previous-progress);
   }
   to {
     width: var(--progress);

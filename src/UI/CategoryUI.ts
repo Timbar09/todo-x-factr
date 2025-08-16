@@ -1,4 +1,3 @@
-// import FullList from "../model/FullList";
 import Controller from "../controller/CategoryController";
 import Category from "../model/Category";
 import Observer from "../types/Observer";
@@ -8,6 +7,7 @@ export default class CategoryUI implements Observer<Category> {
 
   private controller: Controller;
   private uls: NodeListOf<HTMLUListElement>;
+  private previousCompletions: Map<string, number> = new Map();
 
   constructor(controller: Controller) {
     this.controller = controller;
@@ -33,6 +33,10 @@ export default class CategoryUI implements Observer<Category> {
 
       this.controller.categories.forEach(category => {
         const li = this.createCategoryElement(category);
+        const { completionPercentage } = this.getCategoryStats(category);
+
+        this.previousCompletions.set(category.id, completionPercentage);
+
         ul.appendChild(li);
       });
     });
@@ -41,6 +45,14 @@ export default class CategoryUI implements Observer<Category> {
   private createCategoryElement(category: Category): HTMLLIElement {
     const { numberOfItems, numberOfCompletedItems, completionPercentage } =
       this.getCategoryStats(category);
+
+    // ✅ Get previous completion for animation
+    const previousCompletion = this.previousCompletions.get(category.id) || 0;
+    const currentCompletion = completionPercentage;
+
+    console.log(
+      `🎬 Animation: ${category.name} from ${previousCompletion}% → ${currentCompletion}%`
+    );
 
     const plural = numberOfItems === 1 ? "" : "s";
 
@@ -51,18 +63,33 @@ export default class CategoryUI implements Observer<Category> {
 
     li.innerHTML = `
     <span class="category__item--count">
-      <span>${numberOfItems} task${plural}</span> | <span>${numberOfCompletedItems} completed</span>
+      <span>${numberOfCompletedItems}</span>/<span>${numberOfItems}</span> tasks completed
     </span>
 
     <h4 class="category__item--title">${category.name}</h4>
 
     <div 
       class="category__item--progressBar" 
-      style="--progress: ${completionPercentage}%;"
+      style="--previous-progress: ${completionPercentage}%; --progress: ${completionPercentage}%;"
     >
       <span class="category__item--progressBar__fill"></span>
     </div>
   `;
+
+    // ✅ Update progress bar with animation
+    const progressBar = li.querySelector(
+      ".category__item--progressBar"
+    ) as HTMLElement;
+    if (progressBar) {
+      progressBar.style.setProperty(
+        "--previous-progress",
+        `${previousCompletion}%`
+      );
+      progressBar.style.setProperty("--progress", `${currentCompletion}%`);
+    }
+
+    // ✅ Store current as previous for next update
+    this.previousCompletions.set(category.id, currentCompletion);
 
     return li;
   }
