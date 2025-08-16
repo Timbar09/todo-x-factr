@@ -32,36 +32,39 @@ export default class CategoryUI implements Observer<Category> {
       ul.innerHTML = "";
 
       this.controller.categories.forEach(category => {
-        const li = document.createElement("li");
-        li.className = "category__item";
-        li.setAttribute("data-category-id", category.id);
-        li.style.setProperty("--category-clr", category.color);
-
-        const { numberOfItems, numberOfCompletedItems, completionPercentage } =
-          this.getCategoryStats(category);
-
-        const plural = numberOfItems === 1 ? "" : "s";
-
-        const categoryItem = `
-          <span class="category__item--count">
-            <span>${numberOfItems} task${plural}</span> | <span>${numberOfCompletedItems} completed</span>
-          </span>
-
-          <h4 class="category__item--title">${category.name}</h4>
-
-          <div 
-            class="category__item--progressBar" 
-            style="--progress: ${completionPercentage}%;"
-          >
-            <span class="category__item--progressBar__fill"></span>
-          </div>
-        `;
-
-        li.innerHTML = categoryItem;
-
+        const li = this.createCategoryElement(category);
         ul.appendChild(li);
       });
     });
+  }
+
+  private createCategoryElement(category: Category): HTMLLIElement {
+    const { numberOfItems, numberOfCompletedItems, completionPercentage } =
+      this.getCategoryStats(category);
+
+    const plural = numberOfItems === 1 ? "" : "s";
+
+    const li = document.createElement("li");
+    li.className = "category__item";
+    li.setAttribute("data-category-id", category.id);
+    li.style.setProperty("--category-clr", category.color);
+
+    li.innerHTML = `
+    <span class="category__item--count">
+      <span>${numberOfItems} task${plural}</span> | <span>${numberOfCompletedItems} completed</span>
+    </span>
+
+    <h4 class="category__item--title">${category.name}</h4>
+
+    <div 
+      class="category__item--progressBar" 
+      style="--progress: ${completionPercentage}%;"
+    >
+      <span class="category__item--progressBar__fill"></span>
+    </div>
+  `;
+
+    return li;
   }
 
   private getCategoryStats(category: Category): {
@@ -84,22 +87,17 @@ export default class CategoryUI implements Observer<Category> {
     if (!category) return;
 
     this.uls.forEach(ul => {
-      const categoryItem = ul.querySelector(
+      const existingElement = ul.querySelector(
         `[data-category-id="${categoryId}"]`
       );
-      if (!categoryItem) return;
 
-      const { numberOfItems, numberOfCompletedItems } =
-        this.getCategoryStats(category);
-      const categoryCount = categoryItem.querySelector(
-        ".category__item--count"
-      );
+      if (existingElement) {
+        const newElement = this.createCategoryElement(category);
 
-      if (!categoryCount) return;
+        existingElement.insertAdjacentElement("beforebegin", newElement);
 
-      categoryCount.innerHTML = `
-        <span>${numberOfItems} task${numberOfItems === 1 ? "" : "s"}</span> | <span>${numberOfCompletedItems} completed</span>
-      `;
+        existingElement.remove();
+      }
     });
   }
 }
