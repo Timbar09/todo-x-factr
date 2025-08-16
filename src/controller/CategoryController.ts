@@ -197,7 +197,8 @@ export default class CategoryController implements Controller {
     window.addEventListener("completedTasksCleared", (e: Event) => {
       const customEvent = e as CustomEvent;
       const { removedItems } = customEvent.detail;
-      console.log("Tasks removed:", removedItems);
+
+      if (!removedItems) return;
 
       const affectedCategories = new Set<Category>();
 
