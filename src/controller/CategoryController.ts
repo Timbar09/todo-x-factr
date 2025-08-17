@@ -1,7 +1,6 @@
-// import FullList from "../model/FullList";
 import Category from "../model/Category";
 import Observer from "../types/Observer";
-import Task from "../model/ListItem";
+import Task from "../model/Task";
 
 interface Controller {
   categories: Category[];
@@ -32,7 +31,6 @@ export default class CategoryController implements Controller {
     const stored: string | null = localStorage.getItem("categories");
 
     if (!stored) {
-      console.warn("No categories found in localStorage");
       this._categories = [
         new Category("personal1000", "Personal", "var(--primary)"),
         new Category("business1000", "Business", "var(--variant)"),
