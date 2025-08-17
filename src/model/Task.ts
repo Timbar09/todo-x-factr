@@ -1,11 +1,11 @@
-export interface Item {
+export interface TaskInterface {
   id: string;
   title: string;
   checked: boolean;
   categoryId: string;
 }
 
-export default class ListItem implements Item {
+export default class Task implements TaskInterface {
   constructor(
     private _id: string,
     private _title: string,
