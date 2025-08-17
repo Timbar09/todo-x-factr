@@ -10,9 +10,6 @@ interface Controller {
   addCategory: (category: Category) => void;
   findCategoryById: (id: string) => Category | undefined;
   findCategoryByName: (name: string) => Category | undefined;
-  saveAndNotifyCategory: (UpdatedCategory: Category) => void;
-  clearCategoryTasks: () => void;
-  clearCompletedCategoryTasks: (e: Event) => void;
   syncWithTasks: (tasks: Task[]) => void;
 }
 
@@ -114,7 +111,7 @@ export default class CategoryController implements Controller {
     return this._categories.find(category => category.name === name);
   }
 
-  saveAndNotifyCategory(updatedCategory: Category): void {
+  private saveAndNotifyCategory(updatedCategory: Category): void {
     this._categories = this._categories.map(category =>
       category.id === updatedCategory.id ? updatedCategory : category
     );
@@ -122,7 +119,7 @@ export default class CategoryController implements Controller {
     this.notifyCategoryObservers(updatedCategory);
   }
 
-  addCategoryTask(e: Event): void {
+  private addCategoryTask(e: Event): void {
     const customEvent = e as CustomEvent;
     const task = customEvent.detail;
     const category = this.findCategoryById(task.categoryId);
@@ -133,7 +130,7 @@ export default class CategoryController implements Controller {
     }
   }
 
-  removeCategoryTask(e: Event): void {
+  private removeCategoryTask(e: Event): void {
     const customEvent = e as CustomEvent;
     const task = customEvent.detail;
     const category = this.findCategoryById(task.categoryId);
@@ -147,7 +144,7 @@ export default class CategoryController implements Controller {
     }
   }
 
-  toggleCategoryTaskCompletion(e: Event): void {
+  private toggleCategoryTaskCompletion(e: Event): void {
     const customEvent = e as CustomEvent;
     const { task, wasChecked, isChecked } = customEvent.detail;
     const category = this.findCategoryById(task.categoryId);
@@ -163,14 +160,14 @@ export default class CategoryController implements Controller {
     }
   }
 
-  clearCategoryTasks(): void {
+  private clearCategoryTasks(): void {
     this._categories.forEach(category => {
       category.clearTasks();
       this.saveAndNotifyCategory(category);
     });
   }
 
-  clearCompletedCategoryTasks(e: Event): void {
+  private clearCompletedCategoryTasks(e: Event): void {
     const customEvent = e as CustomEvent;
     const removedItems = customEvent.detail;
 
