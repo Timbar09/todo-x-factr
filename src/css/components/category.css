@@ -84,7 +84,7 @@
   height: 100%;
   width: var(--progress);
   border-radius: inherit;
-  animation: grow-progress-bar 400ms ease-out forwards;
+  animation: grow-progress-bar 200ms ease-out forwards;
 }
 
 @keyframes grow-progress-bar {

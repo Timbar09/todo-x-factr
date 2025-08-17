@@ -1,4 +1,4 @@
-import FullList from "../model/FullList";
+// import FullList from "../model/FullList";
 import Category from "../model/Category";
 import Observer from "../types/Observer";
 import Task from "../model/ListItem";
@@ -10,9 +10,9 @@ interface Controller {
   addCategory: (category: Category) => void;
   findCategoryById: (id: string) => Category | undefined;
   findCategoryByName: (name: string) => Category | undefined;
-  updateCategory: (UpdatedCategory: Category) => void;
+  saveAndNotifyCategory: (UpdatedCategory: Category) => void;
   clearCategoryTasks: () => void;
-  clearCompletedCategoryTasks: (fullList: FullList) => void;
+  clearCompletedCategoryTasks: (e: Event) => void;
   syncWithTasks: (tasks: Task[]) => void;
 }
 
@@ -23,7 +23,6 @@ export default class CategoryController implements Controller {
   private _categories: Category[] = [];
 
   private constructor() {
-    // ] //   new Category("business1000", "Business", "var(--variant)"), //   new Category("personal1000", "Personal", "var(--primary)"), // private _categories: Category[] = [
     this.load();
     this.bindTaskEvents();
   }
@@ -115,7 +114,7 @@ export default class CategoryController implements Controller {
     return this._categories.find(category => category.name === name);
   }
 
-  updateCategory(updatedCategory: Category): void {
+  saveAndNotifyCategory(updatedCategory: Category): void {
     this._categories = this._categories.map(category =>
       category.id === updatedCategory.id ? updatedCategory : category
     );
@@ -123,98 +122,95 @@ export default class CategoryController implements Controller {
     this.notifyCategoryObservers(updatedCategory);
   }
 
+  addCategoryTask(e: Event): void {
+    const customEvent = e as CustomEvent;
+    const task = customEvent.detail;
+    const category = this.findCategoryById(task.categoryId);
+
+    if (category) {
+      category.addTask(task.id);
+      this.saveAndNotifyCategory(category);
+    }
+  }
+
+  removeCategoryTask(e: Event): void {
+    const customEvent = e as CustomEvent;
+    const task = customEvent.detail;
+    const category = this.findCategoryById(task.categoryId);
+
+    if (category) {
+      if (task.checked) {
+        category.markTaskIncomplete(task.id);
+      }
+      category.removeTask(task.id);
+      this.saveAndNotifyCategory(category);
+    }
+  }
+
+  toggleCategoryTaskCompletion(e: Event): void {
+    const customEvent = e as CustomEvent;
+    const { task, wasChecked, isChecked } = customEvent.detail;
+    const category = this.findCategoryById(task.categoryId);
+
+    if (category) {
+      if (isChecked && !wasChecked) {
+        category.markTaskCompleted(task.id);
+      } else if (!isChecked && wasChecked) {
+        category.markTaskIncomplete(task.id);
+      }
+
+      this.saveAndNotifyCategory(category);
+    }
+  }
+
   clearCategoryTasks(): void {
     this._categories.forEach(category => {
       category.clearTasks();
-      this.updateCategory(category);
+      this.saveAndNotifyCategory(category);
     });
   }
 
-  clearCompletedCategoryTasks(fullList: FullList) {
-    this.categories.forEach(category => {
-      fullList.list.forEach(item => {
-        if (item.checked) {
-          category.removeTask(item.id);
-        }
-      });
-      this.updateCategory(category);
+  clearCompletedCategoryTasks(e: Event): void {
+    const customEvent = e as CustomEvent;
+    const removedItems = customEvent.detail;
+
+    if (!removedItems) return;
+
+    const affectedCategories = new Set<Category>();
+
+    removedItems.forEach((task: { id: string; categoryId: string }) => {
+      const category = this.findCategoryById(task.categoryId);
+      if (category) {
+        category.markTaskIncomplete(task.id);
+        category.removeTask(task.id);
+        affectedCategories.add(category);
+      }
+    });
+
+    affectedCategories.forEach(category => {
+      this.saveAndNotifyCategory(category);
     });
   }
 
   private bindTaskEvents(): void {
     window.addEventListener("taskAdded", (e: Event) => {
-      const customEvent = e as CustomEvent;
-      const task = customEvent.detail;
-      const category = this.findCategoryById(task.categoryId);
-
-      if (category) {
-        category.addTask(task.id);
-        this.save();
-        this.notifyCategoryObservers(category);
-      }
+      this.addCategoryTask(e);
     });
 
     window.addEventListener("taskRemoved", (e: Event) => {
-      const customEvent = e as CustomEvent;
-      const task = customEvent.detail;
-      const category = this.findCategoryById(task.categoryId);
-
-      if (category) {
-        if (task.checked) {
-          category.markTaskIncomplete(task.id);
-        }
-        category.removeTask(task.id);
-        this.save();
-        this.notifyCategoryObservers(category);
-      }
+      this.removeCategoryTask(e);
     });
 
     window.addEventListener("taskToggled", (e: Event) => {
-      const customEvent = e as CustomEvent;
-      const { task, wasChecked, isChecked } = customEvent.detail;
-      const category = this.findCategoryById(task.categoryId);
-
-      if (category) {
-        if (isChecked && !wasChecked) {
-          category.markTaskCompleted(task.id);
-        } else if (!isChecked && wasChecked) {
-          category.markTaskIncomplete(task.id);
-        }
-
-        this.save();
-        this.notifyCategoryObservers(category);
-      }
+      this.toggleCategoryTaskCompletion(e);
     });
 
     window.addEventListener("tasksCleared", () => {
       this.clearCategoryTasks();
-      this.save();
-      this._categories.forEach(category => {
-        this.notifyCategoryObservers(category);
-      });
     });
 
     window.addEventListener("completedTasksCleared", (e: Event) => {
-      const customEvent = e as CustomEvent;
-      const { removedItems } = customEvent.detail;
-
-      if (!removedItems) return;
-
-      const affectedCategories = new Set<Category>();
-
-      removedItems.forEach((task: { id: string; categoryId: string }) => {
-        const category = this.findCategoryById(task.categoryId);
-        if (category) {
-          category.markTaskIncomplete(task.id);
-          category.removeTask(task.id);
-          affectedCategories.add(category);
-        }
-      });
-      this.save();
-
-      affectedCategories.forEach(category => {
-        this.notifyCategoryObservers(category);
-      });
+      this.clearCompletedCategoryTasks(e);
     });
   }
 }

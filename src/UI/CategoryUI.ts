@@ -50,12 +50,6 @@ export default class CategoryUI implements Observer<Category> {
     const previousCompletion = this.previousCompletions.get(category.id) || 0;
     const currentCompletion = completionPercentage;
 
-    console.log(
-      `🎬 Animation: ${category.name} from ${previousCompletion}% → ${currentCompletion}%`
-    );
-
-    const plural = numberOfItems === 1 ? "" : "s";
-
     const li = document.createElement("li");
     li.className = "category__item";
     li.setAttribute("data-category-id", category.id);
