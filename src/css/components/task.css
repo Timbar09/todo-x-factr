@@ -1,0 +1,129 @@
+.app__task {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__task--list {
+  flex: 1;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  display: flex;
+  flex-direction: column;
+  height: 16em;
+  gap: 0.5em;
+  overflow-x: clip;
+  overflow-y: auto;
+  max-height: 19.5em;
+}
+
+.task__item {
+  --transition-time: 200ms;
+  --padding: 1em;
+  --outline-color: var(--text-200);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-200);
+  border-radius: var(--radius-100);
+  transition: background-color var(--transition-time) ease-in-out;
+}
+.task__item:hover {
+  background-color: var(--bg-100);
+}
+
+.task__item--label {
+  padding: var(--padding);
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  flex: 1;
+}
+
+.task__item--label__checkbox {
+  --check-thickness: 0.215em;
+  --checkbox-dimension: 1.25em;
+
+  appearance: none;
+  position: relative;
+  min-width: var(--checkbox-dimension);
+  height: var(--checkbox-dimension);
+  outline: 0.195em solid var(--outline-color);
+  border-radius: var(--radius-circle);
+  background-color: transparent;
+  rotate: -45deg;
+  transition:
+    outline var(--transition-time) ease-in-out,
+    background-color var(--transition-time) ease-in-out;
+}
+
+.task__item--label__checkbox::before,
+.task__item--label__checkbox::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: var(--radius-100);
+  transition: background-color var(--transition-time) ease-in-out;
+}
+
+.task__item--label__checkbox::before {
+  width: var(--check-thickness);
+  height: 0.5em;
+  bottom: 35%;
+  left: 22%;
+}
+
+.task__item--label__checkbox::after {
+  width: 0.75em;
+  height: var(--check-thickness);
+  bottom: 35%;
+  left: 22%;
+}
+
+.task__item--label__checkbox:checked,
+.task__item--label__checkbox:checked {
+  background-color: var(--text-200);
+  outline-width: 0;
+  opacity: 0.5;
+}
+
+.task__item--label__checkbox:checked::before,
+.task__item--label__checkbox:checked::after {
+  background-color: var(--text-100);
+}
+
+.task__item--label__text {
+  --strike-through-overlap: 0.25em;
+
+  position: relative;
+  color: var(--text-100);
+}
+
+.task__item--label__text::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: calc(var(--strike-through-overlap) * -1);
+  width: 0;
+  height: 0.115em;
+  border-radius: var(--radius-100);
+  background-color: var(--text-200);
+  transition: width 200ms ease-in-out;
+}
+
+.task__item--label__checkbox:checked + .task__item--label__text {
+  color: var(--text-200);
+}
+
+.task__item--label__checkbox:checked + .task__item--label__text::before {
+  width: calc(100% + (var(--strike-through-overlap) * 2));
+}
+
+.task__item .more__options {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
