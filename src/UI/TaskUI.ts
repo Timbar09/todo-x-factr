@@ -19,16 +19,13 @@ export default class TaskUI {
 
   private init(): void {
     this.render();
-  }
-
-  clearUl(): void {
-    this.ul.innerHTML = "";
+    this.bindEvents();
   }
 
   render(): void {
     const tasks = this.controller.tasks;
 
-    this.clearUl();
+    this.ul.innerHTML = "";
 
     tasks.forEach(task => {
       const li = this.createTaskElement(task);
@@ -43,31 +40,31 @@ export default class TaskUI {
     const isChecked = task.checked ? "checked" : "";
 
     const li = document.createElement("li");
-    li.className = "app__task--list__item";
+    li.className = "task__item";
+    li.setAttribute("data-task-id", task.id);
 
     li.innerHTML = `
-      <div class="app__task--list__item--checkbox">
+      <label for="${task.id}" class="task__item--label">
         <input 
           type="checkbox" 
-          id="${task.id}" 
+          id="${task.id}"
+          class="task__item--label__checkbox" 
           ${isChecked} 
           style="--outline-color: ${checkboxOutlineColor}"
         />
 
-        <label for="${task.id}">
-          <span class="app__task--list__item--text">${task.title}</span>
-        </label>
-      </div>
+        <span class="task__item--label__text">${task.title}</span>
+      </label>
 
       <aside class="more__options">
-        <button class="more__options--button" aria-label="More options">
+        <button class="more__options--button button button__round" aria-label="More options">
           <span class="material-symbols-outlined">more_vert</span>
         </button>
 
         <menu class="more__options--menu__list">
           <li class="more__options--menu__item">
             <button 
-              id="deleteItem" 
+              id="deleteTaskButton" 
               class="more__options--menu__option" 
               aria-label="Delete item"
             >
@@ -79,5 +76,57 @@ export default class TaskUI {
     `;
 
     return li;
+  }
+
+  private getElById(id: string): HTMLElement | null {
+    return document.getElementById(id);
+  }
+
+  private bindEvents(): void {
+    const clearTasksButton = this.getElById(
+      "clearTasksButton"
+    ) as HTMLButtonElement;
+    const clearCompletedTasksButton = this.getElById(
+      "clearCompletedTasksButton"
+    ) as HTMLButtonElement;
+
+    clearTasksButton.addEventListener("click", (): void => {
+      this.controller.clearTasks();
+      this.render();
+    });
+
+    clearCompletedTasksButton.addEventListener("click", (): void => {
+      this.controller.clearCompleted();
+      this.render();
+    });
+
+    this.ul.addEventListener("click", (e: Event) => {
+      const target = e.target as HTMLElement;
+
+      const taskItem = target.closest(".task__item") as HTMLElement;
+      const taskId = taskItem?.dataset.taskId;
+
+      if (!taskId) return;
+
+      // Checkbox toggle
+      if (target.matches(".task__item--label__checkbox")) {
+        this.controller.toggleCheckStatus(taskId);
+      }
+
+      // More options menu
+      if (target.matches(".more__options--menu__option")) {
+        // Delete task
+        if (target.id === "deleteTaskButton") {
+          this.controller.removeTask(taskId);
+          this.render();
+        }
+      }
+    });
+
+    // window.addEventListener("taskAdded", this.render.bind(this));
+    // // window.addEventListener("taskRemoved", this.render.bind(this));
+    // // window.addEventListener("tasksCleared", this.render.bind(this));
+    // // window.addEventListener("completedTasksCleared", this.render.bind(this));
+    // window.addEventListener("taskToggled", this.render.bind(this));
   }
 }

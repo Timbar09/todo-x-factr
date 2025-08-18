@@ -1,20 +1,24 @@
-import FullList from "../model/FullList";
-import ListTemplate from "../templates/ListTemplate";
+import TaskController from "../controller/TaskController";
+import TaskUI from "../UI/TaskUI";
+
 import CategoryController from "../controller/CategoryController";
+import CategoryUI from "../UI/CategoryUI";
 import CategorySelectionTemplate from "../templates/CategorySelectionTemplate";
 
-import { setSectionFocusStatus } from "./Reusable";
-import { handleFormSubmit } from "./EntryForm";
 import TemplateController from "../controller/TemplateController";
 import { TemplateUI } from "../UI/TemplateUI";
-import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
+
 import MenuController from "../controller/MenuController";
+
+import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
+import { handleFormSubmit } from "./EntryForm";
 import { openEntryForm, closeEntryForm } from "./EntryForm";
+import { setSectionFocusStatus } from "./Reusable";
 import { addClass, removeClass } from "./Reusable";
 
-const fullList = FullList.instance;
+const taskController = TaskController.instance;
 const categoryController = CategoryController.instance;
-const listTemplate = ListTemplate.instance;
+const taskUI = TaskUI.instance;
 const categorySelectionTemplate = CategorySelectionTemplate.instance;
 
 const setDefaultSectionFocusStatuses = (): void => {
@@ -51,27 +55,10 @@ const renderListeners = (): void => {
   const itemEntryForm = document.getElementById(
     "itemEntryForm"
   ) as HTMLFormElement;
-  const clearItemsButton = document.getElementById(
-    "clearItemsButton"
-  ) as HTMLButtonElement;
-  const clearCompletedButton = document.getElementById(
-    "clearCompletedItemsButton"
-  ) as HTMLButtonElement;
 
   itemEntryForm.addEventListener("submit", (e: SubmitEvent): void => {
     handleFormSubmit(e);
-  });
-
-  clearItemsButton.addEventListener("click", (): void => {
-    fullList.clearList();
-    // categoryList.clearCategoryItems();
-    listTemplate.clear();
-  });
-
-  clearCompletedButton.addEventListener("click", (): void => {
-    // categoryList.clearCompletedCategoryItems(fullList);
-    fullList.clearCompleted();
-    listTemplate.render(fullList, categoryController);
+    taskUI.render();
   });
 
   buttons.forEach(button => {
@@ -101,15 +88,15 @@ const renderListeners = (): void => {
 };
 
 export default (): void => {
-  fullList.load();
-  categoryController.syncWithTasks(fullList.list);
+  categoryController.syncWithTasks(taskController.tasks);
   categorySelectionTemplate.render(categoryController);
 
   renderListeners();
 
   const templateController = new TemplateController();
-  listTemplate.render(fullList, categoryController);
   new TemplateUI(templateController);
+  // TaskUI.instance;
+  CategoryUI.instance;
   MenuController.getInstance();
 
   setDefaultSectionFocusStatuses();

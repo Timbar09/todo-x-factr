@@ -18,11 +18,16 @@ export default class TaskController implements Controller {
   private _tasks: Task[] = [];
 
   private constructor() {
-    this.load();
+    this.init();
   }
 
   get tasks(): Task[] {
     return this._tasks;
+  }
+
+  private init(): void {
+    this.load();
+    // this.bindEvents();
   }
 
   load(): void {
@@ -101,4 +106,29 @@ export default class TaskController implements Controller {
       );
     }
   }
+
+  // private getElById(id: string): HTMLElement | null {
+  //   return document.getElementById(id);
+  // }
+
+  // private getAll(className: string): NodeListOf<HTMLElement> {
+  //   return document.querySelectorAll(`.${className}`);
+  // }
+
+  // private bindEvents(): void {
+  //   const clearTasksButton = this.getElById(
+  //     "clearTasksButton"
+  //   ) as HTMLButtonElement;
+  //   const clearCompletedTasksButton = this.getElById(
+  //     "clearCompletedTasksButton"
+  //   ) as HTMLButtonElement;
+
+  //   clearTasksButton.addEventListener("click", (): void => {
+  //     this.clearTasks();
+  //   });
+
+  //   clearCompletedTasksButton.addEventListener("click", (): void => {
+  //     this.clearCompleted();
+  //   });
+  // }
 }

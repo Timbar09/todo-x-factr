@@ -1,8 +1,8 @@
-import FullList from "../model/FullList";
-import ListTemplate from "../templates/ListTemplate";
-import ListItem from "../model/ListItem";
+import taskController from "../controller/TaskController";
+// import ListTemplate from "../templates/ListTemplate";
+import Task from "../model/Task";
 import CategoryItem from "../model/Category";
-import CategoryList from "../controller/CategoryController";
+import CategoryController from "../controller/CategoryController";
 
 import { addClass, removeClass, lockFocus } from "./Reusable";
 import { showTaskListSection } from "./HeroSection";
@@ -10,15 +10,15 @@ import { showTaskListSection } from "./HeroSection";
 export const handleFormSubmit = (e: SubmitEvent): void => {
   e.preventDefault();
 
-  const fullList = FullList.instance;
-  const categoryList = CategoryList.instance;
-  const listTemplate = ListTemplate.instance;
+  const TaskController = taskController.instance;
+  const categoryController = CategoryController.instance;
+  // const listTemplate = ListTemplate.instance;
 
   const categorySelectionBox = document.getElementById(
     "categoryButton"
   ) as HTMLButtonElement;
-  const itemInput = document.getElementById("newItem") as HTMLInputElement;
-  const newEntryText: string = itemInput.value.trim();
+  const newTaskInput = document.getElementById("newTask") as HTMLInputElement;
+  const newTaskInputValue: string = newTaskInput.value.trim();
 
   const selectedCategory = categorySelectionBox.children[0].textContent;
   let updatedCategoryItem: CategoryItem | null = null;
@@ -26,7 +26,7 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
   const itemId: string = crypto.randomUUID();
 
   if (selectedCategory && selectedCategory !== "Select category") {
-    const category = categoryList.findCategoryByName(selectedCategory);
+    const category = categoryController.findCategoryByName(selectedCategory);
 
     if (!category) {
       return console.error("Category not found");
@@ -35,14 +35,14 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
     updatedCategoryItem = category;
 
     updatedCategoryItem.addTask(itemId);
-    categoryList.updateCategory(updatedCategoryItem);
+    // categoryController.updateCategory(updatedCategoryItem);
   }
 
-  if (!newEntryText.length) return;
+  if (!newTaskInputValue.length) return;
 
-  const newItem = new ListItem(
+  const newTask = new Task(
     itemId,
-    newEntryText,
+    newTaskInputValue,
     false,
     updatedCategoryItem?.id
   );
@@ -50,12 +50,12 @@ export const handleFormSubmit = (e: SubmitEvent): void => {
     "categoryColor"
   ) as HTMLDivElement;
 
-  itemInput.value = "";
+  newTaskInput.value = "";
   categorySelectionBox.children[0].textContent = "Select category";
   categoryColor.style.setProperty("--color", "var(--text-300)");
 
-  fullList.addItem(newItem);
-  listTemplate.render(fullList, categoryList);
+  TaskController.addTask(newTask);
+  // listTemplate.render(TaskController, categoryController);
   closeEntryForm();
 };
 
