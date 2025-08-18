@@ -208,7 +208,7 @@
               <header class="app__task--header padding-x">
                 <h3 class="section__subTitle">Today's tasks</h3>
 
-                <div id="taskMenu" class="task__menu--button more__options">
+                <aside id="taskMenu" class="task__menu--button more__options">
                   <button
                     id="taskMenuButton"
                     class="button button__round button more__options--button"
@@ -217,13 +217,13 @@
                     <span class="material-symbols-outlined"> more_vert </span>
                   </button>
 
-                  <ul
+                  <menu
                     class="app__task--menu__list more__options--menu__list"
                     id="taskMenuList"
                   >
                     <li class="app__task--menu__item more__options--menu__item">
                       <button
-                        id="clearItemsButton"
+                        id="clearTasksButton"
                         class="more__options--menu__option"
                         title="Clear the list"
                         aria-label="Remove all items from the list"
@@ -234,7 +234,7 @@
 
                     <li class="app__task--menu__item more__options--menu__item">
                       <button
-                        id="clearCompletedItemsButton"
+                        id="clearCompletedTasksButton"
                         class="more__options--menu__option"
                         title="Clear completed tasks"
                         aria-label="Remove all completed items from the list"
@@ -242,8 +242,8 @@
                         Clear completed tasks
                       </button>
                     </li>
-                  </ul>
-                </div>
+                  </menu>
+                </aside>
               </header>
 
               <ul id="listItems" class="app__task--list padding-x">
