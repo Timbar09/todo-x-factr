@@ -127,3 +127,165 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.task__dialog {
+  --dialog-starting-position: 2em;
+  --dialog-end-position: 0;
+
+  --dialog-starting-dimension: 4em;
+  --dialog-mid-dimension: calc(100% - var(--dialog-starting-position) * 2);
+  --dialog-end-dimension: 100%;
+
+  --dialog-starting-radius: var(--radius-pill);
+  --dialog-mid-radius: var(--radius-200);
+  --dialog-end-radius: var(--radius-100);
+
+  position: absolute;
+  right: var(--dialog-starting-position);
+  bottom: var(--dialog-starting-position);
+  width: var(--dialog-starting-dimension);
+  height: var(--dialog-starting-dimension);
+  border-radius: var(--dialog-starting-radius);
+  background-color: var(--bg-200);
+  outline: 0.125em solid var(--bg-200);
+  display: grid;
+  place-items: center;
+  transform: scale(0);
+  overflow: hidden;
+  z-index: 1000;
+  transition: transform 200ms 950ms ease-out;
+}
+
+.task__dialog.open {
+  transform: scale(1);
+  transition: transform 200ms ease-out;
+  animation: open-task-entry-form 900ms 500ms ease-out forwards;
+}
+
+.task__dialog.closed {
+  /* transform: scale(0); */
+  animation: close-task-entry-form 1000ms ease-out forwards;
+}
+
+.task__dialog::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: var(--bg-200, red);
+  border-radius: inherit;
+  transition:
+    opacity 200ms ease-out,
+    height 200ms ease-out;
+}
+
+.task__dialog.open::after {
+  transition:
+    opacity 400ms 1500ms ease-out,
+    height 50ms 1950ms ease-out;
+  height: 0;
+  opacity: 0;
+}
+
+@keyframes open-task-entry-form {
+  0% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-starting-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-starting-radius);
+    visibility: hidden;
+    outline-width: 0.125em;
+  }
+  1% {
+    visibility: visible;
+  }
+  30% {
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-starting-radius);
+    visibility: visible;
+    outline-width: 0.125em;
+  }
+  31% {
+    border-radius: var(--dialog-mid-radius);
+    outline-width: 0;
+  }
+  75% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-mid-dimension);
+    border-radius: var(--dialog-mid-radius);
+  }
+  100% {
+    right: var(--dialog-end-position);
+    bottom: var(--dialog-end-position);
+    width: var(--dialog-end-dimension);
+    height: var(--dialog-end-dimension);
+    border-radius: var(--dialog-end-radius);
+    visibility: visible;
+    outline-width: 0;
+  }
+}
+
+@keyframes close-task-entry-form {
+  0% {
+    right: var(--dialog-end-position);
+    bottom: var(--dialog-end-position);
+    width: var(--dialog-end-dimension);
+    height: var(--dialog-end-dimension);
+    border-radius: var(--dialog-end-radius);
+    visibility: visible;
+    outline-width: 0;
+  }
+  15% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-mid-dimension);
+    border-radius: var(--dialog-mid-radius);
+  }
+  70% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-mid-radius);
+    outline-width: 0;
+  }
+  90% {
+    visibility: visible;
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-starting-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-starting-radius);
+    outline-width: 0.125em;
+  }
+  100% {
+    visibility: hidden;
+    outline-width: 0.125em;
+  }
+}
+
+.task__dialog--header {
+  --dimension: 4em;
+
+  position: absolute;
+  right: 2em;
+  bottom: 2em;
+  width: var(--dimension);
+  height: var(--dimension);
+  border-radius: var(--radius-circle);
+  border: 0.125em solid var(--text-400);
+  display: grid;
+  place-items: center;
+}
+
+/* .task__dialog .form {
+  max-width: 30em;
+  margin-inline: auto;
+} */

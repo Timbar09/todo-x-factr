@@ -1,18 +1,23 @@
 import Controller from "../controller/TaskController";
 import CategoryController from "../controller/CategoryController";
 import Task from "../model/Task";
+import FormUI, { FormField } from "./FormUI";
 
 export default class TaskUI {
   static instance: TaskUI = new TaskUI(Controller.instance);
 
   private controller: Controller;
   private categoryController: CategoryController;
+  private app: HTMLElement;
   private ul: HTMLUListElement;
 
   constructor(controller: Controller) {
     this.controller = controller;
     this.categoryController = CategoryController.instance;
-    this.ul = document.getElementById("listItems") as HTMLUListElement;
+    this.app = document.getElementById("application") as HTMLElement;
+    this.ul = document.getElementById("todayTaskList") as HTMLUListElement;
+
+    this.app.appendChild(this.createDialog());
 
     this.init();
   }
@@ -78,8 +83,94 @@ export default class TaskUI {
     return li;
   }
 
+  private createDialog(): HTMLElement {
+    const dialog = document.createElement("section");
+    dialog.id = "taskDialog";
+    dialog.className = "task__dialog padding closed";
+
+    const categories = this.categoryController.categories;
+    const options = categories.map(category => ({
+      name: category.name,
+      value: category.id,
+      variables: [],
+    }));
+
+    const fields: FormField[] = [
+      {
+        label: "Task Title",
+        name: "title",
+        required: true,
+        placeholder: "Enter task title",
+      },
+      {
+        label: "Category",
+        name: "categoryId",
+        type: "select",
+        placeholder: "Select Task Category",
+        options: options,
+      },
+    ];
+
+    dialog.innerHTML = `
+      <header class="task__dialog--header">
+        <button
+          id="closeTaskDialogButton"
+          class="button button__round task__dialog--button__close"
+          title="Close task dialog"
+          aria-label="Close task dialog"
+        >
+          <span class="material-symbols-outlined"> close </span>
+        </button>
+      </header>
+    `;
+
+    const formContainer = document.createElement("div");
+    formContainer.className = "task__dialog--container";
+
+    const formUI = new FormUI(fields, data => {
+      this.handleFormSubmit(data);
+      this.closeDialog();
+      this.render();
+    });
+
+    formUI.render(formContainer);
+
+    dialog.appendChild(formContainer);
+
+    return dialog;
+  }
+
   private getElById(id: string): HTMLElement | null {
-    return document.getElementById(id);
+    return this.app.querySelector(`#${id}`);
+  }
+
+  private handleFormSubmit(data: Record<string, string>): void {
+    const task = new Task(
+      crypto.randomUUID(),
+      data.title,
+      false, // checked
+      data.categoryId
+    );
+
+    this.controller.addTask(task);
+  }
+
+  openDialog(): void {
+    const dialog = this.getElById("taskDialog") as HTMLDivElement;
+
+    if (dialog) {
+      dialog.classList.remove("closed");
+      dialog.classList.add("open");
+    }
+  }
+
+  closeDialog(): void {
+    const dialog = this.getElById("taskDialog") as HTMLDivElement;
+
+    if (dialog) {
+      dialog.classList.remove("open");
+      dialog.classList.add("closed");
+    }
   }
 
   private bindEvents(): void {
@@ -100,8 +191,23 @@ export default class TaskUI {
       this.render();
     });
 
-    this.ul.addEventListener("click", (e: Event) => {
+    this.app.addEventListener("click", (e: Event) => {
       const target = e.target as HTMLElement;
+
+      // Open task dialog
+      if (target.closest("#openTaskDialogButton")) {
+        this.openDialog();
+      }
+
+      // Close task dialog
+      const closeDialogButton = this.getElById(
+        "closeTaskDialogButton"
+      ) as HTMLButtonElement;
+      if (closeDialogButton) {
+        closeDialogButton.addEventListener("click", () => {
+          this.closeDialog();
+        });
+      }
 
       const taskItem = target.closest(".task__item") as HTMLElement;
       const taskId = taskItem?.dataset.taskId;
@@ -122,11 +228,5 @@ export default class TaskUI {
         }
       }
     });
-
-    // window.addEventListener("taskAdded", this.render.bind(this));
-    // // window.addEventListener("taskRemoved", this.render.bind(this));
-    // // window.addEventListener("tasksCleared", this.render.bind(this));
-    // // window.addEventListener("completedTasksCleared", this.render.bind(this));
-    // window.addEventListener("taskToggled", this.render.bind(this));
   }
 }
