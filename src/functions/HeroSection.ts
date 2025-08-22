@@ -6,7 +6,7 @@ import {
   lockFocus,
 } from "./Reusable";
 
-const taskListSection = document.getElementById("appList") as HTMLElement;
+const taskListSection = document.getElementById("application") as HTMLElement;
 const menu = MenuController.getInstance();
 
 export const showTaskListSection = (): void => {
@@ -17,7 +17,7 @@ export const showTaskListSection = (): void => {
   }
 
   if (taskListSection.classList.contains("show")) {
-    setSectionFocusStatus("appList", true);
+    setSectionFocusStatus("application", true);
     lockFocus(taskListSection);
   }
 };
@@ -30,9 +30,9 @@ export const toggleTaskListSection = (): void => {
   }
 
   if (taskListSection.classList.contains("show")) {
-    setSectionFocusStatus("appList", true);
+    setSectionFocusStatus("application", true);
     lockFocus(taskListSection);
   } else {
-    setSectionFocusStatus("appList", false);
+    setSectionFocusStatus("application", false);
   }
 };
