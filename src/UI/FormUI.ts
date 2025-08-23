@@ -91,6 +91,9 @@ export default class FormUI {
       case "radio":
         this.createRadioField(formField, fieldData);
         break;
+      case "color":
+        this.createColorField(formField, fieldData);
+        break;
       default:
         this.createInputField(formField, fieldData);
     }
@@ -174,6 +177,21 @@ export default class FormUI {
     `;
   }
 
+  createColorField(formField: HTMLDivElement, fieldData: FormField): void {
+    const { name, label, value } = fieldData;
+
+    formField.innerHTML = `
+      <label for="${name}" class="form__field--label">${label}</label>
+      <input 
+      class="form__field--input"
+        type="color" 
+        name="${name}" 
+        id="${name}"
+        value="${value}"
+      >
+    `;
+  }
+
   createInputField(formField: HTMLDivElement, fieldData: FormField): void {
     const { name, label } = fieldData;
     const placeholderValue = fieldData.placeholder || "";
@@ -192,8 +210,12 @@ export default class FormUI {
 
   getFormData(event: Event) {
     event.preventDefault();
+    const mode = this.form.dataset.mode || "create";
 
     const data: Record<string, string> = {};
+    data["mode"] = mode;
+    console.log(data);
+
     let isValid = true;
 
     this.fieldsData.forEach(fieldData => {
