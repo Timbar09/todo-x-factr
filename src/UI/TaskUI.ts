@@ -118,8 +118,6 @@ export default class TaskUI {
       fieldsData: fieldsData,
       onSubmit: fieldData => {
         this.handleFormSubmit(fieldData);
-        this.closeDialog();
-        this.render();
       },
     };
 
@@ -156,6 +154,8 @@ export default class TaskUI {
     );
 
     this.controller.addTask(task);
+    this.closeDialog();
+    this.render();
   }
 
   openDialog(): void {

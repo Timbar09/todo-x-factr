@@ -21,7 +21,6 @@
 
 .template__item:hover,
 .template__item:focus-visible {
-  /* --btn-bg: var(--template-bg-color); */
   background-color: var(--template-bg-color, var(--text-400));
   outline: 1px solid var(--text-400);
   color: var(--template-text-color);
@@ -89,10 +88,16 @@
 }
 
 .template__dialog {
+  --dialog-bg: var(--bg-100);
+  --form-input-bg: var(--dialog-bg);
+  --form-input-border: var(--text-400);
+  --form-input-color: var(--text-100);
+  --form-input-placeholder-color: var(--text-200);
+
   position: absolute;
   height: 100%;
   border-radius: var(--radius-100);
-  background-color: var(--bg-100);
+  background-color: var(--dialog-bg);
   box-shadow: var(--shadow);
   transition:
     inset 400ms ease-in-out,
@@ -124,7 +129,7 @@
 
 .template__dialog.closed .template__dialog--header {
   height: 100%;
-  background-color: var(--bg-100);
+  background-color: var(--dialog-bg);
 }
 
 .template__dialog--button__toggle {

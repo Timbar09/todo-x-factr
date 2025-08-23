@@ -1,4 +1,5 @@
 import MoreMenuController from "../controller/MoreMenuController.js";
+import FormUI, { FormConfig, FormField } from "./FormUI.js";
 import TemplateController from "../controller/TemplateController.js";
 import Template, { ColorScheme } from "../model/Template.js";
 export class TemplateUI {
@@ -245,15 +246,13 @@ export class TemplateUI {
   private editTemplate(templateId: string): void {
     const template = this.controller.findTemplateById(templateId);
     if (template && !template.default) {
-      this.populateDialogForEdit(template);
+      this.populateFormForEdit(template);
       this.dragUpCustomTemplateDialog();
     }
   }
 
-  private populateDialogForEdit(template: Template): void {
-    const form = this.dialog.querySelector(
-      "#customTemplateForm"
-    ) as HTMLFormElement;
+  private populateFormForEdit(template: Template): void {
+    const form = this.dialog.querySelector(".form") as HTMLFormElement;
     const nameInput = form.querySelector("#templateName") as HTMLInputElement;
     const primaryInput = form.querySelector(
       "#primaryColor"
@@ -273,7 +272,7 @@ export class TemplateUI {
     // Change button text and add edit mode
     submitButton.innerHTML = `
       <span>Update Template</span>
-      <span class="material-symbols-outlined">save</span>
+      <span class="material-symbols-outlined"> Keyboard_arrow_up</span>
     `;
 
     // Mark form as edit mode
@@ -328,111 +327,88 @@ export class TemplateUI {
           <span class="material-symbols-outlined">drag_handle</span>
         </button>
       </header>
-
-      <div class="form__container">
-        <form id="customTemplateForm" class="form template__form">
-          <div class="form__field">
-          <input type="text" id="templateName" name="templateName" placeholder="Enter template name" required>
-          <label for="templateName" class="offscreen">Template Name</label>
-          </div>
-
-          <fieldset class="form__fieldset form__colors">
-            <legend class="form__fieldset--legend">
-              <span class="">Select Colors</span>
-            </legend>
-
-            <div class="form__field form__field__color">
-            <input type="color" id="primaryColor" name="primaryColor" value="#6366f1">
-            <label for="primaryColor" class="form__field__color--label">Primary</label>
-            </div>
-
-            <div class="form__field form__field__color">
-            <input type="color" id="textColor" name="textColor" value="#ffffff">
-            <label for="textColor" class="form__field__color--label">Text</label>
-            </div>
-
-            <div class="form__field form__field__color">
-            <input type="color" id="bgColor" name="bgColor" value="#0f172a">
-            <label for="bgColor" class="form__field__color--label">Background</label>
-            </div>
-          </fieldset>
-
-          <div class="form__actions">
-          <button type="submit" class="button button__primary button__primary--bar">
-            <span>Create Template</span>
-            <span class="material-symbols-outlined">Keyboard_arrow_up</span>
-          </button>
-
-            <button type="button" class="button form__button--cancel" id="cancelCustomTemplate">Cancel</button>
-          </div>
-        </form>
       </div>
     `;
 
-    // Handle form submission
-    const form = dialog.querySelector("#customTemplateForm") as HTMLFormElement;
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      e.stopPropagation();
-      // this.clearFormFields(form);
-      this.handleCustomTemplateSubmission(form);
-    });
+    const fieldsData: FormField[] = [
+      {
+        name: "templateName",
+        label: "Template Name",
+        type: "text",
+        placeholder: "Enter template name",
+        required: true,
+      },
+      {
+        name: "primaryColor",
+        label: "Select Primary Color",
+        type: "color",
+        value: "#f13d3d",
+        required: true,
+      },
+      {
+        name: "textColor",
+        label: "Select Text Color",
+        type: "color",
+        value: "#e9c5c5",
+        required: true,
+      },
+      {
+        name: "bgColor",
+        label: "Select Background Color",
+        type: "color",
+        value: "#000000",
+        required: true,
+      },
+    ];
 
-    // Handle cancel button
-    const cancelButton = dialog.querySelector(
-      "#cancelCustomTemplate"
-    ) as HTMLButtonElement;
-    cancelButton.addEventListener("click", e => {
-      e.stopPropagation();
-      this.dragCustomTemplateDialog();
-      this.clearFormFields(form);
-    });
+    const formConfig: FormConfig = {
+      title: "Create Custom Template",
+      action: "create",
+      submitButtonText: "Create Template",
+      fieldsData: fieldsData,
+      onSubmit: data => {
+        this.handleFormSubmit(data);
+      },
+    };
+
+    const form = new FormUI(formConfig);
+    form.renderInto(dialog);
 
     return dialog;
   }
 
-  private clearFormFields(form: HTMLFormElement): void {
-    form.reset();
-  }
-
-  private handleCustomTemplateSubmission(form: HTMLFormElement): void {
-    const formData = new FormData(form);
-    const name = formData.get("templateName") as string;
-    const primary = formData.get("primaryColor") as string;
-    const text = formData.get("textColor") as string;
-    const bg = formData.get("bgColor") as string;
+  private handleFormSubmit(data: Record<string, string>): void {
+    const { templateName, primaryColor, textColor, bgColor } = data;
+    const form = this.dialog.querySelector(".form") as HTMLFormElement;
 
     const colors: ColorScheme = {
-      primary,
-      "text-100": text,
-      "text-200": this.reduceOpacity(text, 0.7),
-      "text-300": this.reduceOpacity(text, 0.5),
-      "text-400": this.reduceOpacity(text, 0.125),
-      variant: primary,
-      "bg-100": bg,
-      "bg-200": this.lightenColor(bg, 10),
-      "bg-300": this.lightenColor(bg, 20),
+      primary: primaryColor,
+      "text-100": textColor,
+      "text-200": this.reduceOpacity(textColor, 0.7),
+      "text-300": this.reduceOpacity(textColor, 0.5),
+      "text-400": this.reduceOpacity(textColor, 0.125),
+      variant: primaryColor,
+      "bg-100": bgColor,
+      "bg-200": this.lightenColor(bgColor, 10),
+      "bg-300": this.lightenColor(bgColor, 20),
     };
 
-    // ✅ Check if this is edit or create mode
     if (form.dataset.mode === "edit") {
-      // Update existing template
       const templateId = form.dataset.templateId!;
       const template = this.controller.findTemplateById(templateId);
       if (template) {
-        template.name = name.trim();
+        template.name = templateName.trim();
         template.colors = colors;
         this.controller.updateTemplate(template);
       }
     } else {
-      // Create new template
-      const customTemplate = new Template(
-        `custom-${Date.now()}`,
+      const template = new Template(
+        crypto.randomUUID(),
         false,
-        name.trim(),
+        templateName.trim(),
         colors
       );
-      this.controller.addTemplate(customTemplate);
+      this.controller.addTemplate(template);
     }
 
     this.renderTemplates();
