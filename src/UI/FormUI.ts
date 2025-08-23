@@ -17,6 +17,7 @@ export interface FormField {
 }
 
 export interface FormConfig {
+  title: string;
   action: string;
   submitButtonText: string;
   fieldsData: FormField[];
@@ -24,19 +25,22 @@ export interface FormConfig {
 }
 
 export default class FormUI {
-  private formElement: HTMLFormElement;
+  private form: HTMLFormElement;
+  private formTitle: string;
   private action: string = "create";
   private fieldsData: FormField[];
   private submitButtonText: string;
   private onSubmit: (data: Record<string, string>) => void;
 
   constructor(formConfig: FormConfig) {
-    const { action, submitButtonText, fieldsData, onSubmit } = formConfig;
+    const { title, action, submitButtonText, fieldsData, onSubmit } =
+      formConfig;
 
+    this.formTitle = title;
     this.action = action;
-    this.formElement = document.createElement("form");
-    this.formElement.className = "form";
-    this.formElement.setAttribute("action", this.action);
+    this.form = document.createElement("form");
+    this.form.className = "form";
+    this.form.setAttribute("action", this.action);
 
     this.fieldsData = fieldsData;
     this.submitButtonText = submitButtonText;
@@ -45,42 +49,50 @@ export default class FormUI {
     this.createForm();
   }
 
-  render(container: HTMLElement) {
-    container.appendChild(this.formElement);
+  renderInto(dialogEl: HTMLElement) {
+    const container = document.createElement("div");
+    container.className = "form__container";
+
+    container.innerHTML = `
+      <h2 class="offscreen">${this.formTitle}</h2>
+    `;
+
+    container.appendChild(this.form);
+    dialogEl.appendChild(container);
   }
 
   createForm(): HTMLFormElement {
     this.fieldsData.forEach(fieldData => {
       const formField = this.createFormField(fieldData);
-      this.formElement.appendChild(formField);
+      this.form.appendChild(formField);
     });
 
     const formActions = this.createSubmitButton(this.submitButtonText);
-    this.formElement.appendChild(formActions);
+    this.form.appendChild(formActions);
 
     this.bindEvents();
 
-    return this.formElement;
+    return this.form;
   }
 
-  createFormField(field: FormField): HTMLDivElement {
-    const typeValue = field.type || "text";
+  createFormField(fieldData: FormField): HTMLDivElement {
+    const typeValue = fieldData.type || "text";
 
     const formField = document.createElement("div");
     formField.className = `form__field form__field--${typeValue}`;
 
     switch (typeValue) {
       case "textarea":
-        this.createTextAreaField(formField, field);
+        this.createTextAreaField(formField, fieldData);
         break;
       case "select":
-        this.createSelectField(formField, field);
+        this.createSelectField(formField, fieldData);
         break;
       case "radio":
-        this.createRadioField(formField, field);
+        this.createRadioField(formField, fieldData);
         break;
       default:
-        this.createInputField(formField, field);
+        this.createInputField(formField, fieldData);
     }
 
     return formField;
@@ -185,7 +197,7 @@ export default class FormUI {
     let isValid = true;
 
     this.fieldsData.forEach(fieldData => {
-      const input = this.formElement.elements.namedItem(
+      const input = this.form.elements.namedItem(
         fieldData.name
       ) as HTMLInputElement;
       const value = input?.value?.trim() || "";
@@ -207,7 +219,7 @@ export default class FormUI {
   }
 
   private showFieldErrors(fieldName: string, message: string): void {
-    const field = this.formElement
+    const field = this.form
       .querySelector(`[name="${fieldName}"]`)
       ?.closest(".form__field") as HTMLElement;
     const input = field?.querySelector(
@@ -222,7 +234,7 @@ export default class FormUI {
   }
 
   private clearFieldErrors(fieldName: string): void {
-    const field = this.formElement
+    const field = this.form
       .querySelector(`[name="${fieldName}"]`)
       ?.closest(".form__field") as HTMLElement;
 
@@ -233,19 +245,17 @@ export default class FormUI {
   }
 
   private clearAllErrors(): void {
-    const errorFields = this.formElement.querySelectorAll(
-      ".form__field--error"
-    );
+    const errorFields = this.form.querySelectorAll(".form__field--error");
 
     errorFields.forEach(field => field.classList.remove("form__field--error"));
   }
 
   bindEvents() {
-    this.formElement.addEventListener("submit", e => {
+    this.form.addEventListener("submit", e => {
       this.getFormData(e);
     });
 
-    this.formElement.addEventListener("input", e => {
+    this.form.addEventListener("input", e => {
       const target = e.target as HTMLInputElement;
 
       if (target.closest(".form__field--input")) {
@@ -265,10 +275,10 @@ export default class FormUI {
   }
 
   reset() {
-    const labels = this.formElement.querySelectorAll(
+    const labels = this.form.querySelectorAll(
       ".form__field--label"
     ) as NodeListOf<HTMLElement>;
-    const customSelects = this.formElement.querySelectorAll(
+    const customSelects = this.form.querySelectorAll(
       ".form__select--custom__button"
     ) as NodeListOf<HTMLElement>;
 
@@ -278,7 +288,7 @@ export default class FormUI {
       select.classList.add("form__field--input__placeholder-title");
     });
 
-    this.formElement.reset();
+    this.form.reset();
     this.clearAllErrors();
   }
 }

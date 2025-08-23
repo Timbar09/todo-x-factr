@@ -130,7 +130,6 @@ export default class CustomSelect {
         ".form__select--custom__button"
       );
       const icon = button?.querySelector(".material-symbols-outlined");
-      console.log("focusin", button, this.isOpen);
 
       if (button && icon && !this.isOpen) {
         icon.classList.add("animate");

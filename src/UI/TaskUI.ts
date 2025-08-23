@@ -95,7 +95,7 @@ export default class TaskUI {
       variables: [],
     }));
 
-    const fields: FormField[] = [
+    const fieldsData: FormField[] = [
       {
         label: "Task Title",
         name: "title",
@@ -112,11 +112,12 @@ export default class TaskUI {
     ];
 
     const formConfig: FormConfig = {
+      title: "Add New Task",
       action: "create",
       submitButtonText: "Add Task",
-      fieldsData: fields,
-      onSubmit: data => {
-        this.handleFormSubmit(data);
+      fieldsData: fieldsData,
+      onSubmit: fieldData => {
+        this.handleFormSubmit(fieldData);
         this.closeDialog();
         this.render();
       },
@@ -135,14 +136,9 @@ export default class TaskUI {
       </header>
     `;
 
-    const formContainer = document.createElement("div");
-    formContainer.className = "task__dialog--container";
+    const form = new FormUI(formConfig);
 
-    const formUI = new FormUI(formConfig);
-
-    formUI.render(formContainer);
-
-    dialog.appendChild(formContainer);
+    form.renderInto(dialog);
 
     return dialog;
   }
