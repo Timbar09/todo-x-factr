@@ -16,19 +16,30 @@ export interface FormField {
   options?: Options[]; // For select or radio types
 }
 
+export interface FormConfig {
+  action: string;
+  submitButtonText: string;
+  fieldsData: FormField[];
+  onSubmit: (data: Record<string, string>) => void;
+}
+
 export default class FormUI {
   private formElement: HTMLFormElement;
-  private fieldData: FormField[];
+  private action: string = "create";
+  private fieldsData: FormField[];
+  private submitButtonText: string;
   private onSubmit: (data: Record<string, string>) => void;
 
-  constructor(
-    fieldData: FormField[],
-    onSubmit: (data: Record<string, string>) => void
-  ) {
+  constructor(formConfig: FormConfig) {
+    const { action, submitButtonText, fieldsData, onSubmit } = formConfig;
+
+    this.action = action;
     this.formElement = document.createElement("form");
     this.formElement.className = "form";
+    this.formElement.setAttribute("action", this.action);
 
-    this.fieldData = fieldData;
+    this.fieldsData = fieldsData;
+    this.submitButtonText = submitButtonText;
     this.onSubmit = onSubmit;
 
     this.createForm();
@@ -39,12 +50,12 @@ export default class FormUI {
   }
 
   createForm(): HTMLFormElement {
-    this.fieldData.forEach(data => {
-      const formField = this.createFormField(data);
+    this.fieldsData.forEach(fieldData => {
+      const formField = this.createFormField(fieldData);
       this.formElement.appendChild(formField);
     });
 
-    const formActions = this.createSubmitButton();
+    const formActions = this.createSubmitButton(this.submitButtonText);
     this.formElement.appendChild(formActions);
 
     this.bindEvents();
@@ -75,13 +86,14 @@ export default class FormUI {
     return formField;
   }
 
-  createSubmitButton() {
+  createSubmitButton(submitButtonText: string) {
     const formActions = document.createElement("div");
     formActions.className = "form__actions";
 
     formActions.innerHTML = `
       <button type="submit" class="button button__primary button__primary--bar">
-        <span>Submit</span>
+        <span> ${submitButtonText} </span>
+        
         <span class="material-symbols-outlined"> keyboard_arrow_up </span>
       </button>
     `;
@@ -172,28 +184,29 @@ export default class FormUI {
     const data: Record<string, string> = {};
     let isValid = true;
 
-    this.fieldData.forEach(field => {
+    this.fieldsData.forEach(fieldData => {
       const input = this.formElement.elements.namedItem(
-        field.name
+        fieldData.name
       ) as HTMLInputElement;
       const value = input?.value?.trim() || "";
 
-      if (field.required && !value) {
+      if (fieldData.required && !value) {
         isValid = false;
-        this.showFieldError(field.name, `${field.label} is required`);
+        this.showFieldErrors(fieldData.name, `${fieldData.label} is required`);
         return;
       }
 
-      this.clearFieldError(field.name);
-      data[field.name] = value;
+      this.clearFieldErrors(fieldData.name);
+      data[fieldData.name] = value;
     });
 
     if (!isValid) return;
 
     this.onSubmit(data);
+    this.reset();
   }
 
-  private showFieldError(fieldName: string, message: string): void {
+  private showFieldErrors(fieldName: string, message: string): void {
     const field = this.formElement
       .querySelector(`[name="${fieldName}"]`)
       ?.closest(".form__field") as HTMLElement;
@@ -208,7 +221,7 @@ export default class FormUI {
     }
   }
 
-  private clearFieldError(fieldName: string): void {
+  private clearFieldErrors(fieldName: string): void {
     const field = this.formElement
       .querySelector(`[name="${fieldName}"]`)
       ?.closest(".form__field") as HTMLElement;
@@ -217,6 +230,14 @@ export default class FormUI {
       field.classList.remove("form__field--error");
       field.removeAttribute("data-error-message");
     }
+  }
+
+  private clearAllErrors(): void {
+    const errorFields = this.formElement.querySelectorAll(
+      ".form__field--error"
+    );
+
+    errorFields.forEach(field => field.classList.remove("form__field--error"));
   }
 
   bindEvents() {
@@ -244,12 +265,20 @@ export default class FormUI {
   }
 
   reset() {
+    const labels = this.formElement.querySelectorAll(
+      ".form__field--label"
+    ) as NodeListOf<HTMLElement>;
+    const customSelects = this.formElement.querySelectorAll(
+      ".form__select--custom__button"
+    ) as NodeListOf<HTMLElement>;
+
+    labels.forEach(label => label.classList.add("offscreen"));
+    customSelects.forEach(select => {
+      select.innerText = select.getAttribute("data-placeholder") || "";
+      select.classList.add("form__field--input__placeholder-title");
+    });
+
     this.formElement.reset();
-
-    const errorFields = this.formElement.querySelectorAll(
-      ".form__field--error"
-    );
-
-    errorFields.forEach(field => field.classList.remove("form__field--error"));
+    this.clearAllErrors();
   }
 }

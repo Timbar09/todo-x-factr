@@ -1,7 +1,7 @@
 import Controller from "../controller/TaskController";
 import CategoryController from "../controller/CategoryController";
 import Task from "../model/Task";
-import FormUI, { FormField } from "./FormUI";
+import FormUI, { FormConfig, FormField } from "./FormUI";
 
 export default class TaskUI {
   static instance: TaskUI = new TaskUI(Controller.instance);
@@ -111,6 +111,17 @@ export default class TaskUI {
       },
     ];
 
+    const formConfig: FormConfig = {
+      action: "create",
+      submitButtonText: "Add Task",
+      fieldsData: fields,
+      onSubmit: data => {
+        this.handleFormSubmit(data);
+        this.closeDialog();
+        this.render();
+      },
+    };
+
     dialog.innerHTML = `
       <header class="task__dialog--header">
         <button
@@ -127,11 +138,7 @@ export default class TaskUI {
     const formContainer = document.createElement("div");
     formContainer.className = "task__dialog--container";
 
-    const formUI = new FormUI(fields, data => {
-      this.handleFormSubmit(data);
-      this.closeDialog();
-      this.render();
-    });
+    const formUI = new FormUI(formConfig);
 
     formUI.render(formContainer);
 

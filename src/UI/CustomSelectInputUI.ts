@@ -44,6 +44,7 @@ export default class CustomSelect {
     button.className =
       "form__select--custom__button form__field--input__placeholder-title";
     button.id = `${name}SelectButton`;
+    button.setAttribute("data-placeholder", placeholder || "");
 
     button.setAttribute("role", "combobox");
     button.setAttribute("aria-haspopup", "listbox");
