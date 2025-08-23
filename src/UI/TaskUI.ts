@@ -164,6 +164,7 @@ export default class TaskUI {
     if (dialog) {
       dialog.classList.remove("closed");
       dialog.classList.add("open");
+      this.focusDialogFormFirstInput();
     }
   }
 
@@ -173,6 +174,18 @@ export default class TaskUI {
     if (dialog) {
       dialog.classList.remove("open");
       dialog.classList.add("closed");
+    }
+  }
+
+  private focusDialogFormFirstInput(): void {
+    const dialogEl = this.getElById("taskDialog") as HTMLDivElement;
+    const dialogForm = dialogEl.querySelector(".form") as HTMLFormElement;
+    const firstInput = dialogForm.querySelector(
+      'input:not([type="hidden"]), textarea, .form__select--custom__button'
+    ) as HTMLElement;
+
+    if (firstInput) {
+      firstInput.focus();
     }
   }
 
