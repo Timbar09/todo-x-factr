@@ -10,12 +10,46 @@ export default class TaskUI {
   private categoryController: CategoryController;
   private app: HTMLElement;
   private ul: HTMLUListElement;
+  private form: FormUI;
 
   constructor(controller: Controller) {
     this.controller = controller;
     this.categoryController = CategoryController.instance;
     this.app = document.getElementById("application") as HTMLElement;
     this.ul = document.getElementById("todayTaskList") as HTMLUListElement;
+
+    const options = this.categoryController.categories.map(category => ({
+      name: category.name,
+      value: category.id,
+      variables: [],
+    }));
+
+    const fieldsData: FormField[] = [
+      {
+        label: "Task Title",
+        name: "title",
+        required: true,
+        placeholder: "Enter task title",
+      },
+      {
+        label: "Category",
+        name: "categoryId",
+        type: "select",
+        placeholder: "Select Task Category",
+        options: options,
+      },
+    ];
+
+    const formConfig: FormConfig = {
+      title: "Add New Task",
+      submitButtonText: "Add Task",
+      fieldsData: fieldsData,
+      onSubmit: fieldData => {
+        this.handleFormSubmit(fieldData);
+      },
+    };
+
+    this.form = new FormUI(formConfig);
 
     this.app.appendChild(this.createDialog());
 
@@ -69,6 +103,16 @@ export default class TaskUI {
         <menu class="more__options--menu__list">
           <li class="more__options--menu__item">
             <button 
+              id="openTaskEditButton" 
+              class="more__options--menu__option" 
+              aria-label="Edit item"
+            >
+              Edit task
+            </button>
+          </li>
+
+          <li class="more__options--menu__item">
+            <button 
               id="deleteTaskButton" 
               class="more__options--menu__option" 
               aria-label="Delete item"
@@ -88,39 +132,6 @@ export default class TaskUI {
     dialog.id = "taskDialog";
     dialog.className = "task__dialog padding closed";
 
-    const categories = this.categoryController.categories;
-    const options = categories.map(category => ({
-      name: category.name,
-      value: category.id,
-      variables: [],
-    }));
-
-    const fieldsData: FormField[] = [
-      {
-        label: "Task Title",
-        name: "title",
-        required: true,
-        placeholder: "Enter task title",
-      },
-      {
-        label: "Category",
-        name: "categoryId",
-        type: "select",
-        placeholder: "Select Task Category",
-        options: options,
-      },
-    ];
-
-    const formConfig: FormConfig = {
-      title: "Add New Task",
-      action: "create",
-      submitButtonText: "Add Task",
-      fieldsData: fieldsData,
-      onSubmit: fieldData => {
-        this.handleFormSubmit(fieldData);
-      },
-    };
-
     dialog.innerHTML = `
       <header class="task__dialog--header">
         <button
@@ -134,9 +145,7 @@ export default class TaskUI {
       </header>
     `;
 
-    const form = new FormUI(formConfig);
-
-    form.renderInto(dialog);
+    this.form.renderInto(dialog);
 
     return dialog;
   }
@@ -146,14 +155,33 @@ export default class TaskUI {
   }
 
   private handleFormSubmit(data: Record<string, string>): void {
-    const task = new Task(
-      crypto.randomUUID(),
-      data.title,
-      false, // checked
-      data.categoryId
-    );
+    const form = this.getElById("taskDialog")?.querySelector(
+      ".form"
+    ) as HTMLFormElement;
 
-    this.controller.addTask(task);
+    if (form.dataset.mode === "edit") {
+      const taskId = form.dataset.itemId;
+
+      if (taskId) {
+        const task = this.controller.findTaskById(taskId);
+
+        if (task) {
+          task.title = data.title;
+          task.categoryId = data.categoryId;
+          this.controller.updateTask(task);
+        }
+      }
+    } else {
+      const task = new Task(
+        crypto.randomUUID(),
+        data.title,
+        false, // checked
+        data.categoryId
+      );
+
+      this.controller.addTask(task);
+    }
+
     this.closeDialog();
     this.render();
   }
@@ -237,6 +265,16 @@ export default class TaskUI {
 
       // More options menu
       if (target.matches(".more__options--menu__option")) {
+        // Edit task
+        if (target.id === "openTaskEditButton") {
+          const task = this.controller.findTaskById(taskId);
+
+          if (task) {
+            this.form.editItem(task);
+            this.openDialog();
+          }
+        }
+
         // Delete task
         if (target.id === "deleteTaskButton") {
           this.controller.removeTask(taskId);

@@ -363,7 +363,6 @@ export class TemplateUI {
 
     const formConfig: FormConfig = {
       title: "Create Custom Template",
-      action: "create",
       submitButtonText: "Create Template",
       fieldsData: fieldsData,
       onSubmit: data => {

@@ -8,6 +8,7 @@ interface Controller {
   clearTasks: () => void;
   clearCompleted: () => void;
   addTask: (task: Task) => void;
+  updateTask: (updatedTask: Task) => void;
   removeTask: (taskId: string) => void;
   toggleCheckStatus: (taskId: string) => void;
 }
@@ -74,6 +75,17 @@ export default class TaskController implements Controller {
     window.dispatchEvent(new CustomEvent("taskAdded", { detail: task }));
   }
 
+  updateTask(updatedTask: Task): void {
+    this._tasks = this._tasks.map(task =>
+      task.id === updatedTask.id ? updatedTask : task
+    );
+    this.save();
+
+    window.dispatchEvent(
+      new CustomEvent("taskUpdated", { detail: updatedTask })
+    );
+  }
+
   removeTask(taskId: string): void {
     const removedTask = this._tasks.find(task => task.id === taskId);
     this._tasks = this._tasks.filter(task => task.id !== taskId);
@@ -104,5 +116,9 @@ export default class TaskController implements Controller {
         })
       );
     }
+  }
+
+  findTaskById(taskId: string): Task | undefined {
+    return this._tasks.find(task => task.id === taskId);
   }
 }
