@@ -1,6 +1,9 @@
+import Task from "../model/Task";
 import Controller from "../controller/TaskController";
 import CategoryController from "../controller/CategoryController";
-import Task from "../model/Task";
+import MoreMenuController, {
+  MoreMenuConfig,
+} from "../controller/MoreMenuController";
 import FormUI, { FormConfig, FormField } from "./FormUI";
 
 export default class TaskUI {
@@ -8,6 +11,7 @@ export default class TaskUI {
 
   private controller: Controller;
   private categoryController: CategoryController;
+  private moreMenuController: MoreMenuController;
   private app: HTMLElement;
   private ul: HTMLUListElement;
   private form: FormUI;
@@ -15,8 +19,11 @@ export default class TaskUI {
   constructor(controller: Controller) {
     this.controller = controller;
     this.categoryController = CategoryController.instance;
+    this.moreMenuController = MoreMenuController.getInstance();
     this.app = document.getElementById("application") as HTMLElement;
     this.ul = document.getElementById("todayTaskList") as HTMLUListElement;
+
+    this.createTaskListHeaderMenu();
 
     const options = this.categoryController.categories.map(category => ({
       name: category.name,
@@ -73,6 +80,35 @@ export default class TaskUI {
     });
   }
 
+  private createTaskListHeaderMenu(): void {
+    const header = this.app.querySelector(".app__task--header")! as HTMLElement;
+
+    const menuConfig: MoreMenuConfig = {
+      options: [
+        {
+          id: "clearTasksButton",
+          label: "Clear all tasks",
+          onClick: () => {
+            this.controller.clearTasks();
+            this.render();
+          },
+        },
+        {
+          id: "clearCompletedTasksButton",
+          label: "Clear completed tasks",
+          onClick: () => {
+            this.controller.clearCompleted();
+            this.render();
+          },
+        },
+      ],
+      buttonAriaLabel: "Task list options",
+    };
+
+    const menu = this.moreMenuController.createMenu(menuConfig);
+    header.appendChild(menu);
+  }
+
   private createTaskElement(task: Task): HTMLLIElement {
     const category = this.categoryController.findCategoryById(task.categoryId);
     const checkboxOutlineColor = category ? category.color : "var(--text-200)";
@@ -94,37 +130,49 @@ export default class TaskUI {
 
         <span class="task__item--label__text">${task.title}</span>
       </label>
-
-      <aside class="more__options">
-        <button class="more__options--button button button__round" aria-label="More options">
-          <span class="material-symbols-outlined">more_vert</span>
-        </button>
-
-        <menu class="more__options--menu__list">
-          <li class="more__options--menu__item">
-            <button 
-              id="openTaskEditButton" 
-              class="more__options--menu__option" 
-              aria-label="Edit item"
-            >
-              Edit task
-            </button>
-          </li>
-
-          <li class="more__options--menu__item">
-            <button 
-              id="deleteTaskButton" 
-              class="more__options--menu__option" 
-              aria-label="Delete item"
-            >
-              Delete task
-            </button>
-          </li>
-        </menu>
-      </aside>
     `;
 
+    const menuConfig: MoreMenuConfig = {
+      options: [
+        {
+          id: "openTaskEditButton",
+          label: "Edit task",
+          onClick: () => {
+            this.editTask(task.id);
+          },
+        },
+        {
+          id: "deleteTaskButton",
+          label: "Delete task",
+          onClick: () => {
+            this.deleteTask(task.id);
+          },
+        },
+      ],
+    };
+
+    const moreMenu = this.moreMenuController.createMenu(menuConfig);
+    li.appendChild(moreMenu);
+
     return li;
+  }
+
+  private editTask(taskId: string): void {
+    const task = this.controller.findTaskById(taskId);
+
+    if (task) {
+      this.form.editItem(task);
+      this.openDialog();
+    }
+  }
+
+  private deleteTask(taskId: string): void {
+    const task = this.controller.findTaskById(taskId);
+
+    if (task) {
+      this.controller.removeTask(task.id);
+      this.render();
+    }
   }
 
   private createDialog(): HTMLElement {
@@ -261,25 +309,6 @@ export default class TaskUI {
       // Checkbox toggle
       if (target.matches(".task__item--label__checkbox")) {
         this.controller.toggleCheckStatus(taskId);
-      }
-
-      // More options menu
-      if (target.matches(".more__options--menu__option")) {
-        // Edit task
-        if (target.id === "openTaskEditButton") {
-          const task = this.controller.findTaskById(taskId);
-
-          if (task) {
-            this.form.editItem(task);
-            this.openDialog();
-          }
-        }
-
-        // Delete task
-        if (target.id === "deleteTaskButton") {
-          this.controller.removeTask(taskId);
-          this.render();
-        }
       }
     });
   }

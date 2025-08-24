@@ -1,38 +1,10 @@
-import {
-  addClass,
-  removeClass,
-  // setSectionFocusStatus,
-} from "../functions/Reusable";
-
-// MoreMenu Structure
-//
-// <aside class="more__options">
-//   <button
-//     class="more__options--button button"
-//     aria-expanded="false"
-//     aria-haspopup="menu"
-//   >
-//     <span class="material-symbols-outlined">more_vert</span>
-//   </button>
-
-//   <menu class="more__options--menu__list closed" role="menu" aria-hidden="true">
-//     <li class="more__options--menu__item" role="none">
-//       <button
-//         class="more__options--menu__option"
-//         role="menuitem"
-//         data-action="delete"
-//       >
-//         Delete Template
-//       </button>
-//     </li>
-//   </menu>
-// </aside>
+import { addClass, removeClass } from "../functions/Reusable";
 
 export interface MoreMenuOption {
   id: string;
   label: string;
-  action: string;
   icon?: string;
+  onClick?: (event: MouseEvent) => void;
 }
 
 export interface MoreMenuConfig {
@@ -58,7 +30,6 @@ export default class MoreMenuController {
   }
 
   private init(): void {
-    this.bindEvents();
     this.addClickOutsideSupport();
   }
 
@@ -87,7 +58,6 @@ export default class MoreMenuController {
               id="${option.id}"
               class="more__options--menu__option" 
               role="menuitem"
-              data-action="${option.action}"
               aria-label="${option.label}"
             >
               ${option.icon ? `<span class="material-symbols-outlined">${option.icon}</span>` : ""}
@@ -101,6 +71,8 @@ export default class MoreMenuController {
     `;
 
     this.initializeMenu(menuContainer);
+
+    this.bindEvents(options, menuContainer);
     this.addKeyboardSupport(menuContainer);
 
     return menuContainer;
@@ -130,33 +102,29 @@ export default class MoreMenuController {
     // Close any other open menus first
     this.closeAll();
 
-    const menuList = menuElement.querySelector(
-      ".more__options--menu__list"
-    ) as HTMLElement;
     const toggleButton = menuElement.querySelector(
       ".more__options--button"
     ) as HTMLButtonElement;
 
-    if (!menuList || !toggleButton) {
+    if (!menuElement || !toggleButton) {
       console.warn("Menu structure not found");
       return;
     }
 
     // Open this menu
-    removeClass(menuList, "closed");
-    addClass(menuList, "open");
+    removeClass(menuElement, "closed");
+    addClass(menuElement, "open");
     toggleButton.setAttribute("aria-expanded", "true");
-    menuList.setAttribute("aria-hidden", "false");
+    menuElement
+      .querySelector(".more__options--menu__list")
+      ?.setAttribute("aria-hidden", "false");
 
     // Update state
     this.isMoreMenuOpen = true;
     this.activeMenu = menuElement;
 
-    // Focus management
-    // setSectionFocusStatus("more-menu", true);
-
     // Focus first menu item
-    const firstMenuItem = menuList.querySelector(
+    const firstMenuItem = menuElement.querySelector(
       '[role="menuitem"]'
     ) as HTMLElement;
     if (firstMenuItem) {
@@ -176,29 +144,25 @@ export default class MoreMenuController {
 
     if (!targetMenu) return;
 
-    const menuList = targetMenu.querySelector(
-      ".more__options--menu__list"
-    ) as HTMLElement;
     const toggleButton = targetMenu.querySelector(
       ".more__options--button"
     ) as HTMLButtonElement;
 
-    if (!menuList || !toggleButton) return;
+    if (!menuElement || !toggleButton) return;
 
     // Close the menu
-    removeClass(menuList, "open");
-    addClass(menuList, "closed");
+    removeClass(menuElement, "open");
+    addClass(menuElement, "closed");
     toggleButton.setAttribute("aria-expanded", "false");
-    menuList.setAttribute("aria-hidden", "true");
+    menuElement
+      .querySelector(".more__options--menu__list")
+      ?.setAttribute("aria-hidden", "true");
 
-    // Update state if this was the active menu
     if (targetMenu === this.activeMenu) {
       this.isMoreMenuOpen = false;
       this.activeMenu = null;
-      // setSectionFocusStatus("more-menu", false);
     }
 
-    // Return focus to toggle button
     toggleButton.focus();
 
     // Dispatch event
@@ -215,18 +179,17 @@ export default class MoreMenuController {
     ) as NodeListOf<HTMLElement>;
 
     allMenus.forEach(menu => {
-      const menuList = menu.querySelector(
-        ".more__options--menu__list"
-      ) as HTMLElement;
       const toggleButton = menu.querySelector(
         ".more__options--button"
       ) as HTMLButtonElement;
 
-      if (menuList && toggleButton) {
-        removeClass(menuList, "open");
-        addClass(menuList, "closed");
+      if (menu && toggleButton) {
+        removeClass(menu, "open");
+        addClass(menu, "closed");
         toggleButton.setAttribute("aria-expanded", "false");
-        menuList.setAttribute("aria-hidden", "true");
+        menu
+          .querySelector(".more__options--menu__list")
+          ?.setAttribute("aria-hidden", "true");
       }
     });
 
@@ -242,8 +205,11 @@ export default class MoreMenuController {
     }
   }
 
-  private bindEvents(): void {
-    document.addEventListener("click", e => {
+  private bindEvents(
+    options: MoreMenuOption[],
+    menuContainer: HTMLElement
+  ): void {
+    menuContainer.addEventListener("click", e => {
       const target = e.target as Element;
 
       // Handle toggle button clicks
@@ -254,26 +220,53 @@ export default class MoreMenuController {
         e.preventDefault();
         e.stopPropagation();
 
-        const menuContainer = toggleButton.closest(
-          ".more__options"
-        ) as HTMLElement;
-        if (menuContainer) {
-          this.toggle(menuContainer);
-        }
+        this.toggle(menuContainer);
+
         return;
       }
 
       // Handle menu item clicks
       const menuItem = target.closest('[role="menuitem"]') as HTMLElement;
       if (menuItem) {
-        const menuContainer = menuItem.closest(".more__options") as HTMLElement;
-        if (menuContainer) {
-          // Close menu after action
-          setTimeout(() => this.close(menuContainer), 100);
-        }
-        return;
+        this.handleMenuItemClick(
+          e as MouseEvent,
+          menuItem,
+          options,
+          menuContainer
+        );
       }
     });
+  }
+
+  private handleMenuItemClick(
+    e: MouseEvent,
+    menuItem: HTMLElement,
+    options: MoreMenuOption[],
+    menuContainer: HTMLElement
+  ): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const clickedOption = options.find(option => option.id === menuItem.id);
+
+    if (clickedOption && clickedOption.onClick) {
+      clickedOption.onClick(e as MouseEvent);
+    }
+
+    // ✅ Dispatch custom event with option data
+    window.dispatchEvent(
+      new CustomEvent("moreMenuOptionClicked", {
+        detail: {
+          option: clickedOption,
+          menuContainer,
+          menuItem,
+        },
+      })
+    );
+
+    // Close menu after action
+    setTimeout(() => this.close(menuContainer), 100);
+    return;
   }
 
   private addKeyboardSupport(menuContainer: HTMLElement): void {

@@ -3,6 +3,10 @@
   position: relative;
 }
 
+.more__options.open {
+  z-index: 1;
+}
+
 .more__options--button {
   border: none;
 }
@@ -21,14 +25,13 @@
   width: max-content;
   border-radius: var(--radius-50);
   background-color: var(--bg-200);
-  z-index: 1;
   box-shadow: 0 0 0.5em 0.125em rgba(0, 0, 0, 0.2);
   transition:
     opacity 150ms ease-in-out,
     top 150ms ease-in-out;
 }
 
-.more__options--menu__list.open {
+.more__options.open .more__options--menu__list {
   right: 0;
   visibility: visible;
   opacity: 1;

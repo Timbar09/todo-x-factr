@@ -208,87 +208,11 @@
               <header class="app__task--header padding-x">
                 <h3 class="section__subTitle">Today's tasks</h3>
 
-                <aside id="taskMenu" class="task__menu--button more__options">
-                  <button
-                    id="taskMenuButton"
-                    class="button button__round button more__options--button"
-                    aria-label="More options"
-                  >
-                    <span class="material-symbols-outlined"> more_vert </span>
-                  </button>
-
-                  <menu
-                    class="app__task--menu__list more__options--menu__list"
-                    id="taskMenuList"
-                  >
-                    <li class="app__task--menu__item more__options--menu__item">
-                      <button
-                        id="clearTasksButton"
-                        class="more__options--menu__option"
-                        title="Clear the list"
-                        aria-label="Remove all items from the list"
-                      >
-                        Clear all tasks
-                      </button>
-                    </li>
-
-                    <li class="app__task--menu__item more__options--menu__item">
-                      <button
-                        id="clearCompletedTasksButton"
-                        class="more__options--menu__option"
-                        title="Clear completed tasks"
-                        aria-label="Remove all completed items from the list"
-                      >
-                        Clear completed tasks
-                      </button>
-                    </li>
-                  </menu>
-                </aside>
+                <!-- More options is dynamically rendered here -->
               </header>
 
               <ul id="todayTaskList" class="app__task--list padding-x">
-                <!-- <li class="app__task--list__item">
-                      <div class="app__task--list__item--checkbox">
-                        <input type="checkbox" id="1">
-                        <label for="1">
-                          <span class="app__task--list__item--text">eat</span>
-                        </label>
-                      </div>
-
-                      <div class="app__task--list__item--button-container">
-                        <button class="app__task--list__item--delete">
-                            <span class="material-symbols-outlined"> delete </span>
-                        </button>
-                      </div>
-                    </li>
-                    <li class="app__task--list__item">
-                      <div class="app__task--list__item--checkbox">
-                        <input type="checkbox" id="2">
-                        <label for="2">
-                          <span class="app__task--list__item--text">sleep</span>
-                        </label>
-                      </div>
-
-                      <div class="app__task--list__item--button-container">
-                        <button class="app__task--list__item--delete">
-                            <span class="material-symbols-outlined"> delete </span>
-                        </button>
-                      </div>
-                    </li>
-                    <li class="app__task--list__item">
-                      <div class="app__task--list__item--checkbox">
-                        <input type="checkbox" id="3">
-                        <label for="3">
-                          <span class="app__task--list__item--text">code</span>
-                        </label>
-                      </div>
-
-                      <div class="app__task--list__item--button-container">
-                        <button class="app__task--list__item--delete">
-                            <span class="material-symbols-outlined"> delete </span>
-                        </button>
-                      </div>
-                    </li> -->
+                <!-- Task items are dynamically generated here -->
               </ul>
             </div>
           </div>
