@@ -28,27 +28,26 @@ import {
 //   </menu>
 // </aside>
 
-export interface MoreMenusInterface {
-  moreMenus: NodeListOf<HTMLElement>;
-  isMoreMenuOpen: boolean;
-  open(menuElement: HTMLElement): void;
-  close(menuElement: HTMLElement): void;
-  closeAll(): void;
-  toggle(menuElement: HTMLElement): void;
+export interface MoreMenuOption {
+  id: string;
+  label: string;
+  action: string;
+  icon?: string;
 }
 
-export default class MoreMenuController implements MoreMenusInterface {
+export interface MoreMenuConfig {
+  options: MoreMenuOption[];
+  buttonAriaLabel?: string;
+}
+
+export default class MoreMenuController {
   private static instance: MoreMenuController;
 
-  public isMoreMenuOpen: boolean = false;
-  public activeMenu: HTMLElement | null = null;
+  isMoreMenuOpen: boolean = false;
+  activeMenu: HTMLElement | null = null;
 
   private constructor() {
     this.init();
-  }
-
-  get moreMenus(): NodeListOf<HTMLElement> {
-    return document.querySelectorAll(".more__options");
   }
 
   static getInstance(): MoreMenuController {
@@ -56,6 +55,71 @@ export default class MoreMenuController implements MoreMenusInterface {
       MoreMenuController.instance = new MoreMenuController();
     }
     return MoreMenuController.instance;
+  }
+
+  private init(): void {
+    this.bindEvents();
+    this.addClickOutsideSupport();
+  }
+
+  createMenu(config: MoreMenuConfig): HTMLElement {
+    const { options, buttonAriaLabel = "More options" } = config;
+
+    const menuContainer = document.createElement("aside");
+    menuContainer.className = "more__options";
+
+    menuContainer.innerHTML = `
+      <button 
+        class="more__options--button button button__round" 
+        aria-expanded="false"
+        aria-haspopup="menu"
+        aria-label="${buttonAriaLabel}"
+      >
+        <span class="material-symbols-outlined">more_vert</span>
+      </button>
+
+      <menu class="more__options--menu__list closed" role="menu" aria-hidden="true">
+        ${options
+          .map(option => {
+            return `
+          <li class="more__options--menu__item" role="none">
+            <button 
+              id="${option.id}"
+              class="more__options--menu__option" 
+              role="menuitem"
+              data-action="${option.action}"
+              aria-label="${option.label}"
+            >
+              ${option.icon ? `<span class="material-symbols-outlined">${option.icon}</span>` : ""}
+              ${option.label}
+            </button>
+          </li>
+        `;
+          })
+          .join("")}
+      </menu>
+    `;
+
+    this.initializeMenu(menuContainer);
+    this.addKeyboardSupport(menuContainer);
+
+    return menuContainer;
+  }
+
+  private initializeMenu(menu: HTMLElement): void {
+    const menuList = menu.querySelector(
+      ".more__options--menu__list"
+    ) as HTMLElement;
+    const toggleButton = menu.querySelector(
+      ".more__options--button"
+    ) as HTMLButtonElement;
+
+    if (menuList && toggleButton) {
+      addClass(menuList, "closed");
+      toggleButton.setAttribute("aria-expanded", "false");
+      toggleButton.setAttribute("aria-haspopup", "menu");
+      menuList.setAttribute("aria-hidden", "true");
+    }
   }
 
   open(menuElement: HTMLElement): void {
@@ -146,7 +210,11 @@ export default class MoreMenuController implements MoreMenusInterface {
   }
 
   closeAll(): void {
-    this.moreMenus.forEach(menu => {
+    const allMenus = document.querySelectorAll(
+      ".more__options"
+    ) as NodeListOf<HTMLElement>;
+
+    allMenus.forEach(menu => {
       const menuList = menu.querySelector(
         ".more__options--menu__list"
       ) as HTMLElement;
@@ -164,7 +232,6 @@ export default class MoreMenuController implements MoreMenusInterface {
 
     this.isMoreMenuOpen = false;
     this.activeMenu = null;
-    // setSectionFocusStatus("more-menu", false);
   }
 
   toggle(menuElement: HTMLElement): void {
@@ -175,67 +242,7 @@ export default class MoreMenuController implements MoreMenusInterface {
     }
   }
 
-  private init(): void {
-    this.bindEvents();
-    this.addKeyboardSupport();
-    this.addClickOutsideSupport();
-
-    // ✅ Initialize existing menus and listen for new ones
-    this.initializeExistingMenus();
-    this.observeForNewMenus();
-  }
-
-  // ✅ Initialize any menus that already exist
-  private initializeExistingMenus(): void {
-    this.moreMenus.forEach(menu => this.initializeMenu(menu));
-  }
-
-  // ✅ Initialize a single menu
-  private initializeMenu(menu: HTMLElement): void {
-    const menuList = menu.querySelector(
-      ".more__options--menu__list"
-    ) as HTMLElement;
-    const toggleButton = menu.querySelector(
-      ".more__options--button"
-    ) as HTMLButtonElement;
-
-    if (menuList && toggleButton) {
-      addClass(menuList, "closed");
-      toggleButton.setAttribute("aria-expanded", "false");
-      toggleButton.setAttribute("aria-haspopup", "menu");
-      menuList.setAttribute("aria-hidden", "true");
-    }
-  }
-
-  // ✅ Watch for dynamically added menus
-  private observeForNewMenus(): void {
-    const observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        mutation.addedNodes.forEach(node => {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            const element = node as Element;
-
-            // Check if the added element is a more menu
-            if (element.classList?.contains("more__options")) {
-              this.initializeMenu(element as HTMLElement);
-            }
-
-            // Check if the added element contains more menus
-            const newMenus = element.querySelectorAll?.(".more__options");
-            newMenus?.forEach(menu => this.initializeMenu(menu as HTMLElement));
-          }
-        });
-      });
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-  }
-
   private bindEvents(): void {
-    // Event delegation for all more menu buttons
     document.addEventListener("click", e => {
       const target = e.target as Element;
 
@@ -269,8 +276,8 @@ export default class MoreMenuController implements MoreMenusInterface {
     });
   }
 
-  private addKeyboardSupport(): void {
-    document.addEventListener("keydown", e => {
+  private addKeyboardSupport(menuContainer: HTMLElement): void {
+    menuContainer.addEventListener("keydown", e => {
       if (!this.isMoreMenuOpen || !this.activeMenu) return;
 
       const menuList = this.activeMenu.querySelector(
