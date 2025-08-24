@@ -301,6 +301,21 @@ export default class MoreMenuController {
     return;
   }
 
+  // Cleanup method to remove menu from Map when menu is destroyed
+  removeMenu(menuContainer: HTMLElement): void {
+    const menuId = menuContainer.getAttribute("data-menu-id");
+    if (menuId) {
+      this.menuOptions.delete(menuId);
+      console.log(`Removed menu ${menuId} from Map`);
+    }
+  }
+
+  // Method to get options for debugging
+  getMenuOptions(menuContainer: HTMLElement): MoreMenuOption[] | undefined {
+    const menuId = menuContainer.getAttribute("data-menu-id");
+    return menuId ? this.menuOptions.get(menuId) : undefined;
+  }
+
   private addKeyboardSupport(menuContainer: HTMLElement): void {
     menuContainer.addEventListener("keydown", e => {
       if (!this.isMoreMenuOpen || !this.activeMenu) return;
