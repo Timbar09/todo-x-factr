@@ -39,6 +39,8 @@ export default class MoreMenuController {
     const menuContainer = document.createElement("aside");
     menuContainer.className = "more__options";
 
+    // console.log(`This menu's parent is is ${menuContainer.parentElement}`);
+
     menuContainer.innerHTML = `
       <button 
         class="more__options--button button button__round" 
@@ -72,7 +74,7 @@ export default class MoreMenuController {
 
     this.initializeMenu(menuContainer);
 
-    this.bindEvents(options, menuContainer);
+    this.bindEvents(options);
     this.addKeyboardSupport(menuContainer);
 
     return menuContainer;
@@ -148,13 +150,13 @@ export default class MoreMenuController {
       ".more__options--button"
     ) as HTMLButtonElement;
 
-    if (!menuElement || !toggleButton) return;
+    if (!targetMenu || !toggleButton) return;
 
     // Close the menu
-    removeClass(menuElement, "open");
-    addClass(menuElement, "closed");
+    removeClass(targetMenu, "open");
+    addClass(targetMenu, "closed");
     toggleButton.setAttribute("aria-expanded", "false");
-    menuElement
+    targetMenu
       .querySelector(".more__options--menu__list")
       ?.setAttribute("aria-hidden", "true");
 
@@ -205,17 +207,16 @@ export default class MoreMenuController {
     }
   }
 
-  private bindEvents(
-    options: MoreMenuOption[],
-    menuContainer: HTMLElement
-  ): void {
-    menuContainer.addEventListener("click", e => {
+  private bindEvents(options: MoreMenuOption[]): void {
+    document.addEventListener("click", e => {
       const target = e.target as Element;
 
       // Handle toggle button clicks
       const toggleButton = target.closest(
         ".more__options--button"
       ) as HTMLButtonElement;
+      const menuContainer = toggleButton?.parentElement as HTMLElement;
+
       if (toggleButton) {
         e.preventDefault();
         e.stopPropagation();
@@ -264,8 +265,7 @@ export default class MoreMenuController {
       })
     );
 
-    // Close menu after action
-    setTimeout(() => this.close(menuContainer), 100);
+    this.close(menuContainer);
     return;
   }
 
