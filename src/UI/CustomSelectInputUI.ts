@@ -184,8 +184,7 @@ export default class CustomSelect {
     }
   }
 
-  selectOption(index: number) {
-    // Update selection
+  selectOption(index: number, fromEdit: boolean = false) {
     if (index < 0 || index >= this.options.length) return;
 
     const allOptions = this.select.querySelectorAll(
@@ -219,12 +218,64 @@ export default class CustomSelect {
 
     option.textContent = selectedText;
     hiddenInput.value = selectedValue;
-
     this.selectedIndex = index;
-    this.close();
+
+    if (!fromEdit) {
+      this.close();
+    }
 
     // Announce to screen readers
     button.setAttribute("aria-label", `${selectedText} selected`);
+  }
+
+  setValue(value: string): void {
+    const optionIndex = this.options.findIndex(
+      option => option.value === value
+    );
+
+    if (optionIndex >= 0) {
+      this.selectOption(optionIndex);
+    }
+  }
+
+  getValue(): string {
+    const hiddenInput = this.select.querySelector(
+      'input[type="hidden"]'
+    ) as HTMLInputElement;
+    return hiddenInput?.value || "";
+  }
+
+  reset(): void {
+    const button = this.select.querySelector(
+      ".form__select--custom__button"
+    ) as HTMLElement;
+    const textSpan = button?.querySelector(
+      ".form__select--custom__text"
+    ) as HTMLElement;
+    const hiddenInput = this.select.querySelector(
+      'input[type="hidden"]'
+    ) as HTMLInputElement;
+    const label = this.select.previousElementSibling as HTMLElement;
+
+    if (button && textSpan && hiddenInput) {
+      textSpan.textContent = this.fieldData.placeholder || "";
+      button.classList.add("form__field--input__placeholder-title");
+      hiddenInput.value = "";
+      this.selectedIndex = -1;
+
+      if (label && label.classList.contains("form__field--label")) {
+        label.classList.add("offscreen");
+      }
+
+      if (this.isOpen) {
+        this.close();
+      }
+
+      const allOptions = this.select.querySelectorAll(
+        ".form__select--custom__option"
+      );
+      allOptions.forEach(opt => opt.setAttribute("aria-selected", "false"));
+    }
   }
 
   handleKeydown(e: KeyboardEvent) {
