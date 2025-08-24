@@ -18,6 +18,8 @@ export default class MoreMenuController {
   isMoreMenuOpen: boolean = false;
   activeMenu: HTMLElement | null = null;
 
+  private menuOptions: Map<string, MoreMenuOption[]> = new Map();
+
   private constructor() {
     this.init();
   }
@@ -31,6 +33,7 @@ export default class MoreMenuController {
 
   private init(): void {
     this.addClickOutsideSupport();
+    this.bindEvents();
   }
 
   createMenu(config: MoreMenuConfig): HTMLElement {
@@ -39,7 +42,8 @@ export default class MoreMenuController {
     const menuContainer = document.createElement("aside");
     menuContainer.className = "more__options";
 
-    // console.log(`This menu's parent is is ${menuContainer.parentElement}`);
+    const menuId = crypto.randomUUID();
+    menuContainer.setAttribute("data-menu-id", menuId);
 
     menuContainer.innerHTML = `
       <button 
@@ -72,9 +76,10 @@ export default class MoreMenuController {
       </menu>
     `;
 
+    this.menuOptions.set(menuId, options);
+
     this.initializeMenu(menuContainer);
 
-    this.bindEvents(options);
     this.addKeyboardSupport(menuContainer);
 
     return menuContainer;
@@ -207,7 +212,7 @@ export default class MoreMenuController {
     }
   }
 
-  private bindEvents(options: MoreMenuOption[]): void {
+  private bindEvents(): void {
     document.addEventListener("click", e => {
       const target = e.target as Element;
 
@@ -215,12 +220,14 @@ export default class MoreMenuController {
       const toggleButton = target.closest(
         ".more__options--button"
       ) as HTMLButtonElement;
-      const menuContainer = toggleButton?.parentElement as HTMLElement;
 
       if (toggleButton) {
         e.preventDefault();
         e.stopPropagation();
 
+        const menuContainer = toggleButton.closest(
+          ".more__options"
+        ) as HTMLElement;
         this.toggle(menuContainer);
 
         return;
@@ -229,6 +236,31 @@ export default class MoreMenuController {
       // Handle menu item clicks
       const menuItem = target.closest('[role="menuitem"]') as HTMLElement;
       if (menuItem) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const menuContainer = menuItem.closest(".more__options") as HTMLElement;
+
+        if (!menuContainer) {
+          console.error("Menu container not found for menu item:", menuItem);
+          return;
+        }
+
+        const menuId = menuContainer.getAttribute("data-menu-id");
+        if (!menuId) {
+          console.error("Menu ID not found on menu container:", menuContainer);
+          return;
+        }
+
+        const options = this.menuOptions.get(menuId);
+        if (!options) {
+          console.error("Options not found on menu container:", menuContainer);
+          console.log("Available properties:", Object.keys(menuContainer));
+          return;
+        }
+
+        console.log("Found options:", options);
+
         this.handleMenuItemClick(
           e as MouseEvent,
           menuItem,

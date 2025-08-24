@@ -32,6 +32,8 @@ export class TemplateUI {
     const templates = this.controller.templates;
     const activeTemplate = this.controller.activeTemplate;
 
+    this.ul.innerHTML = "";
+
     templates.forEach(template => {
       const templateHTML = this.createTemplateHTML(
         template,
@@ -145,6 +147,16 @@ export class TemplateUI {
     // Template selection and button clicks - use event delegation
     this.menuContent.addEventListener("click", e => {
       const target = e.target as Element;
+
+      // ✅ CRITICAL: Check for MoreMenu clicks first and let them bubble
+      const isMoreMenuClick = target.closest(".more__options");
+      if (isMoreMenuClick) {
+        console.log(
+          "MoreMenu click detected in TemplateUI - letting MoreMenuController handle it"
+        );
+        // Don't handle this here - let MoreMenuController handle it
+        return;
+      }
 
       // Handle template selection
       const templateButton = target.closest(
@@ -342,8 +354,8 @@ export class TemplateUI {
       "text-400": this.reduceOpacity(textColor, 0.125),
       variant: primaryColor,
       "bg-100": bgColor,
-      "bg-200": this.lightenColor(bgColor, 10),
-      "bg-300": this.lightenColor(bgColor, 20),
+      "bg-200": this.lightenColor(bgColor, 5),
+      "bg-300": this.lightenColor(bgColor, 10),
     };
 
     if (form.dataset.mode === "edit") {

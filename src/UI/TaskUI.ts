@@ -250,6 +250,7 @@ export default class TaskUI {
     if (dialog) {
       dialog.classList.remove("open");
       dialog.classList.add("closed");
+      this.form.reset();
     }
   }
 
