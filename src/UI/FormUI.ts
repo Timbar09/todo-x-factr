@@ -18,7 +18,7 @@ export interface FormField {
 
 export interface FormConfig {
   title: string;
-  action: string;
+  // mode?: string;
   submitButtonText: string;
   fieldsData: FormField[];
   onSubmit: (data: Record<string, string>) => void;
@@ -27,20 +27,21 @@ export interface FormConfig {
 export default class FormUI {
   private form: HTMLFormElement;
   private formTitle: string;
-  private action: string = "create";
+  private mode: string;
   private fieldsData: FormField[];
   private submitButtonText: string;
   private onSubmit: (data: Record<string, string>) => void;
+  private currentItemId?: string;
+  private customSelects: Map<string, CustomSelectInputUI> = new Map();
 
   constructor(formConfig: FormConfig) {
-    const { title, action, submitButtonText, fieldsData, onSubmit } =
-      formConfig;
+    const { title, submitButtonText, fieldsData, onSubmit } = formConfig;
 
     this.formTitle = title;
-    this.action = action;
+    this.mode = "create";
     this.form = document.createElement("form");
     this.form.className = "form";
-    this.form.setAttribute("action", this.action);
+    this.form.dataset.mode = this.mode;
 
     this.fieldsData = fieldsData;
     this.submitButtonText = submitButtonText;
@@ -141,8 +142,10 @@ export default class FormUI {
     formField.appendChild(label);
 
     const selectInput = new CustomSelectInputUI(fieldData);
-
     selectInput.renderInTo(formField);
+
+    // Store reference to CustomSelectInputUI instance for later use
+    this.customSelects.set(fieldData.name, selectInput);
   }
 
   createRadioField(formField: HTMLDivElement, fieldData: FormField): void {
@@ -208,13 +211,17 @@ export default class FormUI {
     `;
   }
 
-  getFormData(event: Event) {
+  private getFormData(event: Event) {
     event.preventDefault();
     const mode = this.form.dataset.mode || "create";
+    const itemId = this.form.dataset.itemId;
 
     const data: Record<string, string> = {};
     data["mode"] = mode;
-    console.log(data);
+
+    if (itemId) {
+      data["itemId"] = itemId;
+    }
 
     let isValid = true;
 
@@ -237,7 +244,83 @@ export default class FormUI {
     if (!isValid) return;
 
     this.onSubmit(data);
+
+    if (mode === "edit") {
+      this.resetToCreateMode();
+    } else {
+      this.reset();
+    }
+  }
+
+  public editItem(item: any): void {
+    if (item) {
+      this.currentItemId = item.id;
+      this.mode = "edit";
+      this.form.dataset.mode = this.mode;
+      this.form.dataset.itemId = this.currentItemId;
+      this.populateFormForEdit(item);
+    }
+
+    const submitButton = this.form.querySelector(
+      "[type='submit'] span"
+    ) as HTMLSpanElement;
+    if (submitButton) {
+      submitButton.innerText = this.submitButtonText.replace("Add", "Update");
+    }
+  }
+
+  public resetToCreateMode(): void {
+    this.currentItemId = undefined;
+    this.mode = "create";
+    this.form.dataset.mode = "create";
+    delete this.form.dataset.itemId;
     this.reset();
+
+    const submitButton = this.form.querySelector('button[type="submit"] span');
+    if (submitButton) {
+      submitButton.textContent = this.submitButtonText;
+    }
+  }
+
+  private populateFormForEdit(data: Record<string, any>): void {
+    this.fieldsData.forEach(fieldData => {
+      const input = this.form.elements.namedItem(
+        fieldData.name
+      ) as HTMLInputElement;
+
+      if (input) {
+        const value = data[fieldData.name];
+
+        if (input.type === "hidden") {
+          this.populateCustomSelectField(fieldData, value);
+        } else {
+          this.populateDefaultField(input, value);
+        }
+      }
+    });
+  }
+
+  private populateCustomSelectField(fieldData: FormField, value: string): void {
+    const customSelect = this.customSelects.get(fieldData.name);
+
+    if (customSelect && value) {
+      customSelect.setValue(value);
+    }
+  }
+
+  private populateDefaultField(input: HTMLInputElement, value: string): void {
+    if (input) {
+      input.value = value || "";
+
+      if (value) {
+        const label = input
+          .closest(".form__field")
+          ?.querySelector(".form__field--label");
+        if (label) {
+          label.classList.remove("offscreen");
+        }
+      }
+    }
   }
 
   private showFieldErrors(fieldName: string, message: string): void {
@@ -300,14 +383,11 @@ export default class FormUI {
     const labels = this.form.querySelectorAll(
       ".form__field--label"
     ) as NodeListOf<HTMLElement>;
-    const customSelects = this.form.querySelectorAll(
-      ".form__select--custom__button"
-    ) as NodeListOf<HTMLElement>;
 
     labels.forEach(label => label.classList.add("offscreen"));
-    customSelects.forEach(select => {
-      select.innerText = select.getAttribute("data-placeholder") || "";
-      select.classList.add("form__field--input__placeholder-title");
+
+    this.customSelects.forEach(customSelect => {
+      customSelect.reset();
     });
 
     this.form.reset();
