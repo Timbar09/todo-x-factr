@@ -1,16 +1,18 @@
 import Template, { ColorScheme } from "../model/Template.js";
-import TemplateController from "../controller/TemplateController.js";
+import Controller from "../controller/TemplateController.js";
 import MoreMenuController from "../controller/MoreMenuController.js";
 import FormUI, { FormConfig, FormField } from "./FormUI.js";
 export class TemplateUI {
+  static instance: TemplateUI = new TemplateUI();
+
+  private controller: Controller;
   private moreMenuController: MoreMenuController;
-  private controller: TemplateController;
-  private ul: HTMLUListElement;
   private menuContent: HTMLElement;
+  private ul: HTMLUListElement;
   private dialog: HTMLElement;
 
-  constructor(controller: TemplateController) {
-    this.controller = controller;
+  constructor() {
+    this.controller = Controller.instance;
     this.moreMenuController = MoreMenuController.getInstance();
 
     this.menuContent = document.getElementById("menuContent")!;
@@ -29,7 +31,7 @@ export class TemplateUI {
   }
 
   private renderTemplates(): void {
-    const templates = this.controller.templates;
+    const templates = this.controller.list;
     const activeTemplate = this.controller.activeTemplate;
 
     this.ul.innerHTML = "";
@@ -107,7 +109,17 @@ export class TemplateUI {
           id: "deleteTemplateButton",
           label: "Delete Template",
           onClick: () => {
+            const defaultTemplate = this.controller.list.filter(
+              template => template.default
+            )[0];
+
             this.controller.removeTemplate(template.id);
+
+            if (template.active) {
+              this.selectTemplate(defaultTemplate.id);
+            }
+
+            this.renderTemplates();
           },
         },
       ],
@@ -207,7 +219,7 @@ export class TemplateUI {
   }
 
   private editTemplate(templateId: string): void {
-    const template = this.controller.findTemplateById(templateId);
+    const template = this.controller.findById(templateId);
     if (template && !template.default) {
       this.populateFormForEdit(template);
       this.dragUpCustomTemplateDialog();
@@ -245,7 +257,7 @@ export class TemplateUI {
 
   private selectTemplate(templateId: string): void {
     if (this.controller.activeTemplate.id !== templateId) {
-      const template = this.controller.findTemplateById(templateId);
+      const template = this.controller.findById(templateId);
       if (template) {
         this.controller.activeTemplate = template;
         this.renderTemplates();
@@ -360,11 +372,11 @@ export class TemplateUI {
 
     if (form.dataset.mode === "edit") {
       const templateId = form.dataset.templateId!;
-      const template = this.controller.findTemplateById(templateId);
+      const template = this.controller.findById(templateId);
       if (template) {
         template.name = templateName.trim();
         template.colors = colors;
-        this.controller.updateTemplate(template);
+        this.controller.update(template);
       }
     } else {
       const template = new Template(
@@ -373,7 +385,8 @@ export class TemplateUI {
         templateName.trim(),
         colors
       );
-      this.controller.addTemplate(template);
+      this.controller.add(template);
+      this.selectTemplate(template.id);
     }
 
     this.renderTemplates();

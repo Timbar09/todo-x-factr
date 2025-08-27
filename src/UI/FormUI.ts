@@ -390,6 +390,9 @@ export default class FormUI {
       customSelect.reset();
     });
 
+    const colorLabels = this.form.querySelectorAll(".form__field--color label");
+    colorLabels.forEach(label => label.classList.remove("offscreen"));
+
     this.form.reset();
     this.clearAllErrors();
   }

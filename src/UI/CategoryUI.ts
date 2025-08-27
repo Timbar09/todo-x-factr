@@ -1,4 +1,4 @@
-import Controller from "../controller/CategoryController";
+import Controller from "../controller/CentralController";
 import Category from "../model/Category";
 import Observer from "../types/Observer";
 
@@ -20,7 +20,7 @@ export default class CategoryUI implements Observer<Category> {
 
   private init(): void {
     this.render();
-    this.controller.addCategoryObserver(this);
+    this.controller.category.addCategoryObserver(this);
   }
 
   update(category: Category): void {
@@ -31,7 +31,7 @@ export default class CategoryUI implements Observer<Category> {
     this.uls.forEach(ul => {
       ul.innerHTML = "";
 
-      this.controller.categories.forEach(category => {
+      this.controller.category.list.forEach(category => {
         const li = this.createCategoryElement(category);
         const { completionPercentage } = this.getCategoryStats(category);
 
@@ -46,7 +46,6 @@ export default class CategoryUI implements Observer<Category> {
     const { numberOfItems, numberOfCompletedItems, completionPercentage } =
       this.getCategoryStats(category);
 
-    // ✅ Get previous completion for animation
     const previousCompletion = this.previousCompletions.get(category.id) || 0;
     const currentCompletion = completionPercentage;
 
@@ -82,7 +81,6 @@ export default class CategoryUI implements Observer<Category> {
       progressBar.style.setProperty("--progress", `${currentCompletion}%`);
     }
 
-    // ✅ Store current as previous for next update
     this.previousCompletions.set(category.id, currentCompletion);
 
     return li;
@@ -104,7 +102,7 @@ export default class CategoryUI implements Observer<Category> {
   }
 
   private updateCategoryDisplay(categoryId: string): void {
-    const category = this.controller.findCategoryById(categoryId);
+    const category = this.controller.category.findById(categoryId);
     if (!category) return;
 
     this.uls.forEach(ul => {

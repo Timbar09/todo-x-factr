@@ -1,31 +1,28 @@
 import Task from "../model/Task";
-import Controller from "../controller/TaskController";
-import CategoryController from "../controller/CategoryController";
+import Controller from "../controller/CentralController";
 import MoreMenuController, {
   MoreMenuConfig,
 } from "../controller/MoreMenuController";
 import FormUI, { FormConfig, FormField } from "./FormUI";
 
 export default class TaskUI {
-  static instance: TaskUI = new TaskUI(Controller.instance);
+  static instance: TaskUI = new TaskUI();
 
   private controller: Controller;
-  private categoryController: CategoryController;
   private moreMenuController: MoreMenuController;
   private app: HTMLElement;
   private ul: HTMLUListElement;
   private form: FormUI;
 
-  constructor(controller: Controller) {
-    this.controller = controller;
-    this.categoryController = CategoryController.instance;
+  constructor() {
+    this.controller = Controller.instance;
     this.moreMenuController = MoreMenuController.getInstance();
     this.app = document.getElementById("application") as HTMLElement;
     this.ul = document.getElementById("todayTaskList") as HTMLUListElement;
 
     this.createTaskListHeaderMenu();
 
-    const options = this.categoryController.categories.map(category => ({
+    const options = this.controller.category.list.map(category => ({
       name: category.name,
       value: category.id,
       variables: [],
@@ -69,7 +66,7 @@ export default class TaskUI {
   }
 
   render(): void {
-    const tasks = this.controller.tasks;
+    const tasks = this.controller.task.list;
 
     this.ul.innerHTML = "";
 
@@ -89,7 +86,7 @@ export default class TaskUI {
           id: "clearTasksButton",
           label: "Clear all tasks",
           onClick: () => {
-            this.controller.clearTasks();
+            this.controller.clearAllTasks();
             this.render();
           },
         },
@@ -97,7 +94,7 @@ export default class TaskUI {
           id: "clearCompletedTasksButton",
           label: "Clear completed tasks",
           onClick: () => {
-            this.controller.clearCompleted();
+            this.controller.clearCompletedTasks();
             this.render();
           },
         },
@@ -110,7 +107,7 @@ export default class TaskUI {
   }
 
   private createTaskElement(task: Task): HTMLLIElement {
-    const category = this.categoryController.findCategoryById(task.categoryId);
+    const category = this.controller.category.findById(task.categoryId);
     const checkboxOutlineColor = category ? category.color : "var(--text-200)";
     const isChecked = task.checked ? "checked" : "";
 
@@ -158,7 +155,7 @@ export default class TaskUI {
   }
 
   private editTask(taskId: string): void {
-    const task = this.controller.findTaskById(taskId);
+    const task = this.controller.task.findById(taskId);
 
     if (task) {
       this.form.editItem(task);
@@ -167,12 +164,8 @@ export default class TaskUI {
   }
 
   private deleteTask(taskId: string): void {
-    const task = this.controller.findTaskById(taskId);
-
-    if (task) {
-      this.controller.removeTask(task.id);
-      this.render();
-    }
+    this.controller.deleteTask(taskId);
+    this.render();
   }
 
   private createDialog(): HTMLElement {
@@ -203,35 +196,46 @@ export default class TaskUI {
   }
 
   private handleFormSubmit(data: Record<string, string>): void {
-    const form = this.getElById("taskDialog")?.querySelector(
-      ".form"
-    ) as HTMLFormElement;
+    const form = this.app.querySelector("#taskDialog .form") as HTMLFormElement;
 
     if (form.dataset.mode === "edit") {
       const taskId = form.dataset.itemId;
 
       if (taskId) {
-        const task = this.controller.findTaskById(taskId);
-
-        if (task) {
-          task.title = data.title;
-          task.categoryId = data.categoryId;
-          this.controller.updateTask(task);
-        }
+        this.#handleFormUpdate(taskId, data);
       }
     } else {
-      const task = new Task(
-        crypto.randomUUID(),
-        data.title,
-        false, // checked
-        data.categoryId
-      );
-
-      this.controller.addTask(task);
+      this.#handleFormCreate(data);
     }
 
     this.closeDialog();
     this.render();
+  }
+
+  #handleFormUpdate(id: string, data: Record<string, string>): void {
+    const { title, categoryId } = data;
+
+    const task = this.controller.task.findById(id);
+
+    if (task) {
+      task.title = title;
+      task.categoryId = categoryId || "default";
+
+      this.controller.updateTask(task);
+    }
+  }
+
+  #handleFormCreate(data: Record<string, string>): void {
+    const { title, categoryId } = data;
+
+    const task = new Task(
+      crypto.randomUUID(),
+      title,
+      false,
+      categoryId || "default"
+    );
+
+    this.controller.addTask(task);
   }
 
   openDialog(): void {
@@ -275,12 +279,12 @@ export default class TaskUI {
     ) as HTMLButtonElement;
 
     clearTasksButton.addEventListener("click", (): void => {
-      this.controller.clearTasks();
+      this.controller.clearAllTasks();
       this.render();
     });
 
     clearCompletedTasksButton.addEventListener("click", (): void => {
-      this.controller.clearCompleted();
+      this.controller.clearCompletedTasks();
       this.render();
     });
 
@@ -309,7 +313,7 @@ export default class TaskUI {
 
       // Checkbox toggle
       if (target.matches(".task__item--label__checkbox")) {
-        this.controller.toggleCheckStatus(taskId);
+        this.controller.toggleTaskCheckStatus(taskId);
       }
     });
   }
