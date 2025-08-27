@@ -1,124 +1,115 @@
+import ApplicationController from "./ApplicationController";
 import Task from "../model/Task";
 
-const STORAGE_KEY = "todo-tasks";
-interface Controller {
-  tasks: Task[];
-  load: () => void;
-  save: () => void;
-  clearTasks: () => void;
-  clearCompleted: () => void;
-  addTask: (task: Task) => void;
-  updateTask: (updatedTask: Task) => void;
-  removeTask: (taskId: string) => void;
-  toggleCheckStatus: (taskId: string) => void;
-}
-
-export default class TaskController implements Controller {
-  static instance: TaskController = new TaskController();
-
-  private _tasks: Task[] = [];
+export default class TaskController extends ApplicationController<Task> {
+  private static _instance: TaskController;
 
   private constructor() {
-    this.init();
+    super("todo-x-factr-tasks");
   }
 
-  get tasks(): Task[] {
-    return this._tasks;
+  static get instance(): TaskController {
+    if (!TaskController._instance) {
+      TaskController._instance = new TaskController();
+    }
+    return TaskController._instance;
   }
 
-  private init(): void {
-    this.load();
+  get list(): Task[] {
+    return this.items;
   }
 
-  load(): void {
-    const storedList: string | null = localStorage.getItem(STORAGE_KEY);
-
-    if (typeof storedList !== "string") return;
-
-    const parsedList: {
-      _id: string;
-      _title: string;
-      _checked: boolean;
-      _categoryId: string;
-    }[] = JSON.parse(storedList);
-
-    this._tasks = parsedList.map(
-      task => new Task(task._id, task._title, task._checked, task._categoryId)
-    );
+  set list(tasks: Task[]) {
+    this.items = tasks;
   }
 
-  save(): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this._tasks));
+  toggleCheckStatus(id: string): void {
+    const task = this.findById(id);
+    if (task) {
+      task.checked = !task.checked;
+      this.update(task);
+    }
   }
 
-  clearTasks(): void {
-    this._tasks = [];
-    this.save();
-
-    window.dispatchEvent(new CustomEvent("tasksCleared"));
+  deleteTask(id: string): void {
+    const task = this.findById(id);
+    if (task) {
+      this.remove(task.id);
+    }
   }
 
   clearCompleted(): void {
-    const removedTasks = this._tasks.filter(task => task.checked);
-    this._tasks = this._tasks.filter(task => !task.checked);
-    this.save();
+    this.list = this.list.filter(task => !task.checked);
+  }
 
-    window.dispatchEvent(
-      new CustomEvent("completedTasksCleared", { detail: removedTasks })
+  getTasksByCategory(categoryId: string): Task[] {
+    return this.items.filter(task => task.categoryId === categoryId);
+  }
+
+  getCompletedTasks(): Task[] {
+    return this.items.filter(task => task.checked);
+  }
+
+  getPendingTasks(): Task[] {
+    return this.items.filter(task => !task.checked);
+  }
+
+  // Abstract methods
+  protected getId(task: Task): string {
+    return task.id;
+  }
+
+  protected deserializeItems(items: any[]): Task[] {
+    return items.map(
+      item =>
+        new Task(
+          item._id || item.id,
+          item._title || item.title,
+          item._checked || item.checked,
+          item._categoryId || item.categoryId
+        )
     );
   }
 
-  addTask(task: Task): void {
-    this._tasks.unshift(task);
-    this.save();
-
-    window.dispatchEvent(new CustomEvent("taskAdded", { detail: task }));
+  protected getControllerName(): string {
+    return "task";
   }
 
-  updateTask(updatedTask: Task): void {
-    this._tasks = this._tasks.map(task =>
-      task.id === updatedTask.id ? updatedTask : task
-    );
-    this.save();
+  // ✅ Override hooks for task-specific behavior
+  protected beforeAdd(task: Task): void {
+    // Validate task before adding
+    if (!task.title?.trim()) {
+      throw new Error("Task title cannot be empty");
+    }
 
-    window.dispatchEvent(
-      new CustomEvent("taskUpdated", { detail: updatedTask })
-    );
+    // TODO: Valiated length of tittle, there is a max lenght on html validation
+    //       When user reaches the max-length throe error
   }
 
-  removeTask(taskId: string): void {
-    const removedTask = this._tasks.find(task => task.id === taskId);
-    this._tasks = this._tasks.filter(task => task.id !== taskId);
-    this.save();
+  protected afterAdd(task: Task): void {
+    // Perform any post-add actions
+    console.log(`Task "${task.title}" added successfully`);
+  }
 
-    if (removedTask) {
-      window.dispatchEvent(
-        new CustomEvent("taskRemoved", { detail: removedTask })
-      );
+  protected beforeUpdate(item: Task): void {
+    // Validate task before updating
+    if (!item.title?.trim()) {
+      throw new Error("Task title cannot be empty");
     }
   }
 
-  toggleCheckStatus(taskId: string): void {
-    const task = this._tasks.find(task => task.id === taskId);
-
-    if (task) {
-      const wasChecked = task.checked;
-      task.checked = !wasChecked;
-      this.save();
-
-      window.dispatchEvent(
-        new CustomEvent("taskToggled", {
-          detail: {
-            task,
-            wasChecked,
-            isChecked: task.checked,
-          },
-        })
-      );
-    }
+  protected afterUpdate(item: Task): void {
+    // Perform any post-update actions
+    console.log(`Task "${item.title}" updated successfully`);
   }
 
-  findTaskById(taskId: string): Task | undefined {
-    return this._tasks.find(task => task.id === taskId);
+  protected beforeRemove(item: Task): void {
+    // Confirm deletion or log action
+    console.log(`Removing task "${item.title}"...`);
+  }
+
+  protected afterRemove(task: Task): void {
+    // Clean up any task-related data
+    console.log(`Task "${task.title}" removed successfully`);
   }
 }
