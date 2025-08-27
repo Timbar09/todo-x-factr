@@ -1,6 +1,6 @@
-import TaskUI from "../UI/TaskUI";
-import CategoryUI from "../UI/CategoryUI";
-import TemplateUI from "../UI/TemplateUI";
+import TaskUI from "../UI/task";
+import CategoryUI from "../UI/category";
+import TemplateUI from "../UI/template";
 
 import MenuController from "../controller/MenuController";
 

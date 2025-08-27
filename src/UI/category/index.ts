@@ -1,6 +1,6 @@
-import Controller from "../controller/CentralController";
-import Category from "../model/Category";
-import Observer from "../types/Observer";
+import Controller from "../../controller/CentralController";
+import Category from "../../model/Category";
+import Observer from "../../types/Observer";
 
 export default class CategoryUI implements Observer<Category> {
   static instance: CategoryUI = new CategoryUI(Controller.instance);

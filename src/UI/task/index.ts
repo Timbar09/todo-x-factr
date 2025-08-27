@@ -1,9 +1,9 @@
-import Task from "../model/Task";
-import Controller from "../controller/CentralController";
+import Task from "../../model/Task";
+import Controller from "../../controller/CentralController";
 import MoreMenuController, {
   MoreMenuConfig,
-} from "../controller/MoreMenuController";
-import FormUI, { FormConfig, FormField } from "./FormUI";
+} from "../../controller/MoreMenuController";
+import FormUI, { FormConfig, FormField } from "../form";
 
 export default class TaskUI {
   static instance: TaskUI = new TaskUI();
