@@ -1,3 +1,5 @@
+import Task from "./Task";
+
 export interface CategoryInterface {
   id: string;
   name: string;
@@ -6,10 +8,8 @@ export interface CategoryInterface {
   completedTasks: number;
   completionPercentage: number;
   addTask: (taskId: string) => void;
-  removeTask: (taskId: string) => void;
+  removeTask: (task: Task) => void;
   clearTasks: () => void;
-  markTaskCompleted: (taskId: string) => void;
-  markTaskIncomplete: (taskId: string) => void;
 }
 
 export default class Category implements CategoryInterface {
@@ -18,7 +18,7 @@ export default class Category implements CategoryInterface {
     private _name: string,
     private _color: string,
     private _tasks: string[] = [],
-    private _completedTasks: number = 0
+    private _completedTasks: number
   ) {}
 
   get id(): string {
@@ -68,28 +68,13 @@ export default class Category implements CategoryInterface {
     this._tasks.push(taskId);
   }
 
-  removeTask(taskId: string): void {
-    this._tasks = this._tasks.filter(id => id !== taskId);
+  removeTask(task: Task): void {
+    this._tasks = this._tasks.filter(id => id !== task.id);
     this.completedTasks = Math.min(this.completedTasks, this._tasks.length);
   }
 
   clearTasks(): void {
     this._tasks = [];
     this.completedTasks = 0;
-  }
-
-  markTaskCompleted(taskId: string): void {
-    if (this._tasks.includes(taskId)) {
-      this.completedTasks = Math.min(
-        this.completedTasks + 1,
-        this._tasks.length
-      );
-    }
-  }
-
-  markTaskIncomplete(taskId: string): void {
-    if (this._tasks.includes(taskId)) {
-      this.completedTasks = Math.max(this.completedTasks - 1, 0);
-    }
   }
 }
