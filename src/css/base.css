@@ -15,7 +15,7 @@
 
 * {
   scrollbar-gutter: stable; /* Reserves space for scrollbar */
-  scrollbar-width: auto; /* Firefox */
+  scrollbar-width: thin; /* Firefox */
   scrollbar-color: var(--text-300) transparent; /* Firefox */
   scroll-behavior: smooth;
   transition:
@@ -26,6 +26,7 @@
 html {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 *,

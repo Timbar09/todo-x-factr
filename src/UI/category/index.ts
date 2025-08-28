@@ -1,6 +1,9 @@
-import Controller from "../../controller/CentralController";
-import Category from "../../model/Category";
-import { Observer } from "./types";
+import Controller from "../../controller/CentralController.js";
+import Category from "../../model/Category.js";
+import CategoryRenderer from "./CategoryRenderer.js";
+import CategoryEvents from "./CategoryEvents.js";
+// import CategoryDialog from "./CategoryDialog.js";
+import { Observer } from "./types.js";
 
 export default class CategoryUI implements Observer<Category> {
   static instance: CategoryUI = new CategoryUI(Controller.instance);
@@ -8,115 +11,130 @@ export default class CategoryUI implements Observer<Category> {
   private controller: Controller;
   private uls: NodeListOf<HTMLUListElement>;
   private previousCompletions: Map<string, number> = new Map();
+  private app: HTMLElement;
+
+  // ✅ Composed parts
+  private renderer: CategoryRenderer;
+  // private dialog: CategoryDialog;
+  private events: CategoryEvents;
 
   constructor(controller: Controller) {
     this.controller = controller;
+    this.app = document.getElementById("application") as HTMLElement;
     this.uls = document.querySelectorAll(
       ".app__category--list"
     ) as NodeListOf<HTMLUListElement>;
+
+    // Initialize composed parts
+    this.renderer = new CategoryRenderer(
+      this.controller,
+      this.previousCompletions
+    );
+
+    // this.dialog = new CategoryDialog(this.app, this.controller, data =>
+    //   this.handleFormSubmit(data)
+    // );
+
+    this.events = new CategoryEvents(
+      this.app,
+      this.controller,
+      // this.dialog,
+      () => this.render()
+    );
 
     this.init();
   }
 
   private init(): void {
+    this.setupUI();
     this.render();
+    this.events.bindEvents();
     this.controller.category.addCategoryObserver(this);
   }
 
+  private setupUI(): void {
+    // Add dialog to app
+    // const dialog = this.dialog.createDialog();
+    // this.app.appendChild(dialog);
+
+    // Add "Add Category" button if it doesn't exist
+    this.addCategoryButton();
+  }
+
+  private addCategoryButton(): void {
+    // Look for category section header to add button
+    const categoryHeader = this.app.querySelector(".app__category--header");
+    if (categoryHeader && !categoryHeader.querySelector(".add-category-btn")) {
+      const addButton = document.createElement("button");
+      addButton.className = "add-category-btn button button__primary";
+      addButton.innerHTML = `
+        <span class="material-symbols-outlined">add</span>
+        Add Category
+      `;
+      categoryHeader.appendChild(addButton);
+    }
+  }
+
+  // ✅ Your original Observer implementation
   update(category: Category): void {
     this.updateCategoryDisplay(category.id);
   }
 
   private render(): void {
     this.uls.forEach(ul => {
-      ul.innerHTML = "";
-
-      this.controller.category.list.forEach(category => {
-        const li = this.createCategoryElement(category);
-        const { completionPercentage } = this.getCategoryStats(category);
-
-        this.previousCompletions.set(category.id, completionPercentage);
-
-        ul.appendChild(li);
-      });
+      this.renderer.renderCategoryList(ul);
     });
-  }
-
-  private createCategoryElement(category: Category): HTMLLIElement {
-    const { numberOfItems, numberOfCompletedItems, completionPercentage } =
-      this.getCategoryStats(category);
-
-    const previousCompletion = this.previousCompletions.get(category.id) || 0;
-    const currentCompletion = completionPercentage;
-
-    const li = document.createElement("li");
-    li.className = "category__item";
-    li.setAttribute("data-category-id", category.id);
-    li.style.setProperty("--category-clr", category.color);
-
-    li.innerHTML = `
-    <span class="category__item--count">
-      <span>${numberOfCompletedItems}</span>/<span>${numberOfItems}</span> tasks completed
-    </span>
-
-    <h4 class="category__item--title">${category.name}</h4>
-
-    <div 
-      class="category__item--progressBar" 
-      style="--previous-progress: ${completionPercentage}%; --progress: ${completionPercentage}%;"
-    >
-      <span class="category__item--progressBar__fill"></span>
-    </div>
-  `;
-
-    // ✅ Update progress bar with animation
-    const progressBar = li.querySelector(
-      ".category__item--progressBar"
-    ) as HTMLElement;
-    if (progressBar) {
-      progressBar.style.setProperty(
-        "--previous-progress",
-        `${previousCompletion}%`
-      );
-      progressBar.style.setProperty("--progress", `${currentCompletion}%`);
-    }
-
-    this.previousCompletions.set(category.id, currentCompletion);
-
-    return li;
-  }
-
-  private getCategoryStats(category: Category): {
-    numberOfItems: number;
-    numberOfCompletedItems: number;
-    completionPercentage: number;
-  } {
-    const completedTasks = Number(category.completedTasks);
-    const completionPercentage = Number(category.completionPercentage);
-
-    return {
-      numberOfItems: category.tasks.length,
-      numberOfCompletedItems: completedTasks,
-      completionPercentage: completionPercentage,
-    };
   }
 
   private updateCategoryDisplay(categoryId: string): void {
-    const category = this.controller.category.findById(categoryId);
-    if (!category) return;
-
     this.uls.forEach(ul => {
-      const existingElement = ul.querySelector(
-        `[data-category-id="${categoryId}"]`
-      );
-
-      if (existingElement) {
-        const newElement = this.createCategoryElement(category);
-
-        existingElement.insertAdjacentElement("beforebegin", newElement);
-
-        existingElement.remove();
-      }
+      this.renderer.updateCategoryElement(categoryId, ul);
     });
   }
+
+  public refreshDisplay(): void {
+    this.render();
+  }
+
+  // ✅ Handle form submissions
+  // private handleFormSubmit(data: CategoryFormData): void {
+  //   const form = this.app.querySelector(
+  //     "#categoryDialog .form"
+  //   ) as HTMLFormElement;
+
+  //   if (form?.dataset.mode === "edit") {
+  //     const categoryId = form.dataset.itemId;
+  //     if (categoryId) {
+  //       this.handleFormUpdate(categoryId, data);
+  //     }
+  //   } else {
+  //     this.handleFormCreate(data);
+  //   }
+
+  //   this.render();
+  // }
+
+  // private handleFormCreate(data: CategoryFormData): void {
+  //   const { name, color } = data;
+  //   const category = new Category(
+  //     crypto.randomUUID(),
+  //     name,
+  //     color,
+  //     [], // empty tasks array
+  //     0
+  //   );
+
+  //   this.controller.category.add(category);
+  // }
+
+  // private handleFormUpdate(id: string, data: CategoryFormData): void {
+  //   const { name, color } = data;
+  //   const category = this.controller.category.findById(id);
+
+  //   if (category) {
+  //     category.updateName(name);
+  //     category.updateColor(color);
+  //     this.controller.category.update(category);
+  //   }
+  // }
 }
