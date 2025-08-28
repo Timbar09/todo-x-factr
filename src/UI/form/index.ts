@@ -1,5 +1,5 @@
 import CustomSelectInputUI from "./CustomSelectInputUI";
-import { FormConfig, FormField } from "./types.js";
+import { FormConfig, FormField } from "./types";
 
 export default class FormUI {
   private form: HTMLFormElement;

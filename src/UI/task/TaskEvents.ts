@@ -1,5 +1,5 @@
-import Controller from "../../controller/CentralController.js";
-import TaskDialog from "./TaskDialog.js";
+import Controller from "../../controller/CentralController";
+import TaskDialog from "./TaskDialog";
 
 export default class TaskEvents {
   private controller: Controller;

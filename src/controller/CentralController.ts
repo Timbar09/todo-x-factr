@@ -1,8 +1,8 @@
-import TaskController from "./TaskController.js";
-import CategoryController from "./CategoryController.js";
-import TemplateController from "./TemplateController.js";
-import Task from "../model/Task.js";
-import Category from "../model/Category.js";
+import TaskController from "./TaskController";
+import CategoryController from "./CategoryController";
+import TemplateController from "./TemplateController";
+import Task from "../model/Task";
+import Category from "../model/Category";
 
 export default class CentralController {
   private static _instance: CentralController;

@@ -1,4 +1,4 @@
-import { FormField, Options } from "./FormUI";
+import { FormField, Options } from "./types";
 
 export default class CustomSelect {
   private select: HTMLElement;

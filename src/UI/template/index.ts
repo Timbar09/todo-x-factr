@@ -1,8 +1,8 @@
-import Template, { ColorScheme } from "../../model/Template.js";
-import Controller from "../../controller/TemplateController.js";
-import MoreMenuController from "../../controller/MoreMenuController.js";
+import Template, { ColorScheme } from "../../model/Template";
+import Controller from "../../controller/TemplateController";
+import MoreMenuController from "../../controller/MoreMenuController";
 import FormUI from "../form";
-import { FormConfig, FormField } from "../form/types.js";
+import { FormConfig, FormField } from "../form/types";
 export default class TemplateUI {
   static instance: TemplateUI = new TemplateUI();
 

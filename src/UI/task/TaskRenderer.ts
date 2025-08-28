@@ -1,6 +1,6 @@
-import Task from "../../model/Task.js";
-import Controller from "../../controller/CentralController.js";
-import TaskMenu from "./TaskMenu.js";
+import Task from "../../model/Task";
+import Controller from "../../controller/CentralController";
+import TaskMenu from "./TaskMenu";
 
 export default class TaskRenderer {
   private controller: Controller;

@@ -1,7 +1,7 @@
-import Controller from "../../controller/CentralController.js";
+import Controller from "../../controller/CentralController";
 import MoreMenuController, {
   MoreMenuConfig,
-} from "../../controller/MoreMenuController.js";
+} from "../../controller/MoreMenuController";
 
 export default class TaskMenu {
   private controller: Controller;

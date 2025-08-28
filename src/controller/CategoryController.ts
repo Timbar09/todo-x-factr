@@ -1,6 +1,6 @@
 import ApplicationController from "./ApplicationController";
 import Category from "../model/Category";
-import { Observer } from "../types";
+import { Observer } from "../UI/category/types";
 import Task from "../model/Task";
 
 export default class CategoryController extends ApplicationController<Category> {

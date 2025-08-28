@@ -1,10 +1,10 @@
-import Task from "../../model/Task.js";
-import Controller from "../../controller/CentralController.js";
-import TaskRenderer from "./TaskRenderer.js";
-import TaskDialog from "./TaskDialog.js";
-import TaskEvents from "./TaskEvents.js";
-import TaskMenu from "./TaskMenu.js";
-import { FormData } from "../form/types.js";
+import Task from "../../model/Task";
+import Controller from "../../controller/CentralController";
+import TaskRenderer from "./TaskRenderer";
+import TaskDialog from "./TaskDialog";
+import TaskEvents from "./TaskEvents";
+import TaskMenu from "./TaskMenu";
+import { FormData } from "../form/types";
 
 export default class TaskUI {
   static instance: TaskUI = new TaskUI();

@@ -1,6 +1,6 @@
-import Controller from "../../controller/CentralController.js";
+import Controller from "../../controller/CentralController";
 import FormUI from "../form";
-import { FormConfig, FormField, FormData } from "../form/types.js";
+import { FormConfig, FormField, FormData } from "../form/types";
 
 export default class TaskDialog {
   private controller: Controller;
