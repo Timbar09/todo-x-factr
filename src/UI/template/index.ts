@@ -70,7 +70,7 @@ export default class TemplateUI {
     template: Template,
     isActive: boolean
   ): HTMLElement {
-    const isActiveClass = isActive ? "template__button--active" : "";
+    const isActiveClass = isActive ? " template__item--active" : "";
 
     const colorScheme = {
       primary: template.colors.primary,
@@ -127,13 +127,13 @@ export default class TemplateUI {
     };
 
     const templateCard = document.createElement("li");
-    templateCard.className = "template__item";
+    templateCard.className = `template__item${isActiveClass}`;
     templateCard.style = cssVarString;
 
     templateCard.innerHTML = `
       <header class="template__item--header">
         <button
-          class="template__item--button button ${isActiveClass}"
+          class="template__item--button button"
           data-template="${template.id}"
         >
           <span class="template__item--status">

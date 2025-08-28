@@ -2,7 +2,7 @@ export const defaultTemplates = [
   {
     id: "default-dark",
     active: true,
-    name: "Default Dark",
+    name: "Dark",
     colors: {
       primary: "#a056c5ff", // electric-purple
       variant: "#2643c4", // royal-blue
@@ -21,7 +21,7 @@ export const defaultTemplates = [
   {
     id: "default-light",
     active: false,
-    name: "Default Light",
+    name: "Light",
     colors: {
       primary: "#a056c5", // electric-purple
       variant: "#2643c4", // royal-blue
@@ -35,24 +35,6 @@ export const defaultTemplates = [
     },
     description:
       "Light theme with a soft lavender-blue background and dark-blue text.",
-    default: false,
-  },
-  {
-    id: "default-desert",
-    active: false,
-    name: "Default Desert",
-    colors: {
-      primary: "#fbbf24", // yellow
-      variant: "#f59e0b", // golden yellow
-      "text-100": "#f9f2d8ff", // light yellow
-      "text-200": "#e7e2cdff", // pale yellow
-      "text-300": "#9b6e5eff", // golden yellow
-      "text-400": "#7c2c1241", // dark yellow
-      "bg-100": "#7c2d12",
-      "bg-200": "#9a3412",
-      "bg-300": "#c2410c",
-    },
-    description: "Desert theme with warm yellow tones and a sandy background.",
     default: false,
   },
 ];

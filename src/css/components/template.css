@@ -15,12 +15,9 @@
   gap: 0.75em;
 }
 
-.template__item--active {
-  outline: var(--focus-outline);
-}
-
 .template__item:hover,
-.template__item:focus-visible {
+.template__item:focus-visible,
+.template__item--active {
   background-color: var(--template-bg-color, var(--text-400));
   outline: 1px solid var(--text-400);
   color: var(--template-text-color);
