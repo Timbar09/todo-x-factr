@@ -14,7 +14,3 @@ export interface TaskFormData {
   title: string;
   categoryId: string;
 }
-
-export interface Observer<T> {
-  update: (data: T) => void;
-}

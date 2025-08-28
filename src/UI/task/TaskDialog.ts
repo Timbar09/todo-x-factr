@@ -1,17 +1,17 @@
 import Controller from "../../controller/CentralController.js";
-import FormUI, { FormConfig, FormField } from "../form/index.js";
-import { TaskFormData } from "../../types";
+import FormUI from "../form";
+import { FormConfig, FormField, FormData } from "../form/types.js";
 
 export default class TaskDialog {
   private controller: Controller;
   private form: FormUI;
   private app: HTMLElement;
-  private onSubmit: (data: TaskFormData) => void;
+  private onSubmit: (data: FormData) => void;
 
   constructor(
     app: HTMLElement,
     controller: Controller,
-    onSubmit: (data: TaskFormData) => void
+    onSubmit: (data: FormData) => void
   ) {
     this.app = app;
     this.controller = controller;
@@ -119,21 +119,8 @@ export default class TaskDialog {
     }
   }
 
-  private handleFormSubmit(data: Record<string, string>): void {
-    const taskFormData = this.convertToTaskFormData(data);
-
-    if (!taskFormData.title) {
-      console.error("Task title is required");
-      return;
-    }
-    this.onSubmit(taskFormData);
+  private handleFormSubmit(data: FormData): void {
+    this.onSubmit(data);
     this.closeDialog();
-  }
-
-  private convertToTaskFormData(data: Record<string, string>): TaskFormData {
-    return {
-      title: data.title?.trim() || "",
-      categoryId: data.categoryId || "default",
-    };
   }
 }

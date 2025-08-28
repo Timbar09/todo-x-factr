@@ -1,28 +1,5 @@
 import CustomSelectInputUI from "./CustomSelectInputUI";
-
-export interface Options {
-  name: string;
-  value: string;
-  variables: string[];
-}
-
-export interface FormField {
-  label: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-  placeholder?: string;
-  value?: string; // Default value
-  options?: Options[]; // For select or radio types
-}
-
-export interface FormConfig {
-  title: string;
-  // mode?: string;
-  submitButtonText: string;
-  fieldsData: FormField[];
-  onSubmit: (data: Record<string, string>) => void;
-}
+import { FormConfig, FormField } from "./types.js";
 
 export default class FormUI {
   private form: HTMLFormElement;
