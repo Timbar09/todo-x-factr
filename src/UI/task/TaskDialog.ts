@@ -1,17 +1,17 @@
 import Controller from "../../controller/CentralController";
 import FormUI from "../form";
-import { FormConfig, FormField, FormData } from "../form/types";
+import { FormConfig, FormField, FormDataCollection } from "../form/types";
 
 export default class TaskDialog {
   private controller: Controller;
   private form: FormUI;
   private app: HTMLElement;
-  private onSubmit: (data: FormData) => void;
+  private onSubmit: (data: FormDataCollection) => void;
 
   constructor(
     app: HTMLElement,
     controller: Controller,
-    onSubmit: (data: FormData) => void
+    onSubmit: (data: FormDataCollection) => void
   ) {
     this.app = app;
     this.controller = controller;
@@ -119,7 +119,7 @@ export default class TaskDialog {
     }
   }
 
-  private handleFormSubmit(data: FormData): void {
+  private handleFormSubmit(data: FormDataCollection): void {
     this.onSubmit(data);
     this.closeDialog();
   }

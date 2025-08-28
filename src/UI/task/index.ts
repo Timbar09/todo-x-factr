@@ -4,7 +4,7 @@ import TaskRenderer from "./TaskRenderer";
 import TaskDialog from "./TaskDialog";
 import TaskEvents from "./TaskEvents";
 import TaskMenu from "./TaskMenu";
-import { FormData } from "../form/types";
+import { FormDataCollection } from "../form/types";
 
 export default class TaskUI {
   static instance: TaskUI = new TaskUI();
@@ -84,7 +84,7 @@ export default class TaskUI {
     this.render();
   }
 
-  private handleFormSubmit(data: FormData): void {
+  private handleFormSubmit(data: FormDataCollection): void {
     const form = this.app.querySelector("#taskDialog .form") as HTMLFormElement;
 
     if (form.dataset.mode === "edit") {
@@ -99,7 +99,7 @@ export default class TaskUI {
     this.render();
   }
 
-  private handleFormUpdate(id: string, data: FormData): void {
+  private handleFormUpdate(id: string, data: FormDataCollection): void {
     const { title, categoryId } = data;
     const task = this.controller.task.findById(id);
 
@@ -110,7 +110,7 @@ export default class TaskUI {
     }
   }
 
-  private handleFormCreate(data: FormData): void {
+  private handleFormCreate(data: FormDataCollection): void {
     const { title, categoryId } = data;
     const task = new Task(
       crypto.randomUUID(),

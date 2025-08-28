@@ -14,7 +14,7 @@ export interface FormField {
   options?: Options[]; // For select or radio types
 }
 
-export interface FormData {
+export interface FormDataCollection {
   [key: string]: string;
 }
 
@@ -22,5 +22,5 @@ export interface FormConfig {
   title: string;
   submitButtonText: string;
   fieldsData: FormField[];
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormDataCollection) => void;
 }
