@@ -1,0 +1,145 @@
+export type ViewType = "home" | "templates" | "categories" | "analytics";
+
+export default class CentralUI {
+  static instance = new CentralUI();
+
+  private currentView: ViewType = "home";
+  private app: HTMLElement;
+  private appHeaderButton: HTMLElement;
+  private navigation: HTMLElement;
+
+  constructor() {
+    this.app = document.getElementById("application")!;
+    this.appHeaderButton = this.app.querySelector(".app__header--button")!;
+    this.navigation = document.querySelector(".hero__nav")!;
+    this.bindNavigationEvents();
+  }
+
+  private bindNavigationEvents(): void {
+    this.navigation.addEventListener("click", e => {
+      const target = e.target as HTMLElement;
+
+      // Templates navigation
+      if (target.closest("#templatesNavButton")) {
+        this.navigateTo("templates");
+      }
+
+      // Categories navigation
+      if (target.closest("#categoriesNavButton")) {
+        this.navigateTo("categories");
+      }
+
+      // Analytics navigation
+      if (target.closest("#analyticsNavButton")) {
+        this.navigateTo("analytics");
+      }
+
+      // Back to home (logo click or similar)
+      if (target.closest(".app__header--logo__image")) {
+        this.navigateTo("home");
+      }
+    });
+  }
+
+  navigateTo(view: ViewType): void {
+    if (this.currentView === view) return;
+
+    // Hide current view
+    this.hideCurrentView();
+
+    // Show new view
+    this.showView(view);
+    this.currentView = view;
+
+    // Trigger view change event
+    window.dispatchEvent(
+      new CustomEvent("viewChanged", {
+        detail: { from: this.currentView, to: view },
+      })
+    );
+  }
+
+  private hideCurrentView(): void {
+    const currentViewElement = this.app.querySelector(
+      `#${this.currentView}View`
+    );
+    if (currentViewElement) {
+      currentViewElement.classList.add("hidden");
+    }
+  }
+
+  private showView(view: ViewType): void {
+    const viewElement = this.app.querySelector(`#${view}View`);
+    if (viewElement) {
+      viewElement.classList.remove("hidden");
+    }
+
+    // Trigger specific view initialization
+    switch (view) {
+      case "templates":
+        this.initializeTemplatesView();
+        break;
+      case "categories":
+        this.initializeCategoriesView();
+        break;
+      case "analytics":
+        this.initializeAnalyticsView();
+        break;
+      case "home":
+        this.initializeHomeView();
+        break;
+    }
+  }
+
+  private initializeTemplatesView(): void {
+    this.createBackToHomeButton();
+  }
+
+  private initializeCategoriesView(): void {
+    this.createBackToHomeButton();
+  }
+
+  private initializeAnalyticsView(): void {
+    this.createBackToHomeButton();
+  }
+
+  private initializeHomeView(): void {
+    this.createDragAppButton();
+  }
+
+  private createDragAppButton(): void {
+    this.appHeaderButton.innerHTML = `
+      <button
+        id="dragAppButton"
+        class="button button__round app__header--button"
+        title="Drag in or out"
+        aria-label="Drag in or out"
+      >
+        <span class="material-symbols-outlined"> drag_handle </span>
+      </button>
+    `;
+  }
+
+  private createBackToHomeButton(): void {
+    this.appHeaderButton.innerHTML = `
+      <button
+        id="backToHome"
+        class="button button__round app__view--back"
+        title="Back to home"
+        aria-label="Back to home"
+      >
+        <span class="material-symbols-outlined"> arrow_back </span>
+      </button>
+    `;
+
+    this.appHeaderButton
+      .querySelector("#backToHome")
+      ?.addEventListener("click", () => {
+        this.navigateTo("home");
+      });
+  }
+
+  getCurrentView(): ViewType {
+    return this.currentView;
+  }
+}

@@ -1,3 +1,4 @@
+import CentralUI from "../UI/central";
 import TaskUI from "../UI/task";
 import CategoryUI from "../UI/category";
 import TemplateUI from "../UI/template";
@@ -38,6 +39,7 @@ const renderListeners = (): void => {
 export default (): void => {
   renderListeners();
 
+  CentralUI.instance;
   TemplateUI.instance;
   TaskUI.instance;
   CategoryUI.instance;

@@ -88,8 +88,8 @@
               <ul class="hero__nav--list">
                 <li class="hero__nav--item">
                   <button
+                    id="templatesNavButton"
                     aria-label="Templates"
-                    id="openMenuButton"
                     class="button menu__button--open"
                   >
                     <span class="material-symbols-outlined"> Bookmark </span>
@@ -100,6 +100,7 @@
 
                 <li class="hero__nav--item">
                   <button
+                    id="categoriesNavButton"
                     aria-label="Categories"
                     class="button menu__button--open"
                   >
@@ -111,6 +112,7 @@
 
                 <li class="hero__nav--item">
                   <button
+                    id="analyticsNavButton"
                     aria-label="Analytics"
                     class="button menu__button--open"
                   >
@@ -158,38 +160,30 @@
         </section>
 
         <main class="app" id="application">
-          <div class="app__container">
-            <header class="app__header padding-x">
-              <div class="app__header--button">
-                <button
-                  id="toggleTaskListButton"
-                  class="button button__round app__header--button__toggle"
-                  title="Toggle task list"
-                  aria-label="Toggle task list"
-                >
-                  <span class="material-symbols-outlined"> drag_handle </span>
-                </button>
-              </div>
+          <header class="app__header padding-x">
+            <div class="app__header--button">
+              <button
+                id="toggleTaskListButton"
+                class="button button__round app__header--button__toggle"
+                title="Toggle task list"
+                aria-label="Toggle task list"
+              >
+                <span class="material-symbols-outlined"> drag_handle </span>
+              </button>
+            </div>
 
-              <div class="app__logo">
-                <img
-                  src="/logo.png"
-                  alt="App logo"
-                  class="app__header--logo__image"
-                />
-              </div>
+            <nav class="app__nav">
+              <span class="button button__round">
+                <span class="material-symbols-outlined"> search </span>
+              </span>
 
-              <nav class="app__nav">
-                <span class="button button__round">
-                  <span class="material-symbols-outlined"> search </span>
-                </span>
+              <span class="button button__round">
+                <span class="material-symbols-outlined"> notifications </span>
+              </span>
+            </nav>
+          </header>
 
-                <span class="button button__round">
-                  <span class="material-symbols-outlined"> notifications </span>
-                </span>
-              </nav>
-            </header>
-
+          <section id="homeView" class="app__view app__view--home">
             <h2 class="app__title section__title padding-x">
               What's up, Gorilla?
             </h2>
@@ -215,113 +209,40 @@
                 <!-- Task items are dynamically generated here -->
               </ul>
             </div>
-          </div>
 
-          <div class="app__entryForm--button__container">
-            <button
-              id="openTaskDialogButton"
-              class="button button__primary button__primary--round app__entryForm--button"
-              title="Add new item"
-              aria-label="Add new item to list"
-            >
-              <span class="material-symbols-outlined"> add </span>
-            </button>
-          </div>
-        </main>
-
-        <section
-          class="app__task--entry__container"
-          id="itemEntryFormContainer"
-        >
-          <div class="app__task--entryForm__closeButton--container">
-            <button
-              id="closeItemEntryForm"
-              class="button button__round app__task--entryForm__closeButton"
-              title="Close"
-              aria-label="Close"
-            >
-              <span class="material-symbols-outlined"> close </span>
-            </button>
-          </div>
-
-          <form class="app__task--entry" id="itemEntryForm">
-            <div class="app__task--entry__title">
-              <label for="newTask" class="offscreen">Enter a new task</label>
-              <input
-                class="app__task--entry__input"
-                id="newTask"
-                type="text"
-                maxlength="40"
-                autocomplete="off"
-                placeholder="Add new task"
-              />
-            </div>
-
-            <div class="app__task--entry__customSelect" id="customSelect">
-              <ul class="app__task--entry__dropdown" id="categoryDropdown"></ul>
-
-              <div class="app__task--entry__category--color" id="categoryColor">
-                <span class="app__task--entry__category--color__indicator">
-                </span>
-              </div>
-            </div>
-
-            <!-- <div class="app__task--entry__category">
-              <div class="app__task--entry__select--container">
-                <label for="category" class="offscreen"
-                  >Select a category for the item</label
-                >
-                <select
-                  class="app__task--entry__select"
-                  id="categorySelect"
-                  name="category"
-                  autocomplete="off"
-                >
-                  <option
-                    value=""
-                    disabled
-                    selected
-                    class="app__task--entry__select--placeholder"
-                    data-color="--text-300"
-                  >
-                    Select category
-                  </option>
-                  <option value="personal" data-color="--primary">
-                Personal
-              </option>
-              <option value="business" data-color="--variant">
-                Business
-              </option>
-                </select>
-
-                <span
-                  class="material-symbols-outlined app__task--entry__select--icon"
-                >
-                  keyboard_arrow_down
-                </span>
-              </div>
-
-              <div class="app__task--entry__category--color" id="categoryColor">
-                <span class="app__task--entry__category--color__indicator">
-                </span>
-              </div>
-            </div> -->
-
-            <div class="app__task--entry__button--container">
+            <div class="app__entryForm--button__container">
               <button
-                id="showTaskEntryFormButton"
-                class="button button__primary button__primary--bar app__task--entry__button"
+                id="openTaskDialogButton"
+                class="button button__primary button__primary--round app__entryForm--button"
                 title="Add new item"
                 aria-label="Add new item to list"
               >
-                <span> New task </span>
-                <span class="material-symbols-outlined">
-                  keyboard_arrow_up
-                </span>
+                <span class="material-symbols-outlined"> add </span>
               </button>
             </div>
-          </form>
-        </section>
+          </section>
+
+          <section
+            id="categoriesView"
+            class="app__view app__view--categories hidden"
+          >
+            This is the categories view
+          </section>
+
+          <section
+            id="templatesView"
+            class="app__view app__view--templates hidden"
+          >
+            This is the templates view
+          </section>
+
+          <section
+            id="analyticsView"
+            class="app__view app__view--analytics hidden"
+          >
+            This is the analytics view
+          </section>
+        </main>
       </div>
     </main>
   </body>
