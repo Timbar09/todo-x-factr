@@ -48,17 +48,17 @@
       <img src="/logo.png" alt="App logo" width="150" height="150" />
     </div>
 
-    <main class="main">
+    <main id="main" class="main">
       <div class="main__container">
         <section class="hero">
           <section class="hero__section">
             <header class="hero__header">
               <div class="hero__header--button__container">
                 <button
-                  id="showList"
+                  id="dragOutAppButton"
                   class="button button__round"
-                  title="Show task list"
-                  aria-label="Show task list"
+                  title="Drag out application"
+                  aria-label="Drag out application"
                 >
                   <span class="material-symbols-outlined"> chevron_left </span>
                 </button>
@@ -163,10 +163,10 @@
           <header class="app__header padding-x">
             <div class="app__header--button">
               <button
-                id="toggleTaskListButton"
+                id="dragAppButton"
                 class="button button__round app__header--button__toggle"
-                title="Toggle task list"
-                aria-label="Toggle task list"
+                title="Drag in or out"
+                aria-label="Drag in or out"
               >
                 <span class="material-symbols-outlined"> drag_handle </span>
               </button>

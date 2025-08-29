@@ -5,19 +5,18 @@ import TemplateUI from "../UI/template";
 
 import MenuController from "../controller/MenuController";
 
-import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
+// import { showTaskListSection, toggleTaskListSection } from "./HeroSection";
 
 const renderListeners = (): void => {
-  const showListSectionButton = document.getElementById(
-    "showList"
-  ) as HTMLButtonElement;
-  const toggleListButton = document.getElementById(
-    "toggleTaskListButton"
-  ) as HTMLButtonElement;
+  // const showListSectionButton = document.getElementById(
+  //   "showList"
+  // ) as HTMLButtonElement;
+  // const toggleListButton = document.getElementById(
+  //   "toggleTaskListButton"
+  // ) as HTMLButtonElement;
   // const buttons = document.querySelectorAll(
   //   ".button"
   // ) as NodeListOf<HTMLButtonElement>;
-
   // buttons.forEach(button => {
   //   button.addEventListener("click", () => {
   //     addClass(button, "clicked");
@@ -26,14 +25,12 @@ const renderListeners = (): void => {
   //     }, 500);
   //   });
   // });
-
-  showListSectionButton.addEventListener("click", () => {
-    showTaskListSection();
-  });
-
-  toggleListButton.addEventListener("click", () => {
-    toggleTaskListSection();
-  });
+  // showListSectionButton.addEventListener("click", () => {
+  //   showTaskListSection();
+  // });
+  // toggleListButton.addEventListener("click", () => {
+  //   toggleTaskListSection();
+  // });
 };
 
 export default (): void => {

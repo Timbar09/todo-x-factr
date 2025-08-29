@@ -32,18 +32,45 @@
   scale: 1;
 }
 
+.app__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
 .app__view {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 4em;
+  min-height: 100%;
 }
 
 .app__view.hidden {
   display: none;
 }
 
-.app__header {
-  padding-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
+.app__view--title {
+  margin: 1em 0;
+  font-size: 1.75em;
+  font-weight: 700;
+}
+
+/* .section__subTitle--container {
+  margin: 0 0 0.5em;
+} */
+
+.app__view--subtitle {
+  font-size: 0.9em;
+  font-weight: normal;
+  color: var(--text-200);
+  text-transform: uppercase;
 }
 
 .app__task--header {

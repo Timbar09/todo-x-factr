@@ -4,18 +4,29 @@ export default class CentralUI {
   static instance = new CentralUI();
 
   private currentView: ViewType = "home";
+  private main: HTMLElement;
+  private dragOutAppButton: HTMLElement;
   private app: HTMLElement;
   private appHeaderButton: HTMLElement;
   private navigation: HTMLElement;
 
   constructor() {
-    this.app = document.getElementById("application")!;
+    this.main = document.getElementById("main")!;
+    this.dragOutAppButton = this.main.querySelector("#dragOutAppButton")!;
+    this.app = this.main.querySelector("#application")!;
     this.appHeaderButton = this.app.querySelector(".app__header--button")!;
-    this.navigation = document.querySelector(".hero__nav")!;
+    this.navigation = this.main.querySelector(".hero__nav")!;
     this.bindNavigationEvents();
   }
 
   private bindNavigationEvents(): void {
+    this.dragOutAppButton.addEventListener("click", this.dragOutApp);
+
+    const toggleAppDragButton = this.app.querySelector("#dragAppButton");
+    if (toggleAppDragButton) {
+      toggleAppDragButton.addEventListener("click", this.toggleAppDrag);
+    }
+
     this.navigation.addEventListener("click", e => {
       const target = e.target as HTMLElement;
 
@@ -118,6 +129,12 @@ export default class CentralUI {
         <span class="material-symbols-outlined"> drag_handle </span>
       </button>
     `;
+
+    this.appHeaderButton
+      .querySelector("#dragAppButton")!
+      .addEventListener("click", () => {
+        this.toggleAppDrag();
+      });
   }
 
   private createBackToHomeButton(): void {
@@ -138,6 +155,18 @@ export default class CentralUI {
         this.navigateTo("home");
       });
   }
+
+  private dragOutApp = (): void => {
+    this.app.classList.add("show");
+  };
+
+  // private dragInApp = (): void => {
+  //   this.app.classList.remove("show");
+  // };
+
+  private toggleAppDrag = (): void => {
+    this.app.classList.toggle("show");
+  };
 
   getCurrentView(): ViewType {
     return this.currentView;
