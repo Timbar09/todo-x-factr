@@ -184,33 +184,29 @@
           </header>
 
           <section id="homeView" class="app__view app__view--home">
-            <h2 class="app__title section__title padding-x">
-              What's up, Gorilla?
-            </h2>
+            <h2 class="app__view--title padding-x">What's up, Gorilla?</h2>
 
-            <div class="app__category category padding-x">
-              <div class="section__subTitle--container">
-                <h3 class="section__subTitle">Categories</h3>
-              </div>
+            <div class="app__view--section padding-x">
+              <h3 class="app__view--subtitle">Categories</h3>
 
-              <ul class="app__category--list" id="appCategoryList">
+              <ul class="app__view--category__list category__list">
                 <!-- Categories are dynamically generated -->
               </ul>
             </div>
 
-            <div class="app__task">
-              <header class="app__task--header padding-x">
-                <h3 class="section__subTitle">Today's tasks</h3>
+            <div class="app__view--section">
+              <header class="app__view--task__header padding-x">
+                <h3 class="app__view--subtitle">Today's tasks</h3>
 
                 <!-- More options is dynamically rendered here -->
               </header>
 
-              <ul id="todayTaskList" class="app__task--list padding-x">
+              <ul id="todayTaskList" class="app__view--task__list padding-x">
                 <!-- Task items are dynamically generated here -->
               </ul>
             </div>
 
-            <div class="app__entryForm--button__container">
+            <div class="app__view--button__container">
               <button
                 id="openTaskDialogButton"
                 class="button button__primary button__primary--round app__entryForm--button"

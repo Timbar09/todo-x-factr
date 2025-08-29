@@ -22,7 +22,7 @@ export default class CategoryUI implements Observer<Category> {
     this.controller = controller;
     this.app = document.getElementById("application") as HTMLElement;
     this.uls = document.querySelectorAll(
-      ".app__category--list"
+      ".category__list"
     ) as NodeListOf<HTMLUListElement>;
 
     // Initialize composed parts

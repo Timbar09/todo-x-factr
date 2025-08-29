@@ -1,11 +1,4 @@
-.app__task {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.app__task--list {
-  flex: 1;
+.task__list {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   display: flex;

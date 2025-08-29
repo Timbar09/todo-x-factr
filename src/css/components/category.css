@@ -2,15 +2,6 @@
   margin-bottom: 1rem;
 }
 
-.app__category--list {
-  display: flex;
-  gap: 1rem;
-}
-
-.app__category--list li {
-  flex: 1;
-}
-
 .category__item {
   --progress: 0;
 
@@ -84,6 +75,7 @@
   height: 100%;
   width: var(--progress);
   border-radius: inherit;
+  background-color: var(--category-clr);
   animation: grow-progress-bar 200ms ease-out forwards;
 }
 
@@ -104,7 +96,7 @@
   width: 0.205em;
   height: 200%;
   border-radius: inherit;
-  background-color: var(--primary);
+  background-color: var(--category-clr);
 }
 
 .app__category--list li:first-child .category__item--progressBar__fill {

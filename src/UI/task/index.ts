@@ -53,7 +53,9 @@ export default class TaskUI {
 
   private setupUI(): void {
     // Add header menu
-    const header = this.app.querySelector(".app__task--header") as HTMLElement;
+    const header = this.app.querySelector(
+      ".app__view--task__header"
+    ) as HTMLElement;
     const headerMenu = this.menu.createTaskListHeaderMenu();
     header.appendChild(headerMenu);
 

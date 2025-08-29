@@ -1,9 +1,3 @@
-.app__entryForm--button__container {
-  position: absolute;
-  right: 2em;
-  bottom: 2em;
-}
-
 .app__task--entry__container {
   --dimension: 4em;
 
