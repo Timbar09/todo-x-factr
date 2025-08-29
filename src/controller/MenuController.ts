@@ -1,10 +1,3 @@
-import {
-  addClass,
-  removeClass,
-  setSectionFocusStatus,
-  lockFocus,
-} from "../functions/Reusable";
-
 export interface MenuInterface {
   menu: HTMLElement;
   isMenuOpen: boolean;
@@ -41,26 +34,15 @@ export default class MenuController implements MenuInterface {
       return;
     }
 
-    removeClass(this.menu, "closed");
-    addClass(this.menu, "open");
-
-    if (this.menu.classList.contains("open")) {
-      this.isMenuOpen = true;
-      setSectionFocusStatus("menu", true);
-      lockFocus(this.menu);
-    }
+    this.menu.classList.remove("closed");
+    this.menu.classList.add("open");
   }
 
   close(): void {
     if (!this.isMenuOpen) return;
 
-    removeClass(this.menu, "open");
-    addClass(this.menu, "closed");
-
-    if (this.menu.classList.contains("closed")) {
-      this.isMenuOpen = false;
-      setSectionFocusStatus("menu", false);
-    }
+    this.menu.classList.remove("open");
+    this.menu.classList.add("closed");
 
     window.dispatchEvent(new CustomEvent("menuClosed"));
   }

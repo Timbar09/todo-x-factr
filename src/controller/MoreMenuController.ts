@@ -1,5 +1,3 @@
-import { addClass, removeClass } from "../functions/Reusable";
-
 export interface MoreMenuOption {
   id: string;
   label: string;
@@ -94,7 +92,7 @@ export default class MoreMenuController {
     ) as HTMLButtonElement;
 
     if (menuList && toggleButton) {
-      addClass(menuList, "closed");
+      menuList.classList.add("closed");
       toggleButton.setAttribute("aria-expanded", "false");
       toggleButton.setAttribute("aria-haspopup", "menu");
       menuList.setAttribute("aria-hidden", "true");
@@ -119,8 +117,8 @@ export default class MoreMenuController {
     }
 
     // Open this menu
-    removeClass(menuElement, "closed");
-    addClass(menuElement, "open");
+    menuElement.classList.remove("closed");
+    menuElement.classList.add("open");
     toggleButton.setAttribute("aria-expanded", "true");
     menuElement
       .querySelector(".more__options--menu__list")
@@ -158,8 +156,8 @@ export default class MoreMenuController {
     if (!targetMenu || !toggleButton) return;
 
     // Close the menu
-    removeClass(targetMenu, "open");
-    addClass(targetMenu, "closed");
+    targetMenu.classList.remove("open");
+    targetMenu.classList.add("closed");
     toggleButton.setAttribute("aria-expanded", "false");
     targetMenu
       .querySelector(".more__options--menu__list")
@@ -191,8 +189,8 @@ export default class MoreMenuController {
       ) as HTMLButtonElement;
 
       if (menu && toggleButton) {
-        removeClass(menu, "open");
-        addClass(menu, "closed");
+        menu.classList.remove("open");
+        menu.classList.add("closed");
         toggleButton.setAttribute("aria-expanded", "false");
         menu
           .querySelector(".more__options--menu__list")
