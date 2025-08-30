@@ -8,14 +8,14 @@ export default class CentralUI {
   private dragOutAppButton: HTMLElement;
   private app: HTMLElement;
   private appHeaderButton: HTMLElement;
-  private navigation: HTMLElement;
+  private navButtons: NodeListOf<HTMLElement>;
 
   constructor() {
     this.main = document.getElementById("main")!;
     this.dragOutAppButton = this.main.querySelector("#dragOutAppButton")!;
     this.app = this.main.querySelector("#application")!;
     this.appHeaderButton = this.app.querySelector(".app__header--button")!;
-    this.navigation = this.main.querySelector(".hero__nav")!;
+    this.navButtons = this.main.querySelectorAll(".hero__nav--button")!;
     this.bindNavigationEvents();
   }
 
@@ -27,20 +27,22 @@ export default class CentralUI {
       toggleAppDragButton.addEventListener("click", this.toggleAppDrag);
     }
 
-    this.navigation.addEventListener("click", e => {
-      const target = e.target as HTMLElement;
+    this.navButtons.forEach(navButton => {
+      navButton.addEventListener("click", () => {
+        const view = navButton.dataset.view as ViewType;
 
-      if (target.closest(".hero__nav--button")) {
-        const locationName = target
-          .closest(".hero__nav--button")!
-          .id.replace("NavButton", "");
-
-        const location = locationName as ViewType;
-
-        this.navigateTo(location);
-        this.dragOutApp();
-      }
+        if (view) {
+          this.setActiveNavButton(navButton);
+          this.navigateTo(view);
+          this.dragOutApp();
+        }
+      });
     });
+  }
+
+  private setActiveNavButton(activeButton: HTMLElement): void {
+    this.navButtons.forEach(btn => btn.classList.remove("active"));
+    activeButton.classList.add("active");
   }
 
   navigateTo(view: ViewType): void {
@@ -144,6 +146,7 @@ export default class CentralUI {
       .querySelector("#backToHome")
       ?.addEventListener("click", () => {
         this.navigateTo("home");
+        this.navButtons.forEach(btn => btn.classList.remove("active"));
       });
   }
 

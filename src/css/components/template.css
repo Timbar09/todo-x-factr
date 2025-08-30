@@ -111,6 +111,7 @@
 .template__dialog.open {
   inset: 0 0 auto;
   scale: 1;
+  border-radius: var(--radius-200);
 }
 
 .template__dialog--header {

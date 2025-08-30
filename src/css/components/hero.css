@@ -55,6 +55,7 @@
 .hero__nav--list {
   display: flex;
   flex-direction: column;
+  gap: 0.25em;
   width: max-content;
 }
 
@@ -69,6 +70,10 @@
 }
 
 .hero__nav--item .button:hover {
+  background-color: var(--bg-300);
+}
+
+.hero__nav--item .button.active {
   color: var(--primary);
   background-color: var(--bg-300);
 }

@@ -17,6 +17,8 @@ export default class TemplateRenderer {
     const templates = this.controller.list;
     const activeTemplate = this.controller.activeTemplate;
 
+    ul.innerHTML = "";
+
     templates.forEach(template => {
       const templateHTML = this.createTemplateHTML(
         template,
