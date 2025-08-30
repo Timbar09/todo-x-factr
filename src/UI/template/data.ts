@@ -32,10 +32,18 @@ export const fieldsData: FormField[] = [
 ];
 
 export const createFormConfig = (
-  onSubmit: (data: FormDataCollection) => void
+  onSubmit: (data: Record<string, string>) => void
 ): FormConfig => ({
   title: "Create Custom Template",
   submitButtonText: "Create Template",
   fieldsData: fieldsData,
-  onSubmit: onSubmit,
+  onSubmit: (rawData: Record<string, string>) => {
+    const templateData = {
+      templateName: rawData.templateName?.trim() || "",
+      primaryColor: rawData.primaryColor || "#f13d3d",
+      textColor: rawData.textColor || "#e9c5c5",
+      bgColor: rawData.bgColor || "#000000",
+    };
+    onSubmit(templateData);
+  },
 });

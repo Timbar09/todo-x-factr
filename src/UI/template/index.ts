@@ -52,7 +52,7 @@ export default class TemplateUI {
 
   private renderTemplates(): void {
     this.renderer.renderTemplates(this.ul);
-    this.showCustomTemplateDialog();
+    this.showTemplateDialog();
   }
 
   private selectTemplate(templateId: string): void {
@@ -65,7 +65,7 @@ export default class TemplateUI {
     }
   }
 
-  private showCustomTemplateDialog(): void {
+  private showTemplateDialog(): void {
     this.container.appendChild(this.dialog.getDialog());
   }
 

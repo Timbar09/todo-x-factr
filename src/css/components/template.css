@@ -84,6 +84,35 @@
   margin-top: 1em;
 }
 
+.template-preview-active {
+  position: relative;
+}
+
+.template-preview-active::before {
+  content: "🎨 Preview Mode";
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: var(--primary);
+  color: var(--bg-100);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-25);
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 1000;
+  animation: pulsePreview 2s infinite;
+}
+
+@keyframes pulsePreview {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 .template__dialog {
   --dialog-bg: var(--bg-100);
   --form-input-bg: var(--dialog-bg);
@@ -112,6 +141,7 @@
   inset: 0 0 auto;
   scale: 1;
   border-radius: var(--radius-200);
+  box-shadow: none;
 }
 
 .template__dialog--header {
