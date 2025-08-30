@@ -30,24 +30,15 @@ export default class CentralUI {
     this.navigation.addEventListener("click", e => {
       const target = e.target as HTMLElement;
 
-      // Templates navigation
-      if (target.closest("#templatesNavButton")) {
-        this.navigateTo("templates");
-      }
+      if (target.closest(".hero__nav--button")) {
+        const locationName = target
+          .closest(".hero__nav--button")!
+          .id.replace("NavButton", "");
 
-      // Categories navigation
-      if (target.closest("#categoriesNavButton")) {
-        this.navigateTo("categories");
-      }
+        const location = locationName as ViewType;
 
-      // Analytics navigation
-      if (target.closest("#analyticsNavButton")) {
-        this.navigateTo("analytics");
-      }
-
-      // Back to home (logo click or similar)
-      if (target.closest(".app__header--logo__image")) {
-        this.navigateTo("home");
+        this.navigateTo(location);
+        this.dragOutApp();
       }
     });
   }
