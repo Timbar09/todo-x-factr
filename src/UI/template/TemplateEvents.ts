@@ -79,19 +79,12 @@ export default class TemplateEvents {
   }
 
   private bindGlobalEvents(): void {
-    // Listen for template changes
-    window.addEventListener("templateChanged", () => {
-      this.onRender();
-    });
+    window.addEventListener("viewChanged", (e: Event) => {
+      const { to } = (e as CustomEvent).detail;
 
-    // Listen for menu close event
-    window.addEventListener("menuClosed", () => {
-      this.dialog.closeDialog();
-    });
-
-    // Listen for menu already open event
-    window.addEventListener("menuAlreadyOpen", () => {
-      this.dialog.closeDialog();
+      if (to !== "templates") {
+        this.dialog.closeDialog();
+      }
     });
   }
 
