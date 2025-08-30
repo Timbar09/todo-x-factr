@@ -5,18 +5,11 @@ export default class TaskEvents {
   private controller: Controller;
   private app: HTMLElement;
   private dialog: TaskDialog;
-  private onRender: () => void;
 
-  constructor(
-    app: HTMLElement,
-    controller: Controller,
-    dialog: TaskDialog,
-    onRender: () => void
-  ) {
+  constructor(app: HTMLElement, controller: Controller, dialog: TaskDialog) {
     this.app = app;
     this.controller = controller;
     this.dialog = dialog;
-    this.onRender = onRender;
   }
 
   bindEvents(): void {
@@ -51,7 +44,7 @@ export default class TaskEvents {
       // Checkbox toggle
       if (target.matches(".task__item--label__checkbox")) {
         this.controller.toggleTaskCheckStatus(taskId);
-        this.onRender();
+        // this.onRender();
       }
     });
   }

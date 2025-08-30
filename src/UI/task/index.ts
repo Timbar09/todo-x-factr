@@ -38,9 +38,7 @@ export default class TaskUI {
       this.handleFormSubmit(data)
     );
 
-    this.events = new TaskEvents(this.app, this.controller, this.dialog, () =>
-      this.render()
-    );
+    this.events = new TaskEvents(this.app, this.controller, this.dialog);
 
     this.init();
   }
