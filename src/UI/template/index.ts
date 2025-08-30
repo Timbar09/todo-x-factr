@@ -11,7 +11,8 @@ export default class TemplateUI {
   static instance: TemplateUI = new TemplateUI();
 
   private controller: Controller;
-  private menuContent: HTMLElement;
+  private container: HTMLElement;
+  private ul: HTMLUListElement;
 
   // Composed parts
   private renderer: TemplateRenderer;
@@ -20,7 +21,8 @@ export default class TemplateUI {
 
   constructor() {
     this.controller = Controller.instance;
-    this.menuContent = document.getElementById("menuContent")!;
+    this.container = document.getElementById("templatesView")!;
+    this.ul = this.container.querySelector("#templateList") as HTMLUListElement;
 
     // Initialize composed parts
     this.renderer = new TemplateRenderer(
@@ -34,7 +36,7 @@ export default class TemplateUI {
 
     this.events = new TemplateEvents(
       this.controller,
-      this.menuContent,
+      this.container,
       this.dialog,
       () => this.renderTemplates(),
       templateId => this.selectTemplate(templateId)
@@ -49,12 +51,7 @@ export default class TemplateUI {
   }
 
   private renderTemplates(): void {
-    // const templates = this.controller.list;
-    // const activeTemplate = this.controller.activeTemplate;
-
-    const ul = this.renderer.renderTemplates();
-
-    this.renderer.renderMenuContent(ul, this.menuContent);
+    this.renderer.renderTemplates(this.ul);
     this.showCustomTemplateDialog();
   }
 
@@ -69,7 +66,7 @@ export default class TemplateUI {
   }
 
   private showCustomTemplateDialog(): void {
-    this.menuContent.appendChild(this.dialog.getDialog());
+    this.container.appendChild(this.dialog.getDialog());
   }
 
   private handleFormSubmit(data: FormDataCollection): void {

@@ -142,7 +142,7 @@
           </section>
         </section>
 
-        <section id="menu" class="menu padding">
+        <!-- <section id="menu" class="menu padding">
           <header class="menu__header menu__button">
             <button
               id="closeMenuButtonButton"
@@ -155,9 +155,8 @@
           </header>
 
           <div id="menuContent" class="menu__content">
-            <!-- Menu content is dynamically generated -->
           </div>
-        </section>
+        </section> -->
 
         <main class="app" id="application">
           <header class="app__header padding-x">
@@ -189,19 +188,19 @@
             <div class="app__view--section padding-x">
               <h3 class="app__view--subtitle">Categories</h3>
 
-              <ul class="app__view--category__list category__list">
+              <ul class="category__list">
                 <!-- Categories are dynamically generated -->
               </ul>
             </div>
 
             <div class="app__view--section">
-              <header class="app__view--task__header padding-x">
+              <header class="task__list--today__header padding-x">
                 <h3 class="app__view--subtitle">Today's tasks</h3>
 
                 <!-- More options is dynamically rendered here -->
               </header>
 
-              <ul id="todayTaskList" class="app__view--task__list padding-x">
+              <ul id="todayTaskList" class="task__list padding-x">
                 <!-- Task items are dynamically generated here -->
               </ul>
             </div>
@@ -227,9 +226,25 @@
 
           <section
             id="templatesView"
-            class="app__view app__view--templates hidden"
+            class="app__view app__view--templates padding-x hidden"
           >
-            This is the templates view
+            <h2 class="app__view--title">Choose a Template</h2>
+
+            <div id="templateList" class="template__list">
+              <!-- Menu content is dynamically generated -->
+            </div>
+
+            <div class="template__actions">
+              <button
+                id="addCustomTemplate"
+                class="button button__primary button__primary--bar template__button--entry"
+              >
+                <span>New Template</span>
+                <span class="material-symbols-outlined">Keyboard_arrow_up</span>
+              </button>
+            </div>
+
+            <!-- The dialog is dynamically generated -->
           </section>
 
           <section

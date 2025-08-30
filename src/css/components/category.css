@@ -66,7 +66,7 @@
   position: relative;
   height: 0.205em;
   border-radius: var(--radius-pill);
-  background-color: var(--text-200);
+  background-color: var(--text-400);
 }
 
 .category__item--progressBar__fill {
@@ -97,22 +97,4 @@
   height: 200%;
   border-radius: inherit;
   background-color: var(--category-clr);
-}
-
-.app__category--list li:first-child .category__item--progressBar__fill {
-  width: var(--progress);
-  background-color: var(--primary);
-}
-
-.app__category--list li:first-child .category__item--progressBar__fill::before {
-  background-color: var(--primary);
-}
-
-.app__category--list li:last-child .category__item--progressBar__fill {
-  width: var(--progress);
-  background-color: var(--variant);
-}
-
-.app__category--list li:last-child .category__item--progressBar__fill::before {
-  background-color: var(--variant);
 }

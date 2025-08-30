@@ -1,13 +1,14 @@
+.task__list--today__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
 .task__list {
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
   display: flex;
   flex-direction: column;
-  height: 16em;
-  gap: 0.5em;
-  overflow-x: clip;
-  overflow-y: auto;
-  max-height: 19.5em;
+  gap: 0.25em;
 }
 
 .task__item {

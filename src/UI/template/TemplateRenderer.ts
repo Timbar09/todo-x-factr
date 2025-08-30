@@ -13,12 +13,9 @@ export default class TemplateRenderer {
     this.moreMenuController = moreMenuController;
   }
 
-  renderTemplates(): HTMLUListElement {
+  renderTemplates(ul: HTMLUListElement): HTMLUListElement {
     const templates = this.controller.list;
     const activeTemplate = this.controller.activeTemplate;
-
-    const ul = document.createElement("ul");
-    ul.className = "template__list";
 
     templates.forEach(template => {
       const templateHTML = this.createTemplateHTML(
@@ -30,26 +27,6 @@ export default class TemplateRenderer {
     });
 
     return ul;
-  }
-
-  renderMenuContent(ul: HTMLUListElement, menuContent: HTMLElement): void {
-    menuContent.innerHTML = `
-      <h3 class="menu__title template__title">Choose a Template</h3>
-    `;
-
-    menuContent.appendChild(ul);
-
-    menuContent.innerHTML += `
-      <div class="template__actions">
-        <button
-          id="addCustomTemplate"
-          class="button button__primary button__primary--bar template__button--entry"
-        >
-          <span>New Template</span>
-          <span class="material-symbols-outlined">Keyboard_arrow_up</span>
-        </button>
-      </div>
-    `;
   }
 
   private createTemplateHTML(

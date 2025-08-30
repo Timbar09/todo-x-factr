@@ -96,6 +96,7 @@
   border-radius: var(--radius-100);
   background-color: var(--dialog-bg);
   box-shadow: var(--shadow);
+  z-index: 10;
   transition:
     inset 400ms ease-in-out,
     scale 400ms ease-in-out,
@@ -110,7 +111,6 @@
 .template__dialog.open {
   inset: 0 0 auto;
   scale: 1;
-  border-radius: 0;
 }
 
 .template__dialog--header {

@@ -3,7 +3,7 @@ import TaskUI from "./UI/task";
 import CategoryUI from "./UI/category";
 import TemplateUI from "./UI/template";
 
-import MenuController from "./controller/MenuController";
+// import MenuController from "./controller/MenuController";
 
 export default (): void => {};
 
@@ -20,5 +20,5 @@ document.addEventListener("DOMContentLoaded", () => {
   TemplateUI.instance;
   TaskUI.instance;
   CategoryUI.instance;
-  MenuController.getInstance();
+  // MenuController.getInstance();
 });
