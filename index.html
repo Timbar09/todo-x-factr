@@ -224,7 +224,23 @@
             id="categoriesView"
             class="app__view app__view--categories hidden"
           >
-            This is the categories view
+            <h2 class="app__view--title padding-x">Your Categories</h2>
+
+            <ul id="categoryList" class="category__list padding">
+              <!-- Categories are dynamically generated -->
+            </ul>
+
+            <div class="category__actions padding-x">
+              <button
+                id="addCategoryButton"
+                class="button button__primary button__primary--bar category__button--entry"
+              >
+                <span>Add Category</span>
+                <span class="material-symbols-outlined">Keyboard_arrow_up</span>
+              </button>
+            </div>
+
+            <!-- Dialog content is dynamically generated -->
           </section>
 
           <section
@@ -233,9 +249,9 @@
           >
             <h2 class="app__view--title">Choose a Template</h2>
 
-            <div id="templateList" class="template__list">
+            <ul id="templateList" class="template__list">
               <!-- Menu content is dynamically generated -->
-            </div>
+            </ul>
 
             <div class="template__actions">
               <button
@@ -256,6 +272,28 @@
           >
             This is the analytics view
           </section>
+
+          <div
+            id="dialog"
+            class="dialog dialog__home hidden"
+            aria-hidden="true"
+            role="dialog"
+            data-dialog=""
+          >
+            <header class="dialog__header">
+              <button
+                id="toggleDialogButton"
+                class="dialog__dragButton button button__round"
+                aria-label="Close dialog"
+              >
+                <span class="material-symbols-outlined">drag_handle</span>
+              </button>
+            </header>
+
+            <div class="dialog__content padding">
+              <!-- Dialog content goes here -->
+            </div>
+          </div>
         </main>
       </div>
     </main>

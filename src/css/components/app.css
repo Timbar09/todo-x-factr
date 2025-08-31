@@ -64,7 +64,8 @@
   overflow-y: auto;
 }
 
-.app__view--templates {
+.app__view--templates,
+.app__view--category {
   overflow: hidden;
 }
 
@@ -89,4 +90,51 @@
   position: fixed;
   right: 2em;
   bottom: 2em;
+}
+
+.dialog {
+  position: fixed;
+  height: 100%;
+  border-radius: var(--radius-100);
+  background-color: var(--bg-200);
+  box-shadow: var(--shadow);
+  z-index: 10;
+  top: 0;
+  left: 0;
+  scale: 1;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  transition:
+    top 400ms ease-in-out,
+    scale 400ms ease-in-out,
+    border-radius 400ms ease-in-out;
+}
+
+.dialog.hidden {
+  top: 80%;
+  scale: 0.85;
+}
+
+.dialog__home {
+  display: none;
+}
+
+.dialog__header {
+  position: absolute;
+  inset: 0 0 2em 0;
+  border-radius: inherit;
+  height: 3.5em;
+  background-color: inherit;
+  transition:
+    height 400ms ease-in-out,
+    background-color 400ms ease-in-out;
+}
+
+.dialog.hidden .dialog__header {
+  height: 100%;
+}
+
+.dialog__dragButton {
+  margin: 1em 2em;
 }
