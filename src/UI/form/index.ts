@@ -1,5 +1,5 @@
 import CustomSelectInputUI from "./CustomSelectInputUI";
-import { FormConfig, FormField } from "./types";
+import { FormConfig, FormField, FormDataCollection } from "./types";
 
 export default class FormUI {
   private form: HTMLFormElement;
@@ -7,7 +7,7 @@ export default class FormUI {
   private mode: string;
   private fieldsData: FormField[];
   private submitButtonText: string;
-  private onSubmit: (data: Record<string, string>) => void;
+  private onSubmit: (data: FormDataCollection) => void;
   private currentItemId?: string;
   private customSelects: Map<string, CustomSelectInputUI> = new Map();
 
@@ -193,7 +193,7 @@ export default class FormUI {
     const mode = this.form.dataset.mode || "create";
     const itemId = this.form.dataset.itemId;
 
-    const data: Record<string, string> = {};
+    const data: FormDataCollection = {};
     data["mode"] = mode;
 
     if (itemId) {
