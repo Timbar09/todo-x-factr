@@ -1,28 +1,18 @@
 import Controller from "../../controller/CentralController";
-// import CategoryDialog from "./CategoryDialog";
 
 export default class CategoryEvents {
   private controller: Controller;
   private app: HTMLElement;
-  // private dialog: CategoryDialog;
   private onRender: () => void;
 
-  constructor(
-    app: HTMLElement,
-    controller: Controller,
-    // dialog: CategoryDialog,
-    onRender: () => void
-  ) {
+  constructor(app: HTMLElement, controller: Controller, onRender: () => void) {
     this.app = app;
     this.controller = controller;
-    // this.dialog = dialog;
     this.onRender = onRender;
   }
 
   bindEvents(): void {
     this.bindCategoryActions();
-    // this.bindDialogEvents();
-    // this.bindAddCategoryButton();
   }
 
   private bindCategoryActions(): void {
@@ -50,36 +40,6 @@ export default class CategoryEvents {
       }
     });
   }
-
-  // private bindDialogEvents(): void {
-  //   this.app.addEventListener("click", (e: Event) => {
-  //     const target = e.target as HTMLElement;
-
-  //     // Open category dialog
-  //     if (target.closest("#openCategoryDialogButton")) {
-  //       this.dialog.openDialog();
-  //     }
-
-  //     // Close category dialog
-  //     if (target.closest("#closeCategoryDialogButton")) {
-  //       this.dialog.closeDialog();
-  //     }
-  //   });
-  // }
-
-  // private bindAddCategoryButton(): void {
-  //   // Look for "Add Category" button in the UI
-  //   this.app.addEventListener("click", (e: Event) => {
-  //     const target = e.target as HTMLElement;
-
-  //     if (
-  //       target.closest(".add-category-btn") ||
-  //       target.closest("#addCategoryButton")
-  //     ) {
-  //       this.dialog.openDialog();
-  //     }
-  //   });
-  // }
 
   // private handleEditCategory(categoryId: string): void {
   //   this.dialog.editCategory(categoryId);
