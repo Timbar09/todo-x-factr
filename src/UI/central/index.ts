@@ -1,30 +1,27 @@
-// import Controller from "../../controller/CentralController";
-import FormUI from "../form";
-import { FormConfig } from "../form/types";
+import Controller from "../../controller/CentralController";
 import { formData } from "../form/data";
-
-export type ViewType = "home" | "templates" | "categories" | "analytics";
+import FormDialog, { ViewType } from "./FormDialog";
 
 export default class CentralUI {
   static instance = new CentralUI();
 
-  // private controller: Controller;
+  private controller: Controller;
   private currentView: ViewType = "home";
   private main: HTMLElement;
   private dragOutAppButton: HTMLElement;
   private app: HTMLElement;
-  private dialog: HTMLElement;
   private appHeaderButton: HTMLElement;
   private navButtons: NodeListOf<HTMLElement>;
+  private formDialog: FormDialog;
 
   constructor() {
-    // this.controller = Controller.instance;
+    this.controller = Controller.instance;
     this.main = document.getElementById("main")!;
     this.dragOutAppButton = this.main.querySelector("#dragOutAppButton")!;
     this.app = this.main.querySelector("#application")!;
-    this.dialog = this.getDialog()!;
     this.appHeaderButton = this.app.querySelector(".app__header--button")!;
     this.navButtons = this.main.querySelectorAll(".hero__nav--button")!;
+    this.formDialog = new FormDialog(this.main, this.controller);
     this.bindNavigationEvents();
   }
 
@@ -36,12 +33,7 @@ export default class CentralUI {
       toggleAppDragButton.addEventListener("click", this.toggleAppDrag);
     }
 
-    const toggleDialogButton = this.dialog.querySelector("#toggleDialogButton");
-    if (toggleDialogButton) {
-      toggleDialogButton.addEventListener("click", () => {
-        this.toggleDialog();
-      });
-    }
+    this.formDialog.bindToggleButton();
 
     this.navButtons.forEach(navButton => {
       navButton.addEventListener("click", () => {
@@ -64,15 +56,11 @@ export default class CentralUI {
   navigateTo(view: ViewType): void {
     if (this.currentView === view) return;
 
-    // Hide current view
     this.hideCurrentView();
-
-    // Show new view
     this.showView(view);
     this.currentView = view;
-    this.dragDownDialog();
+    this.formDialog.dragDownDialog();
 
-    // Trigger view change event
     window.dispatchEvent(
       new CustomEvent("viewChanged", {
         detail: { from: this.currentView, to: view },
@@ -103,7 +91,7 @@ export default class CentralUI {
       ? this.createDragAppButton()
       : this.createBackToHomeButton();
 
-    this.setDialogContent(view, formData[view]);
+    this.formDialog.setDialogContent(view, formData[view]);
   }
 
   private createDragAppButton(): void {
@@ -145,51 +133,13 @@ export default class CentralUI {
       });
   }
 
-  private setDialogContent(view: ViewType, formConfig: FormConfig): void {
-    const dialogContent = this.getDialogContent();
-
-    if (dialogContent) {
-      dialogContent.innerHTML = "";
-
-      this.dialog.dataset.dialog = view;
-
-      view === "home"
-        ? this.dialog.classList.add("dialog__home")
-        : this.dialog.classList.remove("dialog__home");
-
-      const form = new FormUI(formConfig);
-
-      form.renderInto(dialogContent);
-    }
-  }
-
   private dragOutApp = (): void => {
     this.app.classList.add("show");
   };
 
-  // private dragInApp = (): void => {
-  //   this.app.classList.remove("show");
-  // };
-
   private toggleAppDrag = (): void => {
     this.app.classList.toggle("show");
   };
-
-  private dragDownDialog = (): void => {
-    this.dialog.classList.add("hidden");
-  };
-
-  private toggleDialog = (): void => {
-    this.dialog.classList.toggle("hidden");
-  };
-
-  private getDialog(): HTMLElement | null {
-    return this.main.querySelector("#dialog");
-  }
-
-  private getDialogContent(): HTMLElement | null {
-    return this.dialog.querySelector(".dialog__content");
-  }
 
   getCurrentView(): ViewType {
     return this.currentView;

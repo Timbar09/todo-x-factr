@@ -1,4 +1,4 @@
-import { FormField, FormDataCollection } from "./types";
+import { FormField } from "./types";
 
 export const templateFieldsData: FormField[] = [
   {
@@ -53,32 +53,24 @@ export const formData = {
     title: "Create Custom Template",
     submitButtonText: "Create Template",
     fieldsData: templateFieldsData,
-    onSubmit: (rawData: FormDataCollection) => {
-      console.log("Template data submitted:", rawData);
-    },
+    onSubmit: () => {},
   },
   categories: {
     title: "Create Custom Category",
     submitButtonText: "Create Category",
     fieldsData: categoryFieldsData,
-    onSubmit: (rawData: FormDataCollection) => {
-      console.log("Category data submitted:", rawData);
-    },
+    onSubmit: () => {},
   },
   analytics: {
     title: "Create Custom Analytics",
     submitButtonText: "Create Analytics",
     fieldsData: [],
-    onSubmit: (rawData: FormDataCollection) => {
-      console.log("Analytics data submitted:", rawData);
-    },
+    onSubmit: () => {},
   },
   home: {
     title: "Create Custom Home",
     submitButtonText: "Create Home",
     fieldsData: [],
-    onSubmit: (rawData: FormDataCollection) => {
-      console.log("Home data submitted:", rawData);
-    },
+    onSubmit: () => {},
   },
 };

@@ -59,16 +59,6 @@
   display: none;
 }
 
-.app__view--home {
-  overflow-x: clip;
-  overflow-y: auto;
-}
-
-.app__view--templates,
-.app__view--category {
-  overflow: hidden;
-}
-
 .app__view--title {
   margin: 1em 0 0;
   font-size: 1.75em;
@@ -84,6 +74,22 @@
   font-weight: normal;
   color: var(--text-200);
   text-transform: uppercase;
+}
+
+.app__view--templates,
+.app__view--category {
+  overflow: hidden;
+}
+
+.app__view--home {
+  overflow-x: clip;
+  overflow-y: auto;
+}
+
+.app__view--home .category__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
 }
 
 .app__view--button__container {

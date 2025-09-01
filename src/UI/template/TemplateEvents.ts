@@ -95,6 +95,11 @@ export default class TemplateEvents {
     //   this.dialog.editTemplate(templateId);
     // });
 
+    window.addEventListener("templateAdded", (e: Event) => {
+      const { data } = (e as CustomEvent).detail;
+      this.onSelectTemplate(data.id);
+    });
+
     // Listen for delete template events
     window.addEventListener("deleteTemplate", (e: Event) => {
       const { templateId } = (e as CustomEvent).detail;
