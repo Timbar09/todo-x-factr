@@ -1,31 +1,25 @@
 import Controller from "../../controller/TemplateController";
-import TemplateDialog from "./TemplateDialog";
 
 export default class TemplateEvents {
   private controller: Controller;
   private menuContent: HTMLElement;
-  private dialog: TemplateDialog;
   private onRender: () => void;
   private onSelectTemplate: (templateId: string) => void;
 
   constructor(
     controller: Controller,
     menuContent: HTMLElement,
-    dialog: TemplateDialog,
     onRender: () => void,
     onSelectTemplate: (templateId: string) => void
   ) {
     this.controller = controller;
     this.menuContent = menuContent;
-    this.dialog = dialog;
     this.onRender = onRender;
     this.onSelectTemplate = onSelectTemplate;
   }
 
   bindEvents(): void {
     this.bindTemplateActions();
-    this.bindDialogEvents();
-    this.bindGlobalEvents();
     this.bindCustomEvents();
   }
 
@@ -50,40 +44,6 @@ export default class TemplateEvents {
         const templateId = templateButton.dataset.template!;
         this.onSelectTemplate(templateId);
         return;
-      }
-
-      // Handle add custom template button
-      const addButton = target.closest(
-        "#addCustomTemplate"
-      ) as HTMLButtonElement;
-      if (addButton) {
-        e.stopPropagation();
-        this.dialog.openDialog();
-        return;
-      }
-    });
-  }
-
-  private bindDialogEvents(): void {
-    // Drag up custom template dialog
-    const customDialogDragHandle = this.dialog
-      .getDialog()
-      .querySelector(".template__dialog--button__toggle") as HTMLButtonElement;
-
-    if (customDialogDragHandle) {
-      customDialogDragHandle.addEventListener("click", e => {
-        e.stopPropagation();
-        this.dialog.toggleDialog();
-      });
-    }
-  }
-
-  private bindGlobalEvents(): void {
-    window.addEventListener("viewChanged", (e: Event) => {
-      const { to } = (e as CustomEvent).detail;
-
-      if (to !== "templates") {
-        this.dialog.closeDialog();
       }
     });
   }
