@@ -65,7 +65,11 @@ export default class CentralController {
     if (task) {
       this.taskController.toggleCheckStatus(id);
 
-      const completedCount = this.taskController.getCompletedTasks().length;
+      const AllCompleted = this.taskController.getCompletedTasks();
+      const completedCount = AllCompleted.filter(
+        t => t.categoryId === task.categoryId
+      ).length;
+
       this.categoryController.toggleTaskCheckStatus(id, completedCount);
     }
   }
