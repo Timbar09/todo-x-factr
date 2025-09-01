@@ -59,8 +59,37 @@
   display: none;
 }
 
+.app__view--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app__view--button.button {
+  --dimension: 2.75em;
+
+  padding: 0;
+  height: var(--dimension);
+  width: var(--dimension);
+}
+
+.app__view--button span:first-child {
+  display: none;
+}
+
+@media (min-width: 60em) {
+  .app__view--button.button {
+    width: max-content;
+    padding: 0 1.25em;
+  }
+
+  .app__view--button span:first-child {
+    display: inline-block;
+  }
+}
+
 .app__view--title {
-  margin: 1em 0 0;
+  margin: 0;
   font-size: 1.75em;
   font-weight: 700;
 }

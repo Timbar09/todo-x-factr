@@ -9,12 +9,14 @@ export type ViewType = "home" | "templates" | "categories" | "analytics";
 export default class FormDialogManager {
   private main: HTMLElement;
   private dialog: HTMLElement;
+  private dragUpDialogButtons: NodeListOf<HTMLElement>;
   private controller: Controller;
 
   constructor(main: HTMLElement, controller: Controller) {
     this.main = main;
     this.controller = controller;
     this.dialog = this.getDialog()!;
+    this.dragUpDialogButtons = this.getDragUpDialogButtons()!;
   }
 
   setDialogContent(view: ViewType, formConfig: FormConfig): void {
@@ -155,6 +157,10 @@ export default class FormDialogManager {
     console.log(`Creating new analytics item:`, formData);
   }
 
+  private dragUpDialog(): void {
+    this.dialog.classList.remove("hidden");
+  }
+
   dragDownDialog(): void {
     this.dialog.classList.add("hidden");
   }
@@ -163,13 +169,22 @@ export default class FormDialogManager {
     this.dialog.classList.toggle("hidden");
   }
 
-  bindToggleButton(): void {
+  bindEvents(): void {
     const toggleDialogButton = this.dialog.querySelector("#toggleDialogButton");
     if (toggleDialogButton) {
       toggleDialogButton.addEventListener("click", () => {
         this.toggleDialog();
       });
     }
+
+    console.log(this.dragUpDialogButtons);
+
+    this.dragUpDialogButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        console.log("You clicked the DragUpDialog button!");
+        this.dragUpDialog();
+      });
+    });
   }
 
   private getDialog(): HTMLElement | null {
@@ -178,6 +193,10 @@ export default class FormDialogManager {
 
   private getDialogContent(): HTMLElement | null {
     return this.dialog.querySelector(".dialog__content");
+  }
+
+  private getDragUpDialogButtons(): NodeListOf<HTMLElement> | null {
+    return this.main.querySelectorAll(".app__view--button");
   }
 
   private getForm(): HTMLFormElement | null {

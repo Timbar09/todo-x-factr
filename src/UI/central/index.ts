@@ -33,7 +33,7 @@ export default class CentralUI {
       toggleAppDragButton.addEventListener("click", this.toggleAppDrag);
     }
 
-    this.formDialog.bindToggleButton();
+    this.formDialog.bindEvents();
 
     this.navButtons.forEach(navButton => {
       navButton.addEventListener("click", () => {

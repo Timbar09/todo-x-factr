@@ -224,53 +224,57 @@
             id="categoriesView"
             class="app__view app__view--categories hidden"
           >
-            <h2 class="app__view--title padding-x">Your Categories</h2>
+            <header class="app__view--header padding">
+              <h2 class="app__view--title">Your Categories</h2>
 
-            <ul id="categoryList" class="category__list padding">
+              <div class="app__view--actions">
+                <button
+                  id="addCustomTemplate"
+                  aria-label="Add custom template"
+                  class="button button__primary button__primary--bar app__view--button"
+                >
+                  <span>New Template</span>
+                  <span class="material-symbols-outlined">Add</span>
+                </button>
+              </div>
+            </header>
+
+            <ul id="categoryList" class="category__list padding-x">
               <!-- Categories are dynamically generated -->
             </ul>
-
-            <div class="category__actions padding-x">
-              <button
-                id="addCategoryButton"
-                class="button button__primary button__primary--bar category__button--entry"
-              >
-                <span>Add Category</span>
-                <span class="material-symbols-outlined">Keyboard_arrow_up</span>
-              </button>
-            </div>
-
-            <!-- Dialog content is dynamically generated -->
           </section>
 
           <section
             id="templatesView"
             class="app__view app__view--templates padding-x hidden"
           >
-            <h2 class="app__view--title">Choose a Template</h2>
+            <header class="app__view--header padding-y">
+              <h2 class="app__view--title">Choose a Template</h2>
+
+              <div class="app__view--actions">
+                <button
+                  id="addCustomTemplate"
+                  aria-label="Add custom template"
+                  class="button button__primary button__primary--bar app__view--button"
+                >
+                  <span>New Template</span>
+                  <span class="material-symbols-outlined">Add</span>
+                </button>
+              </div>
+            </header>
 
             <ul id="templateList" class="template__list">
               <!-- Menu content is dynamically generated -->
             </ul>
-
-            <div class="template__actions">
-              <button
-                id="addCustomTemplate"
-                class="button button__primary button__primary--bar template__button--entry"
-              >
-                <span>New Template</span>
-                <span class="material-symbols-outlined">Keyboard_arrow_up</span>
-              </button>
-            </div>
-
-            <!-- The dialog is dynamically generated -->
           </section>
 
           <section
             id="analyticsView"
             class="app__view app__view--analytics hidden"
           >
-            This is the analytics view
+            <header class="app__view--header padding">
+              <h2 class="app__view--title">Analytics</h2>
+            </header>
           </section>
 
           <div
