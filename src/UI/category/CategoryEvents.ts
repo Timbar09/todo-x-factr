@@ -29,6 +29,11 @@ export default class CategoryEvents {
       //   }
       // }
 
+      // Add category
+      window.addEventListener("categoryAdded", () => {
+        this.onRender();
+      });
+
       // Delete category
       if (target.closest(".category__delete-btn")) {
         const categoryId = target

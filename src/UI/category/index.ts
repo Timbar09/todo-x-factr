@@ -3,7 +3,6 @@ import Category from "../../model/Category.js";
 import CategoryRenderer from "./CategoryRenderer.js";
 import CategoryEvents from "./CategoryEvents.js";
 import { Observer } from "./types.js";
-import { FormDataCollection } from "../form/types.js";
 
 export default class CategoryUI implements Observer<Category> {
   static instance: CategoryUI = new CategoryUI(Controller.instance);
@@ -38,33 +37,10 @@ export default class CategoryUI implements Observer<Category> {
   }
 
   private init(): void {
-    this.setupUI();
     this.render();
     this.events.bindEvents();
     this.controller.category.addCategoryObserver(this);
   }
-
-  private setupUI(): void {
-    // Add dialog to app
-    // const dialog = this.dialog.createDialog();
-    // this.app.appendChild(dialog);
-    // Add "Add Category" button if it doesn't exist
-    // this.addCategoryButton();
-  }
-
-  // private addCategoryButton(): void {
-  //   // Look for category section header to add button
-  //   const categoryHeader = this.app.querySelector(".app__category--header");
-  //   if (categoryHeader && !categoryHeader.querySelector(".add-category-btn")) {
-  //     const addButton = document.createElement("button");
-  //     addButton.className = "add-category-btn button button__primary";
-  //     addButton.innerHTML = `
-  //       <span class="material-symbols-outlined">add</span>
-  //       Add Category
-  //     `;
-  //     categoryHeader.appendChild(addButton);
-  //   }
-  // }
 
   // Observer implementation
   update(category: Category): void {
@@ -85,48 +61,5 @@ export default class CategoryUI implements Observer<Category> {
 
   public refreshDisplay(): void {
     this.render();
-  }
-
-  // ✅ Handle form submissions
-  private handleFormSubmit(data: FormDataCollection): void {
-    const form = this.app.querySelector(
-      "#categoryDialog .form"
-    ) as HTMLFormElement;
-
-    if (form?.dataset.mode === "edit") {
-      const categoryId = form.dataset.itemId;
-      if (categoryId) {
-        this.handleFormUpdate(categoryId, data);
-      }
-    } else {
-      this.handleFormCreate(data);
-    }
-
-    this.render();
-  }
-
-  private handleFormCreate(data: FormDataCollection): void {
-    const { name, color } = data;
-    const category = new Category(
-      crypto.randomUUID(),
-      name,
-      color,
-      [], // empty tasks array
-      0
-    );
-
-    this.controller.category.add(category);
-  }
-
-  private handleFormUpdate(id: string, data: FormDataCollection): void {
-    const { name, color } = data;
-    const category = this.controller.category.findById(id);
-
-    if (category) {
-      category.name = name;
-      category.color = color;
-
-      this.controller.category.update(category);
-    }
   }
 }

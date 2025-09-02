@@ -149,6 +149,9 @@
   place-items: center;
   border: 0;
   height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background-color: inherit;
 }
 
 .dialog__container.hidden {
@@ -166,6 +169,7 @@
   border-radius: inherit;
   height: 3.5em;
   background-color: inherit;
+  z-index: 1;
   transition:
     height 400ms ease-in-out,
     background-color 400ms ease-in-out;
