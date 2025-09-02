@@ -159,6 +159,7 @@ export default class FormUI {
 
   createColorField(formField: HTMLDivElement, fieldData: FormField): void {
     const { name, label, value } = fieldData;
+    const randomColor = this.generateRandomColor();
 
     formField.innerHTML = `
       <label for="${name}" class="form__field--label">${label}</label>
@@ -167,7 +168,7 @@ export default class FormUI {
         type="color" 
         name="${name}" 
         id="${name}"
-        value="${value}"
+        value="${value || randomColor}"
       >
     `;
   }
@@ -354,6 +355,15 @@ export default class FormUI {
         }
       }
     });
+  }
+
+  private generateRandomColor(): string {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
   reset() {

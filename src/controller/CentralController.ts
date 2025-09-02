@@ -119,11 +119,6 @@ export default class CentralController {
     categoryName: string,
     categoryColor: string = ""
   ): void {
-    // If category color is an empty string, generate a random color
-    if (!categoryColor) {
-      categoryColor = this.generateRandomColor();
-    }
-
     // Create category first
     const category = new Category(
       crypto.randomUUID(),
@@ -211,14 +206,5 @@ export default class CentralController {
       category.removeTask(task);
       this.categoryController.update(category);
     }
-  }
-
-  private generateRandomColor(): string {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   }
 }
