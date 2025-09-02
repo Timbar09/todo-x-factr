@@ -1,8 +1,8 @@
 import FormUI from "../form";
 import { FormConfig, FormDataCollection } from "../form/types";
 import Controller from "../../controller/CentralController";
-import Template from "../../model/Template";
-import TemplateUtils from "../template/TemplateUtils";
+import { TemplateFormHandler } from "./TemplateFormHandler";
+import { CategoryFormHandler } from "./CategoryFormHandler";
 
 export type ViewType = "home" | "templates" | "categories" | "analytics";
 
@@ -12,11 +12,17 @@ export default class FormDialogManager {
   private dragUpDialogButtons: NodeListOf<HTMLElement>;
   private controller: Controller;
 
+  private templateFormHandler: TemplateFormHandler;
+  private categoryFormHandler: CategoryFormHandler;
+
   constructor(main: HTMLElement, controller: Controller) {
     this.main = main;
     this.controller = controller;
     this.dialog = this.getDialog()!;
     this.dragUpDialogButtons = this.getDragUpDialogButtons()!;
+
+    this.templateFormHandler = new TemplateFormHandler(controller);
+    this.categoryFormHandler = new CategoryFormHandler(controller);
   }
 
   setDialogContent(view: ViewType, formConfig: FormConfig): void {
@@ -41,120 +47,21 @@ export default class FormDialogManager {
   }
 
   private handleFormSubmit(view: ViewType, formData: FormDataCollection): void {
-    const form = this.getForm();
+    const form = this.getForm()!;
+    const itemId = form?.dataset.itemId || "";
 
-    if (form?.dataset.mode === "edit") {
-      this.handleFormUpdate(view, form, formData);
-    } else {
-      this.handleFormCreate(view, formData);
+    switch (view) {
+      case "templates":
+        this.templateFormHandler.handleSubmit(itemId, form, formData);
+        break;
+      case "categories":
+        this.categoryFormHandler.handleSubmit(itemId, form, formData);
+        break;
+      default:
+        console.warn(`The view "${view}" does not support form submissions.`);
     }
 
     this.dragDownDialog();
-  }
-
-  private handleFormUpdate(
-    view: ViewType,
-    form: HTMLFormElement,
-    formData: FormDataCollection
-  ): void {
-    const itemId = form.dataset.itemId;
-    if (itemId) {
-      switch (view) {
-        case "home":
-          console.log(`Updating home item ${itemId}:`, formData);
-          break;
-        case "templates":
-          this.handleTemplateUpdate(itemId, formData);
-          break;
-        case "categories":
-          this.handleCategoryUpdate(itemId, formData);
-          break;
-        case "analytics":
-          this.handleAnalyticsUpdate(itemId, formData);
-          break;
-        default:
-          console.log(`Updating item ${itemId}:`, formData);
-      }
-    }
-  }
-
-  private handleTemplateUpdate(
-    itemId: string,
-    formData: FormDataCollection
-  ): void {
-    const { templateName, primaryColor, textColor, bgColor } = formData;
-
-    const colors = TemplateUtils.createColorScheme(
-      primaryColor,
-      textColor,
-      bgColor
-    );
-
-    const template = this.controller.template.findById(itemId);
-    if (template) {
-      template.name = templateName;
-      template.colors = colors;
-      this.controller.template.update(template);
-    }
-  }
-
-  private handleCategoryUpdate(
-    itemId: string,
-    formData: FormDataCollection
-  ): void {
-    console.log(`Updating category item ${itemId}:`, formData);
-  }
-
-  private handleAnalyticsUpdate(
-    itemId: string,
-    formData: FormDataCollection
-  ): void {
-    console.log(`Updating analytics item ${itemId}:`, formData);
-  }
-
-  private handleFormCreate(view: ViewType, formData: FormDataCollection): void {
-    switch (view) {
-      case "home":
-        console.log(`Creating new home item:`, formData);
-        break;
-      case "templates":
-        this.handleTemplateCreate(formData);
-        break;
-      case "categories":
-        this.handleCategoryCreate(formData);
-        break;
-      case "analytics":
-        this.handleAnalyticsCreate(formData);
-        break;
-      default:
-        console.log(`Creating new ${view} item:`, formData);
-    }
-  }
-
-  private handleTemplateCreate(formData: FormDataCollection): void {
-    const { templateName, primaryColor, textColor, bgColor } = formData;
-
-    const colors = TemplateUtils.createColorScheme(
-      primaryColor,
-      textColor,
-      bgColor
-    );
-
-    const template = new Template(
-      crypto.randomUUID(),
-      false,
-      templateName,
-      colors
-    );
-    this.controller.template.add(template);
-  }
-
-  private handleCategoryCreate(formData: FormDataCollection): void {
-    console.log(`Creating new category item:`, formData);
-  }
-
-  private handleAnalyticsCreate(formData: FormDataCollection): void {
-    console.log(`Creating new analytics item:`, formData);
   }
 
   private dragUpDialog(): void {
