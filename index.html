@@ -280,13 +280,11 @@
           </section>
 
           <div
-            id="dialog"
-            class="dialog dialog__home hidden"
-            aria-hidden="true"
-            role="dialog"
+            id="dialogContainer"
+            class="dialog__container dialog__home hidden"
             data-dialog=""
           >
-            <header class="dialog__header">
+            <div class="dialog__dragButton--container">
               <button
                 id="toggleDialogButton"
                 class="dialog__dragButton button button__round"
@@ -294,11 +292,19 @@
               >
                 <span class="material-symbols-outlined">drag_handle</span>
               </button>
-            </header>
-
-            <div class="dialog__content padding">
-              <!-- Dialog content goes here -->
             </div>
+
+            <dialog
+              id="dialog"
+              class="dialog"
+              role="dialog"
+              aria-modal="true"
+              inert
+            >
+              <div class="dialog__content padding">
+                <!-- Dialog content goes here -->
+              </div>
+            </dialog>
           </div>
         </main>
       </div>

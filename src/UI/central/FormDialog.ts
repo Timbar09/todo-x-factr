@@ -27,9 +27,9 @@ export default class FormDialogManager {
 
       this.dialog.dataset.dialog = view;
 
-      view === "home"
-        ? this.dialog.classList.add("dialog__home")
-        : this.dialog.classList.remove("dialog__home");
+      view === "home" || view === "analytics"
+        ? this.dialog.classList.add("dialog__none")
+        : this.dialog.classList.remove("dialog__none");
 
       formConfig.onSubmit = (data: FormDataCollection) => {
         this.handleFormSubmit(view, data);
@@ -158,15 +158,23 @@ export default class FormDialogManager {
   }
 
   private dragUpDialog(): void {
+    const dialogElement = this.getDialogElement();
+
     this.dialog.classList.remove("hidden");
+    dialogElement?.removeAttribute("inert");
   }
 
   dragDownDialog(): void {
+    const dialogElement = this.getDialogElement();
+
     this.dialog.classList.add("hidden");
+    dialogElement?.setAttribute("inert", "");
   }
 
   toggleDialog(): void {
-    this.dialog.classList.toggle("hidden");
+    const isHidden = this.dialog.classList.contains("hidden");
+
+    isHidden ? this.dragUpDialog() : this.dragDownDialog();
   }
 
   bindEvents(): void {
@@ -188,7 +196,11 @@ export default class FormDialogManager {
   }
 
   private getDialog(): HTMLElement | null {
-    return this.main.querySelector("#dialog");
+    return this.main.querySelector("#dialogContainer");
+  }
+
+  private getDialogElement(): HTMLElement | null {
+    return this.dialog.querySelector(".dialog");
   }
 
   private getDialogContent(): HTMLElement | null {

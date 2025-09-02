@@ -127,7 +127,7 @@
   bottom: 2em;
 }
 
-.dialog {
+.dialog__container {
   position: fixed;
   height: 100%;
   border-radius: var(--radius-100);
@@ -138,24 +138,29 @@
   left: 0;
   scale: 1;
   width: 100%;
-  display: grid;
-  place-items: center;
   transition:
     top 400ms ease-in-out,
     scale 400ms ease-in-out,
     border-radius 400ms ease-in-out;
 }
 
-.dialog.hidden {
+.dialog {
+  display: grid;
+  place-items: center;
+  border: 0;
+  height: 100%;
+}
+
+.dialog__container.hidden {
   top: 80%;
   scale: 0.85;
 }
 
-.dialog__home {
+.dialog__none {
   display: none;
 }
 
-.dialog__header {
+.dialog__dragButton--container {
   position: absolute;
   inset: 0 0 2em 0;
   border-radius: inherit;
@@ -166,7 +171,7 @@
     background-color 400ms ease-in-out;
 }
 
-.dialog.hidden .dialog__header {
+.dialog__container.hidden .dialog__dragButton--container {
   height: 100%;
 }
 
