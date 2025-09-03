@@ -1,5 +1,6 @@
 export interface MoreMenuOption {
   id: string;
+  itemId?: string;
   label: string;
   icon?: string;
   onClick?: (event: MouseEvent) => void;
@@ -56,13 +57,18 @@ export default class MoreMenuController {
       <menu class="more__options--menu__list closed" role="menu" aria-hidden="true">
         ${options
           .map(option => {
+            const isEditOption = option.label.includes("Edit");
+            const editClass = isEditOption ? "item__edit" : "";
+            const itemId = option.itemId ? option.itemId : null;
+
             return `
           <li class="more__options--menu__item" role="none">
             <button 
               id="${option.id}"
-              class="more__options--menu__option" 
+              class="more__options--menu__option ${editClass}" 
               role="menuitem"
               aria-label="${option.label}"
+              data-item-id="${itemId}"
             >
               ${option.icon ? `<span class="material-symbols-outlined">${option.icon}</span>` : ""}
               ${option.label}

@@ -10,6 +10,7 @@ export default class FormDialogManager {
   private main: HTMLElement;
   private dialog: HTMLElement;
   private dragUpDialogButtons: NodeListOf<HTMLElement>;
+  private form: FormUI | null;
   private controller: Controller;
 
   private templateFormHandler: TemplateFormHandler;
@@ -20,6 +21,8 @@ export default class FormDialogManager {
     this.controller = controller;
     this.dialog = this.getDialog()!;
     this.dragUpDialogButtons = this.getDragUpDialogButtons()!;
+
+    this.form = null;
 
     this.templateFormHandler = new TemplateFormHandler(controller);
     this.categoryFormHandler = new CategoryFormHandler(controller);
@@ -41,8 +44,8 @@ export default class FormDialogManager {
         this.handleFormSubmit(view, data);
       };
 
-      const form = new FormUI(formConfig);
-      form.renderInto(dialogContent);
+      this.form = new FormUI(formConfig);
+      this.form.renderInto(dialogContent);
     }
   }
 
@@ -92,14 +95,44 @@ export default class FormDialogManager {
       });
     }
 
-    console.log(this.dragUpDialogButtons);
-
     this.dragUpDialogButtons.forEach(button => {
       button.addEventListener("click", () => {
-        console.log("You clicked the DragUpDialog button!");
         this.dragUpDialog();
       });
     });
+
+    this.getApp()?.addEventListener("click", event => {
+      const target = event.target as HTMLElement;
+
+      if (target.classList.contains("item__edit")) {
+        const view = this.getDialog()?.dataset.dialog;
+
+        if (!view && !target.dataset.itemId) return;
+
+        let itemController;
+
+        switch (view) {
+          case "templates":
+            itemController = this.controller.template;
+            break;
+          case "categories":
+            itemController = this.controller.category;
+            break;
+          default:
+            console.warn(`The view "${view}" does not support item editing.`);
+        }
+
+        const item = itemController?.findById(target.dataset.itemId!);
+
+        this.dragUpDialog();
+        this.form?.editItem(item);
+      }
+    });
+  }
+
+  // HTML Element Getters
+  private getApp(): HTMLElement | null {
+    return document.querySelector("#application");
   }
 
   private getDialog(): HTMLElement | null {

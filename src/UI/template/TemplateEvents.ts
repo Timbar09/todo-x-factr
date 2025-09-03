@@ -28,13 +28,13 @@ export default class TemplateEvents {
       const target = e.target as Element;
 
       // ✅ CRITICAL: Check for MoreMenu clicks first and let them bubble
-      const isMoreMenuClick = target.closest(".more__options");
-      if (isMoreMenuClick) {
-        console.log(
-          "MoreMenu click detected in TemplateUI - letting MoreMenuController handle it"
-        );
-        return;
-      }
+      // const isMoreMenuClick = target.closest(".more__options");
+      // if (isMoreMenuClick) {
+      //   console.log(
+      //     "MoreMenu click detected in TemplateUI - letting MoreMenuController handle it"
+      //   );
+      //   return;
+      // }
 
       // Handle template selection
       const templateButton = target.closest(

@@ -94,15 +94,18 @@ export default class TemplateRenderer {
   }
 
   private createTemplateMenu(templateId: string): HTMLElement {
+    const template = this.controller.findById(templateId);
+
     const menuConfig: MoreMenuConfig = {
       options: [
         {
           id: "editTemplateButton",
+          itemId: templateId,
           label: "Edit Template",
           onClick: () =>
             window.dispatchEvent(
-              new CustomEvent("editTemplate", {
-                detail: { templateId },
+              new CustomEvent("editItem", {
+                detail: { item: template },
               })
             ),
         },

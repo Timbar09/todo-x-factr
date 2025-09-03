@@ -230,7 +230,7 @@ export default class FormUI {
     }
   }
 
-  public editItem(item: any): void {
+  editItem(item: any): void {
     if (item) {
       this.currentItemId = item.id;
       this.mode = "edit";
@@ -242,12 +242,17 @@ export default class FormUI {
     const submitButton = this.form.querySelector(
       "[type='submit'] span"
     ) as HTMLSpanElement;
+    console.log(submitButton.innerText);
     if (submitButton) {
-      submitButton.innerText = this.submitButtonText.replace("Add", "Update");
+      submitButton.innerText = this.submitButtonText.replace(
+        "Create",
+        "Update"
+      );
     }
+    console.log(submitButton.innerText);
   }
 
-  public resetToCreateMode(): void {
+  resetToCreateMode(): void {
     this.currentItemId = undefined;
     this.mode = "create";
     this.form.dataset.mode = "create";
@@ -260,14 +265,16 @@ export default class FormUI {
     }
   }
 
-  private populateFormForEdit(data: Record<string, any>): void {
+  private populateFormForEdit(item: any): void {
     this.fieldsData.forEach(fieldData => {
       const input = this.form.elements.namedItem(
         fieldData.name
       ) as HTMLInputElement;
 
       if (input) {
-        const value = data[fieldData.name];
+        const value = this.getValueFromItem(item, fieldData.name);
+
+        console.log(fieldData);
 
         if (input.type === "hidden") {
           this.populateCustomSelectField(fieldData, value);
@@ -298,6 +305,30 @@ export default class FormUI {
           label.classList.remove("offscreen");
         }
       }
+    }
+  }
+
+  private getValueFromItem(item: any, fieldName: string): string {
+    switch (fieldName) {
+      // Template fields
+      case "templateName":
+        return item.name || "";
+      case "primaryColor":
+        return item.colors?.primary || "";
+      case "textColor":
+        return item.colors?.["text-100"] || "";
+      case "bgColor":
+        return item.colors?.["bg-100"] || "";
+
+      // Category fields
+      case "categoryName":
+        return item.name || "";
+      case "categoryColor":
+        return item.color || "";
+
+      // Default: try direct property access
+      default:
+        return item[fieldName] || "";
     }
   }
 
