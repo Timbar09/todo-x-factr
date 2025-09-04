@@ -56,7 +56,6 @@ export default class FormDialogManager {
         this.handleFormSubmit(view, data);
       };
 
-      console.log(formConfig);
       this.form = new FormUI(formConfig);
       this.form.renderInto(dialogContent);
     }
@@ -143,6 +142,9 @@ export default class FormDialogManager {
         let itemController;
 
         switch (view) {
+          case "home":
+            itemController = this.controller.task;
+            break;
           case "templates":
             itemController = this.controller.template;
             break;

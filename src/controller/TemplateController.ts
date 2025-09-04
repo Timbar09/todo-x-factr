@@ -91,7 +91,6 @@ export default class TemplateController extends ApplicationController<Template> 
     }
 
     this._activeTemplate = template;
-    console.log("Setting active template to:", template);
 
     // ✅ Only apply if template has proper structure
     if (template.colors) {

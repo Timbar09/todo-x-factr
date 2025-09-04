@@ -242,14 +242,13 @@ export default class FormUI {
     const submitButton = this.form.querySelector(
       "[type='submit'] span"
     ) as HTMLSpanElement;
-    console.log(submitButton.innerText);
+
     if (submitButton) {
       submitButton.innerText = this.submitButtonText.replace(
         "Create",
         "Update"
       );
     }
-    console.log(submitButton.innerText);
   }
 
   resetToCreateMode(): void {
@@ -273,8 +272,6 @@ export default class FormUI {
 
       if (input) {
         const value = this.getValueFromItem(item, fieldData.name);
-
-        console.log(fieldData);
 
         if (input.type === "hidden") {
           this.populateCustomSelectField(fieldData, value);
@@ -310,6 +307,12 @@ export default class FormUI {
 
   private getValueFromItem(item: any, fieldName: string): string {
     switch (fieldName) {
+      // home fields
+      case "taskTitle":
+        return item.title || "";
+      case "categoryId":
+        return item.categoryId || "";
+
       // Template fields
       case "templateName":
         return item.name || "";
