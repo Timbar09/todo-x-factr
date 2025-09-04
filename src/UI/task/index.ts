@@ -32,7 +32,9 @@ export default class TaskUI {
 
     this.renderer = new TaskRenderer(this.controller, this.menu);
 
-    this.events = new TaskEvents(this.app, this.controller);
+    this.events = new TaskEvents(this.app, this.controller, () =>
+      this.render()
+    );
 
     this.init();
   }

@@ -3,10 +3,12 @@ import Controller from "../../controller/CentralController";
 export default class TaskEvents {
   private controller: Controller;
   private app: HTMLElement;
+  private onRender: () => void;
 
-  constructor(app: HTMLElement, controller: Controller) {
+  constructor(app: HTMLElement, controller: Controller, onRender: () => void) {
     this.app = app;
     this.controller = controller;
+    this.onRender = onRender;
   }
 
   bindEvents(): void {
@@ -15,13 +17,15 @@ export default class TaskEvents {
       const taskItem = target.closest(".task__item") as HTMLElement;
       const taskId = taskItem?.dataset.taskId;
 
-      if (!taskId) return;
-
-      // Checkbox toggle
-      if (target.matches(".task__item--label__checkbox")) {
-        this.controller.toggleTaskCheckStatus(taskId);
-        // this.onRender();
+      if (taskId) {
+        if (target.matches(".task__item--label__checkbox")) {
+          this.controller.toggleTaskCheckStatus(taskId);
+        }
       }
+
+      window.addEventListener("taskAdded", () => {
+        this.onRender();
+      });
     });
   }
 }

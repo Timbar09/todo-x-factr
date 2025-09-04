@@ -3,6 +3,7 @@ import { FormConfig, FormDataCollection } from "../form/types";
 import Controller from "../../controller/CentralController";
 import { TemplateFormHandler } from "./TemplateFormHandler";
 import { CategoryFormHandler } from "./CategoryFormHandler";
+import { TaskFormHandler } from "./TaskFormHandler";
 
 export type ViewType = "home" | "templates" | "categories" | "analytics";
 
@@ -15,6 +16,7 @@ export default class FormDialogManager {
 
   private templateFormHandler: TemplateFormHandler;
   private categoryFormHandler: CategoryFormHandler;
+  private taskFormHandler: TaskFormHandler;
 
   constructor(main: HTMLElement, controller: Controller) {
     this.main = main;
@@ -26,6 +28,7 @@ export default class FormDialogManager {
 
     this.templateFormHandler = new TemplateFormHandler(controller);
     this.categoryFormHandler = new CategoryFormHandler(controller);
+    this.taskFormHandler = new TaskFormHandler(controller);
   }
 
   setDialogContent(view: ViewType, formConfig: FormConfig): void {
@@ -64,6 +67,9 @@ export default class FormDialogManager {
     const itemId = form?.dataset.itemId || "";
 
     switch (view) {
+      case "home":
+        this.taskFormHandler.handleSubmit(itemId, form, formData);
+        break;
       case "templates":
         this.templateFormHandler.handleSubmit(itemId, form, formData);
         break;
