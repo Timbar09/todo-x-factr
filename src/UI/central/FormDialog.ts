@@ -36,9 +36,18 @@ export default class FormDialogManager {
 
       this.dialog.dataset.dialog = view;
 
-      view === "analytics"
-        ? this.dialog.classList.add("dialog__none")
-        : this.dialog.classList.remove("dialog__none");
+      switch (view) {
+        case "analytics":
+          this.dialog.classList.add("dialog__none");
+          break;
+        case "home":
+          this.dialog.classList.remove("dialog__none", "dialog__default");
+          this.dialog.classList.add("dialog__home");
+          break;
+        default:
+          this.dialog.classList.remove("dialog__none", "dialog__home");
+          this.dialog.classList.add("dialog__default");
+      }
 
       formConfig.onSubmit = (data: FormDataCollection) => {
         this.handleFormSubmit(view, data);
@@ -69,17 +78,32 @@ export default class FormDialogManager {
   }
 
   private dragUpDialog(): void {
-    const dialogElement = this.getDialogElement();
+    const dialog = this.getDialog()!;
+    const dialogElement = this.getDialogElement()!;
 
-    this.dialog.classList.remove("hidden");
-    dialogElement?.removeAttribute("inert");
+    if (dialog.classList.contains("dialog__home")) {
+      this.dialog.classList.remove("closed", "hidden");
+      this.dialog.classList.add("open");
+    } else {
+      this.dialog.classList.remove("hidden", "closed", "open");
+    }
+
+    dialogElement.removeAttribute("inert");
   }
 
   dragDownDialog(): void {
-    const dialogElement = this.getDialogElement();
+    const dialog = this.getDialog()!;
+    const dialogElement = this.getDialogElement()!;
 
-    this.dialog.classList.add("hidden");
-    dialogElement?.setAttribute("inert", "");
+    if (dialog.classList.contains("dialog__home")) {
+      this.dialog.classList.remove("open", "hidden");
+      this.dialog.classList.add("closed");
+    } else {
+      this.dialog.classList.remove("closed", "open");
+      this.dialog.classList.add("hidden");
+    }
+
+    dialogElement.setAttribute("inert", "");
   }
 
   toggleDialog(): void {
