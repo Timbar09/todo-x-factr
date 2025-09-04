@@ -1,4 +1,13 @@
+import CentralController from "../../controller/CentralController";
 import { FormField } from "./types";
+
+const controller = CentralController.instance;
+
+const taskSelectOptions = controller.category.list.map(category => ({
+  name: category.name,
+  value: category.id,
+  variables: [],
+}));
 
 export const templateFieldsData: FormField[] = [
   {
@@ -48,6 +57,22 @@ export const categoryFieldsData: FormField[] = [
   },
 ];
 
+export const taskFieldsData: FormField[] = [
+  {
+    label: "Task Title",
+    name: "title",
+    required: true,
+    placeholder: "Enter task title",
+  },
+  {
+    label: "Category",
+    name: "categoryId",
+    type: "select",
+    placeholder: "Select Task Category",
+    options: taskSelectOptions,
+  },
+];
+
 export const formData = {
   templates: {
     title: "Create Custom Template",
@@ -68,9 +93,9 @@ export const formData = {
     onSubmit: () => {},
   },
   home: {
-    title: "Create Custom Home",
-    submitButtonText: "Create Home",
-    fieldsData: [],
+    title: "Create New Task",
+    submitButtonText: "Create Task",
+    fieldsData: taskFieldsData,
     onSubmit: () => {},
   },
 };

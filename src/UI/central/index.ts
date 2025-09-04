@@ -22,6 +22,7 @@ export default class CentralUI {
     this.appHeaderButton = this.app.querySelector(".app__header--button")!;
     this.navButtons = this.main.querySelectorAll(".hero__nav--button")!;
     this.formDialog = new FormDialog(this.main, this.controller);
+    this.showView(this.currentView);
     this.bindNavigationEvents();
   }
 

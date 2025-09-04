@@ -36,7 +36,7 @@ export default class FormDialogManager {
 
       this.dialog.dataset.dialog = view;
 
-      view === "home" || view === "analytics"
+      view === "analytics"
         ? this.dialog.classList.add("dialog__none")
         : this.dialog.classList.remove("dialog__none");
 
@@ -44,6 +44,7 @@ export default class FormDialogManager {
         this.handleFormSubmit(view, data);
       };
 
+      console.log(formConfig);
       this.form = new FormUI(formConfig);
       this.form.renderInto(dialogContent);
     }
