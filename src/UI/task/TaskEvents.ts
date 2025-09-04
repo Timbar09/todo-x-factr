@@ -15,7 +15,7 @@ export default class TaskEvents {
     this.app.addEventListener("click", (e: Event) => {
       const target = e.target as HTMLElement;
       const taskItem = target.closest(".task__item") as HTMLElement;
-      const taskId = taskItem?.dataset.taskId;
+      const taskId = taskItem?.dataset.itemId;
 
       if (taskId) {
         if (target.matches(".task__item--label__checkbox")) {
@@ -24,6 +24,10 @@ export default class TaskEvents {
       }
 
       window.addEventListener("taskAdded", () => {
+        this.onRender();
+      });
+
+      window.addEventListener("taskUpdated", () => {
         this.onRender();
       });
     });

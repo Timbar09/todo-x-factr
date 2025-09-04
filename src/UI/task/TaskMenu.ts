@@ -54,6 +54,7 @@ export default class TaskMenu {
       options: [
         {
           id: "openTaskEditButton",
+          itemId: taskId,
           label: "Edit task",
           onClick: () => {
             this.onEdit(taskId);
@@ -61,6 +62,7 @@ export default class TaskMenu {
         },
         {
           id: "deleteTaskButton",
+          itemId: taskId,
           label: "Delete task",
           onClick: () => {
             this.onDelete(taskId);

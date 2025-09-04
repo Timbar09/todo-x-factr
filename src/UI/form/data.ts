@@ -60,7 +60,7 @@ export const categoryFieldsData: FormField[] = [
 export const taskFieldsData: FormField[] = [
   {
     label: "Task Title",
-    name: "title",
+    name: "taskTitle",
     required: true,
     placeholder: "Enter task title",
   },

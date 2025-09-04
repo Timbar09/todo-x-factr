@@ -29,7 +29,7 @@ export default class TaskRenderer {
 
     const li = document.createElement("li");
     li.className = "task__item";
-    li.setAttribute("data-task-id", task.id);
+    li.setAttribute("data-item-id", task.id);
 
     li.innerHTML = `
       <label for="${task.id}" class="task__item--label">
