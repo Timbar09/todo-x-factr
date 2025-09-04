@@ -121,6 +121,17 @@
   gap: 1em;
 }
 
+.app__view--categories .category__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.app__view--categories .category__list .category__item {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
 .app__view--button__container {
   position: fixed;
   right: 2em;

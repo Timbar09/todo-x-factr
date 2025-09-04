@@ -63,17 +63,25 @@ export default class CategoryRenderer {
         </span>        
         `
       }
-      
-      <h4 class="category__item--title">${category.name}</h4>
-      
+      <h4 class="category__item--title">
+        ${category.name} ${isInView ? `(${category.tasks.length})` : ""}
+      </h4>
+
+      <div class="category__item--actions"></div>
       </header>
     `;
 
-    const itemHeader = li.querySelector(".category__item--header");
+    const actions = li.querySelector(".category__item--actions");
+    const progressCircle = this.createProgressCircle(
+      category.id,
+      previousCompletion,
+      currentCompletion
+    );
     const menu = this.createCategoryMenu(category.id);
-    console.log(isInView);
-    if (itemHeader && isInView) {
-      itemHeader.appendChild(menu);
+
+    if (actions && menu && isInView) {
+      actions.appendChild(progressCircle);
+      actions.appendChild(menu);
     }
 
     const progressBar = this.createProgressBar(
@@ -81,7 +89,10 @@ export default class CategoryRenderer {
       previousCompletion,
       currentCompletion
     );
-    li.appendChild(progressBar);
+
+    if (!isInView && progressBar) {
+      li.appendChild(progressBar);
+    }
 
     return li;
   }
@@ -106,6 +117,64 @@ export default class CategoryRenderer {
     this.previousCompletions.set(categoryId, currentCompletion);
 
     return progressBar;
+  }
+
+  private createProgressCircle(
+    categoryId: string,
+    previousCompletion: number,
+    currentCompletion: number
+  ): HTMLElement {
+    const progressCircle = document.createElement("div");
+    progressCircle.className = "category__item--progressCircle";
+    progressCircle.style.setProperty(
+      "--previous-progress",
+      `${previousCompletion}%`
+    );
+    progressCircle.style.setProperty("--progress", `${currentCompletion}%`);
+    progressCircle.title = `${currentCompletion}% task completion`;
+
+    const radius = 18;
+    const stroke = 2;
+    const circumference = stroke * Math.PI * radius;
+    const progressOffset =
+      circumference - (currentCompletion / 100) * circumference;
+
+    progressCircle.innerHTML = `
+      <span class="category__item--progressCircle__completion">
+        ${currentCompletion}%
+      </span>
+      
+      <svg 
+        width="40" 
+        height="40" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle 
+          cx="${radius + stroke}" 
+          cy="${radius + stroke}" 
+          r="${radius}" 
+          stroke="currentColor" 
+          stroke-width="${stroke}" 
+          fill="transparent" />
+      </svg>
+      
+      <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+        <circle 
+          cx="${radius + stroke}" 
+          cy="${radius + stroke}" 
+          r="${radius}" 
+          stroke="currentColor" 
+          stroke-width="${stroke}" 
+          fill="transparent"
+          stroke-linecap="round"
+          stroke-dasharray="${circumference}"
+          stroke-dashoffset="${progressOffset}" />
+      </svg>
+    `;
+
+    this.previousCompletions.set(categoryId, currentCompletion);
+
+    return progressCircle;
   }
 
   private createCategoryMenu(categoryId: string): HTMLElement {
