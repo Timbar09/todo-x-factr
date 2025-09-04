@@ -1,36 +1,23 @@
-import Task from "../../model/Task";
 import Controller from "../../controller/CentralController";
 import TaskRenderer from "./TaskRenderer";
 import TaskEvents from "./TaskEvents";
-import TaskMenu from "./TaskMenu";
-import { FormDataCollection } from "../form/types";
 
 export default class TaskUI {
   static instance: TaskUI = new TaskUI();
 
   private controller: Controller;
   private app: HTMLElement;
-  private ul: HTMLUListElement;
 
   // Composed parts
   private renderer: TaskRenderer;
   private events: TaskEvents;
-  private menu: TaskMenu;
 
   constructor() {
     this.controller = Controller.instance;
     this.app = document.getElementById("application") as HTMLElement;
-    this.ul = document.getElementById("todayTaskList") as HTMLUListElement;
 
     // Initialize composed parts
-    this.menu = new TaskMenu(
-      this.controller,
-      taskId => this.editTask(taskId),
-      taskId => this.deleteTask(taskId),
-      () => this.render()
-    );
-
-    this.renderer = new TaskRenderer(this.controller, this.menu);
+    this.renderer = new TaskRenderer(this.controller);
 
     this.events = new TaskEvents(this.app, this.controller, () =>
       this.render()
@@ -40,68 +27,11 @@ export default class TaskUI {
   }
 
   private init(): void {
-    this.setupUI();
     this.render();
     this.events.bindEvents();
   }
 
-  private setupUI(): void {
-    // Add header menu
-    const header = this.app.querySelector(
-      ".task__list--today__header"
-    ) as HTMLElement;
-    const headerMenu = this.menu.createTaskListHeaderMenu();
-    header.appendChild(headerMenu);
-  }
-
   render(): void {
-    this.renderer.renderTaskList(this.ul);
-  }
-
-  private editTask(taskId: string): void {
-    // this.dialog.editTask(taskId);
-  }
-
-  private deleteTask(taskId: string): void {
-    this.controller.deleteTask(taskId);
-    this.render();
-  }
-
-  private handleFormSubmit(data: FormDataCollection): void {
-    const form = this.app.querySelector("#taskDialog .form") as HTMLFormElement;
-
-    if (form.dataset.mode === "edit") {
-      const taskId = form.dataset.itemId;
-      if (taskId) {
-        this.handleFormUpdate(taskId, data);
-      }
-    } else {
-      this.handleFormCreate(data);
-    }
-
-    this.render();
-  }
-
-  private handleFormUpdate(id: string, data: FormDataCollection): void {
-    const { title, categoryId } = data;
-    const task = this.controller.task.findById(id);
-
-    if (task) {
-      task.title = title;
-      task.categoryId = categoryId || "default";
-      this.controller.updateTask(task);
-    }
-  }
-
-  private handleFormCreate(data: FormDataCollection): void {
-    const { title, categoryId } = data;
-    const task = new Task(
-      crypto.randomUUID(),
-      title,
-      false,
-      categoryId || "default"
-    );
-
-    this.controller.addTask(task);
+    this.renderer.renderTaskList();
   }
 }

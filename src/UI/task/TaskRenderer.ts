@@ -1,24 +1,34 @@
 import Task from "../../model/Task";
 import Controller from "../../controller/CentralController";
-import TaskMenu from "./TaskMenu";
+import MoreMenuController, {
+  MoreMenuConfig,
+} from "../../controller/MoreMenuController";
 
 export default class TaskRenderer {
   private controller: Controller;
-  private taskMenu: TaskMenu;
+  private moreMenuController: MoreMenuController;
+  private ulHeaderMenuContainer: HTMLElement;
+  private ul: HTMLUListElement;
 
-  constructor(controller: Controller, taskMenu: TaskMenu) {
+  constructor(controller: Controller) {
     this.controller = controller;
-    this.taskMenu = taskMenu;
+    this.moreMenuController = MoreMenuController.getInstance();
+    this.ulHeaderMenuContainer = this.getUlHeader()!;
+    this.ul = this.getUl()!;
   }
 
-  renderTaskList(container: HTMLUListElement): void {
+  renderTaskList(): void {
+    const headerMenu = this.createTaskListHeaderMenu();
+    this.ulHeaderMenuContainer.innerHTML = "";
+    this.ulHeaderMenuContainer.appendChild(headerMenu);
+
     const tasks = this.controller.task.list;
 
-    container.innerHTML = "";
+    this.ul.innerHTML = "";
 
     tasks.forEach(task => {
       const li = this.createTaskElement(task);
-      container.appendChild(li);
+      this.ul.appendChild(li);
     });
   }
 
@@ -45,9 +55,75 @@ export default class TaskRenderer {
     `;
 
     // Add menu to task element
-    const moreMenu = this.taskMenu.createTaskMenu(task.id);
+    const moreMenu = this.createTaskMenu(task.id);
     li.appendChild(moreMenu);
 
     return li;
+  }
+
+  createTaskListHeaderMenu(): HTMLElement {
+    const menuConfig: MoreMenuConfig = {
+      options: [
+        {
+          id: "clearTasksButton",
+          label: "Clear all tasks",
+          onClick: () => {
+            this.controller.clearAllTasks();
+            this.renderTaskList();
+          },
+        },
+        {
+          id: "clearCompletedTasksButton",
+          label: "Clear completed tasks",
+          onClick: () => {
+            this.controller.clearCompletedTasks();
+            this.renderTaskList();
+          },
+        },
+      ],
+      buttonAriaLabel: "Task list options",
+    };
+
+    return this.moreMenuController.createMenu(menuConfig);
+  }
+
+  createTaskMenu(taskId: string): HTMLElement {
+    const menuConfig: MoreMenuConfig = {
+      options: [
+        {
+          id: "openTaskEditButton",
+          itemId: taskId,
+          label: "Edit task",
+          onClick: () => {
+            // Dialog will handle this
+          },
+        },
+        {
+          id: "deleteTaskButton",
+          itemId: taskId,
+          label: "Delete task",
+          onClick: () => {
+            this.deleteTask(taskId);
+          },
+        },
+      ],
+    };
+
+    return this.moreMenuController.createMenu(menuConfig);
+  }
+
+  private deleteTask(taskId: string): void {
+    this.controller.deleteTask(taskId);
+    this.renderTaskList();
+  }
+
+  private getUl(): HTMLUListElement {
+    return document.getElementById("todayTaskList") as HTMLUListElement;
+  }
+
+  private getUlHeader(): HTMLElement {
+    return document.querySelector(
+      ".task__list--today__header--more"
+    ) as HTMLElement;
   }
 }
