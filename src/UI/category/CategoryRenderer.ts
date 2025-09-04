@@ -1,9 +1,15 @@
 import Controller from "../../controller/CentralController.js";
+import MoreMenuController, {
+  MoreMenuConfig,
+} from "../../controller/MoreMenuController.js";
 import Category from "../../model/Category.js";
 import { CategoryStats } from "./types.js";
 
 export default class CategoryRenderer {
   private controller: Controller;
+  private inView: boolean;
+  private moreMenuController: MoreMenuController;
+
   private previousCompletions: Map<string, number>;
 
   constructor(
@@ -11,14 +17,18 @@ export default class CategoryRenderer {
     previousCompletions: Map<string, number>
   ) {
     this.controller = controller;
+    this.inView = false;
+    this.moreMenuController = MoreMenuController.getInstance();
+
     this.previousCompletions = previousCompletions;
   }
 
   renderCategoryList(container: HTMLUListElement): void {
     container.innerHTML = "";
+    this.inView = this.isCategoriesInView(container);
 
     this.controller.category.list.forEach(category => {
-      const li = this.createCategoryElement(category);
+      const li = this.createCategoryElement(category, this.inView);
       const { completionPercentage } = this.getCategoryStats(category);
 
       this.previousCompletions.set(category.id, completionPercentage);
@@ -26,7 +36,9 @@ export default class CategoryRenderer {
     });
   }
 
-  createCategoryElement(category: Category): HTMLLIElement {
+  createCategoryElement(category: Category, isInView: boolean): HTMLLIElement {
+    const flexClass = isInView ? "flex" : "";
+
     const { numberOfItems, numberOfCompletedItems, completionPercentage } =
       this.getCategoryStats(category);
 
@@ -39,54 +51,93 @@ export default class CategoryRenderer {
     li.style.setProperty("--category-clr", category.color);
 
     li.innerHTML = `
-      <span class="category__item--count">
-        <span>${numberOfCompletedItems}</span>/<span>${numberOfItems}</span> tasks completed
-      </span>
-
+      <header class="category__item--header ${flexClass}">
+      ${
+        isInView
+          ? `
+        <!-- display nothing -->
+          `
+          : `
+        <span class="category__item--count">
+          <span>${numberOfCompletedItems}</span>/<span>${numberOfItems}</span> tasks completed
+        </span>        
+        `
+      }
+      
       <h4 class="category__item--title">${category.name}</h4>
-
-      <div 
-        class="category__item--progressBar" 
-        style="--previous-progress: ${completionPercentage}%; --progress: ${completionPercentage}%;"
-      >
-        <span class="category__item--progressBar__fill"></span>
-      </div>
-
-      <!-- ✅ Add action buttons for edit/delete -->
-      <!-- <div class="category__item--actions">
-        <button 
-          class="category__edit-btn" 
-          data-category-id="${category.id}"
-          title="Edit category"
-        >
-          <span class="material-symbols-outlined">edit</span>
-        </button>
-        <button 
-          class="category__delete-btn" 
-          data-category-id="${category.id}"
-          title="Delete category"
-        >
-          <span class="material-symbols-outlined">delete</span>
-        </button>
-      </div> -->
+      
+      </header>
     `;
 
-    // ✅ Your original animation logic
-    const progressBar = li.querySelector(
-      ".category__item--progressBar"
-    ) as HTMLElement;
-
-    if (progressBar) {
-      progressBar.style.setProperty(
-        "--previous-progress",
-        `${previousCompletion}%`
-      );
-      progressBar.style.setProperty("--progress", `${currentCompletion}%`);
+    const itemHeader = li.querySelector(".category__item--header");
+    const menu = this.createCategoryMenu(category.id);
+    console.log(isInView);
+    if (itemHeader && isInView) {
+      itemHeader.appendChild(menu);
     }
 
-    this.previousCompletions.set(category.id, currentCompletion);
+    const progressBar = this.createProgressBar(
+      category.id,
+      previousCompletion,
+      currentCompletion
+    );
+    li.appendChild(progressBar);
 
     return li;
+  }
+
+  private createProgressBar(
+    categoryId: string,
+    previousCompletion: number,
+    currentCompletion: number
+  ): HTMLElement {
+    const progressBar = document.createElement("div");
+    progressBar.className = "category__item--progressBar";
+    progressBar.style.setProperty(
+      "--previous-progress",
+      `${previousCompletion}%`
+    );
+    progressBar.style.setProperty("--progress", `${currentCompletion}%`);
+
+    progressBar.innerHTML = `
+      <span class="category__item--progressBar__fill"></span>
+    `;
+
+    this.previousCompletions.set(categoryId, currentCompletion);
+
+    return progressBar;
+  }
+
+  private createCategoryMenu(categoryId: string): HTMLElement {
+    const category = this.controller.category.findById(categoryId);
+
+    const menuConfig: MoreMenuConfig = {
+      options: [
+        {
+          id: "editCategoryButton",
+          itemId: categoryId,
+          label: "Edit Category",
+          onClick: () =>
+            window.dispatchEvent(
+              new CustomEvent("editItem", {
+                detail: { item: category },
+              })
+            ),
+        },
+        {
+          id: "deleteCategoryButton",
+          label: "Delete Category",
+          onClick: () =>
+            window.dispatchEvent(
+              new CustomEvent("deleteCategory", {
+                detail: { categoryId },
+              })
+            ),
+        },
+      ],
+    };
+
+    return this.moreMenuController.createMenu(menuConfig);
   }
 
   updateCategoryElement(categoryId: string, container: HTMLUListElement): void {
@@ -97,8 +148,10 @@ export default class CategoryRenderer {
       `[data-category-id="${categoryId}"]`
     );
 
+    this.inView = this.isCategoriesInView(container);
+
     if (existingElement) {
-      const newElement = this.createCategoryElement(category);
+      const newElement = this.createCategoryElement(category, this.inView);
       existingElement.insertAdjacentElement("beforebegin", newElement);
       existingElement.remove();
     }
@@ -113,5 +166,10 @@ export default class CategoryRenderer {
       numberOfCompletedItems: completedTasks,
       completionPercentage: completionPercentage,
     };
+  }
+
+  private isCategoriesInView(container: HTMLElement): boolean {
+    const view = container.closest(".app__view--categories");
+    return view !== null;
   }
 }
