@@ -1,7 +1,6 @@
 import Task from "../../model/Task";
 import Controller from "../../controller/CentralController";
 import TaskRenderer from "./TaskRenderer";
-import TaskDialog from "./TaskDialog";
 import TaskEvents from "./TaskEvents";
 import TaskMenu from "./TaskMenu";
 import { FormDataCollection } from "../form/types";
@@ -15,7 +14,6 @@ export default class TaskUI {
 
   // Composed parts
   private renderer: TaskRenderer;
-  private dialog: TaskDialog;
   private events: TaskEvents;
   private menu: TaskMenu;
 
@@ -34,11 +32,7 @@ export default class TaskUI {
 
     this.renderer = new TaskRenderer(this.controller, this.menu);
 
-    this.dialog = new TaskDialog(this.app, this.controller, data =>
-      this.handleFormSubmit(data)
-    );
-
-    this.events = new TaskEvents(this.app, this.controller, this.dialog);
+    this.events = new TaskEvents(this.app, this.controller);
 
     this.init();
   }
@@ -56,27 +50,14 @@ export default class TaskUI {
     ) as HTMLElement;
     const headerMenu = this.menu.createTaskListHeaderMenu();
     header.appendChild(headerMenu);
-
-    // Add dialog to app
-    const dialog = this.dialog.createDialog();
-    this.app.appendChild(dialog);
   }
 
   render(): void {
     this.renderer.renderTaskList(this.ul);
   }
 
-  // Public methods for external access
-  openDialog(): void {
-    this.dialog.openDialog();
-  }
-
-  closeDialog(): void {
-    this.dialog.closeDialog();
-  }
-
   private editTask(taskId: string): void {
-    this.dialog.editTask(taskId);
+    // this.dialog.editTask(taskId);
   }
 
   private deleteTask(taskId: string): void {
