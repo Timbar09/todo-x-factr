@@ -127,7 +127,7 @@
   gap: 1em;
 }
 
-.app__view--categories .category__list .category__item {
+.app__view--categories .category__list .category__item--header {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }

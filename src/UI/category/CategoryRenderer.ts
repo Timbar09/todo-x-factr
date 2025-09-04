@@ -3,10 +3,14 @@ import MoreMenuController, {
   MoreMenuConfig,
 } from "../../controller/MoreMenuController.js";
 import Category from "../../model/Category.js";
+// import Task from "../../model/Task.js";
+// import TaskRenderer from "../task/TaskRenderer.js";
 import { CategoryStats } from "./types.js";
 
 export default class CategoryRenderer {
   private controller: Controller;
+  // private tasks: Task[];
+  // private taskRenderer: TaskRenderer;
   private inView: boolean;
   private moreMenuController: MoreMenuController;
 
@@ -17,6 +21,8 @@ export default class CategoryRenderer {
     previousCompletions: Map<string, number>
   ) {
     this.controller = controller;
+    // this.tasks = controller.task.list;
+    // this.taskRenderer = new TaskRenderer(controller);
     this.inView = false;
     this.moreMenuController = MoreMenuController.getInstance();
 
@@ -84,17 +90,40 @@ export default class CategoryRenderer {
       actions.appendChild(menu);
     }
 
+    const header = li.querySelector(".category__item--header");
     const progressBar = this.createProgressBar(
       category.id,
       previousCompletion,
       currentCompletion
     );
 
-    if (!isInView && progressBar) {
-      li.appendChild(progressBar);
+    if (!isInView && progressBar && header) {
+      header.appendChild(progressBar);
+    }
+
+    const taskList = this.createTaskList(category.tasks);
+    if (isInView && taskList) {
+      li.appendChild(taskList);
     }
 
     return li;
+  }
+
+  private createTaskList(tasks: string[]): HTMLUListElement {
+    const ul = document.createElement("ul");
+    ul.className = "category__item--task__list padding-x";
+
+    tasks.forEach(taskId => {
+      const task = this.controller.task.findById(taskId);
+      if (task) {
+        // const li = taskRenderer.createTaskElement(task);
+        const li = document.createElement("li");
+        li.textContent = task.title;
+        ul.appendChild(li);
+      }
+    });
+
+    return ul;
   }
 
   private createProgressBar(

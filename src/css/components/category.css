@@ -5,12 +5,9 @@
 .category__item {
   --progress: 0;
 
-  padding: 1.25em 1em;
-  border-radius: var(--radius-100);
   display: flex;
   flex-direction: column;
   gap: 0.75em;
-  background-color: var(--bg-200);
 }
 
 .category__item * {
@@ -19,6 +16,9 @@
 }
 
 .category__item--header {
+  border-radius: var(--radius-100);
+  padding: 1.25em 1em;
+  background-color: var(--bg-200);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
