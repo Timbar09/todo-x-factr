@@ -3,14 +3,12 @@ import MoreMenuController, {
   MoreMenuConfig,
 } from "../../controller/MoreMenuController.js";
 import Category from "../../model/Category.js";
-// import Task from "../../model/Task.js";
-// import TaskRenderer from "../task/TaskRenderer.js";
+import TaskRenderer from "../task/TaskRenderer.js";
 import { CategoryStats } from "./types.js";
 
 export default class CategoryRenderer {
   private controller: Controller;
-  // private tasks: Task[];
-  // private taskRenderer: TaskRenderer;
+  private taskRenderer: TaskRenderer;
   private inView: boolean;
   private moreMenuController: MoreMenuController;
 
@@ -21,8 +19,7 @@ export default class CategoryRenderer {
     previousCompletions: Map<string, number>
   ) {
     this.controller = controller;
-    // this.tasks = controller.task.list;
-    // this.taskRenderer = new TaskRenderer(controller);
+    this.taskRenderer = new TaskRenderer(controller);
     this.inView = false;
     this.moreMenuController = MoreMenuController.getInstance();
 
@@ -101,7 +98,7 @@ export default class CategoryRenderer {
       header.appendChild(progressBar);
     }
 
-    const taskList = this.createTaskList(category.tasks);
+    const taskList = this.createTaskList(category.tasks, isInView);
     if (isInView && taskList) {
       li.appendChild(taskList);
     }
@@ -109,16 +106,17 @@ export default class CategoryRenderer {
     return li;
   }
 
-  private createTaskList(tasks: string[]): HTMLUListElement {
+  private createTaskList(tasks: string[], isInView: boolean): HTMLUListElement {
     const ul = document.createElement("ul");
-    ul.className = "category__item--task__list padding-x";
+    const minimized = isInView ? "minimized" : "";
+
+    ul.className = `category__item--task__list ${minimized}`;
+    ul.setAttribute("inert", !isInView ? "true" : "false");
 
     tasks.forEach(taskId => {
       const task = this.controller.task.findById(taskId);
       if (task) {
-        // const li = taskRenderer.createTaskElement(task);
-        const li = document.createElement("li");
-        li.textContent = task.title;
+        const li = this.taskRenderer.createTaskElement(task);
         ul.appendChild(li);
       }
     });
