@@ -123,6 +123,14 @@
   background-color: var(--category-clr);
 }
 
+.category__item--accordionButton span {
+  transition: transform 200ms ease-in-out;
+}
+
+.category__item--accordionButton.open span {
+  transform: rotate(180deg);
+}
+
 .category__item--task__list {
   padding: 0 0.75em 0.75em;
   display: flex;

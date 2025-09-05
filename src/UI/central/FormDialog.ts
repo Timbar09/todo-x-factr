@@ -1,4 +1,5 @@
 import FormUI from "../form";
+import { formData } from "../form/data";
 import { FormConfig, FormDataCollection } from "../form/types";
 import Controller from "../../controller/CentralController";
 import { TemplateFormHandler } from "./TemplateFormHandler";
@@ -85,6 +86,7 @@ export default class FormDialogManager {
   private dragUpDialog(): void {
     const dialog = this.getDialog()!;
     const dialogElement = this.getDialogElement()!;
+    const view = this.dialog.dataset.dialog as ViewType;
 
     if (dialog.classList.contains("dialog__home")) {
       this.dialog.classList.remove("closed", "hidden");
@@ -94,6 +96,7 @@ export default class FormDialogManager {
     }
 
     dialogElement.removeAttribute("inert");
+    this.setDialogContent(view, formData[view]);
   }
 
   dragDownDialog(): void {
@@ -127,6 +130,11 @@ export default class FormDialogManager {
 
     this.dragUpDialogButtons.forEach(button => {
       button.addEventListener("click", () => {
+        const view = button.dataset.view as ViewType;
+
+        if (!view) return;
+
+        this.setDialogContent(view, formData[view]);
         this.dragUpDialog();
       });
     });
@@ -137,9 +145,10 @@ export default class FormDialogManager {
       if (target.classList.contains("item__edit")) {
         const view = this.getDialog()?.dataset.dialog;
 
-        if (!view && !target.dataset.itemId) return;
+        const categoriesViewController =
+          this.setCategoriesViewController(target);
 
-        let itemController;
+        let itemController: any;
 
         switch (view) {
           case "home":
@@ -149,18 +158,37 @@ export default class FormDialogManager {
             itemController = this.controller.template;
             break;
           case "categories":
-            itemController = this.controller.category;
+            itemController = categoriesViewController;
             break;
           default:
             console.warn(`The view "${view}" does not support item editing.`);
+            return;
         }
 
         const item = itemController?.findById(target.dataset.itemId!);
+        if (!item) return;
 
         this.dragUpDialog();
         this.form?.editItem(item);
       }
     });
+  }
+
+  private setCategoriesViewController(target: HTMLElement): any {
+    const isTask = target.closest(".task__item") !== null;
+
+    if (!target.dataset.itemId) {
+      console.warn("No item ID found on the clicked element.");
+      return;
+    }
+
+    if (isTask) {
+      this.setDialogContent("home", formData["home"]);
+      return this.controller.task;
+    }
+
+    this.setDialogContent("categories", formData["categories"]);
+    return this.controller.category;
   }
 
   // HTML Element Getters
