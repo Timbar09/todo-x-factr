@@ -81,7 +81,7 @@ export default class CategoryRenderer {
       currentCompletion
     );
     const menu = this.createCategoryMenu(category.id);
-    const accordionButton = this.createAccordionButton(li);
+    const accordionButton = this.createAccordionButton(category.id, li);
 
     if (actions && menu && isInView) {
       actions.appendChild(progressCircle);
@@ -100,15 +100,25 @@ export default class CategoryRenderer {
       header.appendChild(progressBar);
     }
 
-    const taskList = this.createTaskList(category.tasks, isInView);
+    const taskList = this.createTaskList(category);
     if (isInView && taskList) {
       li.appendChild(taskList);
     }
 
+    // Set initial state of task list based on isAccordionOpen
+    this.toggleTaskListVisibility(
+      category.id,
+      taskList,
+      accordionButton as HTMLButtonElement
+    );
+
     return li;
   }
 
-  private createAccordionButton(li: HTMLLIElement): HTMLElement {
+  private createAccordionButton(
+    categoryId: string,
+    li: HTMLLIElement
+  ): HTMLElement {
     const button = document.createElement("button");
     button.className = "button button__round category__item--accordionButton";
     button.innerHTML = `
@@ -119,17 +129,23 @@ export default class CategoryRenderer {
         ".category__item--task__list"
       ) as HTMLUListElement;
 
-      this.toggleTaskListVisibility(taskList, button);
+      this.toggleTaskListVisibility(categoryId, taskList, button);
     };
     return button;
   }
 
   private toggleTaskListVisibility(
+    categoryId: string,
     taskList: HTMLUListElement,
     button: HTMLButtonElement
   ) {
+    const category = this.controller.category.findById(categoryId);
+    if (!category) return;
+
+    category.isAccordionOpen = !category.isAccordionOpen;
+
     if (taskList) {
-      if (taskList.classList.contains("minimized")) {
+      if (category.isAccordionOpen) {
         taskList.classList.remove("minimized");
         taskList.removeAttribute("inert");
         button.classList.add("open");
@@ -141,15 +157,13 @@ export default class CategoryRenderer {
     }
   }
 
-  private createTaskList(tasks: string[], isInView: boolean): HTMLUListElement {
+  private createTaskList(category: Category): HTMLUListElement {
     const ul = document.createElement("ul");
-    ul.setAttribute("data-category-id", tasks.length > 0 ? tasks[0] : "none");
-    const minimized = isInView ? "minimized" : "";
+    ul.setAttribute("data-category-id", category.id);
 
-    ul.className = `category__item--task__list ${minimized}`;
-    ul.setAttribute("inert", !isInView ? "true" : "false");
+    ul.className = "category__item--task__list";
 
-    tasks.forEach((taskId, i) => {
+    category.tasks.forEach((taskId, i) => {
       const task = this.controller.task.findById(taskId);
       if (task) {
         const li = this.taskRenderer.createTaskElement(task);

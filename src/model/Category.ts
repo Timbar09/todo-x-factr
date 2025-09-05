@@ -7,6 +7,7 @@ export interface CategoryInterface {
   tasks: string[];
   completedTasks: number;
   completionPercentage: number;
+  isAccordionOpen?: boolean;
   addTask: (taskId: string) => void;
   removeTask: (task: Task) => void;
   clearTasks: () => void;
@@ -18,7 +19,8 @@ export default class Category implements CategoryInterface {
     private _name: string,
     private _color: string,
     private _tasks: string[] = [],
-    private _completedTasks: number
+    private _completedTasks: number,
+    private _isAccordionOpen: boolean = false
   ) {}
 
   get id(): string {
@@ -61,6 +63,14 @@ export default class Category implements CategoryInterface {
     return this._tasks.length > 0
       ? Math.round((this._completedTasks / this._tasks.length) * 100)
       : 0;
+  }
+
+  get isAccordionOpen(): boolean {
+    return this._isAccordionOpen;
+  }
+
+  set isAccordionOpen(value: boolean) {
+    this._isAccordionOpen = value;
   }
 
   addTask(taskId: string): void {
