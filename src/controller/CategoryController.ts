@@ -98,16 +98,6 @@ export default class CategoryController extends ApplicationController<Category> 
     }
   }
 
-  remove(id: string): void {
-    console.log(
-      `Overriding default remove behavior from parent class to remove categoryId: ${id}`
-    );
-    // const category = this.findById(id);
-    // if (category && !this.isDefaultCategory(category)) {
-    //   this.remove(id);
-    // }
-  }
-
   removeTask(task: Task): void {
     if (!task || !task.id) return;
 

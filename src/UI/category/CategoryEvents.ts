@@ -16,6 +16,20 @@ export default class CategoryEvents {
   }
 
   private bindCategoryActions(): void {
+    // Add category
+    window.addEventListener("categoryAdded", () => {
+      this.onRender();
+    });
+
+    // Delete category
+    window.addEventListener("deleteCategory", (e: Event) => {
+      const event = e as CustomEvent;
+      const categoryId = event.detail.categoryId;
+
+      this.controller.deleteCategory(categoryId);
+      this.onRender();
+    });
+
     this.app.addEventListener("click", (e: Event) => {
       const target = e.target as HTMLElement;
 
@@ -28,11 +42,6 @@ export default class CategoryEvents {
       //     this.handleEditCategory(categoryId);
       //   }
       // }
-
-      // Add category
-      window.addEventListener("categoryAdded", () => {
-        this.onRender();
-      });
 
       // Delete category
       if (target.closest(".category__delete-btn")) {
