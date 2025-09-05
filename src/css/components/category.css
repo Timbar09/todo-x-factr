@@ -124,12 +124,23 @@
 }
 
 .category__item--task__list {
-  padding: 0 0.75em;
+  padding: 0 0.75em 0.75em;
   display: flex;
   flex-direction: column;
   gap: 0.25em;
 }
 
-/* .category__item--task__list.minimized .task__item {
+.category__item--task__list.minimized {
+  padding: 0 0.75em;
+}
+
+.category__item--task__list .task__item {
+  transition:
+    margin 200ms var(--delay) ease-in-out,
+    opacity 200ms var(--delay) ease-in-out;
+}
+
+.category__item--task__list.minimized .task__item {
   margin-top: -4em;
-} */
+  opacity: 0;
+}

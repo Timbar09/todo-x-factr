@@ -81,10 +81,12 @@ export default class CategoryRenderer {
       currentCompletion
     );
     const menu = this.createCategoryMenu(category.id);
+    const accordionButton = this.createAccordionButton(li);
 
     if (actions && menu && isInView) {
       actions.appendChild(progressCircle);
       actions.appendChild(menu);
+      actions.appendChild(accordionButton);
     }
 
     const header = li.querySelector(".category__item--header");
@@ -106,17 +108,53 @@ export default class CategoryRenderer {
     return li;
   }
 
+  private createAccordionButton(li: HTMLLIElement): HTMLElement {
+    const button = document.createElement("button");
+    button.className = "button button__round category__item--accordionButton";
+    button.innerHTML = `
+      <span class="material-symbols-outlined">expand_more</span>
+    `;
+    button.onclick = () => {
+      const taskList = li.querySelector(
+        ".category__item--task__list"
+      ) as HTMLUListElement;
+
+      this.toggleTaskListVisibility(taskList, button);
+    };
+    return button;
+  }
+
+  private toggleTaskListVisibility(
+    taskList: HTMLUListElement,
+    button: HTMLButtonElement
+  ) {
+    if (taskList) {
+      if (taskList.classList.contains("minimized")) {
+        taskList.classList.remove("minimized");
+        taskList.removeAttribute("inert");
+        button.classList.add("open");
+      } else {
+        taskList.classList.add("minimized");
+        taskList.setAttribute("inert", "true");
+        button.classList.remove("open");
+      }
+    }
+  }
+
   private createTaskList(tasks: string[], isInView: boolean): HTMLUListElement {
     const ul = document.createElement("ul");
+    ul.setAttribute("data-category-id", tasks.length > 0 ? tasks[0] : "none");
     const minimized = isInView ? "minimized" : "";
 
     ul.className = `category__item--task__list ${minimized}`;
     ul.setAttribute("inert", !isInView ? "true" : "false");
 
-    tasks.forEach(taskId => {
+    tasks.forEach((taskId, i) => {
       const task = this.controller.task.findById(taskId);
       if (task) {
         const li = this.taskRenderer.createTaskElement(task);
+        li.style.setProperty("--delay", i * 150 + "ms");
+
         ul.appendChild(li);
       }
     });

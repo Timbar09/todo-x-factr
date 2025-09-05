@@ -126,7 +126,7 @@
 .app__view--categories .category__list {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.25em;
 }
 
 .app__view--categories .category__list .category__item--header {
