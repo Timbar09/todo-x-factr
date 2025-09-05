@@ -1,0 +1,202 @@
+.dialog__container {
+  background-color: var(--bg-200);
+}
+
+.dialog__default {
+  position: fixed;
+  height: 100%;
+  border-radius: var(--radius-100);
+  box-shadow: var(--shadow);
+  z-index: 10;
+  top: 0;
+  left: 0;
+  scale: 1;
+  width: 100%;
+  transition:
+    top 400ms ease-in-out,
+    scale 400ms ease-in-out,
+    border-radius 400ms ease-in-out;
+}
+
+.dialog__home {
+  --dialog-starting-position: 2em;
+  --dialog-end-position: 0;
+
+  --dialog-starting-dimension: 4em;
+  --dialog-mid-dimension: calc(100% - var(--dialog-starting-position) * 2);
+  --dialog-end-dimension: 100%;
+
+  --dialog-starting-radius: var(--radius-pill);
+  --dialog-mid-radius: var(--radius-200);
+  --dialog-end-radius: var(--radius-100);
+
+  position: absolute;
+  right: var(--dialog-starting-position);
+  bottom: var(--dialog-starting-position);
+  width: var(--dialog-starting-dimension);
+  height: var(--dialog-starting-dimension);
+  border-radius: var(--dialog-starting-radius);
+  outline: 0.125em solid var(--bg-200);
+  transform: scale(0);
+  overflow: hidden;
+  z-index: 1000;
+  transition:
+    transform 200ms 950ms ease-out,
+    /* FIXME: This transition affects the home dialog closing animation */ top 0,
+    scale 0,
+    border-radius 0;
+}
+
+.dialog__home.open {
+  transform: scale(1);
+  transition: transform 200ms ease-out;
+  animation: open-task-entry-form 900ms 500ms ease-out forwards;
+}
+
+.dialog__home.closed {
+  animation: close-task-entry-form 1000ms ease-out forwards;
+}
+
+.dialog__home::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: var(--bg-200);
+  border-radius: inherit;
+  z-index: 1000;
+  transition:
+    opacity 200ms ease-out,
+    height 200ms ease-out;
+}
+
+.dialog__home.open::after {
+  transition:
+    opacity 400ms 1500ms ease-out,
+    height 50ms 1950ms ease-out;
+  height: 0;
+  opacity: 0;
+}
+
+@keyframes open-task-entry-form {
+  0% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-starting-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-starting-radius);
+    visibility: hidden;
+    outline-width: 0.125em;
+  }
+  1% {
+    visibility: visible;
+  }
+  30% {
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-starting-radius);
+    visibility: visible;
+    outline-width: 0.125em;
+  }
+  31% {
+    border-radius: var(--dialog-mid-radius);
+    outline-width: 0;
+  }
+  75% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-mid-dimension);
+    border-radius: var(--dialog-mid-radius);
+  }
+  100% {
+    right: var(--dialog-end-position);
+    bottom: var(--dialog-end-position);
+    width: var(--dialog-end-dimension);
+    height: var(--dialog-end-dimension);
+    border-radius: var(--dialog-end-radius);
+    visibility: visible;
+    outline-width: 0;
+  }
+}
+
+@keyframes close-task-entry-form {
+  0% {
+    right: var(--dialog-end-position);
+    bottom: var(--dialog-end-position);
+    width: var(--dialog-end-dimension);
+    height: var(--dialog-end-dimension);
+    border-radius: var(--dialog-end-radius);
+    visibility: visible;
+    outline-width: 0;
+  }
+  15% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-mid-dimension);
+    border-radius: var(--dialog-mid-radius);
+  }
+  70% {
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-mid-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-mid-radius);
+    outline-width: 0;
+  }
+  90% {
+    visibility: visible;
+    right: var(--dialog-starting-position);
+    bottom: var(--dialog-starting-position);
+    width: var(--dialog-starting-dimension);
+    height: var(--dialog-starting-dimension);
+    border-radius: var(--dialog-starting-radius);
+    outline-width: 0.125em;
+  }
+  100% {
+    visibility: hidden;
+    outline-width: 0.125em;
+  }
+}
+
+.dialog {
+  display: grid;
+  place-items: center;
+  border: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background-color: inherit;
+}
+
+.dialog__container.hidden {
+  top: 80%;
+  scale: 0.85;
+}
+
+.dialog__none {
+  display: none;
+}
+
+.dialog__dragButton--container {
+  position: absolute;
+  inset: 0 0 2em 0;
+  border-radius: inherit;
+  height: 3.5em;
+  background-color: inherit;
+  z-index: 1;
+  transition:
+    height 400ms ease-in-out,
+    background-color 400ms ease-in-out;
+}
+
+.dialog__container.hidden .dialog__dragButton--container {
+  height: 100%;
+}
+
+.dialog__dragButton {
+  margin: 1em 2em;
+}
