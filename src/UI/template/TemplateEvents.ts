@@ -5,6 +5,7 @@ export default class TemplateEvents {
   private menuContent: HTMLElement;
   private onRender: () => void;
   private onSelectTemplate: (templateId: string) => void;
+  private isBound: boolean = false;
 
   constructor(
     controller: Controller,
@@ -19,6 +20,9 @@ export default class TemplateEvents {
   }
 
   bindEvents(): void {
+    if (this.isBound) return;
+    this.isBound = true;
+
     this.bindTemplateActions();
     this.bindCustomEvents();
   }
