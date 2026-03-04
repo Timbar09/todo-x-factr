@@ -8,27 +8,25 @@ export default class TaskRenderer {
   private controller: Controller;
   private moreMenuController: MoreMenuController;
   private ulHeaderMenuContainer: HTMLElement;
-  private ul: HTMLUListElement;
 
   constructor(controller: Controller) {
     this.controller = controller;
     this.moreMenuController = MoreMenuController.getInstance();
     this.ulHeaderMenuContainer = this.getUlHeader()!;
-    this.ul = this.getUl()!;
   }
 
-  renderTaskList(): void {
+  renderTaskList(container: HTMLUListElement): void {
     const headerMenu = this.createTaskListHeaderMenu();
     this.ulHeaderMenuContainer.innerHTML = "";
     this.ulHeaderMenuContainer.appendChild(headerMenu);
 
     const tasks = this.controller.task.list;
 
-    this.ul.innerHTML = "";
+    container.innerHTML = "";
 
     tasks.forEach(task => {
       const li = this.createTaskElement(task);
-      this.ul.appendChild(li);
+      container.appendChild(li);
     });
   }
 
@@ -68,16 +66,14 @@ export default class TaskRenderer {
           id: "clearTasksButton",
           label: "Clear all tasks",
           onClick: () => {
-            this.controller.clearAllTasks();
-            this.renderTaskList();
+            window.dispatchEvent(new CustomEvent("clearAllTasks"));
           },
         },
         {
           id: "clearCompletedTasksButton",
           label: "Clear completed tasks",
           onClick: () => {
-            this.controller.clearCompletedTasks();
-            this.renderTaskList();
+            window.dispatchEvent(new CustomEvent("clearCompletedTasks"));
           },
         },
       ],
@@ -103,22 +99,16 @@ export default class TaskRenderer {
           itemId: taskId,
           label: "Delete task",
           onClick: () => {
-            this.deleteTask(taskId);
+            // this.deleteTask(taskId);
+            window.dispatchEvent(
+              new CustomEvent("deleteTask", { detail: { taskId } })
+            );
           },
         },
       ],
     };
 
     return this.moreMenuController.createMenu(menuConfig);
-  }
-
-  private deleteTask(taskId: string): void {
-    this.controller.deleteTask(taskId);
-    this.renderTaskList();
-  }
-
-  private getUl(): HTMLUListElement {
-    return document.getElementById("todayTaskList") as HTMLUListElement;
   }
 
   private getUlHeader(): HTMLElement {

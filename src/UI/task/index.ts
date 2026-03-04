@@ -7,6 +7,7 @@ export default class TaskUI {
 
   private controller: Controller;
   private app: HTMLElement;
+  private uls: NodeListOf<HTMLUListElement>;
 
   // Composed parts
   private renderer: TaskRenderer;
@@ -15,6 +16,7 @@ export default class TaskUI {
   constructor() {
     this.controller = Controller.instance;
     this.app = document.getElementById("application") as HTMLElement;
+    this.uls = this.getUls();
 
     // Initialize composed parts
     this.renderer = new TaskRenderer(this.controller);
@@ -32,6 +34,14 @@ export default class TaskUI {
   }
 
   render(): void {
-    this.renderer.renderTaskList();
+    this.uls.forEach(ul => {
+      this.renderer.renderTaskList(ul);
+    });
+  }
+
+  private getUls(): NodeListOf<HTMLUListElement> {
+    return document.querySelectorAll(
+      ".task__list"
+    ) as NodeListOf<HTMLUListElement>;
   }
 }

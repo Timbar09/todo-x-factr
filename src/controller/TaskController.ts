@@ -27,7 +27,8 @@ export default class TaskController extends ApplicationController<Task> {
     const task = this.findById(id);
     if (task) {
       task.checked = !task.checked;
-      this.update(task);
+      this.saveToStorage();
+      this.dispatchEvent("toggled", task);
     }
   }
 
@@ -40,6 +41,8 @@ export default class TaskController extends ApplicationController<Task> {
 
   clearCompleted(): void {
     this.list = this.list.filter(task => !task.checked);
+    this.saveToStorage();
+    this.dispatchEvent("clearedCompleted", null);
   }
 
   getTasksByCategory(categoryId: string): Task[] {

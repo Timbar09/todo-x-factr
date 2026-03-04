@@ -22,9 +22,9 @@ export class TaskFormHandler {
   }
 
   private handleCreate(formData: FormDataCollection): void {
-    const { title, categoryId } = formData;
+    const { taskTitle, categoryId } = formData;
 
-    const task = new Task(crypto.randomUUID(), title, false, categoryId);
+    const task = new Task(crypto.randomUUID(), taskTitle, false, categoryId);
     this.controller.addTask(task);
   }
 
