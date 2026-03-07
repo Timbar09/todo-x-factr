@@ -44,11 +44,11 @@ export default class TaskRenderer {
         <input 
           type="checkbox" 
           id="${task.id}"
-          class="task__item--label__checkbox" 
+          class="task__item--checkbox" 
           ${isChecked} 
           style="--outline-color: ${checkboxOutlineColor}"
         />
-        <span class="task__item--label__text">${task.title}</span>
+        <span class="task__item--title">${task.title}</span>
       </label>
     `;
 

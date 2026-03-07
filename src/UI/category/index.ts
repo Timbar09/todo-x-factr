@@ -8,7 +8,6 @@ export default class CategoryUI implements Observer<Category> {
   static instance: CategoryUI = new CategoryUI(Controller.instance);
 
   private controller: Controller;
-  private app: HTMLElement;
   private uls: NodeListOf<HTMLUListElement>;
   private previousCompletions: Map<string, number> = new Map();
 
@@ -18,10 +17,7 @@ export default class CategoryUI implements Observer<Category> {
 
   constructor(controller: Controller) {
     this.controller = controller;
-    this.app = document.getElementById("application") as HTMLElement;
-    this.uls = document.querySelectorAll(
-      ".category__list"
-    ) as NodeListOf<HTMLUListElement>;
+    this.uls = this.getUls();
 
     // Initialize composed parts
     this.renderer = new CategoryRenderer(
@@ -29,9 +25,7 @@ export default class CategoryUI implements Observer<Category> {
       this.previousCompletions
     );
 
-    this.events = new CategoryEvents(this.app, this.controller, () =>
-      this.render()
-    );
+    this.events = new CategoryEvents(this.controller, () => this.render());
 
     this.init();
   }
@@ -59,7 +53,13 @@ export default class CategoryUI implements Observer<Category> {
     });
   }
 
-  public refreshDisplay(): void {
+  refreshDisplay(): void {
     this.render();
+  }
+
+  private getUls(): NodeListOf<HTMLUListElement> {
+    return document.querySelectorAll(
+      ".category__list"
+    ) as NodeListOf<HTMLUListElement>;
   }
 }

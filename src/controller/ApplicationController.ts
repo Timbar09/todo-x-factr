@@ -80,6 +80,7 @@ export default abstract class ApplicationController<T> {
   // ✅ Event system
   protected dispatchEvent(action: string, data: T | null): void {
     const eventName = `${this.getControllerName()}${action.charAt(0).toUpperCase() + action.slice(1)}`;
+    // Example: "taskAdded", "categoryRemoved", etc.
     window.dispatchEvent(
       new CustomEvent(eventName, {
         detail: {

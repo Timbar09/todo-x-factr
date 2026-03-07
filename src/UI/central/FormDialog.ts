@@ -6,7 +6,12 @@ import { TemplateFormHandler } from "./TemplateFormHandler";
 import { CategoryFormHandler } from "./CategoryFormHandler";
 import { TaskFormHandler } from "./TaskFormHandler";
 
-export type ViewType = "home" | "templates" | "categories" | "analytics";
+export type ViewType =
+  | "home"
+  | "templates"
+  | "categories"
+  | "tasks"
+  | "analytics";
 
 export default class FormDialogManager {
   private main: HTMLElement;
@@ -68,6 +73,9 @@ export default class FormDialogManager {
 
     switch (view) {
       case "home":
+        this.taskFormHandler.handleSubmit(itemId, form, formData);
+        break;
+      case "tasks":
         this.taskFormHandler.handleSubmit(itemId, form, formData);
         break;
       case "templates":
@@ -183,7 +191,7 @@ export default class FormDialogManager {
     }
 
     if (isTask) {
-      this.setDialogContent("home", formData["home"]);
+      this.setDialogContent("tasks", formData["tasks"]);
       return this.controller.task;
     }
 

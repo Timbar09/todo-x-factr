@@ -88,14 +88,14 @@
               <ul class="hero__nav--list">
                 <li class="hero__nav--item">
                   <button
-                    id="templatesNavButton"
-                    aria-label="Navigate to templates"
+                    id="tasksNavButton"
+                    aria-label="Navigate to tasks"
                     class="button hero__nav--button"
-                    data-view="templates"
+                    data-view="tasks"
                   >
-                    <span class="material-symbols-outlined"> Bookmark </span>
+                    <span class="material-symbols-outlined"> priority </span>
 
-                    <span class="hero__nav--item--text"> Templates </span>
+                    <span class="hero__nav--item--text"> Tasks </span>
                   </button>
                 </li>
 
@@ -109,6 +109,19 @@
                     <span class="material-symbols-outlined"> view_cozy </span>
 
                     <span class="hero__nav--item--text"> Categories </span>
+                  </button>
+                </li>
+
+                <li class="hero__nav--item">
+                  <button
+                    id="templatesNavButton"
+                    aria-label="Navigate to templates"
+                    class="button hero__nav--button"
+                    data-view="templates"
+                  >
+                    <span class="material-symbols-outlined"> Bookmark </span>
+
+                    <span class="hero__nav--item--text"> Templates </span>
                   </button>
                 </li>
 
@@ -247,6 +260,28 @@
 
             <ul id="categoryList" class="category__list padding-x">
               <!-- Categories are dynamically generated -->
+            </ul>
+          </section>
+
+          <section id="tasksView" class="app__view app__view--tasks hidden">
+            <header class="app__view--header padding">
+              <h2 class="app__view--title">Your Tasks</h2>
+
+              <div class="app__view--actions">
+                <button
+                  id="addNewTask"
+                  aria-label="Add new task"
+                  class="button button__primary button__primary--bar app__view--button app__view--button__add"
+                  data-view="tasks"
+                >
+                  <span>New Task</span>
+                  <span class="material-symbols-outlined">Add</span>
+                </button>
+              </div>
+            </header>
+
+            <ul id="taskList" class="task__list padding-x">
+              <!-- Tasks are dynamically generated -->
             </ul>
           </section>
 

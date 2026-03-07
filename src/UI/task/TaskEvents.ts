@@ -2,12 +2,16 @@ import Controller from "../../controller/CentralController";
 
 export default class TaskEvents {
   private controller: Controller;
-  private app: HTMLElement;
+  private uls: NodeListOf<HTMLUListElement>;
   private onRender: () => void;
   private isBound: boolean = false;
 
-  constructor(app: HTMLElement, controller: Controller, onRender: () => void) {
-    this.app = app;
+  constructor(
+    uls: NodeListOf<HTMLUListElement>,
+    controller: Controller,
+    onRender: () => void
+  ) {
+    this.uls = uls;
     this.controller = controller;
     this.onRender = onRender;
   }
@@ -16,17 +20,33 @@ export default class TaskEvents {
     if (this.isBound) return;
     this.isBound = true;
 
-    this.app.addEventListener("click", (e: Event) => {
-      const target = e.target as HTMLElement;
-      const taskItem = target.closest(".task__item") as HTMLElement;
-      const taskId = taskItem?.dataset.itemId;
-
-      if (taskId) {
-        if (target.matches(".task__item--label__checkbox")) {
-          this.controller.toggleTaskCheckStatus(taskId);
+    this.uls.forEach(ul => {
+      ul.addEventListener("click", (e: Event) => {
+        const target = e.target as HTMLElement;
+        const taskItem = target.closest(".task__item") as HTMLElement;
+        const taskId = taskItem?.dataset.itemId;
+        console.log("Clicked Task ID:", taskId);
+        if (taskId) {
+          if (target.matches(".task__item--checkbox")) {
+            this.controller.toggleTaskCheckStatus(taskId);
+          }
         }
-      }
+      });
     });
+
+    // this.uls.addEventListener("click", (e: Event) => {
+    //   const target = e.target as HTMLElement;
+    //   const taskItem = target.closest(".task__item") as HTMLElement;
+    //   const taskId = taskItem?.dataset.itemId;
+
+    //   console.log("Clicked Task ID:", taskId);
+
+    //   if (taskId) {
+    //     if (target.matches(".task__item--checkbox")) {
+    //       this.controller.toggleTaskCheckStatus(taskId);
+    //     }
+    //   }
+    // });
 
     window.addEventListener("taskAdded", () => {
       this.onRender();

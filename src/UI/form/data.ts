@@ -74,6 +74,12 @@ export const taskFieldsData: FormField[] = [
 ];
 
 export const formData = {
+  home: {
+    title: "Create New Task",
+    submitButtonText: "Create Task",
+    fieldsData: taskFieldsData,
+    onSubmit: () => {},
+  },
   templates: {
     title: "Create Custom Template",
     submitButtonText: "Create Template",
@@ -92,7 +98,7 @@ export const formData = {
     fieldsData: [],
     onSubmit: () => {},
   },
-  home: {
+  tasks: {
     title: "Create New Task",
     submitButtonText: "Create Task",
     fieldsData: taskFieldsData,

@@ -6,7 +6,7 @@ export default class TaskUI {
   static instance: TaskUI = new TaskUI();
 
   private controller: Controller;
-  private app: HTMLElement;
+  // private app: HTMLElement;
   private uls: NodeListOf<HTMLUListElement>;
 
   // Composed parts
@@ -15,13 +15,13 @@ export default class TaskUI {
 
   constructor() {
     this.controller = Controller.instance;
-    this.app = document.getElementById("application") as HTMLElement;
+    // this.app = document.getElementById("application") as HTMLElement;
     this.uls = this.getUls();
 
     // Initialize composed parts
     this.renderer = new TaskRenderer(this.controller);
 
-    this.events = new TaskEvents(this.app, this.controller, () =>
+    this.events = new TaskEvents(this.uls, this.controller, () =>
       this.render()
     );
 
