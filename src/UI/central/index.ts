@@ -11,6 +11,7 @@ export default class CentralUI {
 
   private controller: Controller;
   private currentView: ViewType = "home";
+  private isViewDraggedOut: boolean = false;
   private app: HTMLElement;
   private main: HTMLElement;
   private dragOutMainViewButton: HTMLElement;
@@ -110,12 +111,14 @@ export default class CentralUI {
   }
 
   private createToggleMainViewButton(): void {
+    const inOrOut = this.isViewDraggedOut ? "in" : "out";
+
     this.mainHeaderButton.innerHTML = `
       <button
         id="toggleMainViewButton"
         class="button button__round main__header--button"
-        title="Drag in or out"
-        aria-label="Drag in or out"
+        title="Drag ${inOrOut} view"
+        aria-label="Drag ${inOrOut} view"
       >
         <span class="material-symbols-outlined"> drag_handle </span>
       </button>
@@ -133,8 +136,8 @@ export default class CentralUI {
       <button
         id="backToHome"
         class="button button__round app__view--back"
-        title="Back to home"
-        aria-label="Back to home"
+        title="Back to home view"
+        aria-label="Back to home view"
       >
         <span class="material-symbols-outlined"> arrow_back </span>
       </button>
@@ -150,10 +153,14 @@ export default class CentralUI {
 
   private dragOutMainView = (): void => {
     this.main.classList.add("show");
+    this.isViewDraggedOut = true;
+    this.createToggleMainViewButton();
   };
 
   private dragInMainView = (): void => {
     this.main.classList.remove("show");
+    this.isViewDraggedOut = false;
+    this.createToggleMainViewButton();
   };
 
   private toggleMainViewDrag = (): void => {
