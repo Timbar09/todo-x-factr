@@ -1,0 +1,144 @@
+.main {
+  --overlap-position: 0 -70% 0 auto;
+  --no-overlap-position: 0 0 0 auto;
+
+  position: absolute;
+  inset: var(--overlap-position);
+  scale: 0.85;
+  width: 100%;
+  background-color: var(--bg-300);
+  border-radius: var(--radius-200);
+  box-shadow: var(--shadow);
+  transition:
+    inset 300ms ease-in-out,
+    scale 300ms 100ms ease-in-out,
+    border-radius 300ms ease-in-out;
+}
+
+@media (min-width: 40em) {
+  .main {
+    --no-overlap-position: auto;
+
+    position: relative;
+    border-radius: var(--radius-100);
+    inset: var(--no-overlap-position);
+    /* width: calc(100% - 18em); */
+    scale: 1;
+    margin: var(--spacing-3) var(--spacing-3) var(--spacing-3) 0;
+  }
+}
+
+.main.show {
+  border-radius: inherit;
+  inset: var(--no-overlap-position);
+  scale: 1;
+}
+
+.main__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--bg-300);
+  border-radius: inherit;
+  z-index: 10;
+}
+
+.main__view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 4em;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.main__view.hidden {
+  display: none;
+}
+
+.main__view--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main__view--button__add.button {
+  --dimension: 2.75em;
+
+  padding: 0;
+  height: var(--dimension);
+  width: var(--dimension);
+}
+
+.main__view--button__add span:first-child {
+  display: none;
+}
+
+@media (min-width: 60em) {
+  .main__view--button__add.button {
+    width: max-content;
+    padding: 0 1.25em;
+  }
+
+  .main__view--button__add span:first-child {
+    display: inline-block;
+  }
+}
+
+.main__view--title {
+  margin: 0;
+  font-size: 1.75em;
+  font-weight: 700;
+}
+
+.main__view--section {
+  padding-top: 1.5em;
+}
+
+.main__view--subtitle {
+  font-size: 0.9em;
+  font-weight: normal;
+  color: var(--text-200);
+  text-transform: uppercase;
+}
+
+.main__view--home {
+  overflow-x: clip;
+  overflow-y: auto;
+}
+
+.main__view--home .category__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+}
+
+/* .app__view--templates,
+.app__view--categories {
+  overflow-x: clip;
+  overflow-y: auto;
+  padding-bottom: 6em;
+} */
+
+/* .app__view--categories .category__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+} */
+
+/* .app__view--categories .category__list .category__item--header {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  background-color: var(--bg-100);
+} */
+
+.main__view--button__container {
+  position: fixed;
+  right: 2em;
+  bottom: 2em;
+}

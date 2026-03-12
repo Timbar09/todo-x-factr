@@ -160,12 +160,6 @@ export default class CentralController {
       throw new Error("Cannot delete default category");
     }
 
-    const category = this.categoryController.findById(categoryId);
-
-    if (!category) {
-      throw new Error(`Category with id ${categoryId} not found`);
-    }
-
     // Move all tasks to default category
     this.reassignTasksFromDeletedCategory(categoryId);
 

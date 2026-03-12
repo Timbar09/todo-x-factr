@@ -48,135 +48,118 @@
       <img src="/logo.png" alt="App logo" width="150" height="150" />
     </div>
 
-    <main id="main" class="main">
-      <div class="main__container">
-        <section class="hero">
-          <section class="hero__section">
-            <header class="hero__header">
-              <div class="hero__header--button__container">
-                <button
-                  id="dragOutAppButton"
-                  class="button button__round"
-                  title="Drag out application"
-                  aria-label="Drag out application"
-                >
-                  <span class="material-symbols-outlined"> chevron_left </span>
-                </button>
+    <div id="app" class="app">
+      <div class="app__container">
+        <div class="app__button--container py-2">
+          <button
+            id="dragOutMainViewButton"
+            class="button button__round"
+            title="Drag out application"
+            aria-label="Drag out application"
+          >
+            <span class="material-symbols-outlined"> chevron_left </span>
+          </button>
+        </div>
+
+        <header class="app__header p-3">
+          <div class="app__header--top">
+            <section class="app__header--profile">
+              <div class="app__header--profile__image">
+                <img
+                  src="/src/images/Gorilla-soldier_100x100.jpeg"
+                  alt="User image"
+                />
               </div>
 
-              <div class="hero__header--profile">
-                <div class="hero__header--profile__image--container">
-                  <img
-                    src="/src/images/Gorilla-soldier_100x100.jpeg"
-                    alt="User image"
-                    class="hero__header--profile__image"
-                  />
-                </div>
+              <h2 class="app__header--profile__name">
+                <span class="app__header--profile__name--first"> Gorilla </span>
+                <span class="app__header--profile__name--last"> Soldier</span>
+              </h2>
+            </section>
 
-                <h2 class="hero__header--profile__name">
-                  <span class="hero__header--profile__name--first">
-                    Gorilla
-                  </span>
-                  <span class="hero__header--profile__name--last">
-                    Soldier</span
-                  >
-                </h2>
-              </div>
-            </header>
-
-            <nav class="hero__nav">
-              <ul class="hero__nav--list">
-                <li class="hero__nav--item">
+            <nav class="app__header--nav">
+              <ul class="app__header--nav__list">
+                <li class="app__header--nav__item">
                   <button
                     id="tasksNavButton"
                     aria-label="Navigate to tasks"
-                    class="button hero__nav--button"
+                    class="button app__header--nav__button"
                     data-view="tasks"
                   >
                     <span class="material-symbols-outlined"> priority </span>
 
-                    <span class="hero__nav--item--text"> Tasks </span>
+                    <span class="app__header--nav__item--text"> Tasks </span>
                   </button>
                 </li>
 
-                <li class="hero__nav--item">
+                <li class="app__header--nav__item">
                   <button
                     id="categoriesNavButton"
                     aria-label="Navigate to categories"
-                    class="button hero__nav--button"
+                    class="button app__header--nav__button"
                     data-view="categories"
                   >
                     <span class="material-symbols-outlined"> view_cozy </span>
 
-                    <span class="hero__nav--item--text"> Categories </span>
+                    <span class="app__header--nav__item--text">
+                      Categories
+                    </span>
                   </button>
                 </li>
 
-                <li class="hero__nav--item">
+                <li class="app__header--nav__item">
                   <button
                     id="templatesNavButton"
                     aria-label="Navigate to templates"
-                    class="button hero__nav--button"
+                    class="button app__header--nav__button"
                     data-view="templates"
                   >
                     <span class="material-symbols-outlined"> Bookmark </span>
 
-                    <span class="hero__nav--item--text"> Templates </span>
+                    <span class="app__header--nav__item--text">
+                      Templates
+                    </span>
                   </button>
                 </li>
 
-                <li class="hero__nav--item">
+                <li class="app__header--nav__item">
                   <button
                     id="analyticsNavButton"
                     aria-label="Navigate to analytics"
-                    class="button hero__nav--button"
+                    class="button app__header--nav__button"
                     data-view="analytics"
                   >
                     <span class="material-symbols-outlined"> donut_large </span>
 
-                    <span class="hero__nav--item--text"> Analytics </span>
+                    <span class="app__header--nav__item--text">
+                      Analytics
+                    </span>
                   </button>
                 </li>
               </ul>
             </nav>
-          </section>
+          </div>
 
-          <section class="hero__section hero__analytics">
-            <div class="hero__analytics--graph">
+          <section class="app__header--analytics">
+            <div class="app__header--analytics__graph">
               <img
                 src="/src/images/line-graph.png"
                 alt="Graph showing progress"
-                class="hero__analytics--graph__image"
+                class="app__header--analytics__graph--image"
               />
             </div>
 
-            <div class="hero__analytics--report">
-              <h2 class="hero__analytics--report__title">Consistency</h2>
+            <div class="app__header--analytics__report">
+              <h2 class="app__header--analytics__report--title">Consistency</h2>
 
-              <p class="hero__analytics--report__text">Good</p>
+              <p class="app__header--analytics__report--text">Good</p>
             </div>
           </section>
-        </section>
+        </header>
 
-        <!-- <section id="menu" class="menu padding">
-          <header class="menu__header menu__button">
-            <button
-              id="closeMenuButtonButton"
-              class="menu__button--close button button__round"
-              title="Close menu"
-              aria-label="Close menu"
-            >
-              <span class="material-symbols-outlined"> close </span>
-            </button>
-          </header>
-
-          <div id="menuContent" class="menu__content">
-          </div>
-        </section> -->
-
-        <main class="app" id="application">
-          <header class="app__header padding-x">
-            <div class="app__header--button">
+        <main class="main" id="main">
+          <header class="main__header p-2">
+            <div class="main__header--button">
               <button
                 id="dragAppButton"
                 class="button button__round app__header--button__toggle"
@@ -187,7 +170,7 @@
               </button>
             </div>
 
-            <nav class="app__nav">
+            <nav class="main__nav">
               <span class="button button__round">
                 <span class="material-symbols-outlined"> search </span>
               </span>
@@ -198,37 +181,37 @@
             </nav>
           </header>
 
-          <section id="homeView" class="app__view app__view--home">
-            <header class="app__view--header padding-x padding-t">
-              <h2 class="app__view--title">What's up, Gorilla?</h2>
+          <div id="mainView" class="main__view main__view--home">
+            <header class="main__view--header px-2 pt-2">
+              <h2 class="main__view--title">What's up, Gorilla?</h2>
             </header>
 
-            <div class="app__view--section padding-x">
-              <h3 class="app__view--subtitle">Categories</h3>
+            <div class="main__view--section px-2">
+              <h3 class="main__view--subtitle">Categories</h3>
 
               <ul class="category__list">
-                <!-- Categories are dynamically generated -->
+                Categories are dynamically rendered here
               </ul>
             </div>
 
-            <div class="app__view--section">
-              <header class="task__list--today__header padding-x">
-                <h3 class="app__view--subtitle">Today's tasks</h3>
+            <div class="main__view--section px-2">
+              <header class="task__list--today__header">
+                <h3 class="main__view--subtitle">Today's tasks</h3>
 
                 <div class="task__list--today__header--more">
-                  <!-- More options is dynamically rendered here -->
+                  <!-- Task list menu is dynamically rendered here -->
                 </div>
               </header>
 
-              <ul id="todayTaskList" class="task__list padding-x">
-                <!-- Task items are dynamically generated here -->
+              <ul id="todayTaskList" class="task__list px-2">
+                Task items are dynamically rendered here
               </ul>
             </div>
 
-            <div class="app__view--button__container">
+            <div class="main__view--button__container">
               <button
                 id="openTaskDialogButton"
-                class="button button__primary button__primary--round app__entryForm--button app__view--button"
+                class="button button__primary button__primary--round main__entryForm--button main__view--button"
                 title="Add new item"
                 aria-label="Add new item to list"
                 data-view="home"
@@ -236,88 +219,16 @@
                 <span class="material-symbols-outlined"> add </span>
               </button>
             </div>
-          </section>
-
-          <section
-            id="categoriesView"
-            class="app__view app__view--categories hidden"
-          >
-            <header class="app__view--header padding">
-              <h2 class="app__view--title">Your Categories</h2>
-
-              <div class="app__view--actions">
-                <button
-                  id="addNewCategory"
-                  aria-label="Add new category"
-                  class="button button__primary button__primary--bar app__view--button app__view--button__add"
-                  data-view="categories"
-                >
-                  <span>New Category</span>
-                  <span class="material-symbols-outlined">Add</span>
-                </button>
-              </div>
-            </header>
-
-            <ul id="categoryList" class="category__list padding-x">
-              <!-- Categories are dynamically generated -->
-            </ul>
-          </section>
-
-          <section id="tasksView" class="app__view app__view--tasks hidden">
-            <header class="app__view--header padding">
-              <h2 class="app__view--title">Your Tasks</h2>
-
-              <div class="app__view--actions">
-                <button
-                  id="addNewTask"
-                  aria-label="Add new task"
-                  class="button button__primary button__primary--bar app__view--button app__view--button__add"
-                  data-view="tasks"
-                >
-                  <span>New Task</span>
-                  <span class="material-symbols-outlined">Add</span>
-                </button>
-              </div>
-            </header>
-
-            <ul id="taskList" class="task__list padding-x">
-              <!-- Tasks are dynamically generated -->
-            </ul>
-          </section>
-
-          <section
-            id="templatesView"
-            class="app__view app__view--templates padding-x hidden"
-          >
-            <header class="app__view--header padding-y">
-              <h2 class="app__view--title">Choose a Template</h2>
-
-              <div class="app__view--actions">
-                <button
-                  id="addNewTemplate"
-                  aria-label="Add new template"
-                  class="button button__primary button__primary--bar app__view--button app__view--button__add"
-                  data-view="templates"
-                >
-                  <span>New Template</span>
-                  <span class="material-symbols-outlined">Add</span>
-                </button>
-              </div>
-            </header>
-
-            <ul id="templateList" class="template__list">
-              <!-- Menu content is dynamically generated -->
-            </ul>
-          </section>
-
-          <section
-            id="analyticsView"
-            class="app__view app__view--analytics hidden"
-          >
-            <header class="app__view--header padding">
-              <h2 class="app__view--title">Analytics</h2>
-            </header>
-          </section>
+          </div>
+          <!-- 
+        <section
+          id="analyticsView"
+          class="app__view app__view--analytics hidden"
+        >
+          <header class="app__view--header padding">
+            <h2 class="app__view--title">Analytics</h2>
+          </header>
+        </section> -->
 
           <div
             id="dialogContainer"
@@ -342,13 +253,13 @@
               inert
             >
               <div class="dialog__content padding">
-                <!-- Dialog content goes here -->
+                Dialog content goes here
               </div>
             </dialog>
           </div>
         </main>
       </div>
-    </main>
+    </div>
   </body>
   <script type="module" src="/src/main.ts"></script>
 </html>

@@ -15,8 +15,7 @@ export default class TemplateUI {
 
   constructor() {
     this.controller = Controller.instance;
-    this.container = document.getElementById("templatesView")!;
-    this.ul = this.container.querySelector("#templateList") as HTMLUListElement;
+    this.container = document.getElementById("mainView")!;
 
     // Initialize composed parts
     this.renderer = new TemplateRenderer(
@@ -24,23 +23,23 @@ export default class TemplateUI {
       MoreMenuController.getInstance()
     );
 
+    this.ul = this.renderer.getListContainer();
+
     this.events = new TemplateEvents(
       this.controller,
       this.container,
-      () => this.renderTemplates(),
+      () => this.list(),
       templateId => this.selectTemplate(templateId)
     );
-
-    this.init();
   }
 
-  private init(): void {
-    this.renderTemplates();
+  view(): void {
+    this.renderer.renderTemplateView(this.container);
     this.events.bindEvents();
   }
 
-  private renderTemplates(): void {
-    this.renderer.renderTemplates(this.ul);
+  list(): void {
+    this.renderer.renderTemplateList(this.ul);
   }
 
   private selectTemplate(templateId: string): void {
@@ -48,7 +47,7 @@ export default class TemplateUI {
       const template = this.controller.findById(templateId);
       if (template) {
         this.controller.activeTemplate = template;
-        this.renderTemplates();
+        this.list();
       }
     }
   }

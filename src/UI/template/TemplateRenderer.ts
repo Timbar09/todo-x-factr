@@ -13,7 +13,41 @@ export default class TemplateRenderer {
     this.moreMenuController = moreMenuController;
   }
 
-  renderTemplates(ul: HTMLUListElement): HTMLUListElement {
+  renderTemplateView(container: HTMLElement): void {
+    container.innerHTML = "";
+
+    container.className = "main__view main__view--templates px-2";
+
+    container.innerHTML = `
+      <header class="main__view--header py-2">
+        <h2 class="main__view--title">Choose a Template</h2>
+
+        <div class="main__view--actions">
+          <button
+            id="addNewTemplate"
+            aria-label="Add new template"
+            class="button button__primary button__primary--bar main__view--button main__view--button__add"
+            data-view="templates"
+          >
+            <span>New Template</span>
+            <span class="material-symbols-outlined">Add</span>
+          </button>
+        </div>
+      </header>
+
+      <ul id="templateList" class="template__list">
+        <!-- Menu content is dynamically generated -->
+      </ul>
+      `;
+
+    const listContainer = container.querySelector(
+      "#templateList"
+    ) as HTMLUListElement;
+
+    this.renderTemplateList(listContainer);
+  }
+
+  renderTemplateList(ul: HTMLUListElement): HTMLUListElement {
     const templates = this.controller.list;
     const activeTemplate = this.controller.activeTemplate;
 
@@ -123,5 +157,9 @@ export default class TemplateRenderer {
     };
 
     return this.moreMenuController.createMenu(menuConfig);
+  }
+
+  getListContainer(): HTMLUListElement {
+    return document.querySelector("#templateList") as HTMLUListElement;
   }
 }

@@ -2,16 +2,16 @@ import Controller from "../../controller/CentralController";
 
 export default class TaskEvents {
   private controller: Controller;
-  private uls: NodeListOf<HTMLUListElement>;
+  private ul: HTMLUListElement;
   private onRender: () => void;
   private isBound: boolean = false;
 
   constructor(
-    uls: NodeListOf<HTMLUListElement>,
+    ul: HTMLUListElement,
     controller: Controller,
     onRender: () => void
   ) {
-    this.uls = uls;
+    this.ul = ul;
     this.controller = controller;
     this.onRender = onRender;
   }
@@ -20,18 +20,16 @@ export default class TaskEvents {
     if (this.isBound) return;
     this.isBound = true;
 
-    this.uls.forEach(ul => {
-      ul.addEventListener("click", (e: Event) => {
-        const target = e.target as HTMLElement;
-        const taskItem = target.closest(".task__item") as HTMLElement;
-        const taskId = taskItem?.dataset.itemId;
-        console.log("Clicked Task ID:", taskId);
-        if (taskId) {
-          if (target.matches(".task__item--checkbox")) {
-            this.controller.toggleTaskCheckStatus(taskId);
-          }
+    this.ul.addEventListener("click", (e: Event) => {
+      const target = e.target as HTMLElement;
+      const taskItem = target.closest(".task__item") as HTMLElement;
+      const taskId = taskItem?.dataset.itemId;
+      console.log("Clicked Task ID:", taskId);
+      if (taskId) {
+        if (target.matches(".task__item--checkbox")) {
+          this.controller.toggleTaskCheckStatus(taskId);
         }
-      });
+      }
     });
 
     // this.uls.addEventListener("click", (e: Event) => {
@@ -70,7 +68,6 @@ export default class TaskEvents {
 
     window.addEventListener("clearCompletedTasks", () => {
       this.controller.clearCompletedTasks();
-      // console.log("Cleared All completed");
       this.onRender();
     });
   }

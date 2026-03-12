@@ -1,6 +1,6 @@
-.hero {
-  padding: 2rem;
+.app__header {
   height: 100%;
+  padding-top: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,21 +8,7 @@
   background-color: var(--bg-200);
 }
 
-.hero__header--button__container {
-  text-align: center;
-}
-
-.hero__header--button__container .button {
-  border: solid 0.125em var(--text-200);
-}
-
-@media (min-width: 48em) {
-  .hero__header--button__container {
-    display: none;
-  }
-}
-
-.hero__header--profile__image--container {
+.app__header--profile__image {
   --dimension: 6em;
 
   padding: 0.15em;
@@ -37,7 +23,7 @@
   border-radius: var(--radius-circle);
 }
 
-.hero__header--profile__image {
+.app__header--profile__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -45,21 +31,21 @@
   border: solid 0.215em var(--bg-200);
 }
 
-.hero__header--profile__name--first {
+.app__header--profile__name--first {
   display: block;
   font-weight: 400;
   font-size: 0.9125em;
   color: var(--text-300);
 }
 
-.hero__nav--list {
+.app__header--nav__list {
   display: flex;
   flex-direction: column;
   gap: 0.25em;
   width: max-content;
 }
 
-.hero__nav--item .button {
+.app__header--nav__item .button {
   padding: 0.5em 0.5em;
   display: flex;
   align-items: center;
@@ -69,54 +55,54 @@
   border-radius: var(--radius-25);
 }
 
-.hero__nav--item .button:hover {
+.app__header--nav__item .button:hover {
   background-color: var(--bg-300);
 }
 
-.hero__nav--item .button.active {
+.app__header--nav__item .button.active {
   color: var(--primary);
   background-color: var(--bg-300);
 }
 
-.hero__analytics--graph {
+.app__header--analytics__graph {
   padding: 0 0 0.5em;
   position: relative;
 }
 
-.hero__analytics--graph::before {
+.app__header--analytics__graph::before {
   content: "";
   position: absolute;
   inset: 0 0 0 auto;
   width: 100%;
-  background-color: var(--bg-200);
+  background-color: var(--bg-200, white);
   border-radius: inherit;
   animation: graph-animation 3s 1s forwards ease-in-out;
 }
 
 @keyframes graph-animation {
   0% {
-    width: 1001;
+    width: 100%;
   }
   100% {
     width: 0;
   }
 }
 
-.hero__analytics--graph__image {
+.app__header--analytics__graph--image {
   width: 10em;
 }
 
-.hero__analytics--report {
+.app__header--analytics__report {
   display: flex;
   flex-direction: column;
 }
 
-.hero__analytics--report__text {
+.app__header--analytics__report--text {
   margin: 0;
   font-size: 0.85em;
 }
 
-.hero__analytics--report__title {
+.app__header--analytics__report--title {
   margin: 0;
   font-weight: 500;
   font-size: 1.125em;

@@ -3,6 +3,7 @@ import MoreMenuController, {
   MoreMenuConfig,
 } from "../../controller/MoreMenuController.js";
 import Category from "../../model/Category.js";
+import CategoryEvents from "./CategoryEvents.js";
 import TaskRenderer from "../task/TaskRenderer.js";
 import { CategoryStats } from "./types.js";
 
@@ -10,6 +11,7 @@ export default class CategoryRenderer {
   private controller: Controller;
   private taskRenderer: TaskRenderer;
   private inView: boolean;
+  private bindEvents: CategoryEvents;
   private moreMenuController: MoreMenuController;
 
   private previousCompletions: Map<string, number>;
@@ -22,13 +24,58 @@ export default class CategoryRenderer {
     this.taskRenderer = new TaskRenderer(controller);
     this.inView = false;
     this.moreMenuController = MoreMenuController.getInstance();
+    this.bindEvents = new CategoryEvents(
+      controller,
+      () => this.renderCategoryList
+    );
 
     this.previousCompletions = previousCompletions;
   }
 
+  renderCategoryView(container: HTMLElement): void {
+    container.innerHTML = "";
+    this.inView = this.isCategoriesView(container);
+
+    container.className = "main__view main__view--categories";
+
+    container.innerHTML = `
+      <header class="main__view--header p-2">
+        <h2 class="main__view--title">Your Categories</h2>
+
+        <div class="main__view--actions">
+          <button
+            id="addNewCategory"
+            aria-label="Add new category"
+            class="button button__primary button__primary--bar main__view--button main__view--button__add"
+            data-view="categories"
+          >
+            <span>New Category</span>
+            <span class="material-symbols-outlined">Add</span>
+          </button>
+        </div>
+      </header>
+
+      <ul id="categoryList" class="category__list px-2">
+        <!-- Categories are dynamically rendered here -->
+      </ul>
+      `;
+
+    const listContainer = container.querySelector(
+      "#categoryList"
+    ) as HTMLUListElement;
+
+    this.renderCategoryList(listContainer);
+
+    if (!this.bindEvents) {
+      this.bindEvents = new CategoryEvents(this.controller, () =>
+        this.renderCategoryList(listContainer)
+      );
+    }
+  }
+
   renderCategoryList(container: HTMLUListElement): void {
     container.innerHTML = "";
-    this.inView = this.isCategoriesInView(container);
+    this.inView = this.isCategoriesView(container);
 
     this.controller.category.list.forEach(category => {
       const li = this.createCategoryElement(category, this.inView);
@@ -167,7 +214,7 @@ export default class CategoryRenderer {
       const task = this.controller.task.findById(taskId);
       if (task) {
         const li = this.taskRenderer.createTaskElement(task);
-        li.style.setProperty("--delay", i * 150 + "ms");
+        li.style.setProperty("--delay", i * 100 + "ms");
 
         ul.appendChild(li);
       }
@@ -296,7 +343,7 @@ export default class CategoryRenderer {
       `[data-category-id="${categoryId}"]`
     );
 
-    this.inView = this.isCategoriesInView(container);
+    this.inView = this.isCategoriesView(container);
 
     if (existingElement) {
       const newElement = this.createCategoryElement(category, this.inView);
@@ -316,8 +363,8 @@ export default class CategoryRenderer {
     };
   }
 
-  private isCategoriesInView(container: HTMLElement): boolean {
-    const view = container.closest(".app__view--categories");
+  private isCategoriesView(container: HTMLElement): boolean {
+    const view = container.closest(".main__view--categories");
     return view !== null;
   }
 }

@@ -1,4 +1,8 @@
 import Controller from "../../controller/CentralController";
+import HomeUI from "../home";
+import TaskUI from "../task";
+import CategoryUI from "../category";
+import TemplateUI from "../template";
 import { formData } from "../form/data";
 import FormDialog, { ViewType } from "./FormDialog";
 
@@ -7,57 +11,65 @@ export default class CentralUI {
 
   private controller: Controller;
   private currentView: ViewType = "home";
-  private main: HTMLElement;
-  private dragOutAppButton: HTMLElement;
   private app: HTMLElement;
-  private appHeaderButton: HTMLElement;
-  private navButtons: NodeListOf<HTMLElement>;
+  private main: HTMLElement;
+  private dragOutMainViewButton: HTMLElement;
+  private mainHeaderButton: HTMLElement;
+  private appHeaderNavButtons: NodeListOf<HTMLElement>;
+  private render: CategoryUI | TemplateUI | TaskUI | HomeUI;
   private formDialog: FormDialog;
 
   constructor() {
     this.controller = Controller.instance;
-    this.main = document.getElementById("main")!;
-    this.dragOutAppButton = this.main.querySelector("#dragOutAppButton")!;
-    this.app = this.main.querySelector("#application")!;
-    this.appHeaderButton = this.app.querySelector(".app__header--button")!;
-    this.navButtons = this.main.querySelectorAll(".hero__nav--button")!;
+    this.app = document.getElementById("app")!;
+    this.main = this.app.querySelector("#main")!;
+    this.dragOutMainViewButton = this.app.querySelector(
+      "#dragOutMainViewButton"
+    )!;
+    this.appHeaderNavButtons = this.app.querySelectorAll(
+      ".app__header--nav__button"
+    )!;
+    this.mainHeaderButton = this.main.querySelector(".main__header--button")!;
+    this.render = new HomeUI();
     this.formDialog = new FormDialog(this.main, this.controller);
     this.showView(this.currentView);
     this.bindNavigationEvents();
   }
 
   private bindNavigationEvents(): void {
-    this.dragOutAppButton.addEventListener("click", this.dragOutApp);
+    this.dragOutMainViewButton.addEventListener("click", this.dragOutMainView);
 
-    const toggleAppDragButton = this.app.querySelector("#dragAppButton");
-    if (toggleAppDragButton) {
-      toggleAppDragButton.addEventListener("click", this.toggleAppDrag);
+    const toggleMainViewDragButton = this.app.querySelector("#dragAppButton");
+    if (toggleMainViewDragButton) {
+      toggleMainViewDragButton.addEventListener(
+        "click",
+        this.toggleMainViewDrag
+      );
     }
 
     this.formDialog.bindEvents();
 
-    this.navButtons.forEach(navButton => {
+    this.appHeaderNavButtons.forEach(navButton => {
       navButton.addEventListener("click", () => {
         const view = navButton.dataset.view as ViewType;
 
         if (view) {
           this.setActiveNavButton(navButton);
           this.navigateTo(view);
-          this.dragOutApp();
+          this.dragOutMainView();
         }
       });
     });
   }
 
   private setActiveNavButton(activeButton: HTMLElement): void {
-    this.navButtons.forEach(btn => btn.classList.remove("active"));
+    this.appHeaderNavButtons.forEach(btn => btn.classList.remove("active"));
     activeButton.classList.add("active");
   }
 
   navigateTo(view: ViewType): void {
     if (this.currentView === view) return;
 
-    this.hideCurrentView();
     this.showView(view);
     this.currentView = view;
     this.formDialog.dragDownDialog();
@@ -69,37 +81,39 @@ export default class CentralUI {
     );
   }
 
-  private hideCurrentView(): void {
-    const currentViewElement = this.app.querySelector(
-      `#${this.currentView}View`
-    );
-    if (currentViewElement) {
-      currentViewElement.classList.add("hidden");
-    }
-  }
-
   private showView(view: ViewType): void {
-    const viewElement = this.app.querySelector(`#${view}View`);
-    if (viewElement) {
-      viewElement.classList.remove("hidden");
+    view === "home"
+      ? this.createToggleMainViewButton()
+      : this.createBackToHomeButton();
+
+    switch (view) {
+      case "home":
+        this.render = new HomeUI();
+        break;
+      case "tasks":
+        this.render = new TaskUI();
+        break;
+      case "templates":
+        this.render = new TemplateUI();
+        break;
+      case "categories":
+        this.render = new CategoryUI(this.controller);
+        break;
+      default:
+        console.warn(`The view "${view}" does not support item editing.`);
+        return;
     }
 
-    this.initializeView(view);
-  }
-
-  private initializeView(view: ViewType): void {
-    view === "home"
-      ? this.createDragAppButton()
-      : this.createBackToHomeButton();
+    this.render.view();
 
     this.formDialog.setDialogContent(view, formData[view]);
   }
 
-  private createDragAppButton(): void {
-    this.appHeaderButton.innerHTML = `
+  private createToggleMainViewButton(): void {
+    this.mainHeaderButton.innerHTML = `
       <button
-        id="dragAppButton"
-        class="button button__round app__header--button"
+        id="toggleMainViewButton"
+        class="button button__round main__header--button"
         title="Drag in or out"
         aria-label="Drag in or out"
       >
@@ -107,15 +121,15 @@ export default class CentralUI {
       </button>
     `;
 
-    this.appHeaderButton
-      .querySelector("#dragAppButton")!
+    this.mainHeaderButton
+      .querySelector("#toggleMainViewButton")!
       .addEventListener("click", () => {
-        this.toggleAppDrag();
+        this.toggleMainViewDrag();
       });
   }
 
   private createBackToHomeButton(): void {
-    this.appHeaderButton.innerHTML = `
+    this.mainHeaderButton.innerHTML = `
       <button
         id="backToHome"
         class="button button__round app__view--back"
@@ -126,20 +140,28 @@ export default class CentralUI {
       </button>
     `;
 
-    this.appHeaderButton
+    this.mainHeaderButton
       .querySelector("#backToHome")
       ?.addEventListener("click", () => {
         this.navigateTo("home");
-        this.navButtons.forEach(btn => btn.classList.remove("active"));
+        this.appHeaderNavButtons.forEach(btn => btn.classList.remove("active"));
       });
   }
 
-  private dragOutApp = (): void => {
-    this.app.classList.add("show");
+  private dragOutMainView = (): void => {
+    this.main.classList.add("show");
   };
 
-  private toggleAppDrag = (): void => {
-    this.app.classList.toggle("show");
+  private dragInMainView = (): void => {
+    this.main.classList.remove("show");
+  };
+
+  private toggleMainViewDrag = (): void => {
+    if (this.main.classList.contains("show")) {
+      this.dragInMainView();
+    } else {
+      this.dragOutMainView();
+    }
   };
 
   getCurrentView(): ViewType {

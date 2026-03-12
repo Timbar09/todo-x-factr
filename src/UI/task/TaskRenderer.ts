@@ -3,23 +3,59 @@ import Controller from "../../controller/CentralController";
 import MoreMenuController, {
   MoreMenuConfig,
 } from "../../controller/MoreMenuController";
+import TaskEvents from "./TaskEvents";
 
 export default class TaskRenderer {
   private controller: Controller;
   private moreMenuController: MoreMenuController;
-  private ulHeaderMenuContainer: HTMLElement;
+  private bindEvents: TaskEvents | null = null;
 
   constructor(controller: Controller) {
     this.controller = controller;
+
     this.moreMenuController = MoreMenuController.getInstance();
-    this.ulHeaderMenuContainer = this.getUlHeader()!;
+  }
+
+  renderTaskView(container: HTMLElement): void {
+    container.innerHTML = "";
+
+    container.className = "main__view main__view--tasks";
+
+    container.innerHTML = `
+      <header class="main__view--header p-2">
+        <h2 class="main__view--title">Your Tasks</h2>
+
+        <div class="main__view--actions">
+          <button
+            id="addNewTask"
+            aria-label="Add new task"
+            class="button button__primary button__primary--bar main__view--button main__view--button__add"
+            data-view="tasks"
+          >
+            <span>New Task</span>
+            <span class="material-symbols-outlined">Add</span>
+          </button>
+        </div>
+      </header>
+
+      <ul id="taskList" class="task__list px-2">
+        <!-- Tasks are dynamically generated -->
+      </ul>`;
+
+    const listContainer = container.querySelector(
+      "#taskList"
+    ) as HTMLUListElement;
+
+    this.renderTaskList(listContainer);
+
+    if (!this.bindEvents) {
+      this.bindEvents = new TaskEvents(listContainer, this.controller, () =>
+        this.renderTaskList(listContainer)
+      );
+    }
   }
 
   renderTaskList(container: HTMLUListElement): void {
-    const headerMenu = this.createTaskListHeaderMenu();
-    this.ulHeaderMenuContainer.innerHTML = "";
-    this.ulHeaderMenuContainer.appendChild(headerMenu);
-
     const tasks = this.controller.task.list;
 
     container.innerHTML = "";
@@ -28,6 +64,13 @@ export default class TaskRenderer {
       const li = this.createTaskElement(task);
       container.appendChild(li);
     });
+  }
+
+  renderTodaysTasks(container: HTMLUListElement): void {
+    container.innerHTML = "";
+
+    container.innerHTML =
+      "<div>We don't have code to display tasks for today yet!</div>";
   }
 
   createTaskElement(task: Task): HTMLLIElement {
@@ -59,7 +102,7 @@ export default class TaskRenderer {
     return li;
   }
 
-  createTaskListHeaderMenu(): HTMLElement {
+  createTaskListMenu(): HTMLElement {
     const menuConfig: MoreMenuConfig = {
       options: [
         {
@@ -111,9 +154,17 @@ export default class TaskRenderer {
     return this.moreMenuController.createMenu(menuConfig);
   }
 
-  private getUlHeader(): HTMLElement {
-    return document.querySelector(
-      ".task__list--today__header--more"
-    ) as HTMLElement;
-  }
+  // getListContainer(): HTMLUListElement {
+  //   return document.querySelector("#taskList") as HTMLUListElement;
+  // }
+
+  // getListContainer(): HTMLUListElement {
+  //   // if (this.listContainer) return this.listContainer;
+
+  //   // const el = document.querySelector("#taskList") as HTMLUListElement | null;
+  //   // if (!el) {
+  //   //   throw new Error("Task list container (#taskList) is not available yet.");
+  //   // }
+  //   // return this.view?.querySelector("#taskList") as HTMLUListElement;
+  // }
 }

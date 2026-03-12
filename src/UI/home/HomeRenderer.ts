@@ -1,0 +1,88 @@
+import Controller from "../../controller/CentralController";
+import CategoryUI from "../category";
+import TaskUI from "../task";
+
+export default class HomeRenderer {
+  private controller: Controller;
+  private categoryRenderer: CategoryUI;
+  private taskRenderer: TaskUI;
+  private parentContainer: HTMLElement | null = null;
+
+  constructor(controller: Controller) {
+    this.controller = controller;
+    this.categoryRenderer = new CategoryUI(this.controller);
+    this.taskRenderer = new TaskUI();
+  }
+
+  renderHomeView(container: HTMLElement): void {
+    container.innerHTML = "";
+
+    container.className = "main__view main__view--home";
+
+    container.innerHTML = `
+      <header class="main__view--header px-2 pt-2">
+        <h2 class="main__view--title">What's up, Gorilla?</h2>
+      </header>
+
+      <div class="main__view--section px-2">
+        <h3 class="main__view--subtitle">Categories</h3>
+
+        <ul id="homeCategoryList" class="category__list">
+          Categories are dynamically rendered here
+        </ul>
+      </div>
+
+      <div class="main__view--section px-2">
+        <header class="task__list--today__header">
+          <h3 class="main__view--subtitle">Today's tasks</h3>
+
+          <div id="taskListMenu" class="task__list--today__header--more">
+            <!-- Task list menu is dynamically rendered here -->
+          </div>
+        </header>
+
+        <ul id="todayTaskList" class="task__list px-2">
+          <!-- Task items are dynamically rendered here -->
+        </ul>
+        </div>
+
+        <div class="main__view--button__container">
+          <button
+            id="openTaskDialogButton"
+            class="button button__primary button__primary--round main__entryForm--button main__view--button"
+            title="Add new item"
+            aria-label="Add new item to list"
+            data-view="home"
+          >
+            <span class="material-symbols-outlined"> add </span>
+          </button>
+        </div>
+        `;
+
+    this.parentContainer = container;
+
+    const categoryList = this.getEl("#homeCategoryList") as HTMLUListElement;
+    const todaysTaskListHeader = this.getEl("#taskListMenu") as HTMLDivElement;
+    const todaysTaskList = this.getEl("#todayTaskList") as HTMLUListElement;
+
+    const taskListMenu = this.taskRenderer.todaysTaskListMenu();
+
+    todaysTaskListHeader.appendChild(taskListMenu);
+
+    this.renderCategoryList(categoryList);
+    this.renderTodayTaskList(todaysTaskList);
+  }
+
+  renderCategoryList(container: HTMLUListElement): void {
+    this.categoryRenderer.list(container);
+  }
+
+  renderTodayTaskList(container: HTMLUListElement): void {
+    this.taskRenderer.listToday(container);
+  }
+
+  getEl(selector: string): HTMLElement | null {
+    if (!this.parentContainer) return null;
+    return this.parentContainer.querySelector(selector);
+  }
+}

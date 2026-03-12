@@ -14,8 +14,7 @@
 }
 
 * {
-  scrollbar-gutter: stable; /* Reserves space for scrollbar */
-  scrollbar-width: thin; /* Firefox */
+  scrollbar-width: none; /* Firefox */
   scrollbar-color: var(--text-300) transparent; /* Firefox */
   scroll-behavior: smooth;
   transition:
@@ -46,6 +45,11 @@ body {
   --shadow-primary-200: 0 0 0.75em 0.15em rgba(160, 86, 197, 0.3);
 
   --focus-outline: 0.125em solid var(--primary);
+
+  /* SPACING */
+  --spacing-1: 0.75rem;
+  --spacing-2: 1.5rem;
+  --spacing-3: 2.25rem;
 
   padding: 0;
   margin: 0;
