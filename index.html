@@ -157,20 +157,24 @@
           </section>
         </header>
 
-        <main class="main" id="main">
-          <header class="main__header p-2">
-            <div class="main__header--button">
+        <main class="main__view" id="mainView">
+          <header class="main__view--header p-2">
+            <div class="main__view--toggle">
               <button
-                id="dragAppButton"
-                class="button button__round app__header--button__toggle"
+                id="toggleMainViewButton"
+                class="button button__round main__view--toggle__button"
                 title="Drag in or out"
                 aria-label="Drag out view"
               >
                 <span class="material-symbols-outlined"> drag_handle </span>
               </button>
+
+              <spam class="app__logo">
+                <span class="material-symbols-outlined">task_alt</span>
+              </spam>
             </div>
 
-            <nav class="main__nav">
+            <nav class="main__view--nav">
               <span class="button button__round">
                 <span class="material-symbols-outlined"> search </span>
               </span>
@@ -181,44 +185,11 @@
             </nav>
           </header>
 
-          <div id="mainView" class="main__view main__view--home">
-            <header class="main__view--header px-2 pt-2">
-              <h2 class="main__view--title">What's up, Gorilla?</h2>
-            </header>
-
-            <div class="main__view--section px-2">
-              <h3 class="main__view--subtitle">Categories</h3>
-
-              <ul class="category__list">
-                Categories are dynamically rendered here
-              </ul>
-            </div>
-
-            <div class="main__view--section px-2">
-              <header class="task__list--today__header">
-                <h3 class="main__view--subtitle">Today's tasks</h3>
-
-                <div class="task__list--today__header--more">
-                  <!-- Task list menu is dynamically rendered here -->
-                </div>
-              </header>
-
-              <ul id="todayTaskList" class="task__list px-2">
-                Task items are dynamically rendered here
-              </ul>
-            </div>
-
-            <div class="main__view--button__container">
-              <button
-                id="openTaskDialogButton"
-                class="button button__primary button__primary--round main__entryForm--button main__view--button"
-                title="Add new item"
-                aria-label="Add new item to list"
-                data-view="home"
-              >
-                <span class="material-symbols-outlined"> add </span>
-              </button>
-            </div>
+          <div
+            id="mainViewContent"
+            class="main__view--content main__view--home"
+          >
+            <!-- The content of the current view will be rendered here. By default, it will show the home view. -->
           </div>
           <!-- 
         <section

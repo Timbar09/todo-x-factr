@@ -2,20 +2,20 @@ import Controller from "../../controller/CentralController.js";
 import Category from "../../model/Category.js";
 import CategoryRenderer from "./CategoryRenderer.js";
 import { Observer } from "./types.js";
+import AppUI from "../AppUI";
 
-export default class CategoryUI implements Observer<Category> {
+export default class CategoryUI extends AppUI implements Observer<Category> {
   static instance: CategoryUI = new CategoryUI(Controller.instance);
 
   private controller: Controller;
-  private container: HTMLElement;
   private previousCompletions: Map<string, number> = new Map();
 
   // Composed parts
   private renderer: CategoryRenderer;
 
   constructor(controller: Controller) {
+    super();
     this.controller = controller;
-    this.container = document.getElementById("mainView")! as HTMLElement;
 
     // Initialize composed parts
     this.renderer = new CategoryRenderer(

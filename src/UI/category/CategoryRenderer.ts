@@ -6,6 +6,7 @@ import Category from "../../model/Category.js";
 import CategoryEvents from "./CategoryEvents.js";
 import TaskRenderer from "../task/TaskRenderer.js";
 import { CategoryStats } from "./types.js";
+import { renderViewShell } from "../ViewShell";
 
 export default class CategoryRenderer {
   private controller: Controller;
@@ -33,36 +34,21 @@ export default class CategoryRenderer {
   }
 
   renderCategoryView(container: HTMLElement): void {
-    container.innerHTML = "";
+    const listContainer = renderViewShell(container, {
+      viewClass: "main__view--categories",
+      title: "Your Categories",
+      addButton: {
+        id: "addNewCategory",
+        ariaLabel: "Add new category",
+        text: "New Category",
+        dataView: "categories",
+      },
+      list: {
+        id: "categoryList",
+        className: "category__list px-2",
+      },
+    });
     this.inView = this.isCategoriesView(container);
-
-    container.className = "main__view main__view--categories";
-
-    container.innerHTML = `
-      <header class="main__view--header p-2">
-        <h2 class="main__view--title">Your Categories</h2>
-
-        <div class="main__view--actions">
-          <button
-            id="addNewCategory"
-            aria-label="Add new category"
-            class="button button__primary button__primary--bar main__view--button main__view--button__add"
-            data-view="categories"
-          >
-            <span>New Category</span>
-            <span class="material-symbols-outlined">Add</span>
-          </button>
-        </div>
-      </header>
-
-      <ul id="categoryList" class="category__list px-2">
-        <!-- Categories are dynamically rendered here -->
-      </ul>
-      `;
-
-    const listContainer = container.querySelector(
-      "#categoryList"
-    ) as HTMLUListElement;
 
     this.renderCategoryList(listContainer);
 

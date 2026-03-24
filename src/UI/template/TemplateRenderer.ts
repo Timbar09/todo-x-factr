@@ -3,6 +3,7 @@ import Controller from "../../controller/TemplateController";
 import MoreMenuController, {
   MoreMenuConfig,
 } from "../../controller/MoreMenuController";
+import { renderViewShell } from "../ViewShell";
 
 export default class TemplateRenderer {
   private controller: Controller;
@@ -14,35 +15,21 @@ export default class TemplateRenderer {
   }
 
   renderTemplateView(container: HTMLElement): void {
-    container.innerHTML = "";
-
-    container.className = "main__view main__view--templates px-2";
-
-    container.innerHTML = `
-      <header class="main__view--header py-2">
-        <h2 class="main__view--title">Choose a Template</h2>
-
-        <div class="main__view--actions">
-          <button
-            id="addNewTemplate"
-            aria-label="Add new template"
-            class="button button__primary button__primary--bar main__view--button main__view--button__add"
-            data-view="templates"
-          >
-            <span>New Template</span>
-            <span class="material-symbols-outlined">Add</span>
-          </button>
-        </div>
-      </header>
-
-      <ul id="templateList" class="template__list">
-        <!-- Menu content is dynamically generated -->
-      </ul>
-      `;
-
-    const listContainer = container.querySelector(
-      "#templateList"
-    ) as HTMLUListElement;
+    const listContainer = renderViewShell(container, {
+      viewClass: "main__view--templates px-2",
+      headerPadding: "py-2",
+      title: "Choose a Template",
+      addButton: {
+        id: "addNewTemplate",
+        ariaLabel: "Add new template",
+        text: "New Template",
+        dataView: "templates",
+      },
+      list: {
+        id: "templateList",
+        className: "template__list",
+      },
+    });
 
     this.renderTemplateList(listContainer);
   }

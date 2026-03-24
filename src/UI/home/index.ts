@@ -1,16 +1,16 @@
 import Controller from "../../controller/CentralController";
 import HomeRenderer from "./HomeRenderer";
+import AppUI from "../AppUI";
 
-export default class HomeUI {
+export default class HomeUI extends AppUI {
   static instance: HomeUI = new HomeUI();
 
   private controller: Controller;
-  private container: HTMLElement;
   private renderer: HomeRenderer;
 
   constructor() {
+    super();
     this.controller = Controller.instance;
-    this.container = document.getElementById("mainView")!;
     this.renderer = new HomeRenderer(this.controller);
   }
 

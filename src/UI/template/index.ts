@@ -2,11 +2,12 @@ import Controller from "../../controller/TemplateController";
 import MoreMenuController from "../../controller/MoreMenuController";
 import TemplateRenderer from "./TemplateRenderer";
 import TemplateEvents from "./TemplateEvents";
-export default class TemplateUI {
+import AppUI from "../AppUI";
+
+export default class TemplateUI extends AppUI {
   static instance: TemplateUI = new TemplateUI();
 
   private controller: Controller;
-  private container: HTMLElement;
   private ul: HTMLUListElement;
 
   // Composed parts
@@ -14,8 +15,8 @@ export default class TemplateUI {
   private events: TemplateEvents;
 
   constructor() {
+    super();
     this.controller = Controller.instance;
-    this.container = document.getElementById("mainView")!;
 
     // Initialize composed parts
     this.renderer = new TemplateRenderer(

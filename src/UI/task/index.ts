@@ -1,16 +1,16 @@
 import Controller from "../../controller/CentralController";
 import TaskRenderer from "./TaskRenderer";
+import AppUI from "../AppUI";
 
-export default class TaskUI {
+export default class TaskUI extends AppUI {
   static instance: TaskUI = new TaskUI();
 
   private controller: Controller;
-  private container: HTMLElement;
   private renderer: TaskRenderer;
 
   constructor() {
+    super();
     this.controller = Controller.instance;
-    this.container = document.getElementById("mainView") as HTMLElement;
     this.renderer = new TaskRenderer(this.controller);
   }
 

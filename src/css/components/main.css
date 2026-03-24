@@ -1,4 +1,4 @@
-.main {
+.main__view {
   --overlap-position: 0 -70% 0 auto;
   --no-overlap-position: 0 0 0 auto;
 
@@ -16,7 +16,7 @@
 }
 
 @media (min-width: 40em) {
-  .main {
+  .main__view {
     --no-overlap-position: auto;
 
     position: relative;
@@ -28,13 +28,13 @@
   }
 }
 
-.main.show {
+.main__view.show {
   border-radius: inherit;
   inset: var(--no-overlap-position);
   scale: 1;
 }
 
-.main__header {
+.main__view--header {
   position: absolute;
   top: 0;
   left: 0;
@@ -47,7 +47,27 @@
   z-index: 10;
 }
 
-.main__view {
+.main__view--nav .button__round {
+  cursor: default;
+}
+
+#toggleMainViewButton {
+  @media (min-width: 40em) {
+    display: none;
+  }
+}
+
+.main__view--toggle .app__logo {
+  display: none;
+
+  @media (min-width: 40em) {
+    display: inline-block;
+    color: var(--primary-100);
+    cursor: default;
+  }
+}
+
+.main__view--content {
   position: absolute;
   top: 0;
   left: 0;
@@ -57,11 +77,7 @@
   max-height: 100%;
 }
 
-.main__view.hidden {
-  display: none;
-}
-
-.main__view--header {
+.main__view--content__header {
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -13,9 +13,9 @@ export default class CentralUI {
   private currentView: ViewType = "home";
   private isViewDraggedOut: boolean = false;
   private app: HTMLElement;
-  private main: HTMLElement;
+  private mainView: HTMLElement;
   private dragOutMainViewButton: HTMLElement;
-  private mainHeaderButton: HTMLElement;
+  private toggleViewButtonContainer: HTMLElement;
   private appHeaderNavButtons: NodeListOf<HTMLElement>;
   private render: CategoryUI | TemplateUI | TaskUI | HomeUI;
   private formDialog: FormDialog;
@@ -23,30 +23,20 @@ export default class CentralUI {
   constructor() {
     this.controller = Controller.instance;
     this.app = document.getElementById("app")!;
-    this.main = this.app.querySelector("#main")!;
-    this.dragOutMainViewButton = this.app.querySelector(
-      "#dragOutMainViewButton"
+    this.mainView = this.getEl("#mainView")!;
+    this.dragOutMainViewButton = this.getEl("#dragOutMainViewButton")!;
+    this.appHeaderNavButtons = this.getEls(".app__header--nav__button")!;
+    this.toggleViewButtonContainer = this.mainView.querySelector(
+      ".main__view--toggle"
     )!;
-    this.appHeaderNavButtons = this.app.querySelectorAll(
-      ".app__header--nav__button"
-    )!;
-    this.mainHeaderButton = this.main.querySelector(".main__header--button")!;
     this.render = new HomeUI();
-    this.formDialog = new FormDialog(this.main, this.controller);
+    this.formDialog = new FormDialog(this.mainView, this.controller);
     this.showView(this.currentView);
     this.bindNavigationEvents();
   }
 
   private bindNavigationEvents(): void {
     this.dragOutMainViewButton.addEventListener("click", this.dragOutMainView);
-
-    const toggleMainViewDragButton = this.app.querySelector("#dragAppButton");
-    if (toggleMainViewDragButton) {
-      toggleMainViewDragButton.addEventListener(
-        "click",
-        this.toggleMainViewDrag
-      );
-    }
 
     this.formDialog.bindEvents();
 
@@ -113,10 +103,10 @@ export default class CentralUI {
   private createToggleMainViewButton(): void {
     const inOrOut = this.isViewDraggedOut ? "in" : "out";
 
-    this.mainHeaderButton.innerHTML = `
+    this.toggleViewButtonContainer.innerHTML = `
       <button
         id="toggleMainViewButton"
-        class="button button__round main__header--button"
+        class="button button__round main__view--toggle__button"
         title="Drag ${inOrOut} view"
         aria-label="Drag ${inOrOut} view"
       >
@@ -124,7 +114,13 @@ export default class CentralUI {
       </button>
     `;
 
-    this.mainHeaderButton
+    const logoForLargeScreens = document.createElement("span");
+    logoForLargeScreens.classList.add("app__logo");
+    logoForLargeScreens.innerHTML = `<span class="material-symbols-outlined">task_alt</span>`;
+
+    this.toggleViewButtonContainer.appendChild(logoForLargeScreens);
+
+    this.toggleViewButtonContainer
       .querySelector("#toggleMainViewButton")!
       .addEventListener("click", () => {
         this.toggleMainViewDrag();
@@ -132,10 +128,11 @@ export default class CentralUI {
   }
 
   private createBackToHomeButton(): void {
-    this.mainHeaderButton.innerHTML = `
+    console.log("Creating back to home button");
+    this.toggleViewButtonContainer.innerHTML = `
       <button
         id="backToHome"
-        class="button button__round app__view--back"
+        class="button button__round main__view--back"
         title="Back to home view"
         aria-label="Back to home view"
       >
@@ -143,7 +140,7 @@ export default class CentralUI {
       </button>
     `;
 
-    this.mainHeaderButton
+    this.toggleViewButtonContainer
       .querySelector("#backToHome")
       ?.addEventListener("click", () => {
         this.navigateTo("home");
@@ -152,24 +149,53 @@ export default class CentralUI {
   }
 
   private dragOutMainView = (): void => {
-    this.main.classList.add("show");
+    const button: HTMLButtonElement | null =
+      this.toggleViewButtonContainer.querySelector("button");
+
+    this.mainView.classList.add("show");
     this.isViewDraggedOut = true;
-    this.createToggleMainViewButton();
+
+    if (button) {
+      button.title = "Drag in view";
+    }
   };
 
   private dragInMainView = (): void => {
-    this.main.classList.remove("show");
+    const button: HTMLButtonElement | null =
+      this.toggleViewButtonContainer.querySelector("button");
+
+    this.mainView.classList.remove("show");
     this.isViewDraggedOut = false;
-    this.createToggleMainViewButton();
+
+    if (button) {
+      button.title = "Drag out view";
+    }
   };
 
   private toggleMainViewDrag = (): void => {
-    if (this.main.classList.contains("show")) {
+    if (this.mainView.classList.contains("show")) {
       this.dragInMainView();
     } else {
       this.dragOutMainView();
     }
   };
+
+  private getEl(selector: string): HTMLElement {
+    const element: HTMLElement | null = this.app.querySelector(selector);
+    if (!element) {
+      throw new Error(`Element with selector "${selector}" not found.`);
+    }
+    return element;
+  }
+
+  private getEls(selector: string): NodeListOf<HTMLElement> {
+    const elements: NodeListOf<HTMLElement> =
+      this.app.querySelectorAll(selector);
+    if (elements.length === 0) {
+      throw new Error(`Elements with selector "${selector}" not found.`);
+    }
+    return elements;
+  }
 
   getCurrentView(): ViewType {
     return this.currentView;

@@ -17,10 +17,10 @@ export default class HomeRenderer {
   renderHomeView(container: HTMLElement): void {
     container.innerHTML = "";
 
-    container.className = "main__view main__view--home";
+    container.className = "main__view--content main__view--home";
 
     container.innerHTML = `
-      <header class="main__view--header px-2 pt-2">
+      <header class="main__view--content__header px-2 pt-2">
         <h2 class="main__view--title">What's up, Gorilla?</h2>
       </header>
 
@@ -41,7 +41,7 @@ export default class HomeRenderer {
           </div>
         </header>
 
-        <ul id="todayTaskList" class="task__list px-2">
+        <ul id="todayTaskList" class="task__list">
           <!-- Task items are dynamically rendered here -->
         </ul>
         </div>
