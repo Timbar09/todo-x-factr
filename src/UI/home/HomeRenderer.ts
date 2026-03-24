@@ -68,8 +68,8 @@ export default class HomeRenderer {
     const todaysTaskListHeader = this.getEl("#taskListMenu") as HTMLDivElement;
     const todaysTaskList = this.getEl("#todayTaskList") as HTMLUListElement;
     const openTaskDialogButton = this.getEl(
-      "#openTaskDialogButton"
-    ) as HTMLButtonElement;
+      ".main__view--button__container"
+    ) as HTMLDivElement;
 
     const taskListMenu = this.taskRenderer.todaysTaskListMenu();
 
@@ -78,12 +78,8 @@ export default class HomeRenderer {
     this.renderCategoryList(categoryList);
     this.renderTodayTaskList(todaysTaskList);
 
-    // Change the value of the css custom var(--position) to move the button, if there is more that 2 tasks for today, move the button up to avoid overlapping with the task list menu
     if (this.listCount > 2) {
-      const buttonContainer = this.getEl(
-        ".main__view--button__container"
-      ) as HTMLDivElement;
-      buttonContainer.style.setProperty("--position", "4.5em");
+      openTaskDialogButton.style.setProperty("--offset", "0");
     }
   }
 
