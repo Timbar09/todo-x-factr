@@ -114,9 +114,10 @@ export default class CentralUI {
       </button>
     `;
 
-    const logoForLargeScreens = document.createElement("span");
+    const logoForLargeScreens = document.createElement("img");
     logoForLargeScreens.classList.add("app__logo");
-    logoForLargeScreens.innerHTML = `<span class="material-symbols-outlined">task_alt</span>`;
+    logoForLargeScreens.src = "/public/logo.png";
+    logoForLargeScreens.alt = "App Logo";
 
     this.toggleViewButtonContainer.appendChild(logoForLargeScreens);
 
