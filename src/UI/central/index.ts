@@ -3,8 +3,11 @@ import HomeUI from "../home";
 import TaskUI from "../task";
 import CategoryUI from "../category";
 import TemplateUI from "../template";
+import AnalyticUI from "../analytic";
 import { formData } from "../form/data";
 import FormDialog, { ViewType } from "./FormDialog";
+
+type CentralRenderer = CategoryUI | TemplateUI | TaskUI | HomeUI | AnalyticUI;
 
 export default class CentralUI {
   static instance = new CentralUI();
@@ -17,7 +20,7 @@ export default class CentralUI {
   private dragOutMainViewButton: HTMLElement;
   private toggleViewButtonContainer: HTMLElement;
   private appHeaderNavButtons: NodeListOf<HTMLElement>;
-  private render: CategoryUI | TemplateUI | TaskUI | HomeUI | null = null;
+  private render: CentralRenderer | null = null;
   private formDialog: FormDialog;
 
   constructor() {
@@ -89,8 +92,13 @@ export default class CentralUI {
       case "categories":
         this.render = new CategoryUI(this.controller);
         break;
+      case "analytics":
+        this.render = new AnalyticUI();
+        break;
       default:
-        console.warn(`The view "${view}" does not support item editing.`);
+        console.warn(
+          `The view "${view}" is not recognized. Defaulting to home view.`
+        );
         return;
     }
 

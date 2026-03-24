@@ -18,18 +18,23 @@ export default class FormDialogManager {
   private dialog: HTMLElement;
   private dragUpDialogButtons: NodeListOf<HTMLElement>;
   private form: FormUI | null;
+  private disable: boolean;
   private controller: Controller;
 
   private templateFormHandler: TemplateFormHandler;
   private categoryFormHandler: CategoryFormHandler;
   private taskFormHandler: TaskFormHandler;
 
-  constructor(main: HTMLElement, controller: Controller) {
+  constructor(
+    main: HTMLElement,
+    controller: Controller,
+    disable: boolean = false
+  ) {
     this.main = main;
     this.controller = controller;
     this.dialog = this.getDialog()!;
     this.dragUpDialogButtons = this.getDragUpDialogButtons()!;
-
+    this.disable = disable;
     this.form = null;
 
     this.templateFormHandler = new TemplateFormHandler(controller);
@@ -38,6 +43,13 @@ export default class FormDialogManager {
   }
 
   setDialogContent(view: ViewType, formConfig: FormConfig): void {
+    if (this.disable) {
+      this.dialog.style.display = "none";
+      return;
+    }
+
+    this.dialog.style.display = "block";
+
     const dialogContent = this.getDialogContent();
 
     if (dialogContent) {
