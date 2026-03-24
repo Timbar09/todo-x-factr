@@ -3,8 +3,6 @@ import TaskRenderer from "./TaskRenderer";
 import AppUI from "../AppUI";
 
 export default class TaskUI extends AppUI {
-  static instance: TaskUI = new TaskUI();
-
   private controller: Controller;
   private renderer: TaskRenderer;
 

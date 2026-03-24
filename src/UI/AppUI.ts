@@ -1,12 +1,6 @@
-/**
- * Abstract base class for all main-view UI classes.
- *
- * Provides the shared `container` element (#mainViewContent) and
- * enforces the `view()` contract so every subclass renders into the
- * same well-known DOM node without duplicating the look-up.
- */
 export default abstract class AppUI {
   protected container: HTMLElement;
+  protected listCount: number = 0;
 
   constructor() {
     const el = document.getElementById("mainViewContent");
@@ -18,7 +12,6 @@ export default abstract class AppUI {
     this.container = el;
   }
 
-  /** Render the full view into `this.container`. */
   abstract view(): void;
 
   /**

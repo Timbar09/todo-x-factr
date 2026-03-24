@@ -5,8 +5,6 @@ import TemplateEvents from "./TemplateEvents";
 import AppUI from "../AppUI";
 
 export default class TemplateUI extends AppUI {
-  static instance: TemplateUI = new TemplateUI();
-
   private controller: Controller;
   private ul: HTMLUListElement;
 

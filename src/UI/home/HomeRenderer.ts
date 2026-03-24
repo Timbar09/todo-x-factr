@@ -6,12 +6,15 @@ export default class HomeRenderer {
   private controller: Controller;
   private categoryRenderer: CategoryUI;
   private taskRenderer: TaskUI;
+  private listCount: number = 0;
   private parentContainer: HTMLElement | null = null;
 
   constructor(controller: Controller) {
     this.controller = controller;
     this.categoryRenderer = new CategoryUI(this.controller);
     this.taskRenderer = new TaskUI();
+    this.listCount = this.controller.task.list.length;
+    console.log("HomeRenderer initialized. Total tasks:", this.listCount);
   }
 
   renderHomeView(container: HTMLElement): void {
@@ -64,6 +67,9 @@ export default class HomeRenderer {
     const categoryList = this.getEl("#homeCategoryList") as HTMLUListElement;
     const todaysTaskListHeader = this.getEl("#taskListMenu") as HTMLDivElement;
     const todaysTaskList = this.getEl("#todayTaskList") as HTMLUListElement;
+    const openTaskDialogButton = this.getEl(
+      "#openTaskDialogButton"
+    ) as HTMLButtonElement;
 
     const taskListMenu = this.taskRenderer.todaysTaskListMenu();
 
@@ -71,6 +77,14 @@ export default class HomeRenderer {
 
     this.renderCategoryList(categoryList);
     this.renderTodayTaskList(todaysTaskList);
+
+    // Change the value of the css custom var(--position) to move the button, if there is more that 2 tasks for today, move the button up to avoid overlapping with the task list menu
+    if (this.listCount > 2) {
+      const buttonContainer = this.getEl(
+        ".main__view--button__container"
+      ) as HTMLDivElement;
+      buttonContainer.style.setProperty("--position", "4.5em");
+    }
   }
 
   renderCategoryList(container: HTMLUListElement): void {

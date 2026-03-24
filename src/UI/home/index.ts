@@ -3,8 +3,6 @@ import HomeRenderer from "./HomeRenderer";
 import AppUI from "../AppUI";
 
 export default class HomeUI extends AppUI {
-  static instance: HomeUI = new HomeUI();
-
   private controller: Controller;
   private renderer: HomeRenderer;
 

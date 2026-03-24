@@ -17,7 +17,7 @@ export default class CentralUI {
   private dragOutMainViewButton: HTMLElement;
   private toggleViewButtonContainer: HTMLElement;
   private appHeaderNavButtons: NodeListOf<HTMLElement>;
-  private render: CategoryUI | TemplateUI | TaskUI | HomeUI;
+  private render: CategoryUI | TemplateUI | TaskUI | HomeUI | null = null;
   private formDialog: FormDialog;
 
   constructor() {
@@ -29,7 +29,6 @@ export default class CentralUI {
     this.toggleViewButtonContainer = this.mainView.querySelector(
       ".main__view--toggle"
     )!;
-    this.render = new HomeUI();
     this.formDialog = new FormDialog(this.mainView, this.controller);
     this.showView(this.currentView);
     this.bindNavigationEvents();

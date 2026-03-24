@@ -5,8 +5,6 @@ import { Observer } from "./types.js";
 import AppUI from "../AppUI";
 
 export default class CategoryUI extends AppUI implements Observer<Category> {
-  static instance: CategoryUI = new CategoryUI(Controller.instance);
-
   private controller: Controller;
   private previousCompletions: Map<string, number> = new Map();
 
