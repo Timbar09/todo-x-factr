@@ -14,7 +14,6 @@ export default class HomeRenderer {
     this.categoryRenderer = new CategoryUI(this.controller);
     this.taskRenderer = new TaskUI();
     this.listCount = this.controller.task.list.length;
-    console.log("HomeRenderer initialized. Total tasks:", this.listCount);
   }
 
   renderHomeView(container: HTMLElement): void {

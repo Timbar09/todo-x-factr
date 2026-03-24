@@ -115,7 +115,7 @@ export default class CentralUI {
 
     const logoForLargeScreens = document.createElement("img");
     logoForLargeScreens.classList.add("app__logo");
-    logoForLargeScreens.src = "/public/logo.png";
+    logoForLargeScreens.src = "/logo.png";
     logoForLargeScreens.alt = "App Logo";
 
     this.toggleViewButtonContainer.appendChild(logoForLargeScreens);
@@ -128,7 +128,6 @@ export default class CentralUI {
   }
 
   private createBackToHomeButton(): void {
-    console.log("Creating back to home button");
     this.toggleViewButtonContainer.innerHTML = `
       <button
         id="backToHome"
