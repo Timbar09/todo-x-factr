@@ -9,7 +9,7 @@ import { renderViewShell } from "../ViewShell";
 export default class TaskRenderer {
   private controller: Controller;
   private moreMenuController: MoreMenuController;
-  private bindEvents: TaskEvents | null = null;
+  private events: TaskEvents | null = null;
 
   constructor(controller: Controller) {
     this.controller = controller;
@@ -36,32 +36,48 @@ export default class TaskRenderer {
 
     this.renderTaskList(listContainer);
 
-    if (!this.bindEvents) {
-      this.bindEvents = new TaskEvents(listContainer, this.controller, () =>
-        this.renderTaskList(listContainer)
-      );
-    }
+    // if (!this.events) {
+    //   this.events = new TaskEvents(listContainer, this.controller, () =>
+    //     this.renderTaskList(listContainer)
+    //   );
+    //   this.events.bindEvents();
+    // }
   }
 
-  renderTaskList(container: HTMLUListElement): void {
+  renderTaskList(container: HTMLUListElement, forToday: boolean = false): void {
     const tasks = this.controller.task.list;
+    let listToRender = tasks;
+
+    if (forToday) {
+      console.warn(
+        "Filtering tasks for today unavailable - rendering all tasks instead for now."
+      );
+      // TODO:For now, just render all tasks. We can filter by today's date later.
+    }
 
     container.innerHTML = "";
 
-    tasks.forEach(task => {
+    listToRender.forEach(task => {
       const li = this.createTaskElement(task);
       container.appendChild(li);
     });
+
+    if (!this.events) {
+      this.events = new TaskEvents(container, this.controller, () =>
+        this.renderTaskList(container)
+      );
+      this.events.bindEvents();
+    }
   }
 
-  renderTodaysTasks(container: HTMLUListElement): void {
-    container.innerHTML = "";
+  // renderTodaysTasks(container: HTMLUListElement): void {
+  //   container.innerHTML = "";
 
-    // container.innerHTML =
-    //   "<div>We don't have code to display tasks for today yet!</div>";
+  //   // container.innerHTML =
+  //   //   "<div>We don't have code to display tasks for today yet!</div>";
 
-    this.renderTaskList(container); // TODO:For now, just render all tasks. We can filter by today's date later.
-  }
+  //   this.renderTaskList(container);
+  // }
 
   createTaskElement(task: Task): HTMLLIElement {
     const category = this.controller.category.findById(task.categoryId);
@@ -143,18 +159,4 @@ export default class TaskRenderer {
 
     return this.moreMenuController.createMenu(menuConfig);
   }
-
-  // getListContainer(): HTMLUListElement {
-  //   return document.querySelector("#taskList") as HTMLUListElement;
-  // }
-
-  // getListContainer(): HTMLUListElement {
-  //   // if (this.listContainer) return this.listContainer;
-
-  //   // const el = document.querySelector("#taskList") as HTMLUListElement | null;
-  //   // if (!el) {
-  //   //   throw new Error("Task list container (#taskList) is not available yet.");
-  //   // }
-  //   // return this.view?.querySelector("#taskList") as HTMLUListElement;
-  // }
 }

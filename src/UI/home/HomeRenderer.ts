@@ -66,9 +66,7 @@ export default class HomeRenderer {
     const categoryList = this.getEl("#homeCategoryList") as HTMLUListElement;
     const todaysTaskListHeader = this.getEl("#taskListMenu") as HTMLDivElement;
     const todaysTaskList = this.getEl("#todayTaskList") as HTMLUListElement;
-    const openTaskDialogButton = this.getEl(
-      ".main__view--button__container"
-    ) as HTMLDivElement;
+    const addTaskButtonContainer = this.getAddTaskButtonContainer()!;
 
     const taskListMenu = this.taskRenderer.todaysTaskListMenu();
 
@@ -78,7 +76,7 @@ export default class HomeRenderer {
     this.renderTodayTaskList(todaysTaskList);
 
     if (this.listCount > 2) {
-      openTaskDialogButton.style.setProperty("--offset", "0");
+      addTaskButtonContainer.style.setProperty("--offset", "0");
     }
   }
 
@@ -93,5 +91,9 @@ export default class HomeRenderer {
   getEl(selector: string): HTMLElement | null {
     if (!this.parentContainer) return null;
     return this.parentContainer.querySelector(selector);
+  }
+
+  private getAddTaskButtonContainer(): HTMLDivElement | null {
+    return this.getEl(".main__view--button__container") as HTMLDivElement;
   }
 }
