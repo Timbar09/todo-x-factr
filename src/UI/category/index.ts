@@ -20,14 +20,26 @@ export default class CategoryUI extends AppUI implements Observer<Category> {
       this.controller,
       this.previousCompletions
     );
+
+    this.controller.category.addCategoryObserver(this);
   }
 
   // Observer implementation
   update(category: Category): void {
-    this.updateCategoryDisplay(
-      category.id,
-      document.getElementById("categoryList") as HTMLUListElement
-    );
+    const categoryViewList = document.getElementById(
+      "categoryList"
+    ) as HTMLUListElement | null;
+    const homeViewList = document.getElementById(
+      "homeCategoryList"
+    ) as HTMLUListElement | null;
+
+    if (categoryViewList) {
+      this.updateCategoryDisplay(category.id, categoryViewList);
+    }
+
+    if (homeViewList) {
+      this.updateCategoryDisplay(category.id, homeViewList);
+    }
   }
 
   view(): void {

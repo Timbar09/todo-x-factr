@@ -119,15 +119,22 @@ export default class CategoryController extends ApplicationController<Category> 
   }
 
   clearCompletedTasks(completedTasks: Task[]): void {
-    if (!completedTasks) return;
+    if (!completedTasks || completedTasks.length === 0) return;
+
+    const affectedCategories = new Set<Category>();
 
     completedTasks.forEach((task: Task) => {
       const category = this.findById(task.categoryId);
-      if (category) {
-        category.removeTask(task);
-        category.completedTasks = 0;
-        this.saveToStorage();
-      }
+      if (!category) return;
+
+      category.removeTask(task);
+      category.completedTasks = 0;
+      affectedCategories.add(category);
+    });
+
+    affectedCategories.forEach(category => {
+      this.update(category);
+      this.notifyCategoryObservers(category);
     });
   }
 
@@ -191,6 +198,7 @@ export default class CategoryController extends ApplicationController<Category> 
   }
 
   addCategoryObserver(observer: Observer<Category>): void {
+    if (this.categoryObservers.includes(observer)) return;
     this.categoryObservers.push(observer);
   }
 
