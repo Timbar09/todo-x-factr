@@ -30,7 +30,7 @@ export default class HomeRenderer {
         <h3 class="main__view--subtitle">Categories</h3>
 
         <ul id="homeCategoryList" class="category__list">
-          Categories are dynamically rendered here
+          <!-- Categories are dynamically rendered here -->
         </ul>
       </div>
 
@@ -43,7 +43,7 @@ export default class HomeRenderer {
           </div>
         </header>
 
-        <ul id="todayTaskList" class="task__list">
+        <ul id="todaysTaskList" class="task__list">
           <!-- Task items are dynamically rendered here -->
         </ul>
         </div>
@@ -65,7 +65,7 @@ export default class HomeRenderer {
 
     const categoryList = this.getEl("#homeCategoryList") as HTMLUListElement;
     const todaysTaskListHeader = this.getEl("#taskListMenu") as HTMLDivElement;
-    const todaysTaskList = this.getEl("#todayTaskList") as HTMLUListElement;
+    const todaysTaskList = this.getEl("#todaysTaskList") as HTMLUListElement;
     const addTaskButtonContainer = this.getAddTaskButtonContainer()!;
 
     const taskListMenu = this.taskRenderer.todaysTaskListMenu();

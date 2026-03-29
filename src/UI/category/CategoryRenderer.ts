@@ -72,8 +72,11 @@ export default class CategoryRenderer {
     });
   }
 
-  createCategoryElement(category: Category, isInView: boolean): HTMLLIElement {
-    const flexClass = isInView ? "flex" : "";
+  createCategoryElement(
+    category: Category,
+    isInHomeView: boolean
+  ): HTMLLIElement {
+    const flexClass = isInHomeView ? "flex" : "";
 
     const { numberOfItems, numberOfCompletedItems, completionPercentage } =
       this.getCategoryStats(category);
@@ -89,7 +92,7 @@ export default class CategoryRenderer {
     li.innerHTML = `
       <header class="category__item--header ${flexClass}">
       ${
-        isInView
+        isInHomeView
           ? `
         <!-- display nothing -->
           `
@@ -100,7 +103,7 @@ export default class CategoryRenderer {
         `
       }
       <h4 class="category__item--title">
-        ${category.name} ${isInView ? `(${category.tasks.length})` : ""}
+        ${category.name} ${isInHomeView ? `(${category.tasks.length})` : ""}
       </h4>
 
       <div class="category__item--actions"></div>
@@ -116,7 +119,7 @@ export default class CategoryRenderer {
     const menu = this.createCategoryMenu(category.id);
     const accordionButton = this.createAccordionButton(category.id, li);
 
-    if (actions && menu && isInView) {
+    if (actions && menu && isInHomeView) {
       actions.appendChild(progressCircle);
       actions.appendChild(menu);
       actions.appendChild(accordionButton);
@@ -129,12 +132,12 @@ export default class CategoryRenderer {
       currentCompletion
     );
 
-    if (!isInView && progressBar && header) {
+    if (!isInHomeView && progressBar && header) {
       header.appendChild(progressBar);
     }
 
     const taskList = this.createTaskList(category);
-    if (isInView && taskList) {
+    if (isInHomeView && taskList) {
       li.appendChild(taskList);
     }
 

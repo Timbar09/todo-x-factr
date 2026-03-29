@@ -24,27 +24,15 @@ export default class TaskEvents {
       const target = e.target as HTMLElement;
       const taskItem = target.closest(".task__item") as HTMLElement;
       const taskId = taskItem?.dataset.itemId;
+
       console.log("Clicked Task ID:", taskId);
+
       if (taskId) {
         if (target.matches(".task__item--checkbox")) {
           this.controller.toggleTaskCheckStatus(taskId);
         }
       }
     });
-
-    // this.uls.addEventListener("click", (e: Event) => {
-    //   const target = e.target as HTMLElement;
-    //   const taskItem = target.closest(".task__item") as HTMLElement;
-    //   const taskId = taskItem?.dataset.itemId;
-
-    //   console.log("Clicked Task ID:", taskId);
-
-    //   if (taskId) {
-    //     if (target.matches(".task__item--checkbox")) {
-    //       this.controller.toggleTaskCheckStatus(taskId);
-    //     }
-    //   }
-    // });
 
     window.addEventListener("taskAdded", () => {
       this.onRender();
