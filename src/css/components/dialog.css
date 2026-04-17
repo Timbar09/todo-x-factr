@@ -5,7 +5,7 @@
 .dialog__default {
   position: fixed;
   height: 100%;
-  border-radius: var(--radius-100);
+  border-radius: var(--radius-200);
   box-shadow: var(--shadow);
   z-index: 10;
   top: 0;
@@ -27,8 +27,8 @@
   --dialog-open-dimension: 100%;
 
   --dialog-closed-radius: var(--radius-pill);
-  --dialog-mid-radius: var(--radius-200);
-  --dialog-open-radius: var(--radius-100);
+  /* --dialog-mid-radius: var(--radius-200); */
+  --dialog-open-radius: var(--radius-200);
 
   position: absolute;
   overflow: hidden;
@@ -84,12 +84,11 @@
   30% {
     width: var(--dialog-mid-dimension);
     height: var(--dialog-closed-dimension);
-    border-radius: var(--dialog-closed-radius);
     visibility: visible;
     outline-width: 0.125em;
   }
   31% {
-    border-radius: var(--dialog-mid-radius);
+    border-radius: var(--dialog-open-radius);
     outline-width: 0;
   }
   75% {
@@ -97,7 +96,6 @@
     bottom: var(--dialog-closed-position);
     width: var(--dialog-mid-dimension);
     height: var(--dialog-mid-dimension);
-    border-radius: var(--dialog-mid-radius);
   }
   100% {
     right: var(--dialog-open-position);
@@ -178,6 +176,7 @@
 .dialog__container.hidden {
   top: 80%;
   scale: 0.85;
+  border-radius: var(--radius-100);
 }
 
 .dialog__none {

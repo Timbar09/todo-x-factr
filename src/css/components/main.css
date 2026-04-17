@@ -47,6 +47,37 @@
   z-index: 10;
 }
 
+.main__view--back .material-symbols-outlined {
+  position: absolute;
+}
+
+.main__view--back .material-symbols-outlined:first-child {
+  transform: scale(0);
+  transition: transform 200ms ease-in-out;
+}
+.main__view--back:hover .material-symbols-outlined:first-child {
+  transform: scale(0.75) translateX(-25%);
+}
+
+.main__view--back .material-symbols-outlined:last-child {
+  transition: transform 200ms ease-in-out;
+}
+.main__view--back:hover .material-symbols-outlined:last-child {
+  animation: point-back-home 750ms ease-in-out infinite;
+}
+
+@keyframes point-back-home {
+  0% {
+    transform: scale(0.5) translateX(75%);
+  }
+  50% {
+    transform: scale(0.5) translateX(85%);
+  }
+  100% {
+    transform: scale(0.5) translateX(75%);
+  }
+}
+
 .main__view--nav .button__round {
   cursor: default;
 }
@@ -72,7 +103,7 @@
   top: 0;
   left: 0;
   right: 0;
-  padding-top: 4em;
+  padding-top: 4.5em;
   min-height: 100%;
   max-height: 100%;
 }

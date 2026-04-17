@@ -143,6 +143,7 @@ export default class CentralUI {
         title="Back to home view"
         aria-label="Back to home view"
       >
+        <span class="material-symbols-outlined"> home </span>
         <span class="material-symbols-outlined"> arrow_back </span>
       </button>
     `;
