@@ -160,3 +160,7 @@
   right: var(--offset);
   bottom: var(--offset);
 }
+
+.main__view--button__container.hidden {
+  display: none;
+}

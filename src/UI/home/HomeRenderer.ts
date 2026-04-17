@@ -6,14 +6,14 @@ export default class HomeRenderer {
   private controller: Controller;
   private categoryRenderer: CategoryUI;
   private taskRenderer: TaskUI;
-  private listCount: number = 0;
+  // private listCount: number = 0;
   private parentContainer: HTMLElement | null = null;
 
   constructor(controller: Controller) {
     this.controller = controller;
     this.categoryRenderer = new CategoryUI(this.controller);
     this.taskRenderer = new TaskUI();
-    this.listCount = this.controller.task.list.length;
+    // this.listCount = this.controller.task.list.length;
   }
 
   renderHomeView(container: HTMLElement): void {
@@ -38,7 +38,7 @@ export default class HomeRenderer {
         <header class="task__list--today__header">
           <h3 class="main__view--subtitle">Today's tasks</h3>
 
-          <div id="taskListMenu" class="task__list--today__header--more">
+          <div id="todaysTaskListMenu" class="task__list--today__header--more">
             <!-- Task list menu is dynamically rendered here -->
           </div>
         </header>
@@ -50,8 +50,7 @@ export default class HomeRenderer {
 
         <div class="main__view--button__container">
           <button
-            id="openTaskDialogButton"
-            class="button button__primary button__primary--round main__entryForm--button main__view--button"
+            class="button button__primary button__primary--round main__view--button"
             title="Add new item"
             aria-label="Add new item to list"
             data-view="home"
@@ -64,20 +63,24 @@ export default class HomeRenderer {
     this.parentContainer = container;
 
     const categoryList = this.getEl("#homeCategoryList") as HTMLUListElement;
-    const todaysTaskListHeader = this.getEl("#taskListMenu") as HTMLDivElement;
+    const taskListMenuContainer = this.getTaskListMenuContainer()!;
     const todaysTaskList = this.getEl("#todaysTaskList") as HTMLUListElement;
-    const addTaskButtonContainer = this.getAddTaskButtonContainer()!;
+    // const addTaskButtonContainer = this.getAddTaskButtonContainer()!;
 
+    const addTaskButton = this.createAddTaskButton();
     const taskListMenu = this.taskRenderer.todaysTaskListMenu();
 
-    todaysTaskListHeader.appendChild(taskListMenu);
+    taskListMenuContainer.appendChild(addTaskButton);
+    taskListMenuContainer.appendChild(taskListMenu);
 
     this.renderCategoryList(categoryList);
     this.renderTodayTaskList(todaysTaskList);
 
-    if (this.listCount > 2) {
-      addTaskButtonContainer.style.setProperty("--offset", "0");
-    }
+    // if (this.listCount > 2) {
+    //   addTaskButtonContainer.classList.add("hidden");
+    // } else {
+    //   addTaskButtonContainer.classList.remove("hidden");
+    // }
   }
 
   renderCategoryList(container: HTMLUListElement): void {
@@ -88,12 +91,22 @@ export default class HomeRenderer {
     this.taskRenderer.listToday(container);
   }
 
-  getEl(selector: string): HTMLElement | null {
+  private createAddTaskButton(): HTMLButtonElement {
+    const button = document.createElement("button");
+    button.className = "button button__round main__view--button hidden";
+    button.title = "Add new task";
+    button.setAttribute("aria-label", "Add new task to list");
+    button.dataset.view = "home";
+    button.innerHTML = `<span class="material-symbols-outlined"> add </span>`;
+    return button;
+  }
+
+  private getEl(selector: string): HTMLElement | null {
     if (!this.parentContainer) return null;
     return this.parentContainer.querySelector(selector);
   }
 
-  private getAddTaskButtonContainer(): HTMLDivElement | null {
-    return this.getEl(".main__view--button__container") as HTMLDivElement;
+  private getTaskListMenuContainer(): HTMLDivElement | null {
+    return this.getEl("#todaysTaskListMenu") as HTMLDivElement;
   }
 }

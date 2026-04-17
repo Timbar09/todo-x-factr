@@ -5,6 +5,16 @@
   gap: 1em;
 }
 
+.task__list--today__header .main__view--button.hidden {
+  display: none;
+}
+
+.task__list--today__header--more {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
 .task__list {
   display: flex;
   flex-direction: column;

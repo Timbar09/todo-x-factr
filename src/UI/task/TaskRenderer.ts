@@ -68,6 +68,18 @@ export default class TaskRenderer {
       );
       this.events.bindEvents();
     }
+
+    // TODO: Move this logic into "forToday" branch once we implement actual filtering by today's date.
+    const primaryAddTaskButton = this.getPrimaryAddTaskButton()!;
+    const secondaryAddTaskButton = this.getSecondaryAddTaskButton()!;
+
+    if (listToRender.length > 2) {
+      primaryAddTaskButton.classList.add("hidden");
+      secondaryAddTaskButton.classList.remove("hidden");
+    } else {
+      primaryAddTaskButton.classList.remove("hidden");
+      secondaryAddTaskButton.classList.add("hidden");
+    }
   }
 
   // renderTodaysTasks(container: HTMLUListElement): void {
@@ -158,5 +170,17 @@ export default class TaskRenderer {
     };
 
     return this.moreMenuController.createMenu(menuConfig);
+  }
+
+  private getPrimaryAddTaskButton(): HTMLButtonElement | null {
+    return document.querySelector(
+      ".main__view--home .main__view--button__container"
+    ) as HTMLButtonElement;
+  }
+
+  private getSecondaryAddTaskButton(): HTMLButtonElement | null {
+    return document.querySelector(
+      ".main__view--home .task__list--today__header .main__view--button"
+    ) as HTMLButtonElement;
   }
 }
