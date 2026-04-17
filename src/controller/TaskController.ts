@@ -4,6 +4,15 @@ import Task from "../model/Task";
 export default class TaskController extends ApplicationController<Task> {
   private static _instance: TaskController;
 
+  private parseDate(value: unknown): Date | null {
+    if (value === null || value === undefined || value === "") {
+      return null;
+    }
+
+    const date = value instanceof Date ? value : new Date(String(value));
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
   private constructor() {
     super("todo-x-factr-tasks");
   }
@@ -68,8 +77,11 @@ export default class TaskController extends ApplicationController<Task> {
         new Task(
           item._id || item.id,
           item._title || item.title,
-          item._checked || item.checked,
-          item._categoryId || item.categoryId
+          item._checked ?? item.checked ?? false,
+          item._categoryId || item.categoryId,
+          this.parseDate(item._dateCreated ?? item.dateCreated) ?? new Date(),
+          this.parseDate(item._dateUpdated ?? item.dateUpdated) ?? new Date(),
+          this.parseDate(item._dateDue ?? item.dateDue)
         )
     );
   }
