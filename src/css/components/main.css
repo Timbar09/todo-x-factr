@@ -154,7 +154,7 @@
 } */
 
 .main__view--button__container {
-  --offset: 2em;
+  --offset: var(--spacing-2);
 
   position: fixed;
   right: var(--offset);

@@ -19,45 +19,33 @@
 }
 
 .dialog__home {
-  --dialog-starting-position: 2em;
-  --dialog-end-position: 0;
+  --dialog-closed-position: var(--spacing-2);
+  --dialog-open-position: 0;
 
-  --dialog-starting-dimension: 4em;
-  --dialog-mid-dimension: calc(100% - var(--dialog-starting-position) * 2);
-  --dialog-end-dimension: 100%;
+  --dialog-closed-dimension: 4em;
+  --dialog-mid-dimension: calc(100% - var(--dialog-closed-position) * 2);
+  --dialog-open-dimension: 100%;
 
-  --dialog-starting-radius: var(--radius-pill);
+  --dialog-closed-radius: var(--radius-pill);
   --dialog-mid-radius: var(--radius-200);
-  --dialog-end-radius: var(--radius-100);
+  --dialog-open-radius: var(--radius-100);
 
   position: absolute;
-  right: var(--dialog-starting-position);
-  bottom: var(--dialog-starting-position);
-  width: var(--dialog-starting-dimension);
-  height: var(--dialog-starting-dimension);
-  border-radius: var(--dialog-starting-radius);
-  outline: 0.125em solid var(--bg-200);
-  transform: scale(0);
   overflow: hidden;
   z-index: 1000;
-  transition:
-    transform 200ms 950ms ease-out,
-    /* FIXME: This transition affects the home dialog closing animation */ top 0,
-    scale 0,
-    border-radius 0;
 }
 
 .dialog__home.open {
   transform: scale(1);
   transition: transform 200ms ease-out;
-  animation: open-task-entry-form 900ms 500ms ease-out forwards;
+  animation: open-home-task-entry-form 700ms ease-out forwards;
 }
 
 .dialog__home.closed {
-  animation: close-task-entry-form 1000ms ease-out forwards;
+  animation: close-home-task-entry-form 500ms ease-out forwards;
 }
 
-.dialog__home::after {
+.dialog__home::before {
   content: "";
   position: absolute;
   top: 0;
@@ -72,21 +60,21 @@
     height 200ms ease-out;
 }
 
-.dialog__home.open::after {
+.dialog__home.open::before {
   transition:
-    opacity 400ms 1500ms ease-out,
-    height 50ms 1950ms ease-out;
+    opacity 700ms 700ms ease-out,
+    height 0ms 2000ms ease-out;
   height: 0;
   opacity: 0;
 }
 
-@keyframes open-task-entry-form {
+@keyframes open-home-task-entry-form {
   0% {
-    right: var(--dialog-starting-position);
-    bottom: var(--dialog-starting-position);
-    width: var(--dialog-starting-dimension);
-    height: var(--dialog-starting-dimension);
-    border-radius: var(--dialog-starting-radius);
+    right: var(--dialog-closed-position);
+    bottom: var(--dialog-closed-position);
+    width: var(--dialog-closed-dimension);
+    height: var(--dialog-closed-dimension);
+    border-radius: var(--dialog-closed-radius);
     visibility: hidden;
     outline-width: 0.125em;
   }
@@ -95,8 +83,8 @@
   }
   30% {
     width: var(--dialog-mid-dimension);
-    height: var(--dialog-starting-dimension);
-    border-radius: var(--dialog-starting-radius);
+    height: var(--dialog-closed-dimension);
+    border-radius: var(--dialog-closed-radius);
     visibility: visible;
     outline-width: 0.125em;
   }
@@ -105,60 +93,53 @@
     outline-width: 0;
   }
   75% {
-    right: var(--dialog-starting-position);
-    bottom: var(--dialog-starting-position);
+    right: var(--dialog-closed-position);
+    bottom: var(--dialog-closed-position);
     width: var(--dialog-mid-dimension);
     height: var(--dialog-mid-dimension);
     border-radius: var(--dialog-mid-radius);
   }
   100% {
-    right: var(--dialog-end-position);
-    bottom: var(--dialog-end-position);
-    width: var(--dialog-end-dimension);
-    height: var(--dialog-end-dimension);
-    border-radius: var(--dialog-end-radius);
+    right: var(--dialog-open-position);
+    bottom: var(--dialog-open-position);
+    width: var(--dialog-open-dimension);
+    height: var(--dialog-open-dimension);
+    border-radius: var(--dialog-open-radius);
     visibility: visible;
     outline-width: 0;
   }
 }
 
-@keyframes close-task-entry-form {
+@keyframes close-home-task-entry-form {
   0% {
-    right: var(--dialog-end-position);
-    bottom: var(--dialog-end-position);
-    width: var(--dialog-end-dimension);
-    height: var(--dialog-end-dimension);
-    border-radius: var(--dialog-end-radius);
+    right: var(--dialog-open-position);
+    bottom: var(--dialog-open-position);
+    width: var(--dialog-open-dimension);
+    height: var(--dialog-open-dimension);
+    border-radius: var(--dialog-open-radius);
     visibility: visible;
     outline-width: 0;
+    opacity: 1;
   }
-  15% {
-    right: var(--dialog-starting-position);
-    bottom: var(--dialog-starting-position);
-    width: var(--dialog-mid-dimension);
-    height: var(--dialog-mid-dimension);
-    border-radius: var(--dialog-mid-radius);
-  }
-  70% {
-    right: var(--dialog-starting-position);
-    bottom: var(--dialog-starting-position);
-    width: var(--dialog-mid-dimension);
-    height: var(--dialog-starting-dimension);
-    border-radius: var(--dialog-mid-radius);
-    outline-width: 0;
-  }
-  90% {
+  99% {
+    right: var(--dialog-open-position);
+    bottom: var(--dialog-open-position);
+    width: var(--dialog-open-dimension);
+    height: var(--dialog-open-dimension);
+    border-radius: var(--dialog-open-radius);
     visibility: visible;
-    right: var(--dialog-starting-position);
-    bottom: var(--dialog-starting-position);
-    width: var(--dialog-starting-dimension);
-    height: var(--dialog-starting-dimension);
-    border-radius: var(--dialog-starting-radius);
     outline-width: 0.125em;
+    opacity: 0;
   }
   100% {
+    right: var(--dialog-closed-position);
+    bottom: var(--dialog-closed-position);
+    width: var(--dialog-closed-dimension);
+    height: var(--dialog-closed-dimension);
+    border-radius: var(--dialog-closed-radius);
     visibility: hidden;
     outline-width: 0.125em;
+    opacity: 0;
   }
 }
 
@@ -172,6 +153,28 @@
   background-color: inherit;
 }
 
+.dialog__container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background-color: inherit;
+  border-radius: inherit;
+  opacity: 0;
+  z-index: 1;
+  transition:
+    opacity 500ms 400ms ease-in-out,
+    height 0ms 900ms ease-in-out;
+}
+
+.dialog__container.hidden::before {
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0ms ease-in-out;
+}
+
 .dialog__container.hidden {
   top: 80%;
   scale: 0.85;
@@ -183,18 +186,12 @@
 
 .dialog__dragButton--container {
   position: absolute;
-  inset: 0 0 2em 0;
+  top: 0;
+  left: 0;
+  width: 100%;
   border-radius: inherit;
-  height: 3.5em;
   background-color: inherit;
   z-index: 1;
-  transition:
-    height 400ms ease-in-out,
-    background-color 400ms ease-in-out;
-}
-
-.dialog__container.hidden .dialog__dragButton--container {
-  height: 100%;
 }
 
 .dialog__dragButton {

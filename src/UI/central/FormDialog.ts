@@ -16,25 +16,17 @@ export type ViewType =
 export default class FormDialogManager {
   private main: HTMLElement;
   private dialog: HTMLElement;
-  private dragUpDialogButtons: NodeListOf<HTMLElement>;
   private form: FormUI | null;
-  private disable: boolean;
   private controller: Controller;
 
   private templateFormHandler: TemplateFormHandler;
   private categoryFormHandler: CategoryFormHandler;
   private taskFormHandler: TaskFormHandler;
 
-  constructor(
-    main: HTMLElement,
-    controller: Controller,
-    disable: boolean = false
-  ) {
+  constructor(main: HTMLElement, controller: Controller) {
     this.main = main;
     this.controller = controller;
     this.dialog = this.getDialog()!;
-    this.dragUpDialogButtons = this.getDragUpDialogButtons()!;
-    this.disable = disable;
     this.form = null;
 
     this.templateFormHandler = new TemplateFormHandler(controller);
@@ -43,13 +35,6 @@ export default class FormDialogManager {
   }
 
   setDialogContent(view: ViewType, formConfig: FormConfig): void {
-    if (this.disable) {
-      this.dialog.style.display = "none";
-      return;
-    }
-
-    this.dialog.style.display = "block";
-
     const dialogContent = this.getDialogContent();
 
     if (dialogContent) {
@@ -109,8 +94,8 @@ export default class FormDialogManager {
     const view = this.dialog.dataset.dialog as ViewType;
 
     if (dialog.classList.contains("dialog__home")) {
-      this.dialog.classList.remove("closed", "hidden");
       this.dialog.classList.add("open");
+      this.dialog.classList.remove("closed", "hidden");
     } else {
       this.dialog.classList.remove("hidden", "closed", "open");
     }
@@ -148,15 +133,18 @@ export default class FormDialogManager {
       });
     }
 
-    this.dragUpDialogButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        const view = button.dataset.view as ViewType;
+    this.main.addEventListener("click", (event: Event) => {
+      const target = event.target as HTMLElement;
+      const button = target.closest(
+        ".main__view--button"
+      ) as HTMLElement | null;
 
-        if (!view) return;
+      if (button && button.getAttribute("data-view")) {
+        const view = button.getAttribute("data-view") as ViewType;
 
         this.setDialogContent(view, formData[view]);
         this.dragUpDialog();
-      });
+      }
     });
 
     this.getApp()?.addEventListener("click", event => {
@@ -226,10 +214,6 @@ export default class FormDialogManager {
 
   private getDialogContent(): HTMLElement | null {
     return this.dialog.querySelector(".dialog__content");
-  }
-
-  private getDragUpDialogButtons(): NodeListOf<HTMLElement> | null {
-    return this.main.querySelectorAll(".app__view--button");
   }
 
   private getForm(): HTMLFormElement | null {
