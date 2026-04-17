@@ -70,16 +70,23 @@ export default class TaskRenderer {
     }
 
     // TODO: Move this logic into "forToday" branch once we implement actual filtering by today's date.
-    const primaryAddTaskButton = this.getPrimaryAddTaskButton()!;
-    const secondaryAddTaskButton = this.getSecondaryAddTaskButton()!;
 
-    if (listToRender.length > 2) {
-      primaryAddTaskButton.classList.add("hidden");
-      secondaryAddTaskButton.classList.remove("hidden");
-    } else {
-      primaryAddTaskButton.classList.remove("hidden");
-      secondaryAddTaskButton.classList.add("hidden");
-    }
+    const primaryAddTaskButton = this.getPrimaryAddTaskButton();
+    const secondaryAddTaskButton = this.getSecondaryAddTaskButton();
+
+    setTimeout(() => {
+      if (!primaryAddTaskButton || !secondaryAddTaskButton) {
+        return;
+      }
+
+      if (listToRender.length > 2) {
+        primaryAddTaskButton.classList.add("hidden");
+        secondaryAddTaskButton.classList.remove("hidden");
+      } else {
+        primaryAddTaskButton.classList.remove("hidden");
+        secondaryAddTaskButton.classList.add("hidden");
+      }
+    }, 100);
   }
 
   // renderTodaysTasks(container: HTMLUListElement): void {

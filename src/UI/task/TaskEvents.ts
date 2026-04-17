@@ -25,8 +25,6 @@ export default class TaskEvents {
       const taskItem = target.closest(".task__item") as HTMLElement;
       const taskId = taskItem?.dataset.itemId;
 
-      console.log("Clicked Task ID:", taskId);
-
       if (taskId) {
         if (target.matches(".task__item--checkbox")) {
           this.controller.toggleTaskCheckStatus(taskId);
