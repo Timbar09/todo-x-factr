@@ -1,6 +1,6 @@
 import { ColorScheme } from "../../model/Template";
 
-export default class TemplateUtils {
+export default class Colors {
   static reduceOpacity(color: string, opacity: number): string {
     return (
       color +
@@ -37,13 +37,13 @@ export default class TemplateUtils {
     return {
       primary: primaryColor,
       "text-100": textColor,
-      "text-200": TemplateUtils.reduceOpacity(textColor, 0.7),
-      "text-300": TemplateUtils.reduceOpacity(textColor, 0.5),
-      "text-400": TemplateUtils.reduceOpacity(textColor, 0.125),
+      "text-200": this.reduceOpacity(textColor, 0.7),
+      "text-300": this.reduceOpacity(textColor, 0.5),
+      "text-400": this.reduceOpacity(textColor, 0.125),
       variant: primaryColor,
       "bg-100": bgColor,
-      "bg-200": TemplateUtils.lightenColor(bgColor, 5),
-      "bg-300": TemplateUtils.lightenColor(bgColor, 10),
+      "bg-200": this.lightenColor(bgColor, 5),
+      "bg-300": this.lightenColor(bgColor, 10),
     };
   }
 }
