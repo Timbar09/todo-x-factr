@@ -5,7 +5,8 @@ import CategoryUI from "../category";
 import TemplateUI from "../template";
 import AnalyticUI from "../analytic";
 import { formData } from "../form/data";
-import FormDialog, { ViewType } from "./FormDialog";
+import FormDialog from "./formDialog";
+import { ViewType } from "./types";
 
 type CentralRenderer = CategoryUI | TemplateUI | TaskUI | HomeUI | AnalyticUI;
 
