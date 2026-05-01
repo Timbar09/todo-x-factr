@@ -1,11 +1,9 @@
 import Controller from "../../controller/CentralController.js";
-import MoreMenuController, {
-  MoreMenuConfig,
-} from "../../controller/MoreMenuController.js";
-import Category from "../../model/Category.js";
-import CategoryEvents from "./CategoryEvents.js";
-import TaskRenderer from "../task/TaskRenderer.js";
-import { CategoryStats } from "./types.js";
+import MenuUI, { MenuConfig } from "../menu";
+import Category from "../../model/Category";
+import CategoryEvents from "./CategoryEvents";
+import TaskRenderer from "../task/TaskRenderer";
+import { CategoryStats } from "./types";
 import { renderViewShell } from "../ViewShell";
 
 export default class CategoryRenderer {
@@ -13,7 +11,7 @@ export default class CategoryRenderer {
   private taskRenderer: TaskRenderer;
   private inView: boolean;
   private bindEvents: CategoryEvents;
-  private moreMenuController: MoreMenuController;
+  private menuUI: MenuUI;
 
   private previousCompletions: Map<string, number>;
 
@@ -24,7 +22,7 @@ export default class CategoryRenderer {
     this.controller = controller;
     this.taskRenderer = new TaskRenderer(controller);
     this.inView = false;
-    this.moreMenuController = MoreMenuController.getInstance();
+    this.menuUI = new MenuUI();
     this.bindEvents = new CategoryEvents(
       controller,
       () => this.renderCategoryList
@@ -295,7 +293,7 @@ export default class CategoryRenderer {
   private createCategoryMenu(categoryId: string): HTMLElement {
     const category = this.controller.category.findById(categoryId);
 
-    const menuConfig: MoreMenuConfig = {
+    const menuConfig: MenuConfig = {
       options: [
         {
           id: "editCategoryButton",
@@ -321,7 +319,7 @@ export default class CategoryRenderer {
       ],
     };
 
-    return this.moreMenuController.createMenu(menuConfig);
+    return this.menuUI.renderMenu(menuConfig);
   }
 
   updateCategoryElement(categoryId: string, container: HTMLUListElement): void {

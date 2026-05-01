@@ -25,6 +25,6 @@ export default class TaskUI extends AppUI {
   }
 
   todaysTaskListMenu(): HTMLElement {
-    return this.renderer.createTaskListMenu();
+    return this.renderer.renderTaskListMenu();
   }
 }

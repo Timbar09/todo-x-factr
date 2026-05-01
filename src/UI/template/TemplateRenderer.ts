@@ -1,17 +1,15 @@
 import Template from "../../model/Template";
 import Controller from "../../controller/TemplateController";
-import MoreMenuController, {
-  MoreMenuConfig,
-} from "../../controller/MoreMenuController";
+import MenuUI, { MenuConfig } from "../menu";
 import { renderViewShell } from "../ViewShell";
 
 export default class TemplateRenderer {
   private controller: Controller;
-  private moreMenuController: MoreMenuController;
+  private menuUI: MenuUI;
 
-  constructor(controller: Controller, moreMenuController: MoreMenuController) {
+  constructor(controller: Controller, menuUI: MenuUI) {
     this.controller = controller;
-    this.moreMenuController = moreMenuController;
+    this.menuUI = menuUI;
   }
 
   renderTemplateView(container: HTMLElement): void {
@@ -35,6 +33,7 @@ export default class TemplateRenderer {
   }
 
   renderTemplateList(ul: HTMLUListElement): HTMLUListElement {
+    console.log("Rendering template list inside:", ul);
     const templates = this.controller.list;
     const activeTemplate = this.controller.activeTemplate;
 
@@ -117,7 +116,7 @@ export default class TemplateRenderer {
   private createTemplateMenu(templateId: string): HTMLElement {
     const template = this.controller.findById(templateId);
 
-    const menuConfig: MoreMenuConfig = {
+    const menuConfig: MenuConfig = {
       options: [
         {
           id: "editTemplateButton",
@@ -143,7 +142,7 @@ export default class TemplateRenderer {
       ],
     };
 
-    return this.moreMenuController.createMenu(menuConfig);
+    return this.menuUI.renderMenu(menuConfig);
   }
 
   getListContainer(): HTMLUListElement {

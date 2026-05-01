@@ -1,5 +1,5 @@
 import Controller from "../../controller/TemplateController";
-import MoreMenuController from "../../controller/MoreMenuController";
+import MenuUI from "../menu";
 import TemplateRenderer from "./TemplateRenderer";
 import TemplateEvents from "./TemplateEvents";
 import AppUI from "../AppUI";
@@ -17,10 +17,7 @@ export default class TemplateUI extends AppUI {
     this.controller = Controller.instance;
 
     // Initialize composed parts
-    this.renderer = new TemplateRenderer(
-      this.controller,
-      MoreMenuController.getInstance()
-    );
+    this.renderer = new TemplateRenderer(this.controller, new MenuUI());
 
     this.ul = this.renderer.getListContainer();
 

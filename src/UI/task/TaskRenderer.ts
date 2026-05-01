@@ -1,20 +1,17 @@
 import Task from "../../model/Task";
 import Controller from "../../controller/CentralController";
-import MoreMenuController, {
-  MoreMenuConfig,
-} from "../../controller/MoreMenuController";
+import MenuUI, { MenuConfig } from "../menu";
 import TaskEvents from "./TaskEvents";
 import { renderViewShell } from "../ViewShell";
 
 export default class TaskRenderer {
   private controller: Controller;
-  private moreMenuController: MoreMenuController;
+  private menuUI: MenuUI;
   private events: TaskEvents | null = null;
 
   constructor(controller: Controller) {
     this.controller = controller;
-
-    this.moreMenuController = MoreMenuController.getInstance();
+    this.menuUI = new MenuUI();
   }
 
   renderTaskView(container: HTMLElement): void {
@@ -35,13 +32,6 @@ export default class TaskRenderer {
     });
 
     this.renderTaskList(listContainer);
-
-    // if (!this.events) {
-    //   this.events = new TaskEvents(listContainer, this.controller, () =>
-    //     this.renderTaskList(listContainer)
-    //   );
-    //   this.events.bindEvents();
-    // }
   }
 
   renderTaskList(container: HTMLUListElement, forToday: boolean = false): void {
@@ -89,14 +79,29 @@ export default class TaskRenderer {
     }, 100);
   }
 
-  // renderTodaysTasks(container: HTMLUListElement): void {
-  //   container.innerHTML = "";
+  renderTaskListMenu(): HTMLElement {
+    const menuConfig: MenuConfig = {
+      options: [
+        {
+          id: "clearTasksButton",
+          label: "Clear all tasks",
+          onClick: () => {
+            window.dispatchEvent(new CustomEvent("clearAllTasks"));
+          },
+        },
+        {
+          id: "clearCompletedTasksButton",
+          label: "Clear completed tasks",
+          onClick: () => {
+            window.dispatchEvent(new CustomEvent("clearCompletedTasks"));
+          },
+        },
+      ],
+      buttonAriaLabel: "Task list menu",
+    };
 
-  //   // container.innerHTML =
-  //   //   "<div>We don't have code to display tasks for today yet!</div>";
-
-  //   this.renderTaskList(container);
-  // }
+    return this.menuUI.renderMenu(menuConfig);
+  }
 
   createTaskElement(task: Task): HTMLLIElement {
     const category = this.controller.category.findById(task.categoryId);
@@ -121,38 +126,14 @@ export default class TaskRenderer {
     `;
 
     // Add menu to task element
-    const moreMenu = this.createTaskMenu(task.id);
-    li.appendChild(moreMenu);
+    const menu = this.createTaskMenu(task.id);
+    li.appendChild(menu);
 
     return li;
   }
 
-  createTaskListMenu(): HTMLElement {
-    const menuConfig: MoreMenuConfig = {
-      options: [
-        {
-          id: "clearTasksButton",
-          label: "Clear all tasks",
-          onClick: () => {
-            window.dispatchEvent(new CustomEvent("clearAllTasks"));
-          },
-        },
-        {
-          id: "clearCompletedTasksButton",
-          label: "Clear completed tasks",
-          onClick: () => {
-            window.dispatchEvent(new CustomEvent("clearCompletedTasks"));
-          },
-        },
-      ],
-      buttonAriaLabel: "Task list options",
-    };
-
-    return this.moreMenuController.createMenu(menuConfig);
-  }
-
-  createTaskMenu(taskId: string): HTMLElement {
-    const menuConfig: MoreMenuConfig = {
+  private createTaskMenu(taskId: string): HTMLElement {
+    const menuConfig: MenuConfig = {
       options: [
         {
           id: "openTaskEditButton",
@@ -176,7 +157,7 @@ export default class TaskRenderer {
       ],
     };
 
-    return this.moreMenuController.createMenu(menuConfig);
+    return this.menuUI.renderMenu(menuConfig);
   }
 
   private getPrimaryAddTaskButton(): HTMLButtonElement | null {
